@@ -1,7 +1,7 @@
 # K8S Platform
 ___
 
-This serves all of the necessary apps to bootstrap a kubernetes cluster. At the moment this will only deploy to a local k8s cluster running on Docker Desktop.
+This serves all the necessary apps to bootstrap a kubernetes cluster. At the moment this will only deploy to a local k8s cluster running on Docker Desktop.
 
 ### Apps to be deployed onto a cluster
 1. ArgoCD
@@ -15,8 +15,12 @@ This serves all of the necessary apps to bootstrap a kubernetes cluster. At the 
 9. Trivy Operator
    
 ### Prerequisites
-- Docker Desktop
-- A [kubernetes cluster](https://docs.docker.com/desktop/kubernetes/) created from Docker Desktop 
+You will need the following installed on your machine before deploying:
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [Kubernetes cluster](https://docs.docker.com/desktop/kubernetes/) created from Docker Desktop 
+- [Taskfile](https://taskfile.dev/)
+- [Kubectl](https://kubernetes.io/docs/tasks/tools/)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 
 ### Deploy
 ```shell
