@@ -1,0 +1,15 @@
+# TODO: FIX THIS FILE
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: ghost
+  namespace: argocd # is this correct?
+spec:
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  destinations:
+    - namespace: '*'
+      server: '*'
+  sourceRepos:
+    - '*'

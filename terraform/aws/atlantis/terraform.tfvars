@@ -1,0 +1,7 @@
+atlantis_domain  = "atlantis.<YOUR-DOMAIN>"
+ghost_domain     = "ghost.<YOUR-DOMAIN>"
+eks_cluster_name = "xyz"
+github_user      = "<YOUR-GITHUB-USER>"
+github_repo      = "<YOUR-GITHUB-REPO-NAME>"
+ngrok_endpoint   = "https://YOUR-NGROK-URL.ngrok.io"
+repo_allowlist   = "github.com/YOUR-REPONAME"

@@ -1,0 +1,51 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  {{ if eq .Values.app.env.NODE_ENV "development" -}}
+  name: {{ .Values.app.name }}-ingress-dev
+  {{ else if eq .Values.app.env.NODE_ENV "production" -}}
+  name: {{ .Values.app.name }}-ingress-prod
+  {{ else }}
+  {{ fail "Entry in .Values.app.env.NODE_ENV is not recognized" }}
+  {{ end }}
+  namespace: {{ include  "my-app.namespace" . }}
+  labels:
+    {{ if eq .Values.app.env.NODE_ENV "development" -}}
+    app.kubernetes.io/name: {{ .Values.app.name }}-dev
+    jobLabel: {{ .Values.app.name }}-dev
+    {{ else if eq .Values.app.env.NODE_ENV "production" -}}
+    app.kubernetes.io/name: {{ .Values.app.name }}-prod
+    jobLabel: {{ .Values.app.name }}-prod
+    {{ else }}
+    {{ fail "Entry in .Values.app.env.NODE_ENV is not recognized" }}
+    {{ end }}
+  annotations:
+    konghq.com/https-redirect-status-code: '301'
+    konghq.com/protocols: 'https'
+    konghq.com/strip-path: 'true'
+spec:
+  ingressClassName: {{ include "my-app.ingressClassName" . }}
+  rules:
+    {{ if eq .Values.app.env.NODE_ENV "development" -}}
+    - host: {{ .Values.app.name }}.dev.local
+    {{ else if eq .Values.app.env.NODE_ENV "production" -}}
+    - host: {{ .Values.app.name }}.prod-local
+    {{ else }}
+    {{ fail "Entry in .Values.app.env.NODE_ENV is not recognized" }}
+    {{ end }}
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.app.name }}-svc
+                {{ if eq .Values.app.env.NODE_ENV "development" -}}
+                name: {{ .Values.app.name }}-svc-dev
+                {{ else if eq .Values.app.env.NODE_ENV "production" -}}
+                name: {{ .Values.app.name }}-svc-prod
+                {{ else }}
+                {{ fail "Entry in .Values.app.env.NODE_ENV is not recognized" }}
+                {{ end }}
+                port:
+                  number: 80

@@ -1,0 +1,247 @@
+name: Destroy Dev EKS Cluster
+
+on:
+  workflow_dispatch
+
+env:
+  DNS_ZONE: YOUR_DNS_ZONE
+  DNS_DIR: terraform/dns
+  EKS_DIR: terraform/eks
+  KUBE_SUPPORT_DIR: terraform/kube-support
+  MONITORING_DIR: terraform/monitoring
+  TF_PLAN_FILE: tfplan.destroy
+  TF_VERSION: 1.8.2
+  TF_WORKSPACE: dev
+
+jobs:
+  retrieve-elb-dns:
+    runs-on: ubuntu-latest
+    outputs:
+      elb_dns_name: ${{ steps.retrieve.outputs.elb_dns_name }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4.0.2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_DEV }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+          aws-region: us-east-1
+
+      - name: Retrieve ELB DNS Name
+        id: retrieve
+        run: |
+          ELB_DNS_NAME=$(aws elb describe-load-balancers --region us-east-1 --query 'LoadBalancerDescriptions[0].DNSName' --output text)
+          echo "ELB DNS NAME: $ELB_DNS_NAME"
+          echo "elb_dns_name=$ELB_DNS_NAME" >> "$GITHUB_OUTPUT"
+
+  update-dns:
+    runs-on: ubuntu-latest
+    needs: retrieve-elb-dns
+    env:
+      ELB_DNS_NAME: ${{ needs.retrieve-elb-dns.outputs.elb_dns_name }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4.0.2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_PROD }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          aws-region: us-east-1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3.1.0
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Terraform Init
+        working-directory: ${{ env.DNS_DIR }}
+        run: |
+          terraform init \
+            -backend-config="bucket=YOUR_TF_BACKEND_DEV" \
+            -backend-config="encrypt=true" \
+            -backend-config="key=terraform/dns/terraform.tfstate" \
+            -backend-config="region=us-east-1" \
+            -upgrade \
+            -reconfigure
+
+      - name: List Terraform workspace
+        working-directory: ${{ env.DNS_DIR }}
+        run: terraform workspace list
+
+      - name: Terraform Plan
+        working-directory: ${{ env.DNS_DIR }}
+        run: |
+          echo "ELB DNS NAME: ${{ env.ELB_DNS_NAME }}"
+          BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          COMMIT=$(git rev-parse HEAD)
+          terraform plan \
+            -var "branch=${BRANCH}" \
+            -var "commit=${COMMIT}" \
+            -var "dns_zone=$DNS_ZONE" \
+            -var "elb_dns_name=${{ env.ELB_DNS_NAME }}" \
+            -out ${{ env.TF_PLAN_FILE }} \
+            -destroy
+
+      - name: Terraform Destroy
+        working-directory: ${{ env.DNS_DIR }}
+        run: |
+          terraform apply ${{ env.TF_PLAN_FILE }}
+          rm -f ${{ env.TF_PLAN_FILE }}
+
+  monitoring:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4.0.2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_DEV }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+          aws-region: us-east-1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3.1.0
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Terraform Init
+        working-directory: ${{ env.MONITORING_DIR }}
+        run: |
+          terraform init \
+            -backend-config="bucket=YOUR_TF_BACKEND_DEV" \
+            -backend-config="encrypt=true" \
+            -backend-config="key=terraform/monitoring/terraform.tfstate" \
+            -backend-config="region=us-east-1" \
+            -upgrade \
+            -reconfigure
+
+      - name: Terraform Plan
+        working-directory: ${{ env.MONITORING_DIR }}
+        run: |
+          BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          COMMIT=$(git rev-parse HEAD)
+          terraform plan \
+            -var "branch=${BRANCH}" \
+            -var "commit=${COMMIT}" \
+            -out ${{ env.TF_PLAN_FILE }} \
+            -destroy
+
+      - name: Terraform Destroy
+        working-directory: ${{ env.MONITORING_DIR }}
+        run: |
+          terraform apply ${{ env.TF_PLAN_FILE }}
+          rm -f ${{ env.TF_PLAN_FILE }}
+
+  kube-support:
+    needs: monitoring
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4.0.2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_DEV }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+          aws-region: us-east-1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3.1.0
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Terraform Init
+        working-directory: ${{ env.KUBE_SUPPORT_DIR }}
+        run: |
+          terraform init \
+            -backend-config="bucket=YOUR_TF_BACKEND_DEV" \
+            -backend-config="encrypt=true" \
+            -backend-config="key=terraform/kube-support/terraform.tfstate" \
+            -backend-config="region=us-east-1" \
+            -upgrade \
+            -reconfigure
+
+      - name: List Terraform workspace
+        working-directory: ${{ env.KUBE_SUPPORT_DIR }}
+        run: terraform workspace list
+
+      - name: Terraform Plan
+        working-directory: ${{ env.KUBE_SUPPORT_DIR }}
+        run: |
+          BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          COMMIT=$(git rev-parse HEAD)
+          terraform plan \
+            -var "branch=${BRANCH}" \
+            -var "commit=${COMMIT}" \
+            -out ${{ env.TF_PLAN_FILE }} \
+            -destroy
+
+      - name: Terraform Destroy
+        working-directory: ${{ env.KUBE_SUPPORT_DIR }}
+        run: |
+          terraform apply ${{ env.TF_PLAN_FILE }}
+          rm -f ${{ env.TF_PLAN_FILE }}
+
+#      - name: Connect to EKS Cluster
+#        run: |
+#          aws eks update-kubeconfig --region us-east-1 --name xyz
+#
+#      - name: Deleting Example Microservice
+#        run: kubectl delete -f https://raw.githubusercontent.com/GoogleCloudPlatform/microservices-demo/main/release/kubernetes-manifests.yaml || true
+#
+#      - name: Check Deployment Status
+#        run: kubectl get all -o wide -A
+
+  terraform-eks:
+    needs: kube-support
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4.0.2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_DEV }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+          aws-region: us-east-1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3.1.0
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Terraform Init
+        working-directory: ${{ env.EKS_DIR }}
+        run: |
+          terraform init \
+            -backend-config="bucket=YOUR_TF_BACKEND_DEV" \
+            -backend-config="encrypt=true" \
+            -backend-config="key=terraform/eks/terraform.tfstate" \
+            -backend-config="region=us-east-1" \
+            -upgrade \
+            -reconfigure
+
+      - name: Terraform Plan
+        working-directory: ${{ env.EKS_DIR }}
+        run: |
+          BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          COMMIT=$(git rev-parse HEAD)
+          terraform plan \
+            -var "branch=${BRANCH}" \
+            -var "commit=${COMMIT}" \
+            -out ${{ env.TF_PLAN_FILE }} \
+            -destroy
+
+      - name: Terraform Destroy
+        working-directory: ${{ env.EKS_DIR }}
+        run: |
+          terraform apply ${{ env.TF_PLAN_FILE }}
+          rm -f ${{ env.TF_PLAN_FILE }}

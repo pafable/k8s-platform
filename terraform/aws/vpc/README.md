@@ -1,0 +1,11 @@
+# Deploys a VPC to be used by the EKS cluster
+
+## Deploy
+```bash
+task init-vpc create-vpc
+```
+
+## Destroy
+```bash
+task destroy-vpc
+```

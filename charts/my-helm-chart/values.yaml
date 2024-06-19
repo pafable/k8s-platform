@@ -1,0 +1,13 @@
+app:
+  env:
+    NODE_ENV: development
+  name: my-helm-chart
+  replicas: 1
+  image:
+    repository: ghost
+    tag: 5.82.2
+  port: 2368
+
+ingressClassName: kong
+
+namespaceOverride: ""
