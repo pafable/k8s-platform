@@ -198,7 +198,6 @@ tasks:
       - defer: |
           echo "Cleaning up terraform plans..."
           rm -f tfplan*
-      - defer: { task: install-crds }
       - terraform plan -out=tfplan
       - terraform apply tfplan
 
