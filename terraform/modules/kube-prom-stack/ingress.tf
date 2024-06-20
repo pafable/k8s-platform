@@ -7,6 +7,10 @@ resource "kubernetes_ingress_v1" "prometheus_ingress" {
       "konghq.com/protocols"                  = "https"
       "konghq.com/https-redirect-status-code" = 301
     }
+    labels = {
+      "app.kubernetes.io/name"  = var.app_name
+      "app.kubernetes.io/owner" = var.owner
+    }
   }
 
   wait_for_load_balancer = true

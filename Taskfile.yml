@@ -92,27 +92,10 @@ tasks:
       - terraform plan -var-file=terraform.tfvars -var "github_token=${GH_TOKEN}" -var "github_webhook_secret=$GH_WEBHOOK_SECRET" -out=tfplan.destroy -destroy
       - terraform apply tfplan.destroy
 
-  # apps local
-  init-apps-local:
-    dir: '{{ .TF_APPS_LOCAL_DIR }}'
-    deps:
-      - task: fmt
-      - task: tf-ws-list
-        vars: { DIR: '{{ .TF_APPS_LOCAL_DIR }}' }
-    desc: Initialize Kube Apps terraform
+  # Install CRDs
+  install-crds:
+    desc: Install CRDs
     cmds:
-      - echo "+++++ Initializing Kube Apps +++++"
-      - terraform init -upgrade -reconfigure
-
-  create-apps-local:
-    dir: '{{ .TF_APPS_LOCAL_DIR }}'
-    deps:
-      - task: init-apps-local
-    desc: Create Kube Apps terraform
-    cmds:
-      - defer: |
-          echo "Cleaning up..."
-          rm -f tfplan
       # Cert-Manager CRD, v1.15.0
       - kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.15.0/cert-manager.crds.yaml # this is needed because cert-manager crd is needed to create issuer
       # Gateway-API CRD, v1.0.0
@@ -123,20 +106,11 @@ tasks:
       - kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/application-crd.yaml
       - kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/applicationset-crd.yaml
       - kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/appproject-crd.yaml
-      - terraform plan -out=tfplan
-      - terraform apply tfplan
 
-  destroy-apps-local:
-    dir: '{{ .TF_APPS_LOCAL_DIR }}'
-    desc: Destroy Kube Apps terraform
-    deps:
-      - task: init-apps-local
+  # Delete CRDs
+  delete-crds:
+    desc: Delete CRDs
     cmds:
-      - defer: |
-          echo "Cleaning up..."
-          rm -f tfplan.destroy
-      - terraform plan -out=tfplan.destroy -destroy
-      - terraform apply tfplan.destroy
       # Chaos Mesh CRDs
       - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_awschaos.yaml
       - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_azurechaos.yaml
@@ -194,8 +168,52 @@ tasks:
       # Kong CRD, v1.0.0 is needed for kong
       - kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml # kong-ingress supports only v1.0.0
       - kubectl delete -f https://github.com/cert-manager/cert-manager/releases/download/v1.15.0/cert-manager.crds.yaml
-      # Remove Cert Manager Namespace
+      # Remove Abandoned Namespaces
+      - kubectl delete namespace argo-example-app
       - kubectl delete namespace cert-manager
+      - kubectl delete namespace my-app-dev
+    ignore_error: true
+    parallel: true
+
+  # apps local
+  init-apps-local:
+    dir: '{{ .TF_APPS_LOCAL_DIR }}'
+    deps:
+      - task: fmt
+      - task: tf-ws-list
+        vars: { DIR: '{{ .TF_APPS_LOCAL_DIR }}' }
+    desc: Initialize Kube Apps terraform
+    cmds:
+      - terraform validate
+      - echo "+++++ Initializing Kube Apps +++++"
+      - terraform init -upgrade -reconfigure
+
+  create-apps-local:
+    dir: '{{ .TF_APPS_LOCAL_DIR }}'
+    deps:
+      - task: install-crds
+      - task: init-apps-local
+    desc: Create Kube Apps terraform
+    cmds:
+      - defer: |
+          echo "Cleaning up terraform plans..."
+          rm -f tfplan*
+      - defer: { task: install-crds }
+      - terraform plan -out=tfplan
+      - terraform apply tfplan
+
+  destroy-apps-local:
+    dir: '{{ .TF_APPS_LOCAL_DIR }}'
+    desc: Destroy Kube Apps terraform
+    deps:
+      - task: init-apps-local
+    cmds:
+      - defer: |
+          echo "Cleaning up terraform plans..."
+          rm -f tfplan*
+      - defer: { task: delete-crds }
+      - terraform plan -out=tfplan.destroy -destroy
+      - terraform apply tfplan.destroy
     ignore_error: true
 
 # EKS
