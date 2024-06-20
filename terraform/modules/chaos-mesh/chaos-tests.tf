@@ -1,3 +1,9 @@
+locals {
+  target_namespace = "argo-example-app"
+  target_app_name  = "myhelmapp"
+  target_app_tier  = "frontend"
+}
+
 resource "kubernetes_manifest" "pod_killer" {
   manifest = {
     apiVersion = "chaos-mesh.org/v1alpha1"
@@ -17,12 +23,10 @@ resource "kubernetes_manifest" "pod_killer" {
       mode   = "all"
 
       selector = {
-        namespaces = [
-          kubernetes_namespace_v1.chaos_ns.metadata.0.name
-        ]
+        namespaces = [local.target_namespace]
         labelSelectors = {
-          app  = local.app_name
-          tier = "frontend"
+          app  = local.target_app_name
+          tier = local.target_app_tier
         }
       }
     }
