@@ -210,9 +210,9 @@ tasks:
       - defer: |
           echo "Cleaning up terraform plans..."
           rm -f tfplan*
-      - defer: { task: delete-crds }
       - terraform plan -out=tfplan.destroy -destroy
       - terraform apply tfplan.destroy
+      - task: delete-crds
     ignore_error: true
 
 # EKS
