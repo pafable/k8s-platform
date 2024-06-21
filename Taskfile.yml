@@ -185,14 +185,14 @@ tasks:
     dir: '{{ .TF_APPS_LOCAL_DIR }}'
     deps:
       - task: fmt
-      - task: tf-validate
-        vars: { DIR: '{{ .TF_APPS_LOCAL_DIR }}' }
-      - task: tf-ws-list
-        vars: { DIR: '{{ .TF_APPS_LOCAL_DIR }}' }
     desc: Initialize Kube Apps terraform
     cmds:
       - echo "+++++ Initializing Kube Apps +++++"
       - terraform init -upgrade -reconfigure
+      - task: tf-validate
+        vars: { DIR: '{{ .TF_APPS_LOCAL_DIR }}' }
+      - task: tf-ws-list
+        vars: { DIR: '{{ .TF_APPS_LOCAL_DIR }}' }
 
   create-apps-local:
     dir: '{{ .TF_APPS_LOCAL_DIR }}'
