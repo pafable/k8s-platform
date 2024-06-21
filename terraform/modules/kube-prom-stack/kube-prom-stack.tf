@@ -127,6 +127,11 @@ resource "kubernetes_secret_v1" "grafana_admin_creds" {
   metadata {
     name      = "grafana-admin-creds"
     namespace = kubernetes_namespace_v1.kube_prom_ns.metadata.0.name
+
+    labels = {
+      "app.kubernetes.io/name"  = var.app_name
+      "app.kubernetes.io/owner" = var.owner
+    }
   }
 
   data = {
