@@ -58,7 +58,13 @@ tasks:
     cmds:
       - terraform -chdir="{{ .DIR }}" workspace list
 
-# Atlantis
+  tf-validate:
+    desc: Validate terraform files
+    cmds:
+      - terraform -chdir="{{ .DIR }}" validate
+    ignore_error: true
+
+  # Atlantis
   init-atlantis:
     dir: '{{ .TF_ATLANTIS_DIR }}'
     deps:
@@ -173,18 +179,18 @@ tasks:
       - kubectl delete namespace cert-manager
       - kubectl delete namespace my-app-dev
     ignore_error: true
-    parallel: true
 
   # apps local
   init-apps-local:
     dir: '{{ .TF_APPS_LOCAL_DIR }}'
     deps:
       - task: fmt
+      - task: tf-validate
+        vars: { DIR: '{{ .TF_APPS_LOCAL_DIR }}' }
       - task: tf-ws-list
         vars: { DIR: '{{ .TF_APPS_LOCAL_DIR }}' }
     desc: Initialize Kube Apps terraform
     cmds:
-      - terraform validate
       - echo "+++++ Initializing Kube Apps +++++"
       - terraform init -upgrade -reconfigure
 
