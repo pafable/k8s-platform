@@ -1,7 +1,7 @@
 locals {
   app_name   = "cert-manager"
   chart_name = local.app_name
-  owner      = "pafable"
+  owner      = "devops"
 }
 
 resource "helm_release" "cert_manager" {

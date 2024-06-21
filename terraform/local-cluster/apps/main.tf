@@ -1,7 +1,10 @@
 module "argocd" {
-  source     = "../../modules/argocd"
-  app_repo   = "https://github.com/pafable/argo-examples"
-  depends_on = [module.kong_ingress]
+  source   = "../../modules/argocd"
+  app_repo = "https://github.com/pafable/argo-examples"
+  depends_on = [
+    module.cert_manager,
+    module.kong_ingress
+  ]
 }
 
 module "cert_manager" {

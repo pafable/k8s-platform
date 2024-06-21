@@ -10,8 +10,8 @@ resource "kubernetes_manifest" "self_signed_cluster_issuer" {
     metadata = {
       name = "self-signed-cluster-ca-issuer"
       labels = {
-        app   = local.app_name
-        owner = local.owner
+        "app.kubernetes.io/app"   = local.app_name
+        "app.kubernetes.io/owner" = local.owner
       }
     }
     spec = {

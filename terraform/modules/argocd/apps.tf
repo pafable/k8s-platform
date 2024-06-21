@@ -9,8 +9,8 @@ resource "kubernetes_manifest" "argo_example_app" {
       namespace = local.app_name
 
       labels = {
-        "app.kubernetes.io/name" = "argo-example-app"
-        owner                    = var.owner
+        "app.kubernetes.io/name"  = "argo-example-app"
+        "app.kubernetes.io/owner" = var.owner
       }
     }
 
