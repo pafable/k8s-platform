@@ -38,8 +38,6 @@ In order to access apps without port forwarding, you will need to add the follow
 127.0.0.1  prometheus.local
 ```
 
-```shell
-
 ### Destroy
 ```shell
 task destroy-apps-local
