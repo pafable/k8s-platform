@@ -14,6 +14,7 @@ module "cert_manager" {
 module "chaos_mesh" {
   source                        = "../../modules/chaos-mesh"
   is_dashboard_security_enabled = false
+  depends_on                    = [module.cert_manager]
 }
 
 # module "grafana_dashboards" {
@@ -32,8 +33,9 @@ module "kong_ingress" {
 # }
 
 module "kube_prom_stack" {
-  source   = "../../modules/kube-prom-stack"
-  is_cloud = false
+  source     = "../../modules/kube-prom-stack"
+  is_cloud   = false
+  depends_on = [module.cert_manager]
 }
 
 module "metrics_server" {
@@ -44,6 +46,7 @@ module "metrics_server" {
 module "postgresql_db_01" {
   source      = "../../modules/postgresql"
   admin_email = "test100@test.local"
+  depends_on  = [module.cert_manager]
 }
 
 module "trivy_operator" {
