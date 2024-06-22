@@ -29,6 +29,12 @@ locals {
     }
   }
 
+  global_configs = {
+    commonLabels = {
+      "app.kubernetes.io/owner" = var.owner
+    }
+  }
+
   grafana_admin_pw = sensitive(random_password.grafana_admin_password.result)
 
   grafana_configs = {
@@ -112,6 +118,7 @@ resource "helm_release" "kube_prom_stack" {
   values = [
     yamlencode(
       merge(
+        local.global_configs,
         local.grafana_configs,
         local.local_host_root
       )
