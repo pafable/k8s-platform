@@ -7,7 +7,6 @@ resource "kubernetes_namespace_v1" "karpenter_ns" {
     name = local.name
 
     labels = {
-      "kuma.io/sidecar-injection"    = "enabled"
       "app.kubernetes.io/app"        = local.name
       "app.kubernetes.io/managed-by" = "Terraform"
       "app.kubernetes.io/owner"      = var.owner

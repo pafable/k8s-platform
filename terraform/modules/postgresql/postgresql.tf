@@ -43,7 +43,6 @@ resource "kubernetes_namespace_v1" "postgresql_ns" {
     name = var.namespace
 
     labels = {
-      "kuma.io/sidecar-injection"    = "enabled"
       "app.kubernetes.io/app"        = local.app_name
       "app.kubernetes.io/managed-by" = "Terraform"
       "app.kubernetes.io/owner"      = var.owner

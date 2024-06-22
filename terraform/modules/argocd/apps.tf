@@ -9,8 +9,9 @@ resource "kubernetes_manifest" "argo_example_app" {
       namespace = local.app_name
 
       labels = {
-        "app.kubernetes.io/name"  = "argo-example-app"
-        "app.kubernetes.io/owner" = var.owner
+        "app.kubernetes.io/name"       = "argo-example-app"
+        "app.kubernetes.io/owner"      = var.owner
+        "app.kubernetes.io/managed-by" = "ArgoCD"
       }
     }
 
@@ -71,8 +72,9 @@ resource "kubernetes_manifest" "my_app" {
       namespace = local.app_name
 
       labels = {
-        "app.kubernetes.io/name" = "my-app"
-        owner                    = var.owner
+        "app.kubernetes.io/name"       = "my-app"
+        "app.kubernetes.io/managed-by" = "ArgoCD"
+        "app.kubernetes.io/owner"      = var.owner
       }
     }
 

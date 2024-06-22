@@ -16,9 +16,7 @@ resource "kubernetes_namespace_v1" "ghost_namespace" {
     name = local.ghost_app
 
     labels = {
-      # adds any pods and services deployed to this namespace to the kong/kuma mesh
-      "kuma.io/sidecar-injection"    = "enabled"
-      "kuma.io/sidecar-injection"    = "enabled"
+      "kuma.io/sidecar-injection"    = "enabled" # adds any pods and services deployed to this namespace to the kong/kuma mesh
       "app.kubernetes.io/app"        = local.app_name
       "app.kubernetes.io/managed-by" = "Terraform"
       "app.kubernetes.io/owner"      = local.owner

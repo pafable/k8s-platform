@@ -7,6 +7,7 @@ locals {
 resource "kubernetes_namespace_v1" "kong_ingress_ns" {
   metadata {
     name = var.namespace
+
     labels = {
       "kuma.io/sidecar-injection"    = "enabled"
       "app.kubernetes.io/app"        = local.app_name
