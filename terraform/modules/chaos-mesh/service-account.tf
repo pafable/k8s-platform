@@ -3,6 +3,7 @@ resource "kubernetes_service_account_v1" "chaos_manager_service_account" {
   metadata {
     name      = "${local.app_name}-manager-service-account"
     namespace = kubernetes_namespace_v1.chaos_ns.metadata.0.name
+    labels    = local.labels
   }
 }
 
@@ -10,6 +11,7 @@ resource "kubernetes_role_v1" "chaos_manager_role" {
   metadata {
     name      = "${local.app_name}-manager-role"
     namespace = kubernetes_namespace_v1.chaos_ns.metadata.0.name
+    labels    = local.labels
   }
 
   rule {
@@ -29,6 +31,7 @@ resource "kubernetes_role_binding_v1" "chaos_manager_role_binding" {
   metadata {
     name      = "${local.app_name}-manager-role-binding"
     namespace = kubernetes_namespace_v1.chaos_ns.metadata.0.name
+    labels    = local.labels
   }
 
   role_ref {
@@ -48,6 +51,7 @@ resource "kubernetes_token_request_v1" "manager_token" {
   metadata {
     name      = kubernetes_service_account_v1.chaos_manager_service_account.metadata.0.name
     namespace = kubernetes_namespace_v1.chaos_ns.metadata.0.name
+    labels    = local.labels
   }
 
   spec {

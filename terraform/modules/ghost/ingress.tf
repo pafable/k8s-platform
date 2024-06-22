@@ -46,6 +46,7 @@ resource "kubernetes_manifest" "http_route" {
     metadata = {
       name      = "ghost-http-route"
       namespace = kubernetes_namespace_v1.ghost_namespace.metadata[0].name
+      labels    = local.labels
     }
     spec = {
       parentRefs = [
@@ -87,6 +88,7 @@ resource "kubernetes_manifest" "http_to_https_redirect" {
     metadata = {
       name      = "ghost-http-to-https-redirect"
       namespace = kubernetes_namespace_v1.ghost_namespace.metadata[0].name
+      labels    = local.labels
     }
     spec = {
       parentRefs = [

@@ -4,6 +4,12 @@ locals {
   repo     = "https://charts.bitnami.com/bitnami"
   timezone = "America/New_York"
 
+  labels = {
+    "app.kubernetes.io/app"        = local.app_name
+    "app.kubernetes.io/managed-by" = "Terraform"
+    "app.kubernetes.io/owner"      = var.owner
+  }
+
   values = [
     yamlencode({
       audit = {
@@ -40,13 +46,8 @@ locals {
 
 resource "kubernetes_namespace_v1" "postgresql_ns" {
   metadata {
-    name = var.namespace
-
-    labels = {
-      "app.kubernetes.io/app"        = local.app_name
-      "app.kubernetes.io/managed-by" = "Terraform"
-      "app.kubernetes.io/owner"      = var.owner
-    }
+    name   = var.namespace
+    labels = local.labels
   }
 }
 

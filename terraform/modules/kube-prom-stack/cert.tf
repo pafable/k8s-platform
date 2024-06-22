@@ -6,10 +6,7 @@ resource "kubernetes_manifest" "cert" {
     metadata = {
       name      = "monitoring-self-signed-cert"
       namespace = kubernetes_namespace_v1.kube_prom_ns.metadata.0.name # certs are bound to namespaces
-      labels = {
-        app   = var.app_name
-        owner = var.owner
-      }
+      labels    = local.labels
     }
 
     spec = {

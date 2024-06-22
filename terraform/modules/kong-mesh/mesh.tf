@@ -2,16 +2,18 @@ locals {
   app_name            = "kong-mesh"
   repository          = "https://kong.github.io/kong-mesh-charts"
   self_signed_ca_name = "self-signed-cluster-ca-issuer"
+
+  labels = {
+    "app.kubernetes.io/app"        = local.app_name
+    "app.kubernetes.io/managed-by" = "Terraform"
+    "app.kubernetes.io/owner"      = var.owner
+  }
 }
 
 resource "kubernetes_namespace_v1" "kong_mesh_ns" {
   metadata {
-    name = var.namespace
-    labels = {
-      "app.kubernetes.io/app"        = local.app_name
-      "app.kubernetes.io/managed-by" = "Terraform"
-      "app.kubernetes.io/owner"      = var.owner
-    }
+    name   = var.namespace
+    labels = local.labels
   }
 }
 

@@ -10,11 +10,7 @@ resource "kubernetes_manifest" "argocd_cert" {
     metadata = {
       name      = "${local.app_name}-self-signed-cert"
       namespace = kubernetes_namespace_v1.argocd_ns.metadata.0.name # certs are bound to namespaces
-
-      labels = {
-        app   = "${local.app_name}-server"
-        owner = var.owner
-      }
+      labels    = local.tf_labels
     }
 
     spec = {

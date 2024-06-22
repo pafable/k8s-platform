@@ -1,16 +1,17 @@
 locals {
   name = "karpenter"
+
+  labels = {
+    "app.kubernetes.io/app"        = local.name
+    "app.kubernetes.io/managed-by" = "Terraform"
+    "app.kubernetes.io/owner"      = var.owner
+  }
 }
 
 resource "kubernetes_namespace_v1" "karpenter_ns" {
   metadata {
-    name = local.name
-
-    labels = {
-      "app.kubernetes.io/app"        = local.name
-      "app.kubernetes.io/managed-by" = "Terraform"
-      "app.kubernetes.io/owner"      = var.owner
-    }
+    name   = local.name
+    labels = local.labels
   }
 }
 

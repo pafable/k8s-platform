@@ -8,7 +8,7 @@ resource "kubernetes_ingress_v1" "argocd_ingress" {
   metadata {
     name      = "${local.app_name}-ingress"
     namespace = kubernetes_namespace_v1.argocd_ns.metadata.0.name
-
+    labels    = local.tf_labels
     annotations = {
       "konghq.com/strip-path"                 = true
       "konghq.com/protocols"                  = "https"

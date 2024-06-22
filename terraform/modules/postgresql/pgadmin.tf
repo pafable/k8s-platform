@@ -31,11 +31,7 @@ resource "kubernetes_secret_v1" "pgadmin_secrets" {
   metadata {
     name      = "${local.pg_name}-secrets"
     namespace = var.namespace
-
-    labels = {
-      app                      = "${local.pg_name}-server"
-      "app.kubernetes.io/name" = "${local.pg_name}-server"
-    }
+    labels    = local.labels
   }
 
   data = {
@@ -50,10 +46,7 @@ resource "kubernetes_config_map_v1" "pgadmin_server_json_config_map" {
     name      = "pgadmin4-server-json-config"
     namespace = kubernetes_namespace_v1.postgresql_ns.metadata[0].name
 
-    labels = {
-      app                      = "${local.pg_name}-server"
-      "app.kubernetes.io/name" = "${local.pg_name}-server"
-    }
+    labels = local.labels
   }
 
   data = {

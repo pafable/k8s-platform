@@ -6,6 +6,7 @@ resource "kubernetes_ingress_v1" "pgadmin_ingress" {
   metadata {
     name      = "${local.pg_name}-ingress"
     namespace = kubernetes_namespace_v1.postgresql_ns.metadata.0.name
+    labels    = local.labels
 
     annotations = {
       "konghq.com/strip-path"                 = true

@@ -14,6 +14,12 @@ locals {
   prom_domain         = "prometheus.local"
   self_signed_ca_name = "self-signed-cluster-ca-issuer"
 
+  labels = {
+    "app.kubernetes.io/app"        = local.kube_name
+    "app.kubernetes.io/managed-by" = "Terraform"
+    "app.kubernetes.io/owner"      = var.owner
+  }
+
   local_host_root = var.is_cloud ? null : {
     # This needs to be set to false if deploying on docker-desktop cluster on windows
     prometheus-node-exporter = {
@@ -115,13 +121,8 @@ resource "helm_release" "kube_prom_stack" {
 
 resource "kubernetes_namespace_v1" "kube_prom_ns" {
   metadata {
-    name = local.kube_name
-
-    labels = {
-      "app.kubernetes.io/app"        = local.kube_name
-      "app.kubernetes.io/managed-by" = "Terraform"
-      "app.kubernetes.io/owner"      = var.owner
-    }
+    name   = local.kube_name
+    labels = local.labels
   }
 }
 
@@ -133,11 +134,7 @@ resource "kubernetes_secret_v1" "grafana_admin_creds" {
   metadata {
     name      = "grafana-admin-creds"
     namespace = kubernetes_namespace_v1.kube_prom_ns.metadata.0.name
-
-    labels = {
-      "app.kubernetes.io/name"  = var.app_name
-      "app.kubernetes.io/owner" = var.owner
-    }
+    labels    = local.labels
   }
 
   data = {

@@ -9,6 +9,7 @@ resource "kubernetes_manifest" "default_traffic_permission" {
     metadata = {
       name      = "${local.app_name}-default-traffic-permission"
       namespace = kubernetes_namespace_v1.kong_mesh_ns.metadata.0.name
+      labels    = local.labels
     }
 
     spec = {
