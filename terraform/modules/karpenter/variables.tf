@@ -27,4 +27,5 @@ variable "oidc_provider_arn" {
 variable "owner" {
   description = "Owner of resource"
   type        = string
+  default     = "devops"
 }

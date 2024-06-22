@@ -6,6 +6,13 @@ locals {
 resource "kubernetes_namespace_v1" "trivy_ns" {
   metadata {
     name = "trivy-system"
+
+    labels = {
+      "kuma.io/sidecar-injection"    = "enabled"
+      "app.kubernetes.io/app"        = local.app_name
+      "app.kubernetes.io/managed-by" = "Terraform"
+      "app.kubernetes.io/owner"      = var.owner
+    }
   }
 }
 

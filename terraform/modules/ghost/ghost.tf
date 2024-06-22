@@ -2,6 +2,7 @@ locals {
   app_name            = "ghost"
   domain_name         = "ghost.local"
   exposed_port        = 80
+  owner               = "devops"
   self_signed_ca_name = "self-signed-cluster-ca-issuer"
 
   # Ghost params
@@ -13,9 +14,14 @@ locals {
 resource "kubernetes_namespace_v1" "ghost_namespace" {
   metadata {
     name = local.ghost_app
+
     labels = {
       # adds any pods and services deployed to this namespace to the kong/kuma mesh
-      "kuma.io/sidecar-injection" = "enabled"
+      "kuma.io/sidecar-injection"    = "enabled"
+      "kuma.io/sidecar-injection"    = "enabled"
+      "app.kubernetes.io/app"        = local.app_name
+      "app.kubernetes.io/managed-by" = "Terraform"
+      "app.kubernetes.io/owner"      = local.owner
     }
   }
 }

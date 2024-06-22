@@ -4,6 +4,19 @@ locals {
   owner      = "devops"
 }
 
+resource "kubernetes_namespace_v1" "cert_manager_ns" {
+  metadata {
+    name = local.app_name
+
+    labels = {
+      "kuma.io/sidecar-injection"    = "enabled"
+      "app.kubernetes.io/app"        = local.app_name
+      "app.kubernetes.io/managed-by" = "Terraform"
+      "app.kubernetes.io/owner"      = var.owner
+    }
+  }
+}
+
 resource "helm_release" "cert_manager" {
   chart            = local.chart_name
   create_namespace = true

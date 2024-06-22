@@ -1,13 +1,19 @@
 variable "chart_version" {
   description = "The version of the Helm chart to install"
   type        = string
-  default     = "2.38.0"
+  default     = "2.39.3"
 }
 
 variable "namespace" {
   description = "The namespace to install the Helm chart"
   type        = string
   default     = "kong-ingress"
+}
+
+variable "owner" {
+  description = "The owner of the resources"
+  type        = string
+  default     = "devops"
 }
 
 variable "timeout" {

@@ -8,7 +8,10 @@ resource "kubernetes_namespace_v1" "kong_ingress_ns" {
   metadata {
     name = var.namespace
     labels = {
-      "kuma.io/sidecar-injection" = "enabled"
+      "kuma.io/sidecar-injection"    = "enabled"
+      "app.kubernetes.io/app"        = local.app_name
+      "app.kubernetes.io/managed-by" = "Terraform"
+      "app.kubernetes.io/owner"      = var.owner
     }
   }
 }

@@ -3,3 +3,9 @@ variable "trivy_operator_version" {
   type        = string
   default     = "0.23.3"
 }
+
+variable "owner" {
+  description = "The owner of the resources"
+  type        = string
+  default     = "devops"
+}

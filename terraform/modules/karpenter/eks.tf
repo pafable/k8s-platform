@@ -2,6 +2,19 @@ locals {
   name = "karpenter"
 }
 
+resource "kubernetes_namespace_v1" "karpenter_ns" {
+  metadata {
+    name = local.name
+
+    labels = {
+      "kuma.io/sidecar-injection"    = "enabled"
+      "app.kubernetes.io/app"        = local.name
+      "app.kubernetes.io/managed-by" = "Terraform"
+      "app.kubernetes.io/owner"      = var.owner
+    }
+  }
+}
+
 # This creates AWS resources for Karpenter. It does not install the Karpenter Helm chart.
 module "karpenter" {
   source                 = "terraform-aws-modules/eks/aws//modules/karpenter"

@@ -116,6 +116,12 @@ resource "helm_release" "kube_prom_stack" {
 resource "kubernetes_namespace_v1" "kube_prom_ns" {
   metadata {
     name = local.kube_name
+    labels = {
+      "kuma.io/sidecar-injection"    = "enabled"
+      "app.kubernetes.io/app"        = local.kube_name
+      "app.kubernetes.io/managed-by" = "Terraform"
+      "app.kubernetes.io/owner"      = var.owner
+    }
   }
 }
 
