@@ -10,11 +10,18 @@ locals {
   }
 }
 
+resource "kubernetes_namespace_v1" "metrics_server_ns" {
+  metadata {
+    name   = local.app_name
+    labels = local.labels
+  }
+}
+
 resource "helm_release" "metrics_server" {
   name             = local.app_name
   repository       = local.repo
   chart            = local.app_name
-  namespace        = var.namespace
+  namespace        = kubernetes_namespace_v1.metrics_server_ns.metadata.0.name
   create_namespace = false
   version          = var.chart_version
 
