@@ -2,7 +2,7 @@ locals {
   argo_labels = {
     "app.kubernetes.io/name"       = "argo-example-app"
     "app.kubernetes.io/owner"      = var.owner
-    "app.kubernetes.io/managed-by" = "ArgoCD"
+    "app.kubernetes.io/managed-by" = "argocd"
   }
 }
 

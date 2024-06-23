@@ -15,3 +15,9 @@ variable "namespace" {
   type        = string
   default     = "kube-system"
 }
+
+variable "owner" {
+  description = "Owner of resources"
+  type        = string
+  default     = "devops"
+}

@@ -2,27 +2,32 @@ resource "kubernetes_ingress_v1" "prometheus_ingress" {
   metadata {
     name      = "prometheus-ingress"
     namespace = kubernetes_namespace_v1.kube_prom_ns.metadata.0.name
+    labels    = local.labels
+
     annotations = {
       "konghq.com/strip-path"                 = true
       "konghq.com/protocols"                  = "https"
       "konghq.com/https-redirect-status-code" = 301
     }
-    labels = local.labels
   }
 
   wait_for_load_balancer = true
 
   spec {
     ingress_class_name = "kong"
+
     rule {
       host = local.prom_domain
+
       http {
         path {
           path      = "/"
           path_type = "ImplementationSpecific"
+
           backend {
             service {
               name = "monitoring-kube-prometheus-prometheus"
+
               port {
                 number = 9090
               }
@@ -46,6 +51,7 @@ resource "kubernetes_ingress_v1" "grafana_ingress" {
     name      = "grafana-ingress"
     namespace = kubernetes_namespace_v1.kube_prom_ns.metadata.0.name
     labels    = local.labels
+
     annotations = {
       "konghq.com/strip-path"                 = true
       "konghq.com/protocols"                  = "https"
@@ -57,15 +63,19 @@ resource "kubernetes_ingress_v1" "grafana_ingress" {
 
   spec {
     ingress_class_name = "kong"
+
     rule {
       host = local.grafana_domain
+
       http {
         path {
           path      = "/"
           path_type = "ImplementationSpecific"
+
           backend {
             service {
               name = "monitoring-grafana"
+
               port {
                 number = 80
               }

@@ -4,15 +4,14 @@ locals {
 
   labels = {
     "app.kubernetes.io/app"        = local.app_name
-    "app.kubernetes.io/managed-by" = "Terraform"
+    "app.kubernetes.io/managed-by" = "terraform"
     "app.kubernetes.io/owner"      = var.owner
   }
 }
 
 resource "kubernetes_namespace_v1" "trivy_ns" {
   metadata {
-    name = "trivy-system"
-
+    name   = "trivy-system"
     labels = local.labels
   }
 }

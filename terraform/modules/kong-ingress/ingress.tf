@@ -2,12 +2,19 @@ locals {
   app_name   = "kong-ingress"
   chart      = "kong"
   repository = "https://charts.konghq.com"
+
   labels = {
     "kuma.io/sidecar-injection"    = "enabled"
     "app.kubernetes.io/app"        = local.app_name
-    "app.kubernetes.io/managed-by" = "Terraform"
+    "app.kubernetes.io/managed-by" = "terraform"
     "app.kubernetes.io/owner"      = var.owner
   }
+
+  values = [
+    yamlencode({
+      extraLabels = local.labels
+    })
+  ]
 }
 
 resource "kubernetes_namespace_v1" "kong_ingress_ns" {
@@ -26,6 +33,7 @@ resource "helm_release" "kong_ingress" {
   create_namespace = false
   timeout          = var.timeout
   version          = var.chart_version
+  values           = local.values
 
   depends_on = [kubernetes_manifest.kong_gateway_class]
 }

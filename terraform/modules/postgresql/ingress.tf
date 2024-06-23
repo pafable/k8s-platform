@@ -19,15 +19,19 @@ resource "kubernetes_ingress_v1" "pgadmin_ingress" {
 
   spec {
     ingress_class_name = "kong"
+
     rule {
       host = local.pgadmin_domain
+
       http {
         path {
           path      = "/"
           path_type = "ImplementationSpecific"
+
           backend {
             service {
               name = kubernetes_service_v1.pgadmin_service.metadata[0].name
+
               port {
                 number = kubernetes_service_v1.pgadmin_service.spec[0].port[0].port
               }

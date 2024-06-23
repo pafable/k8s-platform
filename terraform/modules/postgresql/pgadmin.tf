@@ -3,6 +3,12 @@ locals {
   pgadmin_image    = "dpage/pgadmin4:8.8"
   pgadmin_password = sensitive(random_password.password.result)
 
+  pgadmin_labels = {
+    "app.kubernetes.io/name"       = local.pg_name
+    "app.kubernetes.io/managed-by" = local.labels.app
+    "app.kubernetes.io/owner"      = var.owner
+  }
+
   server_data = jsonencode({
     Servers = {
       1 = {
@@ -31,7 +37,7 @@ resource "kubernetes_secret_v1" "pgadmin_secrets" {
   metadata {
     name      = "${local.pg_name}-secrets"
     namespace = var.namespace
-    labels    = local.labels
+    labels    = local.pgadmin_labels
   }
 
   data = {
@@ -45,8 +51,7 @@ resource "kubernetes_config_map_v1" "pgadmin_server_json_config_map" {
   metadata {
     name      = "pgadmin4-server-json-config"
     namespace = kubernetes_namespace_v1.postgresql_ns.metadata[0].name
-
-    labels = local.labels
+    labels    = local.pgadmin_labels
   }
 
   data = {
@@ -58,11 +63,7 @@ resource "kubernetes_config_map_v1" "pgadmin_preferences_json_config_map" {
   metadata {
     name      = "pgadmin4-preferences-json-config"
     namespace = kubernetes_namespace_v1.postgresql_ns.metadata[0].name
-
-    labels = {
-      app                      = "${local.pg_name}-server"
-      "app.kubernetes.io/name" = "${local.pg_name}-server"
-    }
+    labels    = local.pgadmin_labels
   }
 
   data = {
@@ -75,30 +76,21 @@ resource "kubernetes_deployment_v1" "pgadmin_deployment" {
     name      = "${local.pg_name}-server"
     namespace = kubernetes_namespace_v1.postgresql_ns.metadata[0].name
 
-    labels = {
-      app                      = "${local.pg_name}-server"
-      "app.kubernetes.io/name" = "${local.pg_name}-server"
-    }
+    labels = local.pgadmin_labels
   }
 
   spec {
     replicas = 1
 
     selector {
-      match_labels = {
-        app                      = "${local.pg_name}-server"
-        "app.kubernetes.io/name" = "${local.pg_name}-server"
-      }
+      match_labels = local.pgadmin_labels
     }
 
     template {
       metadata {
         name = "${local.pg_name}-server"
 
-        labels = {
-          app                      = "${local.pg_name}-server"
-          "app.kubernetes.io/name" = "${local.pg_name}-server"
-        }
+        labels = local.pgadmin_labels
       }
 
       spec {
@@ -196,17 +188,11 @@ resource "kubernetes_service_v1" "pgadmin_service" {
   metadata {
     name      = "${local.pg_name}-svc"
     namespace = kubernetes_namespace_v1.postgresql_ns.metadata.0.name
-
-    labels = {
-      "app.kubernetes.io/name" = "${local.pg_name}-server"
-      jobLabel                 = "${local.pg_name}-server"
-    }
+    labels    = local.pgadmin_labels
   }
 
   spec {
-    selector = {
-      "app.kubernetes.io/name" = "${local.pg_name}-server"
-    }
+    selector = local.pgadmin_labels
 
     port {
       name        = "${local.pg_name}-port"

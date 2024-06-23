@@ -3,6 +3,7 @@ resource "kubernetes_ingress_v1" "chaos_mesh_ingress" {
     name      = "chaos-mesh-ingress"
     namespace = kubernetes_namespace_v1.chaos_ns.metadata[0].name
     labels    = local.labels
+
     annotations = {
       "konghq.com/strip-path"                 = true
       "konghq.com/protocols"                  = "https"
@@ -14,15 +15,19 @@ resource "kubernetes_ingress_v1" "chaos_mesh_ingress" {
 
   spec {
     ingress_class_name = "kong"
+
     rule {
       host = local.domain_name
+
       http {
         path {
           path      = "/"
           path_type = "ImplementationSpecific"
+
           backend {
             service {
               name = "chaos-dashboard"
+
               port {
                 number = 2333
               }
@@ -31,6 +36,7 @@ resource "kubernetes_ingress_v1" "chaos_mesh_ingress" {
         }
       }
     }
+
     tls {
       hosts       = [local.domain_name]
       secret_name = kubernetes_manifest.cert.manifest.spec.secretName

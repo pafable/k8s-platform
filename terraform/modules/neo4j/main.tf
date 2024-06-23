@@ -5,7 +5,7 @@ locals {
 
   labels = {
     "app.kubernetes.io/app"        = local.neo4j_name
-    "app.kubernetes.io/managed-by" = "Terraform"
+    "app.kubernetes.io/managed-by" = "terraform"
     "app.kubernetes.io/owner"      = var.owner
   }
 

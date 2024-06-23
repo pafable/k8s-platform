@@ -1,9 +1,10 @@
 locals {
   app_name   = "cert-manager"
   chart_name = local.app_name
+
   labels = {
     "app.kubernetes.io/name"       = local.app_name
-    "app.kubernetes.io/managed-by" = "Terraform"
+    "app.kubernetes.io/managed-by" = "terraform"
     "app.kubernetes.io/owner"      = var.owner
   }
 }

@@ -9,14 +9,12 @@ locals {
   grafana_db_type     = local.enable_grafana_db ? "postgres" : null
   grafana_db_user     = local.enable_grafana_db ? "REPLACE_WITH_YOUR_DB_USER" : null
   grafana_domain      = "grafana.local"
-  grafana_repo        = "grafana/grafana-enterprise"
-  grafana_tag         = "11.0.0"
   prom_domain         = "prometheus.local"
   self_signed_ca_name = "self-signed-cluster-ca-issuer"
 
   labels = {
     "app.kubernetes.io/app"        = local.kube_name
-    "app.kubernetes.io/managed-by" = "Terraform"
+    "app.kubernetes.io/managed-by" = "terraform"
     "app.kubernetes.io/owner"      = var.owner
   }
 
@@ -91,8 +89,8 @@ locals {
       }
 
       image = {
-        repository = local.grafana_repo
-        tag        = local.grafana_tag
+        repository = var.grafana_image_repo
+        tag        = var.grafana_image_tag
       }
 
       plugins = [

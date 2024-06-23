@@ -9,6 +9,18 @@ variable "chart_version" {
   default     = "58.7.2"
 }
 
+variable "grafana_image_repo" {
+  description = "Grafana image repository"
+  type        = string
+  default     = "grafana/grafana-enterprise"
+}
+
+variable "grafana_image_tag" {
+  description = "Grafana image tag"
+  type        = string
+  default     = "11.0.0"
+}
+
 variable "is_cloud" {
   description = "Whether the cluster is local"
   type        = bool
