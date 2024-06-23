@@ -13,7 +13,6 @@ locals {
   values = [
     yamlencode({
       extraLabels = local.labels
-      #       podLabels   = local.labels
     })
   ]
 }
