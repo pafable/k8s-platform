@@ -4,16 +4,18 @@ locals {
 
 resource "kubernetes_manifest" "kong_gateway_class" {
   count = local.install_count
+
   manifest = {
     apiVersion = "gateway.networking.k8s.io/v1"
     kind       = "GatewayClass"
 
     metadata = {
-      name = "kong"
+      name   = "kong"
+      labels = local.labels
+
       annotations = {
         "konghq.com/gatewayclass-unmanaged" = "true"
       }
-      labels = local.labels
     }
 
     spec = {
@@ -24,6 +26,7 @@ resource "kubernetes_manifest" "kong_gateway_class" {
 
 resource "kubernetes_manifest" "kong_gateway" {
   count = local.install_count
+
   manifest = {
     apiVersion = "gateway.networking.k8s.io/v1"
     kind       = "Gateway"
@@ -36,6 +39,7 @@ resource "kubernetes_manifest" "kong_gateway" {
 
     spec = {
       gatewayClassName = "kong"
+
       listeners = [
         {
           allowedRoutes = {
@@ -43,6 +47,7 @@ resource "kubernetes_manifest" "kong_gateway" {
               from = "All"
             }
           }
+
           name     = "http"
           port     = 80
           protocol = "HTTP"
@@ -53,9 +58,11 @@ resource "kubernetes_manifest" "kong_gateway" {
               from = "All"
             }
           }
+
           name     = "https"
           port     = 443
           protocol = "HTTPS"
+
           tls = {
             mode = "Passthrough"
           }
@@ -63,5 +70,6 @@ resource "kubernetes_manifest" "kong_gateway" {
       ]
     }
   }
+
   depends_on = [kubernetes_manifest.kong_gateway_class]
 }

@@ -43,11 +43,13 @@ resource "kubernetes_manifest" "http_route" {
   manifest = {
     apiVersion = "gateway.networking.k8s.io/v1"
     kind       = "HTTPRoute"
+
     metadata = {
       name      = "ghost-http-route"
       namespace = kubernetes_namespace_v1.ghost_namespace.metadata[0].name
       labels    = local.labels
     }
+
     spec = {
       parentRefs = [
         {
@@ -85,11 +87,13 @@ resource "kubernetes_manifest" "http_to_https_redirect" {
   manifest = {
     apiVersion = "gateway.networking.k8s.io/v1"
     kind       = "HTTPRoute"
+
     metadata = {
       name      = "ghost-http-to-https-redirect"
       namespace = kubernetes_namespace_v1.ghost_namespace.metadata[0].name
       labels    = local.labels
     }
+
     spec = {
       parentRefs = [
         {

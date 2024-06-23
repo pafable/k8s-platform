@@ -7,7 +7,7 @@ locals {
 # Ingress Nginx
 resource "helm_release" "ingress_nginx_controller" {
   chart            = local.chart_name
-  create_namespace = true
+  create_namespace = false
   name             = local.chart_name
   namespace        = var.namespace
   repository       = local.chart_repo

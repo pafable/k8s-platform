@@ -15,15 +15,19 @@ resource "kubernetes_ingress_v1" "kong_mesh_ingress" {
 
   spec {
     ingress_class_name = "kong"
+
     rule {
       host = var.domain_name
+
       http {
         path {
           path      = "/"
           path_type = "ImplementationSpecific"
+
           backend {
             service {
               name = "${local.app_name}-control-plane"
+
               port {
                 number = 5681
               }
@@ -32,10 +36,12 @@ resource "kubernetes_ingress_v1" "kong_mesh_ingress" {
         }
       }
     }
+
     tls {
       hosts       = [var.domain_name]
       secret_name = kubernetes_manifest.cert.manifest.spec.secretName
     }
   }
+
   depends_on = [helm_release.kong_mesh]
 }

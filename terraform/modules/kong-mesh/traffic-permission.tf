@@ -22,6 +22,7 @@ resource "kubernetes_manifest" "default_traffic_permission" {
           targetRef = {
             kind = "Mesh"
           }
+
           default = {
             action = "Allow"
           }
@@ -29,31 +30,37 @@ resource "kubernetes_manifest" "default_traffic_permission" {
       ]
     }
   }
+
   depends_on = [kubernetes_manifest.enable_mtls]
 }
 
 resource "kubernetes_manifest" "enable_mtls" {
   count = local.install_count
+
   manifest = {
     apiVersion = "kuma.io/v1alpha1"
     kind       = "Mesh"
 
     metadata = {
-      name = "default"
+      name   = "default"
+      labels = local.labels
     }
 
     spec = {
       mtls = {
         enabledBackend = "ca-1"
+
         backends = [
           {
             name = "ca-1"
             type = "builtin"
+
             dpCert = {
               rotation = {
                 expiration = "1d"
               }
             }
+
             conf = {
               caCert = {
                 RSAbits    = 2048
@@ -65,5 +72,6 @@ resource "kubernetes_manifest" "enable_mtls" {
       }
     }
   }
+
   depends_on = [helm_release.kong_mesh]
 }

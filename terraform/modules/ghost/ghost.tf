@@ -13,7 +13,7 @@ locals {
   labels = {
     "kuma.io/sidecar-injection"    = "enabled" # adds any pods and services deployed to this namespace to the kong/kuma mesh
     "app.kubernetes.io/name"       = local.app_name
-    "app.kubernetes.io/managed-by" = "Terraform"
+    "app.kubernetes.io/managed-by" = "terraform"
     "app.kubernetes.io/owner"      = local.owner
     jobLabel                       = local.ghost_app
   }
@@ -30,10 +30,11 @@ resource "kubernetes_deployment_v1" "ghost_deployment" {
   metadata {
     name      = local.ghost_app
     namespace = kubernetes_namespace_v1.ghost_namespace.metadata.0.name
+    labels    = local.labels
+
     annotations = {
       "kuma.io/gateway" = "enabled"
     }
-    labels = local.labels
   }
 
   spec {
@@ -77,10 +78,11 @@ resource "kubernetes_service_v1" "ghost_service" {
   metadata {
     name      = "${local.ghost_app}-svc"
     namespace = kubernetes_namespace_v1.ghost_namespace.metadata.0.name
+    labels    = local.labels
+
     annotations = {
       "ingress.kubernetes.io/service-upstream" = true
     }
-    labels = local.labels
   }
 
   spec {

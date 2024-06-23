@@ -2,6 +2,12 @@ locals {
   app_name = "metrics-server"
   repo     = "https://kubernetes-sigs.github.io/metrics-server/"
   args     = var.is_cloud ? [] : ["--kubelet-insecure-tls"]
+
+  labels = {
+    "app.kubernetes.io/app"        = local.app_name
+    "app.kubernetes.io/managed-by" = "terraform"
+    "app.kubernetes.io/owner"      = var.owner
+  }
 }
 
 resource "helm_release" "metrics_server" {
@@ -15,7 +21,9 @@ resource "helm_release" "metrics_server" {
   values = [
     yamlencode({
       ## This args is needed for the metrics-server to work on a docker-desktop cluster
-      args = local.args
+      args         = local.args
+      commonLabels = local.labels
+      podLabels    = local.labels
 
       ## Uncomment to allow access to the metrics-server
       #       metrics = {

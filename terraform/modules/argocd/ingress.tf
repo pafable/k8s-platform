@@ -9,6 +9,7 @@ resource "kubernetes_ingress_v1" "argocd_ingress" {
     name      = "${local.app_name}-ingress"
     namespace = kubernetes_namespace_v1.argocd_ns.metadata.0.name
     labels    = local.tf_labels
+
     annotations = {
       "konghq.com/strip-path"                 = true
       "konghq.com/protocols"                  = "https"
@@ -20,15 +21,19 @@ resource "kubernetes_ingress_v1" "argocd_ingress" {
 
   spec {
     ingress_class_name = "kong"
+
     rule {
       host = local.argo_domain
+
       http {
         path {
           path      = "/"
           path_type = "ImplementationSpecific"
+
           backend {
             service {
               name = local.argo_server_service
+
               port {
                 number = local.argo_server_port
               }
