@@ -1,7 +1,21 @@
 locals {
   name = "karpenter"
+
+  labels = {
+    "app.kubernetes.io/app"        = local.name
+    "app.kubernetes.io/managed-by" = "Terraform"
+    "app.kubernetes.io/owner"      = var.owner
+  }
 }
 
+resource "kubernetes_namespace_v1" "karpenter_ns" {
+  metadata {
+    name   = local.name
+    labels = local.labels
+  }
+}
+
+# This creates AWS resources for Karpenter. It does not install the Karpenter Helm chart.
 module "karpenter" {
   source                 = "terraform-aws-modules/eks/aws//modules/karpenter"
   version                = ">= 20.8.5"
@@ -18,6 +32,7 @@ module "karpenter" {
   }
 }
 
+# This will install Karpenter kubernetes resources onto a cluster
 resource "helm_release" "karpenter" {
   namespace           = local.name
   create_namespace    = true
@@ -27,7 +42,7 @@ resource "helm_release" "karpenter" {
   repository_password = data.aws_ecrpublic_authorization_token.token.password
   chart               = local.name
   timeout             = 500
-  version             = "0.36.1"
+  version             = var.helm_chart_version
   wait                = false
 
   values = [

@@ -2,6 +2,7 @@ resource "kubernetes_ingress_v1" "chaos_mesh_ingress" {
   metadata {
     name      = "chaos-mesh-ingress"
     namespace = kubernetes_namespace_v1.chaos_ns.metadata[0].name
+    labels    = local.labels
     annotations = {
       "konghq.com/strip-path"                 = true
       "konghq.com/protocols"                  = "https"

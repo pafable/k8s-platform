@@ -13,10 +13,10 @@ variable "code" {
   type        = string
 }
 
-variable "karpenter_module_version" {
-  description = "Karpenter module version"
+variable "helm_chart_version" {
+  description = "helm chart version"
   type        = string
-  default     = "20.8.5"
+  default     = "0.37.0"
 }
 
 variable "oidc_provider_arn" {
@@ -27,4 +27,5 @@ variable "oidc_provider_arn" {
 variable "owner" {
   description = "Owner of resource"
   type        = string
+  default     = "devops"
 }

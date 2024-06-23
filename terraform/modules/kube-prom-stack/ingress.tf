@@ -7,10 +7,7 @@ resource "kubernetes_ingress_v1" "prometheus_ingress" {
       "konghq.com/protocols"                  = "https"
       "konghq.com/https-redirect-status-code" = 301
     }
-    labels = {
-      "app.kubernetes.io/name"  = var.app_name
-      "app.kubernetes.io/owner" = var.owner
-    }
+    labels = local.labels
   }
 
   wait_for_load_balancer = true
@@ -48,6 +45,7 @@ resource "kubernetes_ingress_v1" "grafana_ingress" {
   metadata {
     name      = "grafana-ingress"
     namespace = kubernetes_namespace_v1.kube_prom_ns.metadata.0.name
+    labels    = local.labels
     annotations = {
       "konghq.com/strip-path"                 = true
       "konghq.com/protocols"                  = "https"

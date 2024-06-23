@@ -1,8 +1,14 @@
 locals {
   app_name = "postgresql"
-  db_user  = "phil_user"
+  db_user  = "devops_user"
   repo     = "https://charts.bitnami.com/bitnami"
   timezone = "America/New_York"
+
+  labels = {
+    "app.kubernetes.io/app"        = local.app_name
+    "app.kubernetes.io/managed-by" = "Terraform"
+    "app.kubernetes.io/owner"      = var.owner
+  }
 
   values = [
     yamlencode({
@@ -40,11 +46,8 @@ locals {
 
 resource "kubernetes_namespace_v1" "postgresql_ns" {
   metadata {
-    name = var.namespace
-
-    labels = {
-      name = var.namespace
-    }
+    name   = var.namespace
+    labels = local.labels
   }
 }
 
@@ -62,7 +65,7 @@ resource "helm_release" "postgresql_db" {
   name             = local.app_name
   repository       = local.repo
   chart            = local.app_name
-  namespace        = var.namespace
+  namespace        = kubernetes_namespace_v1.postgresql_ns.metadata[0].name
   create_namespace = false
   version          = var.chart_version
   values           = local.values

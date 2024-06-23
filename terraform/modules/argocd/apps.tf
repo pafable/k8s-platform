@@ -1,3 +1,11 @@
+locals {
+  argo_labels = {
+    "app.kubernetes.io/name"       = "argo-example-app"
+    "app.kubernetes.io/owner"      = var.owner
+    "app.kubernetes.io/managed-by" = "ArgoCD"
+  }
+}
+
 # argo example app
 resource "kubernetes_manifest" "argo_example_app" {
   manifest = {
@@ -7,11 +15,7 @@ resource "kubernetes_manifest" "argo_example_app" {
     metadata = {
       name      = "argo-example-app-dev"
       namespace = local.app_name
-
-      labels = {
-        "app.kubernetes.io/name"  = "argo-example-app"
-        "app.kubernetes.io/owner" = var.owner
-      }
+      labels    = local.argo_labels
     }
 
     spec = {
@@ -69,11 +73,7 @@ resource "kubernetes_manifest" "my_app" {
     metadata = {
       name      = "my-app-dev"
       namespace = local.app_name
-
-      labels = {
-        "app.kubernetes.io/name" = "my-app"
-        owner                    = var.owner
-      }
+      labels    = local.argo_labels
     }
 
     spec = {

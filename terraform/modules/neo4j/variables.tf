@@ -1,7 +1,7 @@
-variable "trivy_operator_version" {
-  description = "Trivy Operator version"
+variable "helm_chart_version" {
+  description = "The version of the Helm chart to deploy"
   type        = string
-  default     = "0.23.3"
+  default     = "5.20.0"
 }
 
 variable "owner" {

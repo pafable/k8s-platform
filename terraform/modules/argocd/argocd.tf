@@ -2,11 +2,18 @@ locals {
   app_name   = "argocd"
   chart_name = "argo-cd"
   helm_repo  = "https://argoproj.github.io/argo-helm"
+
+  tf_labels = {
+    "app.kubernetes.io/name"       = local.app_name
+    "app.kubernetes.io/managed-by" = "Terraform"
+    "app.kubernetes.io/owner"      = var.owner
+  }
 }
 
 resource "kubernetes_namespace_v1" "argocd_ns" {
   metadata {
-    name = "argocd"
+    name   = "argocd"
+    labels = local.tf_labels
   }
 }
 

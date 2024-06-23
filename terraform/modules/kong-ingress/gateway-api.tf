@@ -13,6 +13,7 @@ resource "kubernetes_manifest" "kong_gateway_class" {
       annotations = {
         "konghq.com/gatewayclass-unmanaged" = "true"
       }
+      labels = local.labels
     }
 
     spec = {
@@ -30,6 +31,7 @@ resource "kubernetes_manifest" "kong_gateway" {
     metadata = {
       name      = "kong"
       namespace = kubernetes_namespace_v1.kong_ingress_ns.metadata.0.name
+      labels    = local.labels
     }
 
     spec = {

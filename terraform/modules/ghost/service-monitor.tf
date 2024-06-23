@@ -9,9 +9,7 @@ resource "kubernetes_manifest" "ghost_service_monitor" {
       name = "${local.ghost_app}-svc-monitor"
       #       namespace = kubernetes_namespace_v1.ghost_namespace.metadata.0.name
       namespace = "monitoring"
-      labels = {
-        "app.kubernetes.io/name" = local.ghost_app
-      }
+      labels    = local.labels
     }
 
     spec = {
