@@ -7,6 +7,7 @@ variable "chart_version" {
 variable "admin_email" {
   description = "The email address of the admin user"
   type        = string
+  default     = "admin@example.com"
 }
 
 variable "namespace" {

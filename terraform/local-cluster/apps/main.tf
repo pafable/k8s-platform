@@ -44,9 +44,8 @@ module "metrics_server" {
 }
 
 module "postgresql_db_01" {
-  source      = "../../modules/postgresql"
-  admin_email = "test100@test.local"
-  depends_on  = [module.cert_manager]
+  source     = "../../modules/postgresql"
+  depends_on = [module.cert_manager]
 }
 
 module "trivy_operator" {
