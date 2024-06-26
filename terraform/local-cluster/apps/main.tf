@@ -17,6 +17,13 @@ module "chaos_mesh" {
   depends_on                    = [module.cert_manager]
 }
 
+module "datadog" {
+  source          = "../../modules/datadog"
+  cluster_name    = "local-cluster"
+  datadog_api_key = "datadog-api-key"
+  datadog_app_key = "datadog-app-key"
+}
+
 # module "grafana_dashboards" {
 #   source         = "../../modules/grafana-dashboards"
 #   svc_acct_token = var.svc_acct_token

@@ -19,6 +19,34 @@ variable "datadog_helm_version" {
   default     = "1.8.1"
 }
 
+variable "db_host" {
+  description = "The database host"
+  type        = string
+  default     = "localhost"
+}
+
+variable "db_name" {
+  description = "The database name"
+  type        = string
+  default     = "postgres"
+
+}
+
+variable "db_password" {
+  description = "The database password"
+  type        = string
+  default     = "postgres"
+
+
+}
+
+variable "db_user" {
+  description = "The database user"
+  type        = string
+  default     = "postgres"
+
+}
+
 variable "ou" {
   description = "The organizational unit"
   type        = string

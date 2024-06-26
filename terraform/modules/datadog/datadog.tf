@@ -1,6 +1,6 @@
 locals {
   app_name   = "datadog"
-  chart_name = "datadog-operator"
+  chart_name = "${local.app_name}-operator"
   helm_repo  = "https://helm.datadoghq.com"
 
   labels = {
@@ -15,14 +15,32 @@ locals {
         apiKey      = var.datadog_api_key
         appKey      = var.datadog_app_key
         clusterName = var.cluster_name
+
+        confd = {
+          "postgres.yaml" = {
+            init_config = {  # ???
+              instances = [
+                {
+                  host     = var.db_host
+                  port     = 5432
+                  user     = var.db_user
+                  password = var.db_password
+                  dbname   = var.db_name
+                }
+              ]
+            }
+          }
+        }
       }
+
+      watchNamespaces = [""] # using "" will monitor all namespaces
     })
   ]
 }
 
 resource "kubernetes_namespace_v1" "datadog_ns" {
   metadata {
-    name   = "datadog"
+    name   = local.app_name
     labels = local.labels
   }
 }
