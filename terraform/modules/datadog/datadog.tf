@@ -12,9 +12,10 @@ locals {
   values = [
     yamlencode({
       datadog = {
-        apiKey      = var.datadog_api_key
-        appKey      = var.datadog_app_key
-        clusterName = var.cluster_name
+        apiKey               = var.datadog_api_key
+        appKey               = var.datadog_app_key
+        clusterName          = var.cluster_name
+        apiKeyExistingSecret = kubernetes_secret_v1.datadog_secret.metadata.0.name
 
         confd = {
           "postgres.yaml" = {
@@ -53,7 +54,7 @@ resource "kubernetes_secret_v1" "datadog_secret" {
   }
 
   data = {
-    apiKey = var.datadog_api_key
+    api-key = var.datadog_api_key
   }
 
   type = "Opaque"

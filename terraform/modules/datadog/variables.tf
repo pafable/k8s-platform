@@ -16,7 +16,7 @@ variable "datadog_app_key" {
 variable "datadog_helm_version" {
   description = "Datadog Operator helm version"
   type        = string
-  default     = "1.8.1"
+  default     = "3.66.0"
 }
 
 variable "db_host" {
