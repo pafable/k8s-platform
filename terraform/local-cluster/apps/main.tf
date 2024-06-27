@@ -17,11 +17,13 @@ module "chaos_mesh" {
   depends_on                    = [module.cert_manager]
 }
 
+variable "datadog_api_key" {}
+
 module "datadog" {
   source          = "../../modules/datadog"
   cluster_name    = "local-cluster"
-  datadog_api_key = "datadog-api-key"
-  datadog_app_key = "datadog-app-key"
+  datadog_api_key = var.datadog_api_key
+  datadog_app_key = null
 }
 
 # module "grafana_dashboards" {

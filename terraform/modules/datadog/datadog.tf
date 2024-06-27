@@ -18,7 +18,7 @@ locals {
 
         confd = {
           "postgres.yaml" = {
-            init_config = {  # ???
+            init_config = { # ???
               instances = [
                 {
                   host     = var.db_host
@@ -43,6 +43,20 @@ resource "kubernetes_namespace_v1" "datadog_ns" {
     name   = local.app_name
     labels = local.labels
   }
+}
+
+resource "kubernetes_secret_v1" "datadog_secret" {
+  metadata {
+    name      = local.app_name
+    namespace = kubernetes_namespace_v1.datadog_ns.metadata.0.name
+    labels    = local.labels
+  }
+
+  data = {
+    apiKey = var.datadog_api_key
+  }
+
+  type = "Opaque"
 }
 
 resource "helm_release" "datadog_operator" {
