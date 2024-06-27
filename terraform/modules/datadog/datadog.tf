@@ -1,6 +1,6 @@
 locals {
   app_name   = "datadog"
-  chart_name = local.app_name
+  chart_name = "${local.app_name}-operator"
   helm_repo  = "https://helm.datadoghq.com"
 
   labels = {
@@ -12,10 +12,9 @@ locals {
   values = [
     yamlencode({
       datadog = {
-        apiKey               = var.datadog_api_key
-        appKey               = var.datadog_app_key
-        clusterName          = var.cluster_name
-        apiKeyExistingSecret = kubernetes_secret_v1.datadog_secret.metadata.0.name
+        apiKey      = var.datadog_api_key
+        appKey      = var.datadog_app_key
+        clusterName = var.cluster_name
 
         confd = {
           "postgres.yaml" = {
@@ -31,6 +30,10 @@ locals {
               ]
             }
           }
+        }
+
+        kubelet = {
+          tlsVerify = false
         }
       }
 
