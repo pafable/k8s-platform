@@ -11,13 +11,18 @@ resource "kubernetes_manifest" "datadog_agent" {
 
     spec = {
       global = {
-        clusterName = var.cluster_name
-        site        = "us5.datadoghq.com"
+        #         clusterName = var.cluster_name
+        site = "us5.datadoghq.com"
+
         credentials = {
           apiSecret = {
             secretName = kubernetes_secret_v1.datadog_secret.metadata.0.name
             keyName    = "api-key"
           }
+        }
+
+        kubelet = {
+          tlsVerify = false
         }
       }
 

@@ -23,7 +23,7 @@ module "datadog" {
   source          = "../../modules/datadog"
   cluster_name    = "local-cluster"
   datadog_api_key = var.datadog_api_key
-  datadog_app_key = null
+  datadog_app_key = "thisisatestappkey"
 }
 
 # module "grafana_dashboards" {
