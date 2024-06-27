@@ -1,6 +1,6 @@
 locals {
   app_name   = "datadog"
-  chart_name = "${local.app_name}-operator"
+  chart_name = local.app_name
   helm_repo  = "https://helm.datadoghq.com"
 
   labels = {
@@ -59,7 +59,7 @@ resource "kubernetes_secret_v1" "datadog_secret" {
   type = "Opaque"
 }
 
-resource "helm_release" "datadog_operator" {
+resource "helm_release" "datadog" {
   chart             = local.chart_name
   create_namespace  = false
   dependency_update = true
