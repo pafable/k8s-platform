@@ -1,6 +1,5 @@
 locals {
-  cluster_name = "xyz"
-  owner        = "pafable"
+  cluster_name = "k8s-platform"
   #   worker_node_instance_types = ["t2.micro"]
 
   # default tags
@@ -10,17 +9,18 @@ locals {
     code_location = var.code
     eks_cluster   = local.cluster_name
     managed_by    = "terraform"
-    owner         = local.owner
+    owner         = var.owner
   }
 }
 
-module "xyz_eks" {
+module "k8s_eks" {
   source = "../../modules/eks"
   ## uncomment client_vpn_security_group_id to enable client vpn access
   #   client_vpn_security_group_id = data.aws_ssm_parameter.client_vpn_security_group_id.value
   cluster_name       = local.cluster_name
   intra_subnet_ids   = jsondecode(data.aws_ssm_parameter.intra_subnet_ids.value)
   private_subnet_ids = jsondecode(data.aws_ssm_parameter.private_subnet_ids.value)
+  sso_role_arn       = data.aws_ssm_parameter.aws_sso_role_arn.value
   vpc_id             = data.aws_ssm_parameter.vpc_id.value
 
   ## sets EKS worker node instance types

@@ -1,7 +1,7 @@
 module "aws_auth" {
-  for_each = local.sso_role_arns
+  for_each = nonsensitive(local.sso_role_arns)
   source   = "terraform-aws-modules/eks/aws//modules/aws-auth"
-  version  = "20.8.0"
+  version  = "20.17.2"
 
   aws_auth_roles = [
     {

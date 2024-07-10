@@ -12,7 +12,7 @@ module "new_eks" {
 
   access_entries = {
     sso__admin = {
-      principal_arn = local.sso_role_pafa_admin_arn
+      principal_arn = local.sso_role_admin_arn
       policy_associations = {
         admin = {
           policy_arn = local.eks_cluster_admin_policy_arn
@@ -37,11 +37,14 @@ module "new_eks" {
   #     }
   #   }
 
-  cluster_addons = local.cluster_addons
+  cluster_addons                  = local.cluster_addons
+  eks_managed_node_groups         = local.eks_managed_node_groups
+  eks_managed_node_group_defaults = local.eks_managed_node_group_defaults
 
   node_security_group_tags = {
     "karpenter.sh/discovery" = local.cluster_name
   }
+
   ## this is a test
   #   node_security_group_additional_rules = {
   #     ingress_self_all = {

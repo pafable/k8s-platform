@@ -13,7 +13,7 @@ locals {
   most_recent_addon            = true
   resolve_conflict             = "OVERWRITE"
   single_nat_gateway           = true
-  sso_role_pafa_admin_arn      = "arn:${data.aws_partition.current.partition}:iam::${data.aws_caller_identity.current.account_id}:role/aws-reserved/sso.amazonaws.com/<YOUR_SSO_ROLE_ARN>"
+  sso_role_admin_arn           = var.sso_role_arn
 
   additional_worker_policies = {
     amazon_cloudwatch_agent_server   = "arn:${data.aws_partition.current.partition}:iam::aws:policy/CloudWatchAgentServerPolicy"

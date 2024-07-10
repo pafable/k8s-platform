@@ -1,3 +1,8 @@
+data "aws_ssm_parameter" "aws_sso_role_arn" {
+  provider = aws.parameters
+  name     = "/sso/role/arn"
+}
+
 data "aws_caller_identity" "current" {}
 
 data "aws_partition" "current" {}
