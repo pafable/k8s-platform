@@ -8,17 +8,16 @@ env:
   ELB_DNS_NAME: elb-dns-name
 
   # Terraform Backend Buckets
-  TF_BACKEND_BUCKET_DEV: YOUR-TF-BACKEND-BUCKET-DEV
+  TF_BACKEND_BUCKET_DEV: pafable-tfstates-100
   TF_BACKEND_BUCKET_PROD: YOUR-TF-BACKEND-BUCKET-PROD
 
   # Terraform Directories for AWS
   TF_ATLANTIS_DIR: terraform/aws/atlantis
   TF_CLIENT_VPN_DIR: terraform/aws/client-vpn
   TF_DNS_DIR: terraform/aws/dns
-  TF_EKS_AWS_DIR: terraform/aws/eks
+  TF_EKS_DIR: terraform/aws/eks
   TF_KARPENTER_MANIFESTS_DIR: terraform/aws/karpenter-manifests
   TF_KUBE_SUPP_DIR: terraform/aws/kube-support
-  TF_MONITORING_DIR: terraform/aws/monitoring
   TF_VPC_AWS_DIR: terraform/aws/vpc
 
   # Terraform Directories for Local Cluster
@@ -223,16 +222,16 @@ tasks:
 
 # EKS
   init-eks:
-    dir: '{{ .TF_EKS_AWS_DIR }}'
+    dir: '{{ .TF_EKS_DIR }}'
     deps:
       - fmt
     desc: Initialize EKS terraform
     cmds:
       - echo "+++++ Deploying EKS +++++"
-      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${TF_EKS_AWS_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure
+      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${TF_EKS_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure
 
   create-eks:
-    dir: '{{ .TF_EKS_AWS_DIR }}'
+    dir: '{{ .TF_EKS_DIR }}'
     deps:
       - init-eks
     desc: Create EKS terraform
@@ -244,7 +243,7 @@ tasks:
       - terraform apply tfplan
 
   destroy-eks:
-    dir: '{{ .TF_EKS_AWS_DIR }}'
+    dir: '{{ .TF_EKS_DIR }}'
     deps:
       - init-eks
     desc: Destroy EKS terraform
@@ -328,40 +327,6 @@ tasks:
       - terraform plan -var "branch=${BRANCH}" -out=tfplan.destroy -destroy
       - terraform apply tfplan.destroy
       - task: delete-crds
-
-# Monitoring AWS
-  init-monitoring:
-    dir: '{{ .TF_MONITORING_DIR }}'
-    deps:
-      - fmt
-    desc: Initialize Monitoring
-    cmds:
-      - echo "+++++ Deploying Monitoring +++++"
-      - terraform init -backend-config="bucket=$TF_BACKEND_BUCKET_DEV" -backend-config="encrypt=true" -backend-config="key=${TF_MONITORING_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure
-
-  create-monitoring:
-    dir: '{{ .TF_MONITORING_DIR }}'
-    deps:
-      - init-monitoring
-    desc: Create Monitoring
-    cmds:
-      - defer: |
-          echo "Cleaning up..."
-          rm -f tfplan
-      - terraform plan -var "branch=${BRANCH}" -var "commit=${COMMIT}" -out=tfplan
-      - terraform apply tfplan
-
-  destroy-monitoring:
-    dir: '{{ .TF_MONITORING_DIR }}'
-    deps:
-      - init-monitoring
-    desc: Destroy Monitoring
-    cmds:
-      - defer: |
-          echo "Cleaning up..."
-          rm -f tfplan.destroy
-      - terraform plan -var "branch=${BRANCH}" -var "commit=${COMMIT}" -out=tfplan.destroy -destroy
-      - terraform apply tfplan.destroy
 
 # DNS Update
   retrieve-elb:
@@ -523,7 +488,7 @@ tasks:
 
   trivy-eks:
     desc: Trivy scan for EKS
-    dir: '{{ .TF_EKS_AWS_DIR }}'
+    dir: '{{ .TF_EKS_DIR }}'
     cmds:
       - trivy config .
 
@@ -533,11 +498,6 @@ tasks:
     cmds:
       - trivy config .
 
-  trivy-monitoring:
-    desc: Trivy scan for Monitoring
-    dir: '{{ .TF_MONITORING_DIR }}'
-    cmds:
-      - trivy config .
 
   trivy-apps-local:
     desc: Trivy scan for Apps Local
