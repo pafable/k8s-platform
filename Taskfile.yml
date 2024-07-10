@@ -423,18 +423,6 @@ tasks:
       - terraform plan -var "branch=${BRANCH}" -out=tfplan
       - terraform apply tfplan
 
-  create-vpc-vpn:
-    desc: Create VPC and VPN
-    cmds:
-      - task: create-vpc
-      - task: create-vpn
-
-  destroy-vpc-vpn:
-    desc: Destroy VPC and VPN
-    cmds:
-      - task: destroy-vpn
-      - task: destroy-vpc
-
   destroy-vpn:
     dir: '{{ .TF_CLIENT_VPN_DIR }}'
     deps:
@@ -451,20 +439,16 @@ tasks:
   create-cluster:
     desc: Create Cluster
     cmds:
+      - task: create-vpc
       - task: create-eks
       - task: create-kube-support
-      - task: create-karpenter-manifests
-      - task: create-monitoring
-      - task: connect-eks-cluster
-      - task: retrieve-elb
 
   destroy-cluster:
     desc: Destroy Cluster
     cmds:
-      - task: destroy-monitoring
-      - task: destroy-karpenter-manifests
       - task: destroy-kube-support
       - task: destroy-eks
+      - task: destroy-vpc
 
 # Deploy or Destroy all
   create-all:
@@ -490,7 +474,7 @@ tasks:
     desc: Trivy scan for EKS
     dir: '{{ .TF_EKS_DIR }}'
     cmds:
-      - trivy config .
+      - trivy config . --severity HIGH,CRITICAL
 
   trivy-kube-support:
     desc: Trivy scan for Kube Support

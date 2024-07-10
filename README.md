@@ -22,7 +22,11 @@ You will need the following installed on your machine before deploying:
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/)
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 
+---
+## Local K8S Cluster
+
 ### Deploy
+*NOTE:* For my local deploy I'm using the k8s cluster that comes prepackaged with Docker Desktop.
 ```shell
 task create-apps-local
 ```
@@ -41,4 +45,17 @@ In order to access apps without port forwarding, you will need to add the follow
 ### Destroy
 ```shell
 task destroy-apps-local
+```
+
+---
+## AWS EKS
+
+### Deploy
+```shell
+task create-cluster
+```
+
+### Destroy
+```shell
+task destroy-cluster
 ```
