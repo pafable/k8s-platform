@@ -1,5 +1,5 @@
 locals {
-  cluster_name = "xyz"
+  cluster_name = "k8s-platform"
   namespace    = "karpenter"
 
   # default tags
