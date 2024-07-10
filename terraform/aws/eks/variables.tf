@@ -13,3 +13,9 @@ variable "code" {
   type        = string
   default     = "k8s-platform/terraform/eks"
 }
+
+variable "owner" {
+  description = "Owner"
+  type        = string
+  default     = "YOUR-NAME-HERE"
+}

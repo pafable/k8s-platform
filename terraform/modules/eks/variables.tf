@@ -54,6 +54,11 @@ variable "private_subnet_ids" {
   type        = list(string)
 }
 
+variable "sso_role_arn" {
+  description = "AWS SSO role arn"
+  type        = string
+}
+
 variable "vpc_id" {
   description = "VPC id"
   type        = string

@@ -1,29 +1,32 @@
+module "aws" {
+  source = "../../modules/versions/aws"
+}
+
+module "kubernetes" {
+  source = "../../modules/versions/kubernetes"
+}
+
 terraform {
-  required_version = ">= 1.7.5"
-
-  required_providers {
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = ">= 2.29.0"
-    }
-    aws = {
-      source  = "hashicorp/aws"
-      version = "5.46.0"
-    }
-  }
-
+  required_version = ">= 1.8.0"
   backend "s3" {}
 }
 
 provider "aws" {
   region = var.aws_region
+
+  default_tags {
+    tags = local.default_tags
+  }
 }
 
 provider "aws" {
   alias  = "parameters"
   region = "us-east-1"
-}
 
+  default_tags {
+    tags = local.default_tags
+  }
+}
 
 provider "kubernetes" {
   host                   = data.aws_eks_cluster.cluster.endpoint

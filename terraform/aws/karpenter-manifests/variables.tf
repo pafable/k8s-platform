@@ -1,3 +1,8 @@
+variable "branch" {
+  description = "Git branch to deploy"
+  type        = string
+}
+
 variable "code" {
   description = "Code location"
   type        = string

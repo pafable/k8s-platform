@@ -1,7 +1,7 @@
 locals {
   # default tags
   default_tags = {
-    app_name      = "xyz"
+    app_name      = "k8s-platform"
     branch        = var.branch
     code_location = "k8s-platform/terraform/apps/vpc"
     managed_by    = "terraform"
@@ -15,7 +15,7 @@ locals {
   vpc_cidr         = "10.1.0.0/16"
 }
 
-module "test_vpc" {
+module "k8s_vpc" {
   source                      = "../../modules/vpc"
   enable_karpenter_subnet_tag = local.enable_karpenter
   intra_subnets               = local.intra_subnets

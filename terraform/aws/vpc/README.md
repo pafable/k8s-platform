@@ -2,7 +2,7 @@
 
 ## Deploy
 ```bash
-task init-vpc create-vpc
+task create-vpc
 ```
 
 ## Destroy

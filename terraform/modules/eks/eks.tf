@@ -12,7 +12,7 @@ module "new_eks" {
 
   access_entries = {
     sso__admin = {
-      principal_arn = local.sso_role_pafa_admin_arn
+      principal_arn = local.sso_role_admin_arn
       policy_associations = {
         admin = {
           policy_arn = local.eks_cluster_admin_policy_arn
