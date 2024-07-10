@@ -116,7 +116,6 @@ tasks:
       - kubectl apply -f https://raw.githubusercontent.com/aws/karpenter/main/pkg/apis/crds/karpenter.sh_nodeclaims.yaml
       - kubectl apply -f https://raw.githubusercontent.com/aws/karpenter/main/pkg/apis/crds/karpenter.k8s.aws_ec2nodeclasses.yaml
 
-
   # Delete CRDs
   delete-crds:
     desc: Delete CRDs

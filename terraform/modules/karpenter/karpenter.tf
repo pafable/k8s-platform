@@ -51,7 +51,7 @@ resource "helm_release" "karpenter" {
         controller = {
           resources = {
             requests = {
-              cpu = 1
+              cpu    = 1
               memory = "1Gi"
             }
           }
