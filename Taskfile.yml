@@ -4,7 +4,7 @@ dotenv: ['.env']
 
 env:
   DNS_ZONE: YOUR-DNS-ZONE
-  EKS_CLUSTER_NAME: xyz
+  EKS_CLUSTER_NAME: k8s-platform
   ELB_DNS_NAME: elb-dns-name
 
   # Terraform Backend Buckets
