@@ -3,6 +3,7 @@ version: '3'
 dotenv: ['.env']
 
 env:
+  AWS_REGION: AWS-REGION
   DNS_ZONE: YOUR-DNS-ZONE
   EKS_CLUSTER_NAME: k8s-platform
   ELB_DNS_NAME: elb-dns-name
@@ -50,7 +51,7 @@ tasks:
   connect-eks-cluster:
     desc: Connect to EKS cluster
     cmds:
-      - aws eks --region us-east-1 update-kubeconfig --name ${EKS_CLUSTER_NAME}
+      - aws eks --region ${AWS_REGION} update-kubeconfig --name ${EKS_CLUSTER_NAME}
 
   tf-ws-list:
     desc: Terraform workspace list
@@ -450,6 +451,7 @@ tasks:
     cmds:
       - task: create-vpc
       - task: create-eks
+      - task: connect-eks-cluster
       - task: create-kube-support
 
   destroy-cluster:

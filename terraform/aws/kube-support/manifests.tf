@@ -66,7 +66,7 @@ resource "kubernetes_manifest" "main_karpenter_node_class" {
 
     spec = {
       amiFamily = "AL2"
-      role      = data.aws_ssm_parameter.karpenter_node_iam_role_name.value
+      role      = module.karpenter.node_iam_role_name
 
       subnetSelectorTerms = [
         {

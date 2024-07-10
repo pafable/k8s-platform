@@ -15,11 +15,6 @@ data "aws_eks_cluster_auth" "cluster_auth" {
   name = local.cluster_name
 }
 
-data "aws_ssm_parameter" "karpenter_node_iam_role_name" {
-  provider = aws.parameters
-  name     = "/eks/karpenter/node-iam-role/name"
-}
-
 data "aws_ssm_parameter" "oidc_arn" {
   provider = aws.parameters
   name     = "/eks/${local.cluster_name}/oidc-provider/arn"
