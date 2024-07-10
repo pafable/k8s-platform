@@ -14,13 +14,8 @@ variable "code" {
   default     = "k8s-platform/terraform/apps/eks"
 }
 
-variable "commit" {
-  description = "Git commit to deploy"
-  type        = string
-}
-
 variable "owner" {
   description = "Owner of cluster"
   type        = string
-  default     = "pafable"
+  default     = "YOUR-NAME-HERE"
 }

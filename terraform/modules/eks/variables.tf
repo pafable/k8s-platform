@@ -34,13 +34,13 @@ variable "k8s_version" {
 variable "node_desired_size" {
   description = "Desired number of worker nodes"
   type        = number
-  default     = 1
+  default     = 2
 }
 
 variable "node_max_size" {
   description = "Max number of worker nodes"
   type        = number
-  default     = 2
+  default     = 3
 }
 
 variable "node_min_size" {

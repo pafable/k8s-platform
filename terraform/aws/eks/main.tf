@@ -13,12 +13,6 @@ locals {
   }
 }
 
-data "aws_ssm_parameter" "aws_sso_role_arn" {
-  provider = aws.parameters
-  name     = "/sso/role/arn"
-}
-
-
 module "k8s_eks" {
   source = "../../modules/eks"
   ## uncomment client_vpn_security_group_id to enable client vpn access

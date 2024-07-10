@@ -185,7 +185,7 @@ tasks:
     dir: '{{ .TF_APPS_LOCAL_DIR }}'
     deps:
       - task: fmt
-    desc: Initialize Kube Apps terraform
+    desc: Initialize Apps terraform
     cmds:
       - echo "+++++ Initializing Kube Apps +++++"
       - terraform init -upgrade -reconfigure
@@ -199,7 +199,7 @@ tasks:
     deps:
       - task: install-crds
       - task: init-apps-local
-    desc: Create Kube Apps terraform
+    desc: Create Apps terraform
     cmds:
       - defer: |
           echo "Cleaning up terraform plans..."
@@ -209,7 +209,7 @@ tasks:
 
   destroy-apps-local:
     dir: '{{ .TF_APPS_LOCAL_DIR }}'
-    desc: Destroy Kube Apps terraform
+    desc: Destroy Apps terraform
     deps:
       - task: init-apps-local
     cmds:
@@ -297,18 +297,23 @@ tasks:
     desc: Initialize Kube Support
     cmds:
       - echo "+++++ Deploying Kube Support +++++"
-      - terraform init -backend-config="bucket=$TF_BACKEND_BUCKET_DEV" -backend-config="encrypt=true" -backend-config="key=${TF_KUBE_SUPP_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure
+      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${TF_KUBE_SUPP_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure
+      - task: tf-validate
+        vars: { DIR: '{{ .TF_KUBE_SUPP_DIR }}' }
+      - task: tf-ws-list
+        vars: { DIR: '{{ .TF_KUBE_SUPP_DIR }}' }
 
   create-kube-support:
     dir: '{{ .TF_KUBE_SUPP_DIR }}'
     deps:
-      - init-kube-support
+      - task: install-crds
+      - task: init-kube-support
     desc: Create Kube Support
     cmds:
       - defer: |
           echo "Cleaning up..."
           rm -f tfplan
-      - terraform plan -var "branch=${BRANCH}" -var "commit=${COMMIT}" -out=tfplan
+      - terraform plan -var "branch=${BRANCH}" -out=tfplan
       - terraform apply tfplan
 
   destroy-kube-support:
@@ -320,8 +325,9 @@ tasks:
       - defer: |
           echo "Cleaning up..."
           rm -f tfplan.destroy
-      - terraform plan -var "branch=${BRANCH}" -var "commit=${COMMIT}" -out=tfplan.destroy -destroy
+      - terraform plan -var "branch=${BRANCH}" -out=tfplan.destroy -destroy
       - terraform apply tfplan.destroy
+      - task: delete-crds
 
 # Monitoring AWS
   init-monitoring:

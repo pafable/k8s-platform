@@ -1,23 +1,10 @@
 locals {
-  cluster_name = "xyz"
+  cluster_name = "k8s-platform"
 
   # IAM roles
   sso_role_arns = toset([
-    "arn:${data.aws_partition.current.partition}:iam::${data.aws_caller_identity.current.account_id}:role/aws-reserved/sso.amazonaws.com/us-east-2/AWSReservedSSO_pafable-org-admin_b71b25dcfa53e54a"
+    data.aws_ssm_parameter.aws_sso_role_arn.value
   ])
-
-  # Ingress Nginx
-  chart_name = "ingress-nginx"
-  chart_repo = "https://kubernetes.github.io/ingress-nginx"
-  namespace  = "ingress-nginx"
-  version    = "4.10.1"
-
-  # metrics server helm
-  ms_chart_repo    = "https://kubernetes-sigs.github.io/metrics-server/"
-  ms_chart_version = "3.12.1"
-  ms_name          = "metrics-server"
-  ms_namespace     = "kube-system"
-  owner            = "pafable"
 
   # default tags
   default_tags = {
@@ -25,6 +12,64 @@ locals {
     code_location = var.code
     eks_cluster   = local.cluster_name
     managed_by    = "terraform"
-    owner         = local.owner
+    owner         = var.owner
   }
 }
+
+# module "argocd" {
+#   source   = "../../modules/argocd"
+#   app_repo = "https://github.com/pafable/argo-examples"
+#   depends_on = [
+#     module.cert_manager,
+#     module.kong_ingress
+#   ]
+# }
+
+module "cert_manager" {
+  source = "../../modules/cert-manager"
+}
+
+# module "chaos_mesh" {
+#   source                        = "../../modules/chaos-mesh"
+#   is_dashboard_security_enabled = false
+#   depends_on                    = [module.cert_manager]
+# }
+
+module "ingress_nginx" {
+  source = "../../modules/ingress-nginx"
+}
+
+module "karpenter" {
+  source            = "../../modules/karpenter"
+  cluster_endpoint  = data.aws_eks_cluster.cluster.endpoint
+  cluster_name      = data.aws_eks_cluster.cluster.name
+  code              = local.default_tags.code_location
+  oidc_provider_arn = data.aws_ssm_parameter.oidc_arn.value
+  owner             = var.owner
+}
+
+module "kong_ingress" {
+  source  = "../../modules/kong-ingress"
+  timeout = 500
+}
+
+module "kube_prom_stack" {
+  source     = "../../modules/kube-prom-stack"
+  is_cloud   = false
+  depends_on = [module.cert_manager]
+}
+
+# metrics server is needed for autoscaling (Karpenter)
+module "metrics_server" {
+  source   = "../../modules/metrics-server"
+  is_cloud = false
+}
+
+# module "postgresql_db_01" {
+#   source     = "../../modules/postgresql"
+#   depends_on = [module.cert_manager]
+# }
+
+# module "trivy_operator" {
+#   source = "../../modules/trivy-operator"
+# }

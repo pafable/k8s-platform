@@ -1,3 +1,8 @@
+data "aws_ssm_parameter" "aws_sso_role_arn" {
+  provider = aws.parameters
+  name     = "/sso/role/arn"
+}
+
 data "aws_ssm_parameter" "vpc_id" {
   provider = aws.parameters
   name     = "/vpc/eks/${local.cluster_name}/id"
