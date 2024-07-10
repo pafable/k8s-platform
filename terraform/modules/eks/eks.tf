@@ -37,11 +37,9 @@ module "new_eks" {
   #     }
   #   }
 
-  cluster_addons = local.cluster_addons
-
+  cluster_addons                  = local.cluster_addons
+  eks_managed_node_groups         = local.eks_managed_node_groups
   eks_managed_node_group_defaults = local.eks_managed_node_group_defaults
-
-  eks_managed_node_groups = local.eks_managed_node_groups
 
   node_security_group_tags = {
     "karpenter.sh/discovery" = local.cluster_name
