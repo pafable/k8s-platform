@@ -3,13 +3,13 @@ version: '3'
 dotenv: ['.env']
 
 env:
-  AWS_REGION: us-east-1
+  AWS_REGION: YOUR-AWS-REGION
   DNS_ZONE: YOUR-DNS-ZONE
   EKS_CLUSTER_NAME: k8s-platform
   ELB_DNS_NAME: elb-dns-name
 
   # Terraform Backend Buckets
-  TF_BACKEND_BUCKET_DEV: pafable-tfstates-100
+  TF_BACKEND_BUCKET_DEV: YOUR-TF-BACKEND-BUCKET-DEV
   TF_BACKEND_BUCKET_PROD: YOUR-TF-BACKEND-BUCKET-PROD
 
   # Terraform Directories for AWS
