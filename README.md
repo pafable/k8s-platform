@@ -49,7 +49,7 @@ task destroy-apps-local
 
 ---
 ## AWS EKS
-
+Deploy an [EKS](https://aws.amazon.com/eks/) cluster on AWS.
 ### Deploy
 ```shell
 task create-cluster
