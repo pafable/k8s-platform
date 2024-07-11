@@ -45,6 +45,11 @@ spec:
         env:
           - name: NODE_ENV
             value: {{ .Values.app.env.NODE_ENV }}
+          - name: MY_SECRET_TEST
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.app.secretName }}
+                key: {{ .Values.app.secretKey }}
         ports:
         - name: ghost
           containerPort: {{ .Values.app.port }}
