@@ -3,13 +3,13 @@ version: '3'
 dotenv: ['.env']
 
 env:
-  AWS_REGION: YOUR-AWS-REGION
+  AWS_REGION: us-east-1
   DNS_ZONE: YOUR-DNS-ZONE
   EKS_CLUSTER_NAME: k8s-platform
   ELB_DNS_NAME: elb-dns-name
 
   # Terraform Backend Buckets
-  TF_BACKEND_BUCKET_DEV: YOUR-TF-BACKEND-BUCKET-DEV
+  TF_BACKEND_BUCKET_DEV: pafable-tfstates-100
   TF_BACKEND_BUCKET_PROD: YOUR-TF-BACKEND-BUCKET-PROD
 
   # Terraform Directories for AWS
@@ -177,16 +177,19 @@ tasks:
       # Kong CRD, v1.0.0 is needed for kong
       - kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml  --ignore-not-found # kong-ingress supports only v1.0.0
       - kubectl delete -f https://github.com/cert-manager/cert-manager/releases/download/v1.15.0/cert-manager.crds.yaml --ignore-not-found
-      # Karpenter CRDs
-      - kubectl delete -f https://raw.githubusercontent.com/aws/karpenter/main/pkg/apis/crds/karpenter.sh_nodepools.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/aws/karpenter/main/pkg/apis/crds/karpenter.sh_nodeclaims.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/aws/karpenter/main/pkg/apis/crds/karpenter.k8s.aws_ec2nodeclasses.yaml --ignore-not-found
 
       # Remove Abandoned Namespaces
       - kubectl delete namespace argo-example-app --ignore-not-found
       - kubectl delete namespace cert-manager --ignore-not-found
       - kubectl delete namespace my-app-dev --ignore-not-found
     ignore_error: true
+
+  delete-karpenter-crds:
+    desc: Delete Karpenter CRDs # needed because ec2nodeclasses fails due to an existing nodepool in terraform
+    cmds:
+      - kubectl delete -f https://raw.githubusercontent.com/aws/karpenter/main/pkg/apis/crds/karpenter.sh_nodepools.yaml --ignore-not-found
+      - kubectl delete -f https://raw.githubusercontent.com/aws/karpenter/main/pkg/apis/crds/karpenter.sh_nodeclaims.yaml --ignore-not-found
+      - kubectl delete -f https://raw.githubusercontent.com/aws/karpenter/main/pkg/apis/crds/karpenter.k8s.aws_ec2nodeclasses.yaml --ignore-not-found
 
   # apps local
   init-apps-local:
@@ -421,6 +424,8 @@ tasks:
 
   destroy-cluster:
     desc: Destroy Cluster
+    deps:
+      - delete-karpenter-crds
     cmds:
       - task: destroy-kube-support
       - task: destroy-eks
