@@ -4,10 +4,10 @@ locals {
   repository = "https://charts.konghq.com"
 
   labels = {
-    "kuma.io/sidecar-injection"    = "enabled"
     "app.kubernetes.io/app"        = local.app_name
     "app.kubernetes.io/managed-by" = "terraform"
     "app.kubernetes.io/owner"      = var.owner
+    "kuma.io/sidecar-injection"    = "enabled"
   }
 
   values = [

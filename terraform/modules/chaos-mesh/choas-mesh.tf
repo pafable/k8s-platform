@@ -11,6 +11,18 @@ locals {
     "app.kubernetes.io/managed-by" = "terraform"
     "app.kubernetes.io/owner"      = var.owner
   }
+
+  values = [
+    yamlencode({
+      chaosDaemon = {
+        runtime    = local.container_runtime
+        socketPath = local.socket_path
+      }
+      dashboard = {
+        securityMode = var.is_dashboard_security_enabled
+      }
+    })
+  ]
 }
 
 resource "kubernetes_namespace_v1" "chaos_ns" {
@@ -27,16 +39,5 @@ resource "helm_release" "chaos_mesh" {
   namespace        = kubernetes_namespace_v1.chaos_ns.metadata.0.name
   repository       = local.repo
   version          = var.chart_version
-
-  values = [
-    yamlencode({
-      chaosDaemon = {
-        runtime    = local.container_runtime
-        socketPath = local.socket_path
-      }
-      dashboard = {
-        securityMode = var.is_dashboard_security_enabled
-      }
-    })
-  ]
+  values           = local.values
 }

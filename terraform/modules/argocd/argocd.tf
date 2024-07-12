@@ -8,24 +8,6 @@ locals {
     "app.kubernetes.io/managed-by" = "terraform"
     "app.kubernetes.io/owner"      = var.owner
   }
-}
-
-resource "kubernetes_namespace_v1" "argocd_ns" {
-  metadata {
-    name   = "argocd"
-    labels = local.tf_labels
-  }
-}
-
-resource "helm_release" "argodcd" {
-  chart             = local.chart_name
-  create_namespace  = false
-  dependency_update = true
-  force_update      = true
-  name              = local.app_name
-  namespace         = kubernetes_namespace_v1.argocd_ns.metadata.0.name
-  repository        = local.helm_repo
-  version           = var.argocd_version
 
   values = [
     yamlencode({
@@ -52,4 +34,23 @@ resource "helm_release" "argodcd" {
       }
     })
   ]
+}
+
+resource "kubernetes_namespace_v1" "argocd_ns" {
+  metadata {
+    name   = local.app_name
+    labels = local.tf_labels
+  }
+}
+
+resource "helm_release" "argodcd" {
+  chart             = local.chart_name
+  create_namespace  = false
+  dependency_update = true
+  force_update      = true
+  name              = local.app_name
+  namespace         = kubernetes_namespace_v1.argocd_ns.metadata.0.name
+  repository        = local.helm_repo
+  values            = local.values
+  version           = var.argocd_version
 }

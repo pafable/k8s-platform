@@ -29,3 +29,9 @@ variable "owner" {
   type        = string
   default     = "devops"
 }
+
+variable "timeout" {
+  description = "Timeout for the resource"
+  type        = number
+  default     = 500
+}

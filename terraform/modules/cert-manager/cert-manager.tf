@@ -8,6 +8,15 @@ locals {
     "app.kubernetes.io/managed-by" = "terraform"
     "app.kubernetes.io/owner"      = var.owner
   }
+
+  values = [
+    yamlencode({
+      #         installCRDs = true
+      crds = {
+        keep = false
+      }
+    })
+  ]
 }
 
 resource "kubernetes_namespace_v1" "cert_manager_ns" {
@@ -23,14 +32,6 @@ resource "helm_release" "cert_manager" {
   name             = local.app_name
   namespace        = local.app_name
   repository       = local.repo
+  values           = local.values
   version          = var.cert_manager_version
-
-  values = [
-    yamlencode({
-      #         installCRDs = true
-      crds = {
-        keep = false
-      }
-    })
-  ]
 }
