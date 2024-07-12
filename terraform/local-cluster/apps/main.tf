@@ -53,9 +53,9 @@ module "postgresql_db_01" {
   depends_on = [module.cert_manager]
 }
 
-module "trivy_operator" {
-  source = "../../modules/trivy-operator"
-}
+# module "trivy_operator" {
+#   source = "../../modules/trivy-operator"
+# }
 
 ## this is testing how to deploy a helm chart
 # resource "kubernetes_namespace_v1" "my_app_ns" {
