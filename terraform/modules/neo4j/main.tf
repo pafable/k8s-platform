@@ -32,13 +32,13 @@ locals {
 }
 
 resource "helm_release" "neo4j" {
-  name             = local.neo4j_name
-  repository       = local.neo4j_chart_repo
   chart            = local.neo4j_chart
-  version          = var.helm_chart_version
-  namespace        = kubernetes_namespace_v1.neo4j_ns.metadata.0.name
   create_namespace = false
+  name             = local.neo4j_name
+  namespace        = kubernetes_namespace_v1.neo4j_ns.metadata.0.name
+  repository       = local.neo4j_chart_repo
   values           = local.values
+  version          = var.helm_chart_version
 }
 
 resource "kubernetes_namespace_v1" "neo4j_ns" {

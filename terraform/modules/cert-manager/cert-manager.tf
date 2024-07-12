@@ -1,5 +1,6 @@
 locals {
   app_name   = "cert-manager"
+  repo       = "https://charts.jetstack.io"
   chart_name = local.app_name
 
   labels = {
@@ -21,7 +22,7 @@ resource "helm_release" "cert_manager" {
   create_namespace = true
   name             = local.app_name
   namespace        = local.app_name
-  repository       = "https://charts.jetstack.io"
+  repository       = local.repo
   version          = var.cert_manager_version
 
   values = [

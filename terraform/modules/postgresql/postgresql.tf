@@ -63,11 +63,12 @@ resource "random_password" "db_user_password" {
 }
 
 resource "helm_release" "postgresql_db" {
-  name             = local.app_name
-  repository       = local.repo
   chart            = local.app_name
-  namespace        = kubernetes_namespace_v1.postgresql_ns.metadata[0].name
   create_namespace = false
-  version          = var.chart_version
+  force_update     = true
+  name             = local.app_name
+  namespace        = kubernetes_namespace_v1.postgresql_ns.metadata[0].name
+  repository       = local.repo
   values           = local.values
+  version          = var.chart_version
 }

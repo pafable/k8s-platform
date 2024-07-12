@@ -34,13 +34,14 @@ module "karpenter" {
 
 # This will install Karpenter kubernetes resources onto a cluster
 resource "helm_release" "karpenter" {
+  chart               = local.name
+  create_namespace    = true
+  force_update        = true
   name                = local.name
   namespace           = kubernetes_namespace_v1.karpenter_ns.metadata.0.name
-  create_namespace    = true
   repository          = "oci://public.ecr.aws/karpenter"
-  repository_username = data.aws_ecrpublic_authorization_token.token.user_name
   repository_password = data.aws_ecrpublic_authorization_token.token.password
-  chart               = local.name
+  repository_username = data.aws_ecrpublic_authorization_token.token.user_name
   timeout             = 500
   version             = var.helm_chart_version
   wait                = false
