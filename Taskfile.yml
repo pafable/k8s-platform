@@ -9,7 +9,7 @@ env:
   ELB_DNS_NAME: elb-dns-name
 
   # Terraform Backend Buckets
-  TF_BACKEND_BUCKET_DEV: pafable-tfstates-100
+  TF_BACKEND_BUCKET_DEV:  YOUR-TF-BACKEND-BUCKET-DEV
   TF_BACKEND_BUCKET_PROD: YOUR-TF-BACKEND-BUCKET-PROD
 
   # Terraform Directories for AWS
