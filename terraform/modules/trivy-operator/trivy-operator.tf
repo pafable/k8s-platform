@@ -1,6 +1,6 @@
 locals {
   app        = "trivy"
-  app_name   = "${local.app_name}-operator"
+  app_name   = "${local.app}-operator"
   chart_repo = "https://aquasecurity.github.io/helm-charts/"
 
   labels = {
