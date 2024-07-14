@@ -76,8 +76,7 @@ resource "kubernetes_deployment_v1" "pgadmin_deployment" {
   metadata {
     name      = "${local.pg_name}-server"
     namespace = kubernetes_namespace_v1.postgresql_ns.metadata[0].name
-
-    labels = local.pgadmin_labels
+    labels    = local.pgadmin_labels
   }
 
   spec {
@@ -89,8 +88,7 @@ resource "kubernetes_deployment_v1" "pgadmin_deployment" {
 
     template {
       metadata {
-        name = "${local.pg_name}-server"
-
+        name   = "${local.pg_name}-server"
         labels = local.pgadmin_labels
       }
 
