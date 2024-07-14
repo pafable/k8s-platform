@@ -1,11 +1,37 @@
 locals {
   name = "karpenter"
+  repo = "oci://public.ecr.aws/karpenter"
 
   labels = {
     "app.kubernetes.io/app"        = local.name
     "app.kubernetes.io/managed-by" = "terraform"
     "app.kubernetes.io/owner"      = var.owner
   }
+
+  values = [
+    yamlencode(
+      {
+        controller = {
+          resources = {
+            requests = {
+              cpu    = 1
+              memory = "1Gi"
+            }
+          }
+        }
+        settings = {
+          clusterName       = var.cluster_name
+          clusterEndpoint   = var.cluster_endpoint
+          interruptionQueue = module.karpenter.queue_name
+        }
+        serviceAccount = {
+          annotations = {
+            "eks.amazonaws.com/role-arn" = module.karpenter.iam_role_arn
+          }
+        }
+      }
+    )
+  ]
 }
 
 resource "kubernetes_namespace_v1" "karpenter_ns" {
@@ -34,39 +60,16 @@ module "karpenter" {
 
 # This will install Karpenter kubernetes resources onto a cluster
 resource "helm_release" "karpenter" {
+  chart               = local.name
+  create_namespace    = false
+  dependency_update   = true
   name                = local.name
   namespace           = kubernetes_namespace_v1.karpenter_ns.metadata.0.name
-  create_namespace    = true
-  repository          = "oci://public.ecr.aws/karpenter"
-  repository_username = data.aws_ecrpublic_authorization_token.token.user_name
+  repository          = local.repo
   repository_password = data.aws_ecrpublic_authorization_token.token.password
-  chart               = local.name
+  repository_username = data.aws_ecrpublic_authorization_token.token.user_name
   timeout             = 500
+  values              = local.values
   version             = var.helm_chart_version
   wait                = false
-
-  values = [
-    yamlencode(
-      {
-        controller = {
-          resources = {
-            requests = {
-              cpu    = 1
-              memory = "1Gi"
-            }
-          }
-        }
-        settings = {
-          clusterName       = var.cluster_name
-          clusterEndpoint   = var.cluster_endpoint
-          interruptionQueue = module.karpenter.queue_name
-        }
-        serviceAccount = {
-          annotations = {
-            "eks.amazonaws.com/role-arn" = module.karpenter.iam_role_arn
-          }
-        }
-      }
-    )
-  ]
 }

@@ -8,22 +8,6 @@ locals {
     "app.kubernetes.io/managed-by" = "terraform"
     "app.kubernetes.io/owner"      = var.owner
   }
-}
-
-resource "kubernetes_namespace_v1" "kong_mesh_ns" {
-  metadata {
-    name   = var.namespace
-    labels = local.labels
-  }
-}
-
-resource "helm_release" "kong_mesh" {
-  name             = local.app_name
-  repository       = local.repository
-  chart            = local.app_name
-  namespace        = kubernetes_namespace_v1.kong_mesh_ns.metadata[0].name
-  create_namespace = false
-  version          = var.chart_version
 
   values = [
     yamlencode({
@@ -36,4 +20,22 @@ resource "helm_release" "kong_mesh" {
       }
     })
   ]
+}
+
+resource "kubernetes_namespace_v1" "kong_mesh_ns" {
+  metadata {
+    name   = var.namespace
+    labels = local.labels
+  }
+}
+
+resource "helm_release" "kong_mesh" {
+  chart             = local.app_name
+  create_namespace  = false
+  dependency_update = true
+  name              = local.app_name
+  namespace         = kubernetes_namespace_v1.kong_mesh_ns.metadata[0].name
+  repository        = local.repository
+  values            = local.values
+  version           = var.chart_version
 }

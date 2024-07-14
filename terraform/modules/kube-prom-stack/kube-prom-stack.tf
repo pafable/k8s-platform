@@ -103,15 +103,6 @@ locals {
       ]
     }
   }
-}
-
-resource "helm_release" "kube_prom_stack" {
-  chart            = local.kube_chart_name
-  create_namespace = false
-  name             = var.app_name
-  namespace        = kubernetes_namespace_v1.kube_prom_ns.metadata.0.name
-  repository       = local.kube_chart_repo
-  version          = var.chart_version
 
   values = [
     yamlencode(
@@ -122,6 +113,17 @@ resource "helm_release" "kube_prom_stack" {
       )
     )
   ]
+}
+
+resource "helm_release" "kube_prom_stack" {
+  chart             = local.kube_chart_name
+  create_namespace  = false
+  dependency_update = true
+  name              = var.app_name
+  namespace         = kubernetes_namespace_v1.kube_prom_ns.metadata.0.name
+  repository        = local.kube_chart_repo
+  version           = var.chart_version
+  values            = local.values
 }
 
 resource "kubernetes_namespace_v1" "kube_prom_ns" {
