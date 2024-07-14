@@ -1,7 +1,7 @@
 locals {
   pg_name          = "pgadmin"
-  pgadmin_image    = "dpage/pgadmin4:8.8"
-  pgadmin_password = sensitive(random_password.password.result)
+  pgadmin_image    = var.pgadmin_image
+  pgadmin_password = length(var.pgadmin_password) == 0 ? nonsensitive(random_password.password.result) : var.pgadmin_password
 
   pgadmin_labels = {
     "app.kubernetes.io/name"       = local.pg_name
@@ -41,7 +41,8 @@ resource "kubernetes_secret_v1" "pgadmin_secrets" {
   }
 
   data = {
-    pgadmin_pass = local.pgadmin_password
+    username = var.pgadmin_email
+    password = sensitive(local.pgadmin_password)
   }
 
   type = "Opaque"
@@ -113,14 +114,14 @@ resource "kubernetes_deployment_v1" "pgadmin_deployment" {
 
           env {
             name  = "PGADMIN_DEFAULT_EMAIL"
-            value = var.admin_email
+            value = var.pgadmin_email
           }
 
           env {
             name = "PGADMIN_DEFAULT_PASSWORD"
             value_from {
               secret_key_ref {
-                key  = "pgadmin_pass"
+                key  = "password"
                 name = kubernetes_secret_v1.pgadmin_secrets.metadata[0].name
               }
             }

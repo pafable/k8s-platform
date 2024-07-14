@@ -4,7 +4,7 @@ variable "chart_version" {
   default     = "15.5.5"
 }
 
-variable "admin_email" {
+variable "pgadmin_email" {
   description = "The email address of the admin user"
   type        = string
   default     = "admin@example.com"
@@ -26,4 +26,16 @@ variable "owner" {
   description = "The owner of the resources"
   type        = string
   default     = "devops"
+}
+
+variable "pgadmin_image" {
+  description = "The image to use for pgAdmin"
+  type        = string
+  default     = "dpage/pgadmin4:8.9"
+}
+
+variable "pgadmin_password" {
+  description = "The password for the pgAdmin user"
+  type        = string
+  default     = ""
 }
