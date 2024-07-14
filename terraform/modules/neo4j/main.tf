@@ -10,35 +10,34 @@ locals {
   }
 
   values = [
-    yamlencode(
-      {
-        neo4j = {
-          name                   = local.neo4j_name
-          password               = "<?????>"
-          acceptLicenseAgreement = "yes"
-        }
+    yamlencode({
+      neo4j = {
+        name                   = local.neo4j_name
+        password               = "<?????>"
+        acceptLicenseAgreement = "yes"
+      }
 
-        volumes = {
-          data = {
-            mode = "defaultStorageClass"
-            defaultStorageClass = {
-              storage = "2Gi"
-            }
+      volumes = {
+        data = {
+          mode = "defaultStorageClass"
+          defaultStorageClass = {
+            storage = "2Gi"
           }
         }
       }
-    )
+    })
   ]
 }
 
 resource "helm_release" "neo4j" {
-  name             = local.neo4j_name
-  repository       = local.neo4j_chart_repo
-  chart            = local.neo4j_chart
-  version          = var.helm_chart_version
-  namespace        = kubernetes_namespace_v1.neo4j_ns.metadata.0.name
-  create_namespace = false
-  values           = local.values
+  chart             = local.neo4j_chart
+  create_namespace  = false
+  dependency_update = true
+  name              = local.neo4j_name
+  namespace         = kubernetes_namespace_v1.neo4j_ns.metadata.0.name
+  repository        = local.neo4j_chart_repo
+  values            = local.values
+  version           = var.helm_chart_version
 }
 
 resource "kubernetes_namespace_v1" "neo4j_ns" {

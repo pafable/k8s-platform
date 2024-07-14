@@ -1,5 +1,6 @@
 locals {
-  app_name   = "trivy-operator"
+  app        = "trivy"
+  app_name   = "${local.app_name}-operator"
   chart_repo = "https://aquasecurity.github.io/helm-charts/"
 
   labels = {
@@ -19,7 +20,7 @@ locals {
 
 resource "kubernetes_namespace_v1" "trivy_ns" {
   metadata {
-    name   = "trivy-system"
+    name   = "${local.app}-system"
     labels = local.labels
   }
 }

@@ -4,12 +4,6 @@ variable "chart_version" {
   default     = "15.5.5"
 }
 
-variable "pgadmin_email" {
-  description = "The email address of the admin user"
-  type        = string
-  default     = "admin@example.com"
-}
-
 variable "namespace" {
   description = "The namespace to install the Helm chart into"
   type        = string
@@ -26,6 +20,12 @@ variable "owner" {
   description = "The owner of the resources"
   type        = string
   default     = "devops"
+}
+
+variable "pgadmin_email" {
+  description = "The email address of the admin user"
+  type        = string
+  default     = "admin@example.com"
 }
 
 variable "pgadmin_image" {
