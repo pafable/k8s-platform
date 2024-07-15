@@ -38,7 +38,8 @@ module "kong_ingress" {
 # }
 
 module "jenkins" {
-  source = "../../modules/jenkins"
+  source     = "../../modules/jenkins"
+  depends_on = [module.cert_manager]
 }
 
 module "kube_prom_stack" {
