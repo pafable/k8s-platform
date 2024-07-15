@@ -1,7 +1,7 @@
 variable "helm_chart_version" {
   description = "The version of the Helm chart to deploy"
   type        = string
-  default     = "5.20.0"
+  default     = "5.21.0"
 }
 
 variable "owner" {

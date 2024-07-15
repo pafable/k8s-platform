@@ -13,7 +13,7 @@ locals {
     yamlencode({
       neo4j = {
         name                   = local.neo4j_name
-        password               = "<?????>"
+        passwordFromSecret     = kubernetes_secret_v1.neo4j_secret.metadata.0.name
         acceptLicenseAgreement = "yes"
       }
 
@@ -55,8 +55,13 @@ resource "kubernetes_secret_v1" "neo4j_secret" {
   }
 
   data = {
-    password = "REPLACE-WITH-YOUR-PW"
+    password = sensitive(random_password.neo4j_password.result)
   }
 
   type = "opaque"
+}
+
+resource "random_password" "neo4j_password" {
+  length  = 25
+  special = false
 }
