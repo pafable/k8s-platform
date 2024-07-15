@@ -10,34 +10,35 @@ locals {
   }
 
   values = [
-    yamlencode({
-      neo4j = {
-        name                   = local.neo4j_name
-        passwordFromSecret     = kubernetes_secret_v1.neo4j_secret.metadata.0.name
-        acceptLicenseAgreement = "yes"
-      }
+    yamlencode(
+      {
+        neo4j = {
+          name                   = local.neo4j_name
+          password               = "<?????>"
+          acceptLicenseAgreement = "yes"
+        }
 
-      volumes = {
-        data = {
-          mode = "defaultStorageClass"
-          defaultStorageClass = {
-            storage = "2Gi"
+        volumes = {
+          data = {
+            mode = "defaultStorageClass"
+            defaultStorageClass = {
+              storage = "2Gi"
+            }
           }
         }
       }
-    })
+    )
   ]
 }
 
 resource "helm_release" "neo4j" {
-  chart             = local.neo4j_chart
-  create_namespace  = false
-  dependency_update = true
-  name              = local.neo4j_name
-  namespace         = kubernetes_namespace_v1.neo4j_ns.metadata.0.name
-  repository        = local.neo4j_chart_repo
-  values            = local.values
-  version           = var.helm_chart_version
+  chart            = local.neo4j_chart
+  create_namespace = false
+  name             = local.neo4j_name
+  namespace        = kubernetes_namespace_v1.neo4j_ns.metadata.0.name
+  repository       = local.neo4j_chart_repo
+  values           = local.values
+  version          = var.helm_chart_version
 }
 
 resource "kubernetes_namespace_v1" "neo4j_ns" {
@@ -55,13 +56,8 @@ resource "kubernetes_secret_v1" "neo4j_secret" {
   }
 
   data = {
-    password = sensitive(random_password.neo4j_password.result)
+    password = "REPLACE-WITH-YOUR-PW"
   }
 
   type = "opaque"
-}
-
-resource "random_password" "neo4j_password" {
-  length  = 25
-  special = false
 }
