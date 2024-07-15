@@ -16,12 +16,17 @@ locals {
       }
 
       controller = {
+        admin = {
+          existingSecret = kubernetes_secret_v1.jenkins_secret.metadata[0].name
+        }
+
         installPlugins = local.plugins
         jenkinsUrl     = local.jenkins_url
+        podLabels      = local.labels
+      }
 
-        persistence = {
-          existingClaim = kubernetes_persistent_volume_claim_v1.jenkins_pvc.metadata[0].name
-        }
+      persistence = {
+        existingClaim = kubernetes_persistent_volume_claim_v1.jenkins_pvc.metadata[0].name
       }
     })
   ]
@@ -32,6 +37,25 @@ resource "kubernetes_namespace_v1" "jenkins_ns" {
     name   = local.app_name
     labels = local.labels
   }
+}
+
+resource "random_password" "password" {
+  length = 25
+}
+
+resource "kubernetes_secret_v1" "jenkins_secret" {
+  metadata {
+    name      = "${local.app_name}-secrets"
+    namespace = kubernetes_namespace_v1.jenkins_ns.metadata[0].name
+    labels    = local.labels
+  }
+
+  data = {
+    jenkins-admin-user     = "${local.app_name}-user"
+    jenkins-admin-password = sensitive(random_password.password.result)
+  }
+
+  type = "Opaque"
 }
 
 resource "kubernetes_persistent_volume_claim_v1" "jenkins_pvc" {
