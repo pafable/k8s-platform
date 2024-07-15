@@ -3,7 +3,7 @@ ___
 ### Pre-requisites
 CRDs must be installed before running terraform.
 
-__Cert-Manager CRD, v1.15.0__
+__Cert-Manager CRD, v1.15.1__
 
 This is needed because cert-manager crd is needed to create issuer.
 ```shell
