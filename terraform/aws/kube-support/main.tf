@@ -55,7 +55,6 @@ module "kong_ingress" {
 
 module "kube_prom_stack" {
   source     = "../../modules/kube-prom-stack"
-  is_cloud   = false
   depends_on = [module.cert_manager]
 }
 
