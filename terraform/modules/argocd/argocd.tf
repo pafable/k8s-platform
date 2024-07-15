@@ -38,7 +38,7 @@ locals {
 
 resource "kubernetes_namespace_v1" "argocd_ns" {
   metadata {
-    name   = "argocd"
+    name   = local.app_name
     labels = local.tf_labels
   }
 }
@@ -47,6 +47,7 @@ resource "helm_release" "argodcd" {
   chart             = local.chart_name
   create_namespace  = false
   dependency_update = true
+  force_update      = true
   name              = local.app_name
   namespace         = kubernetes_namespace_v1.argocd_ns.metadata.0.name
   repository        = local.helm_repo

@@ -4,10 +4,10 @@ locals {
   repository = "https://charts.konghq.com"
 
   labels = {
-    "kuma.io/sidecar-injection"    = "enabled"
     "app.kubernetes.io/app"        = local.app_name
     "app.kubernetes.io/managed-by" = "terraform"
     "app.kubernetes.io/owner"      = var.owner
+    "kuma.io/sidecar-injection"    = "enabled"
   }
 
   values = [
@@ -29,6 +29,7 @@ resource "helm_release" "kong_ingress" {
   chart             = local.chart
   create_namespace  = false
   dependency_update = true
+  force_update      = true
   name              = local.app_name
   namespace         = kubernetes_namespace_v1.kong_ingress_ns.metadata[0].name
   repository        = local.repository

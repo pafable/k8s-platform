@@ -1,6 +1,5 @@
 locals {
   name = "karpenter"
-  repo = "oci://public.ecr.aws/karpenter"
 
   labels = {
     "app.kubernetes.io/app"        = local.name
@@ -8,27 +7,31 @@ locals {
     "app.kubernetes.io/owner"      = var.owner
   }
 
+  repo = "oci://public.ecr.aws/karpenter"
+
   values = [
-    yamlencode({
-      controller = {
-        resources = {
-          requests = {
-            cpu    = 1
-            memory = "1Gi"
+    yamlencode(
+      {
+        controller = {
+          resources = {
+            requests = {
+              cpu    = 1
+              memory = "1Gi"
+            }
+          }
+        }
+        settings = {
+          clusterName       = var.cluster_name
+          clusterEndpoint   = var.cluster_endpoint
+          interruptionQueue = module.karpenter.queue_name
+        }
+        serviceAccount = {
+          annotations = {
+            "eks.amazonaws.com/role-arn" = module.karpenter.iam_role_arn
           }
         }
       }
-      settings = {
-        clusterName       = var.cluster_name
-        clusterEndpoint   = var.cluster_endpoint
-        interruptionQueue = module.karpenter.queue_name
-      }
-      serviceAccount = {
-        annotations = {
-          "eks.amazonaws.com/role-arn" = module.karpenter.iam_role_arn
-        }
-      }
-    })
+    )
   ]
 }
 
@@ -61,12 +64,13 @@ resource "helm_release" "karpenter" {
   chart               = local.name
   create_namespace    = false
   dependency_update   = true
+  force_update        = true
   name                = local.name
   namespace           = kubernetes_namespace_v1.karpenter_ns.metadata.0.name
   repository          = local.repo
   repository_password = data.aws_ecrpublic_authorization_token.token.password
   repository_username = data.aws_ecrpublic_authorization_token.token.user_name
-  timeout             = 500
+  timeout             = var.timeout
   values              = local.values
   version             = var.helm_chart_version
   wait                = false

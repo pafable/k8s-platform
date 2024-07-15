@@ -10,22 +10,24 @@ locals {
   }
 
   values = [
-    yamlencode({
-      neo4j = {
-        name                   = local.neo4j_name
-        passwordFromSecret     = kubernetes_secret_v1.neo4j_secret.metadata.0.name
-        acceptLicenseAgreement = "yes"
-      }
+    yamlencode(
+      {
+        neo4j = {
+          name                   = local.neo4j_name
+          password               = "<?????>"
+          acceptLicenseAgreement = "yes"
+        }
 
-      volumes = {
-        data = {
-          mode = "defaultStorageClass"
-          defaultStorageClass = {
-            storage = "2Gi"
+        volumes = {
+          data = {
+            mode = "defaultStorageClass"
+            defaultStorageClass = {
+              storage = "2Gi"
+            }
           }
         }
       }
-    })
+    )
   ]
 }
 
@@ -55,13 +57,8 @@ resource "kubernetes_secret_v1" "neo4j_secret" {
   }
 
   data = {
-    password = sensitive(random_password.neo4j_password.result)
+    password = "REPLACE-WITH-YOUR-PW"
   }
 
   type = "opaque"
-}
-
-resource "random_password" "neo4j_password" {
-  length  = 25
-  special = false
 }
