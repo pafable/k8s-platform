@@ -31,7 +31,7 @@ resource "kubernetes_manifest" "jenkins_cert" {
       privateKey = {
         algorithm = "ECDSA"
         encoding  = "PKCS1"
-        size      = 512
+        size      = 521
       }
 
       secretName = "${local.app_name}-tls"

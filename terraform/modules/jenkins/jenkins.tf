@@ -1,7 +1,7 @@
 locals {
   app_name    = "jenkins"
   chart_name  = local.app_name
-  jenkins_url = "${local.app_name}.local"
+  jenkins_url = "https://${local.app_name}.local"
 
   labels = {
     "app.kubernetes.io/name"       = local.app_name
@@ -24,9 +24,14 @@ locals {
           "git:5.2.2",
           "github:1.39.0",
           "kubernetes:4253.v7700d91739e5",
+          "login-theme:146.v64a_da_cf70ea_6",
+          "matrix-auth:3.2.2",
           "pipeline-build-step:540.vb_e8849e1a_b_d8",
+          "pipeline-stage-view:2.34",
+          "prometheus:773.v3b_62d8178eec",
           "rebuild:332.va_1ee476d8f6d",
           "workflow-aggregator:600.vb_57cdd26fdd7",
+          "ws-cleanup:0.46",
         ]
 
         jenkinsUrl = local.jenkins_url
