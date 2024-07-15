@@ -13,7 +13,9 @@ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/
 
 __Gateway-API CRD, v1.0.0__
 
-This is needed because gateway crd is needed to create kong-ingress and kong-mesh
+This is needed because gateway crd is needed to create kong-ingress and kong-mesh.
+
+*NOTE: Kong only supports v1.0.0*
 ```shell
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml
 ```
