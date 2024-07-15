@@ -33,11 +33,12 @@ resource "kubernetes_namespace_v1" "chaos_ns" {
 }
 
 resource "helm_release" "chaos_mesh" {
-  chart            = local.app_name
-  create_namespace = false
-  name             = local.app_name
-  namespace        = kubernetes_namespace_v1.chaos_ns.metadata.0.name
-  repository       = local.repo
-  version          = var.chart_version
-  values           = local.values
+  chart             = local.app_name
+  create_namespace  = false
+  dependency_update = true
+  name              = local.app_name
+  namespace         = kubernetes_namespace_v1.chaos_ns.metadata.0.name
+  repository        = local.repo
+  values            = local.values
+  version           = var.chart_version
 }

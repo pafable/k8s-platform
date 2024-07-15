@@ -62,7 +62,8 @@ module "karpenter" {
 # This will install Karpenter kubernetes resources onto a cluster
 resource "helm_release" "karpenter" {
   chart               = local.name
-  create_namespace    = true
+  create_namespace    = false
+  dependency_update   = true
   force_update        = true
   name                = local.name
   namespace           = kubernetes_namespace_v1.karpenter_ns.metadata.0.name

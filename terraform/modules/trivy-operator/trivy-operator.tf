@@ -25,12 +25,12 @@ resource "kubernetes_namespace_v1" "trivy_ns" {
 }
 
 resource "helm_release" "trivy_operator" {
-  chart            = local.app_name
-  create_namespace = false
-  force_update     = true
-  name             = local.app_name
-  namespace        = kubernetes_namespace_v1.trivy_ns.metadata.0.name
-  repository       = local.chart_repo
-  values           = local.values
-  version          = var.trivy_operator_version
+  chart             = local.app_name
+  create_namespace  = false
+  dependency_update = true
+  name              = local.app_name
+  namespace         = kubernetes_namespace_v1.trivy_ns.metadata.0.name
+  repository        = local.chart_repo
+  values            = local.values
+  version           = var.trivy_operator_version
 }

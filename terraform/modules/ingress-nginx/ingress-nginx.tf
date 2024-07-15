@@ -20,11 +20,12 @@ resource "kubernetes_namespace_v1" "ingress_nginx_ns" {
 
 # Ingress Nginx
 resource "helm_release" "ingress_nginx_controller" {
-  chart            = local.chart_name
-  create_namespace = false
-  name             = local.chart_name
-  namespace        = kubernetes_namespace_v1.ingress_nginx_ns.metadata[0].name
-  repository       = local.chart_repo
-  version          = var.chart_version
-  timeout          = var.timeout
+  chart             = local.chart_name
+  create_namespace  = false
+  dependency_update = true
+  name              = local.chart_name
+  namespace         = kubernetes_namespace_v1.ingress_nginx_ns.metadata[0].name
+  repository        = local.chart_repo
+  version           = var.chart_version
+  timeout           = var.timeout
 }
