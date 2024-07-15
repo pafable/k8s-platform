@@ -75,7 +75,9 @@ locals {
     min_size               = var.node_min_size
     vpc_security_group_ids = [aws_security_group.allow_all_ingress_sg.id]
 
-    launch_template_tags = { Name = "${local.cluster_name}-node" }
+    launch_template_tags = {
+      Name = "${local.cluster_name}-node"
+    }
   }
 
   private_subnet_tags = {
