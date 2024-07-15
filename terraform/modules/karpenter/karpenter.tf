@@ -10,28 +10,26 @@ locals {
   repo = "oci://public.ecr.aws/karpenter"
 
   values = [
-    yamlencode(
-      {
-        controller = {
-          resources = {
-            requests = {
-              cpu    = 1
-              memory = "1Gi"
-            }
-          }
-        }
-        settings = {
-          clusterName       = var.cluster_name
-          clusterEndpoint   = var.cluster_endpoint
-          interruptionQueue = module.karpenter.queue_name
-        }
-        serviceAccount = {
-          annotations = {
-            "eks.amazonaws.com/role-arn" = module.karpenter.iam_role_arn
+    yamlencode({
+      controller = {
+        resources = {
+          requests = {
+            cpu    = 1
+            memory = "1Gi"
           }
         }
       }
-    )
+      settings = {
+        clusterName       = var.cluster_name
+        clusterEndpoint   = var.cluster_endpoint
+        interruptionQueue = module.karpenter.queue_name
+      }
+      serviceAccount = {
+        annotations = {
+          "eks.amazonaws.com/role-arn" = module.karpenter.iam_role_arn
+        }
+      }
+    })
   ]
 }
 
