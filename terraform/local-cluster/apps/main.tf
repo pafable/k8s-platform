@@ -37,6 +37,11 @@ module "kong_ingress" {
 #   source = "../../modules/kong-mesh"
 # }
 
+module "jenkins" {
+  source     = "../../modules/jenkins"
+  depends_on = [module.cert_manager]
+}
+
 module "kube_prom_stack" {
   source     = "../../modules/kube-prom-stack"
   is_cloud   = false
