@@ -14,7 +14,7 @@ locals {
   ]
 
   jcasc_scripts_indexed_map = zipmap(
-    [ for index in range(length(local.jcasc_scripts)) : format("%03d", index) ], local.jcasc_scripts
+    [ for i in range(length(local.jcasc_scripts)) : format("%03d", i) ], local.jcasc_scripts
   )
 
   jcasc_scripts_map = {
