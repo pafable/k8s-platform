@@ -5,7 +5,7 @@ locals {
       script = {
         jenkins = {
           systemMessage = format(
-            "${var.owner}'s Jenkins Server. Created on %s",
+            "${title(var.owner)}'s Jenkins Server. Created on %s",
             formatdate("DD MMM YYYY hh:mm ZZZ", timestamp())
           )
         }
