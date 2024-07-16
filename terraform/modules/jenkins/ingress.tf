@@ -4,7 +4,7 @@ locals {
   service_name = local.app_name
 }
 
-resource "kubernetes_ingress_v1" "argocd_ingress" {
+resource "kubernetes_ingress_v1" "jenkins_ingress" {
   metadata {
     name      = "${local.app_name}-ingress"
     namespace = kubernetes_namespace_v1.jenkins_ns.metadata.0.name
