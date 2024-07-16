@@ -18,7 +18,6 @@ locals {
       controller = {
         installPlugins = local.plugins
         jenkinsUrl     = local.jenkins_url
-        podLabels      = local.labels
 
         admin = {
           existingSecret = kubernetes_secret_v1.jenkins_secret.metadata[0].name
