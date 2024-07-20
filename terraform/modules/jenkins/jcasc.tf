@@ -18,7 +18,6 @@ locals {
   )
 
   jcasc_scripts_map = {
-    for k, v in local.jcasc_scripts_indexed_map : "${k}-${v.name}.yaml" =>
-    yamlencode(v.script)
+    for k, v in local.jcasc_scripts_indexed_map : "${k}-${v.name}.yaml" => yamlencode(v.script)
   }
 }
