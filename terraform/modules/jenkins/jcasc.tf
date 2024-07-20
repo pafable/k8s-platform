@@ -1,12 +1,14 @@
 locals {
+  edt_tz = timeadd(timestamp(), "-4h")
+
   jcasc_scripts = [
     {
       name = "main-config"
       script = {
         jenkins = {
           systemMessage = format(
-            "${title(var.owner)}'s Jenkins Server. Created on %s",
-            formatdate("DD MMM YYYY hh:mm ZZZ", timestamp())
+            "${title(var.owner)}'s Jenkins Server. Created on %s EDT",
+            formatdate("DD MMM YYYY hh:mm", local.edt_tz)
           )
         }
       }
