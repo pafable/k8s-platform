@@ -12,6 +12,18 @@ locals {
           )
         }
 
+        jobs = [
+          {
+            script = <<-EOT
+            job('example') {
+               steps {
+                shell('echo Hello World!')
+               }
+            }
+            EOT
+          }
+        ]
+
         security = {
           scriptApproval = {
             approvedScriptHashes = [
