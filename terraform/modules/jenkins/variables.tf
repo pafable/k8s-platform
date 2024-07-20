@@ -7,7 +7,7 @@ variable "code" {
 variable "helm_chart_version" {
   description = "helm chart version"
   type        = string
-  default     = "5.4.2"
+  default     = "5.4.3"
 }
 
 variable "helm_repo" {
