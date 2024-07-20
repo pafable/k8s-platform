@@ -21,6 +21,12 @@ locals {
           }
         }
 
+        unclassified = {
+          timestamper = {
+            allPipelines = true
+          }
+        }
+
         tool = {
           terraform = {
             installations = [
