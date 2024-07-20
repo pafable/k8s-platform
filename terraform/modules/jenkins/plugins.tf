@@ -17,6 +17,7 @@ locals {
     "rebuild",
     "role-strategy",
     "timestamper",
+    "terraform",
     "workflow-aggregator",
     "ws-cleanup",
   ]
