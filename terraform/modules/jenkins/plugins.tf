@@ -6,6 +6,7 @@ locals {
     "docker-workflow:580.vc0c340686b_54",
     "git:5.2.2",
     "github:1.39.0",
+    "job-dsl:1.87",
     "kubernetes:4253.v7700d91739e5",
     "login-theme:146.v64a_da_cf70ea_6",
     "matrix-auth:3.2.2",
