@@ -3,10 +3,11 @@ final String platform_destroy = 'k8s-platform-destroy'
 final String platform_repo = 'https://github.com/pafable/k8s-platform.git'
 final String platform_branch = 'refs/heads/master'
 final String platform_script_path = 'cicd/deploy/Jenkinsfile'
+final String agent_label = 'jenkins-jenkins-agent'
 
 pipeline {
     agent {
-      label 'jenkins-jenkins-agent'
+      label "${agent_label}"
     }
 
     options {
@@ -14,10 +15,6 @@ pipeline {
             time: 5,
             unit: 'MINUTES'
         )
-    }
-
-    tools {
-      terraform 'tf-1-9-2'
     }
 
     stages{
