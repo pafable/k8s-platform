@@ -1,6 +1,6 @@
 final String platform_create = 'k8s-platform-create'
 final String platform_repo = 'https://github.com/pafable/k8s-platform.git'
-final String platform_branch = 'refs/head/master'
+final String platform_branch = 'refs/heads/master'
 final String platform_script_path = 'cicd/deploy/Jenkinsfile'
 
 pipeline {
