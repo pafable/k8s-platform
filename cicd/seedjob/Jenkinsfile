@@ -1,4 +1,5 @@
 final String platform_create = 'k8s-platform-create'
+final String platform_destroy = 'k8s-platform-destroy'
 final String platform_repo = 'https://github.com/pafable/k8s-platform.git'
 final String platform_branch = 'refs/heads/master'
 final String platform_script_path = 'cicd/deploy/Jenkinsfile'
@@ -24,6 +25,23 @@ pipeline {
             steps {
                 jobDsl scriptText: """
                     pipelineJob("${platform_create}") {
+                        definition {
+                            cpsScm {
+                                scm {
+                                    git {
+                                        remote {
+                                            url("${platform_repo}")
+                                        }
+                                        branch("${platform_branch}")
+                                    }
+                                }
+                                scriptPath("${platform_script_path}")
+                                lightweight()
+                            }
+                        }
+                    }
+
+                    pipelineJob("${platform_destroy}") {
                         definition {
                             cpsScm {
                                 scm {
