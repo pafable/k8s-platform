@@ -3,6 +3,13 @@ pipeline {
       label 'jenkins-jenkins-agent'
     }
 
+    options {
+        timeout(
+            time: 5,
+            unit: 'MINUTES'
+        )
+    }
+
     tools {
       terraform 'tf-1-9-2'
     }
