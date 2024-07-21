@@ -1,6 +1,7 @@
-def platform_create = 'k8s-platform-create'
-def platform_repo = 'https://github.com/pafable/k8s-platform.git'
-def platform_branch = 'refs/head/master'
+final String platform_create = 'k8s-platform-create'
+final String platform_repo = 'https://github.com/pafable/k8s-platform.git'
+final String platform_branch = 'refs/head/master'
+final String platform_script_path = 'cicd/deploy/Jenkinsfile'
 
 pipeline {
     agent {
@@ -28,11 +29,12 @@ pipeline {
                                 scm {
                                     git {
                                         remote {
-                                            url('https://github.com/jenkinsci/job-dsl-plugin.git')
+                                            url("${platform_repo}")
                                         }
-                                        branch('*/master')
+                                        branch("${platform_branch}")
                                     }
                                 }
+                                scriptPath("${platform_script_path}")
                                 lightweight()
                             }
                         }
