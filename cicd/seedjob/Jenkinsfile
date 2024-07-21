@@ -1,0 +1,24 @@
+pipeline {
+    agent {
+      label 'jenkins-jenkins-agent'
+    }
+
+    tools {
+      terraform 'tf-1-9-2'
+    }
+
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+
+        stage('tf check') {
+            steps {
+                echo 'terraform version'
+            }
+        }
+    }
+}

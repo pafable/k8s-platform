@@ -24,6 +24,7 @@ locals {
                   scm {
                     git('https://github.com/jenkinsci/job-dsl-plugin.git')
                   }
+                  scriptPath('cicd/seedjob/Jenkinsfile')
                 }
               }
               throttleConcurrentBuilds {
