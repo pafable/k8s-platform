@@ -39,9 +39,7 @@ pipeline {
                             }
                         }
                     }
-                """
 
-                jobDsl scriptText: """
                     pipelineJob("this-is-a-test") {
                         definition {
                             cpsScm {
