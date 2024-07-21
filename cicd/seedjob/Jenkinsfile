@@ -40,6 +40,25 @@ pipeline {
                         }
                     }
                 """
+
+                jobDsl scriptText: """
+                    pipelineJob("this-is-a-test") {
+                        definition {
+                            cpsScm {
+                                scm {
+                                    git {
+                                        remote {
+                                            url("${platform_repo}")
+                                        }
+                                        branch("${platform_branch}")
+                                    }
+                                }
+                                scriptPath("${platform_script_path}")
+                                lightweight()
+                            }
+                        }
+                    }
+                """
             }
         }
     }
