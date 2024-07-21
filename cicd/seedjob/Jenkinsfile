@@ -1,3 +1,6 @@
+def platform_create = 'k8s-platform-create'
+def platform_repo = 'https://github.com/pafable/k8s-platform.git'
+
 pipeline {
     agent {
       label 'jenkins-jenkins-agent'
@@ -10,45 +13,26 @@ pipeline {
         )
     }
 
-    tools {
-      terraform 'tf-1-9-2'
-    }
-
-
-    stages {
-        stage('Hello') {
-            steps {
-                echo 'hello this is a seed job'
-            }
-        }
-
-        stage('tf check') {
-            steps {
-                sh 'terraform version'
-            }
-        }
-
-        stage('seeding') {
-            steps {
-                jobDsl scriptText: """
-                    pipelineJob('job-dsl-plugin') {
-                        definition {
-                            cpsScm {
-                                scm {
-                                    git {
-                                        remote {
-                                            url('https://github.com/jenkinsci/job-dsl-plugin.git')
-                                        }
-                                        branch('*/master')
+    stage('seeding') {
+        steps {
+            jobDsl scriptText: """
+                pipelineJob("${platform_create}") {
+                    definition {
+                        cpsScm {
+                            scm {
+                                git {
+                                    remote {
+                                        url("${platform_repo}")
                                     }
+                                    branch('refs/head/master')
                                 }
-                                lightweight()
                             }
+                            lightweight()
                         }
                     }
-                """
-            }
-
+                }
+            """
         }
+    }
     }
 }
