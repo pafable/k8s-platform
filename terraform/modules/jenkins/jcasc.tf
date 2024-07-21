@@ -19,7 +19,6 @@ locals {
           {
             script = <<-EOT
             pipelineJob('seedjob') {
-              displayName('seed job')
               description('seedjob for jenkins.local')
               definition {
                 cpsScm {
