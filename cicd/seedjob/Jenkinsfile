@@ -17,7 +17,13 @@ pipeline {
 
         stage('tf check') {
             steps {
-                echo 'terraform version'
+                sh 'terraform version'
+            }
+        }
+
+        stage('sleep') {
+            steps {
+                sh 'sleep 15'
             }
         }
     }

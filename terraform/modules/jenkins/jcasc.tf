@@ -1,5 +1,7 @@
 locals {
-  edt_tz = timeadd(timestamp(), "-4h")
+  edt_tz       = timeadd(timestamp(), "-4h")
+  seed_branch  = "jenkins-seed"
+  seed_git_url = "https://github.com/pafable/k8s-platform.git"
 
   jcasc_scripts = [
     {
@@ -22,9 +24,14 @@ locals {
                 cpsScm {
                   lightweight()
                   scm {
-                    git('https://github.com/jenkinsci/job-dsl-plugin.git')
+                    git{
+                      branch("${local.seed_branch}")
+                      remote {
+                        url("${local.seed_git_url}")
+                      }
+                    }
                   }
-                  scriptPath('cicd/seedjob/Jenkinsfile')
+                  scriptPath('cicd/seedjob/Jenkins')
                 }
               }
               throttleConcurrentBuilds {
