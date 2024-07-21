@@ -1,8 +1,8 @@
 locals {
-  edt_tz       = timeadd(timestamp(), "-4h")
-  seed_branch  = "jenkins-seed"
-  seed_git_url = "https://github.com/pafable/k8s-platform.git"
-  seed_script_path = "cicd/seedjob/Jenkins"
+  edt_tz           = timeadd(timestamp(), "-4h")
+  seed_branch      = "jenkins-seed"
+  seed_git_url     = "https://github.com/pafable/k8s-platform.git"
+  seed_script_path = "cicd/seedjob/Jenkinsfile"
 
   jcasc_scripts = [
     {
@@ -20,20 +20,26 @@ locals {
             script = <<-EOT
             pipelineJob('seedjob') {
               description('seedjob for jenkins.local')
+
               definition {
+
                 cpsScm {
                   lightweight()
+
                   scm {
                     git{
                       branch("${local.seed_branch}")
+
                       remote {
                         url("${local.seed_git_url}")
                       }
                     }
                   }
+
                   scriptPath("${local.seed_script_path}")
                 }
               }
+
               properties {
                 disableConcurrentBuilds()
               }
