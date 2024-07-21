@@ -30,7 +30,7 @@ pipeline {
 
         stage('seeding') {
             jobDsl scriptText: """
-                pipelineJob('job-dsl-plugin') {
+                pipeline('job-dsl-plugin') {
                     definition {
                         cpsScm {
                             scm {
