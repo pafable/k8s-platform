@@ -29,6 +29,7 @@ pipeline {
         }
 
         stage('seeding') {
+        steps {
             jobDsl scriptText: """
                 pipelineJob('job-dsl-plugin') {
                     definition {
@@ -46,6 +47,7 @@ pipeline {
                     }
                 }
             """
+            }
         }
     }
 }
