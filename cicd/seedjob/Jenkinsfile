@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Hello') {
             steps {
-                echo 'Hello World'
+                echo 'hello this is a seed job'
             }
         }
 

@@ -1,5 +1,5 @@
 locals {
-  edt_tz           = timeadd(timestamp(), "-4h")
+  edt_tz           = timeadd(timestamp(), "-4h") # EDT is -4h from UTC
   seed_branch      = "jenkins-seed"
   seed_git_url     = "https://github.com/pafable/k8s-platform.git"
   seed_script_path = "cicd/seedjob/Jenkinsfile"
@@ -44,6 +44,7 @@ locals {
                 disableConcurrentBuilds()
               }
             }
+
             EOT
           }
         ]

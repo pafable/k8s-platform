@@ -64,3 +64,6 @@ https://hub.docker.com/r/dpage/pgadmin4/
 
 ### 8. Trivy Operator
 https://github.com/aquasecurity/trivy-operator
+
+### 9. Jenkins
+https://github.com/jenkinsci/helm-charts
