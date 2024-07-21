@@ -2,6 +2,7 @@ locals {
   edt_tz       = timeadd(timestamp(), "-4h")
   seed_branch  = "jenkins-seed"
   seed_git_url = "https://github.com/pafable/k8s-platform.git"
+  seed_script_path = "cicd/seedjob/Jenkins"
 
   jcasc_scripts = [
     {
@@ -31,12 +32,11 @@ locals {
                       }
                     }
                   }
-                  scriptPath('cicd/seedjob/Jenkins')
+                  scriptPath("${local.seed_script_path}")
                 }
               }
-              throttleConcurrentBuilds {
-                maxPerNode(1)
-                maxTotal(1)
+              properties {
+                disableConcurrentBuilds()
               }
             }
             EOT
