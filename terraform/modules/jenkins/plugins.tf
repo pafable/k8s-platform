@@ -6,6 +6,7 @@ locals {
     "docker-workflow",
     "git",
     "github",
+    "javax-mail-api",
     "job-dsl",
     "kubernetes",
     "login-theme",
@@ -16,8 +17,10 @@ locals {
     "prometheus",
     "rebuild",
     "role-strategy",
+    "sshd",
     "timestamper",
     "terraform",
+    "trilead-api",
     "workflow-aggregator",
     "ws-cleanup",
   ]

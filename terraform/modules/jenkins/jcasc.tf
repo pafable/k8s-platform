@@ -15,10 +15,21 @@ locals {
         jobs = [
           {
             script = <<-EOT
-            job('example') {
-               steps {
-                shell('echo Hello World!')
-               }
+            pipelineJob('seedjob') {
+              displayName('seed job')
+              description('seedjob for jenkins.local')
+              definition {
+                cpsScm {
+                  lightweight()
+                  scm {
+                    git('https://github.com/jenkinsci/job-dsl-plugin.git')
+                  }
+                }
+              }
+              throttleConcurrentBuilds {
+                maxPerNode(1)
+                maxTotal(1)
+              }
             }
             EOT
           }
