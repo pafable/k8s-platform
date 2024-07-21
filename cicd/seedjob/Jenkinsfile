@@ -29,21 +29,23 @@ pipeline {
         }
 
         stage('seeding') {
-            pipelineJob('job-dsl-plugin') {
-                definition {
-                    cpsScm {
-                        scm {
-                            git {
-                                remote {
-                                    url('https://github.com/jenkinsci/job-dsl-plugin.git')
+            jobDsl scriptText: """
+                pipelineJob('job-dsl-plugin') {
+                    definition {
+                        cpsScm {
+                            scm {
+                                git {
+                                    remote {
+                                        url('https://github.com/jenkinsci/job-dsl-plugin.git')
+                                    }
+                                    branch('*/master')
                                 }
-                                branch('*/master')
                             }
+                            lightweight()
                         }
-                        lightweight()
                     }
                 }
-            }
+            """
         }
     }
 }
