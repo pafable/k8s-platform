@@ -44,6 +44,9 @@ locals {
                 pipelineTriggers {
                   triggers {
                     githubPush()
+                    pollSCM {
+                      ignorePostCommitHooks(false)
+                    }
                   }
                 }
               }
