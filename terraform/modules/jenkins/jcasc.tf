@@ -1,6 +1,6 @@
 locals {
   edt_tz           = timeadd(timestamp(), "-4h") # EDT is -4h from UTC
-  seed_branch      = "master"
+  seed_branch      = "refs/heads/master"
   seed_git_url     = "https://github.com/pafable/k8s-platform.git"
   seed_script_path = "cicd/seedjob/Jenkinsfile"
 
