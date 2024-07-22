@@ -42,7 +42,9 @@ locals {
               properties {
                 disableConcurrentBuilds()
                 pipelineTriggers {
-                  githubPush()
+                  triggers {
+                    githubPush()
+                  }
                 }
               }
             }
