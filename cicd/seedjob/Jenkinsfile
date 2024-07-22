@@ -26,7 +26,6 @@ pipeline {
         stage('seeding') {
             steps {
                 script {
-                    println Jenkins.getInstanceOrNull()
                     for (final String job : jobs) {
                         jobDsl scriptText: """
                             pipelineJob("${job}") {
