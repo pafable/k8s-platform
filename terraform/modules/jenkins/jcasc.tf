@@ -41,14 +41,6 @@ locals {
 
               properties {
                 disableConcurrentBuilds()
-                pipelineTriggers {
-                  triggers {
-                    githubPush()
-                    pollSCM {
-                      ignorePostCommitHooks(false)
-                    }
-                  }
-                }
               }
             }
 
