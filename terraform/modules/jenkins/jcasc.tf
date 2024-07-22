@@ -52,12 +52,6 @@ locals {
           globalJobDslSecurityConfiguration = {
             useScriptSecurity = false
           }
-
-          scriptApproval = {
-            approvedSignatures = [
-              "jenkins.model.Jenkins"
-            ]
-          }
         }
 
         unclassified = {
