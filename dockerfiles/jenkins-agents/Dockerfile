@@ -4,3 +4,9 @@ FROM jenkins/inbound-agent:$VERSION
 USER root
 
 RUN sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
+
+RUN apt update && curl -fsSL https://get.docker.com | sh
+
+RUN usermod -aG docker jenkins
+
+USER jenkins
