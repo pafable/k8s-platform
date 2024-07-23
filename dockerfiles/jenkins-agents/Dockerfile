@@ -5,7 +5,13 @@ USER root
 
 RUN sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
 
-RUN apt update && curl -fsSL https://get.docker.com | sh
+RUN apt update \
+    && apt upgrade -y \
+    && apt install -y curl \
+      golang \
+      jq \
+      python3 \
+    && curl -fsSL https://get.docker.com | sh
 
 RUN usermod -aG docker jenkins
 
