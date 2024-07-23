@@ -477,7 +477,7 @@ tasks:
     desc: Build jenkins agent image
     dir: '{{ .JENKINS_AGENT_IMAGE_DIR }}'
     cmds:
-      - docker build -t boomb0x/myagent:${JENKINS_AGENT_TAG} .
+      - docker build -t ${CONTAINER_REGISTRY}/${JENKINS_IMAGE}:${JENKINS_AGENT_TAG} .
 
   push-jagent-image:
     desc: Push jenkins docker image to a container registry
