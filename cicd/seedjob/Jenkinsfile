@@ -11,12 +11,6 @@ final String platform_destroy = 'k8s-platform-destroy'
 final String agent_builder_script_path = 'cicd/agent-builder/Jenkinsfile'
 final String platform_script_path = 'cicd/deploy/Jenkinsfile'
 
-final List<String> jobs = [
-    agent_builder,
-    platform_create,
-    platform_destroy
-]
-
 final def jobsToScripts = [
     agent_builder: agent_builder_script_path,
     platform_create: platform_script_path,
