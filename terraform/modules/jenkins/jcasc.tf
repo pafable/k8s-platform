@@ -9,28 +9,28 @@ locals {
       name = "main-config"
       script = {
         jenkins = {
-          clouds = [
-            {
-              kubernetes = {
-                templates = [
-                  {
-                    id        = "add41f93e0173b79975347df36192e09c18755cd0f19a8d850790a0df21d99a0"
-                    label     = "jenkins-my-jenkins-agent"
-                    name      = "my-jenkins-agent"
-                    namespace = "jenkins"
-                    volumes = [
-                      {
-                        hostPathVolume = {
-                          hostPath  = "/var/run"
-                          mountPath = "/var/run"
-                        }
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          ]
+          #           clouds = [
+          #             {
+          #               kubernetes = {
+          #                 templates = [
+          #                   {
+          #                     id        = "add41f93e0173b79975347df36192e09c18755cd0f19a8d850790a0df21d99a0"
+          #                     label     = "jenkins-my-jenkins-agent"
+          #                     name      = "my-jenkins-agent"
+          #                     namespace = "jenkins"
+          #                     volumes = [
+          #                       {
+          #                         hostPathVolume = {
+          #                           hostPath  = "/var/run"
+          #                           mountPath = "/var/run"
+          #                         }
+          #                       }
+          #                     ]
+          #                   }
+          #                 ]
+          #               }
+          #             }
+          #           ]
           systemMessage = format(
             "${title(var.owner)}'s Jenkins Server. Created on %s EDT",
             formatdate("DD MMM YYYY hh:mm", local.edt_tz)
