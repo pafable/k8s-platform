@@ -9,28 +9,52 @@ locals {
       name = "main-config"
       script = {
         jenkins = {
-          #           clouds = [
-          #             {
-          #               kubernetes = {
-          #                 templates = [
-          #                   {
-          #                     id        = "add41f93e0173b79975347df36192e09c18755cd0f19a8d850790a0df21d99a0"
-          #                     label     = "jenkins-my-jenkins-agent"
-          #                     name      = "my-jenkins-agent"
-          #                     namespace = "jenkins"
-          #                     volumes = [
-          #                       {
-          #                         hostPathVolume = {
-          #                           hostPath  = "/var/run"
-          #                           mountPath = "/var/run"
-          #                         }
-          #                       }
-          #                     ]
-          #                   }
-          #                 ]
-          #               }
-          #             }
-          #           ]
+          clouds = [
+            {
+              kubernetes = {
+                templates = [
+                  {
+                    containers = [
+                      {
+                        envVars = [{
+                          envVar = [{
+                            key   = "JENKINS_URL"
+                            value = "http://jenkins.jenkins.svc.cluster.local:8080/"
+                          }]
+                        }]
+
+                        image                 = "boomb0x/myagent:0.0.1"
+                        name                  = "jnlp"
+                        privileged            = true
+                        resourceLimitCpu      = "512m"
+                        resourceLimitMemory   = "512Mi"
+                        resourceRequestCpu    = "512m"
+                        resourceRequestMemory = "512Mi"
+                        workingDir            = "/home/jenkins/agent"
+                      }
+                    ]
+
+                    id             = "ffce99fb-fd0c-4c09-a7e0-23db76bad6ac"
+                    label          = "dind-agent"
+                    name           = "dind-agent"
+                    namespace      = "jenkins"
+                    podRetention   = "never"
+                    serviceAccount = "default"
+
+                    volumes = [
+                      {
+                        hostPathVolume = {
+                          hostPath  = "/var/run"
+                          mountPath = "/var/run"
+                          readOnly  = false
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
           systemMessage = format(
             "${title(var.owner)}'s Jenkins Server. Created on %s EDT",
             formatdate("DD MMM YYYY hh:mm", local.edt_tz)
