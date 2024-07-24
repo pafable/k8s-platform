@@ -17,7 +17,7 @@ pipeline {
             steps {
                 script {
                     sh """"
-                        docker-version
+                        docker version
                     """
                 }
             }
