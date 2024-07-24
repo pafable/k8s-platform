@@ -38,10 +38,10 @@ module "kong_ingress" {
 # }
 
 module "jenkins" {
-  source               = "../../modules/jenkins"
-  container_repository = "boomb0x/myagent"
-  container_tag        = "0.0.1"
-  depends_on           = [module.cert_manager]
+  source                     = "../../modules/jenkins"
+  agent_container_repository = "boomb0x/myagent"
+  agent_container_tag        = "0.0.1"
+  depends_on                 = [module.cert_manager]
 }
 
 module "kube_prom_stack" {

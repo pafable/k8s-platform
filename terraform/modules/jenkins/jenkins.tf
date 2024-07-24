@@ -13,8 +13,8 @@ locals {
     yamlencode({
       agent = {
         image = {
-          repository = var.container_repository
-          tag        = var.container_tag
+          repository = var.agent_container_repository
+          tag        = var.agent_container_tag
         }
 
         podName    = "${local.app_name}-agent"

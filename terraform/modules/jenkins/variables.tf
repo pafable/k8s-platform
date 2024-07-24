@@ -4,13 +4,13 @@ variable "code" {
   default     = "k8s-platform"
 }
 
-variable "container_repository" {
+variable "agent_container_repository" {
   description = "Container repo"
   type        = string
   default     = "jenkins/inbound-agent"
 }
 
-variable "container_tag" {
+variable "agent_container_tag" {
   description = "Container tag"
   type        = string
   default     = "3256.v88a_f6e922152-1"
