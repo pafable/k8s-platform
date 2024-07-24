@@ -19,6 +19,15 @@ locals {
 
         podName    = "${local.app_name}-agent"
         privileged = true
+
+        volumes = [
+          {
+            # needed by docker because docker.sock is in this dir on the host node
+            type      = "hostPathVolume"
+            hostPath  = "/var/run"
+            mountPath = "/var/run"
+          }
+        ]
       }
 
       controller = {
