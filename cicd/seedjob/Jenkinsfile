@@ -33,7 +33,7 @@ pipeline {
         stage('seeding') {
             steps {
                 script {
-                    for (final String job : jobsToScripts) {
+                    for (def job : jobsToScripts) {
                         jobDsl scriptText: """
                             pipelineJob("${job.key}") {
                                 definition {
