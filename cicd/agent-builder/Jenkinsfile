@@ -18,6 +18,7 @@ pipeline {
                 script {
                     sh """
                         docker version
+                        docker login
                         task build-jagent-image
                         task push-jagent-image
                     """
