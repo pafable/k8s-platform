@@ -30,7 +30,7 @@ pipeline {
                 script {
                     for (def job : jobsToScripts) {
                         jobDsl scriptText: """
-                            pipelineJob("${job.key}") {
+                            pipelineJob(\"${job.key}\") {
                                 definition {
                                     cpsScm {
                                         scm {
@@ -41,7 +41,7 @@ pipeline {
                                                 branch("${platform_branch}")
                                             }
                                         }
-                                        scriptPath("${job.value}")
+                                        scriptPath(\"${job.value}\")
                                         lightweight()
                                     }
                                 }
