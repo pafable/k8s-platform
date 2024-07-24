@@ -16,7 +16,7 @@ pipeline {
         stage('building image') {
             steps {
                 script {
-                    sh """"
+                    sh """
                         docker version
                     """
                 }
