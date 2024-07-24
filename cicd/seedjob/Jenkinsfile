@@ -2,19 +2,14 @@ final String agent_label = 'jenkins-jenkins-agent'
 final String platform_branch = 'refs/heads/master'
 final String platform_repo = 'https://github.com/pafable/k8s-platform.git'
 
-// job names
-final String agent_builder = 'agent-builder'
-final String platform_create = 'k8s-platform-create'
-final String platform_destroy = 'k8s-platform-destroy'
-
 // script path
 final String agent_builder_script_path = 'cicd/agent-builder/Jenkinsfile'
 final String platform_script_path = 'cicd/deploy/Jenkinsfile'
 
 final def jobsToScripts = [
-    agent_builder: agent_builder_script_path,
-    platform_create: platform_script_path,
-    platform_destroy: platform_script_path
+    'agent-builder': agent_builder_script_path,
+    'k8s-platform-create': platform_script_path,
+    'k8s-platform-destroy': platform_script_path
 ]
 
 pipeline {
