@@ -9,6 +9,24 @@ locals {
       name = "main-config"
       script = {
         jenkins = {
+          clouds = [
+            {
+              kubernetes = {
+                templates = [
+                  {
+                    volumes = [
+                      {
+                        hostPathVolume = {
+                          hostPath  = "/var/run"
+                          mountPath = "/var/run"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
           systemMessage = format(
             "${title(var.owner)}'s Jenkins Server. Created on %s EDT",
             formatdate("DD MMM YYYY hh:mm", local.edt_tz)
@@ -47,6 +65,12 @@ locals {
             EOT
           }
         ]
+
+        appearance = {
+          prism = {
+            theme = "TWILIGHT"
+          }
+        }
 
         security = {
           globalJobDslSecurityConfiguration = {

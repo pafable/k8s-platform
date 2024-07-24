@@ -12,7 +12,13 @@ locals {
   values = [
     yamlencode({
       agent = {
-        podName = "${local.app_name}-agent"
+        image = {
+          repository = var.container_repository
+          tag        = var.container_tag
+        }
+
+        podName    = "${local.app_name}-agent"
+        privileged = true
       }
 
       controller = {
