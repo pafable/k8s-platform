@@ -28,6 +28,11 @@ env:
 
   TF_WORKSPACE: dev # sets the terraform workspace
 
+  JENKINS_AGENT_IMAGE_DIR: dockerfiles/jenkins-agents
+  JENKINS_IMAGE: myagent
+  JENKINS_AGENT_TAG: 0.0.1
+  CONTAINER_REGISTRY: boomb0x
+
   # Used for variables in Terraform
   BRANCH:
     sh: git rev-parse --abbrev-ref HEAD
@@ -467,3 +472,14 @@ tasks:
     dir: '{{ .TF_APPS_LOCAL_DIR }}'
     cmds:
       - trivy config . --severity HIGH,CRITICAL
+
+  build-jagent-image:
+    desc: Build jenkins agent image
+    dir: '{{ .JENKINS_AGENT_IMAGE_DIR }}'
+    cmds:
+      - docker build -t ${CONTAINER_REGISTRY}/${JENKINS_IMAGE}:${JENKINS_AGENT_TAG} .
+
+  push-jagent-image:
+    desc: Push jenkins docker image to a container registry
+    cmds:
+      - docker push ${CONTAINER_REGISTRY}/${JENKINS_IMAGE}:${JENKINS_AGENT_TAG}

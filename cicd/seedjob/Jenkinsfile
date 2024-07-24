@@ -1,13 +1,26 @@
 final String agent_label = 'jenkins-jenkins-agent'
 final String platform_branch = 'refs/heads/master'
+final String platform_repo = 'https://github.com/pafable/k8s-platform.git'
+
+// job names
+final String agent_builder = 'agent-builder'
 final String platform_create = 'k8s-platform-create'
 final String platform_destroy = 'k8s-platform-destroy'
-final String platform_repo = 'https://github.com/pafable/k8s-platform.git'
+
+// script path
+final String agent_builder_script_path = 'cicd/agent-builder/Jenkinsfile'
 final String platform_script_path = 'cicd/deploy/Jenkinsfile'
 
 final List<String> jobs = [
+    agent_builder,
     platform_create,
     platform_destroy
+]
+
+final def jobsToScripts = [
+    agent_builder: agent_builder_script_path,
+    platform_create: platform_script_path,
+    platform_destroy: platform_script_path
 ]
 
 pipeline {
@@ -26,9 +39,9 @@ pipeline {
         stage('seeding') {
             steps {
                 script {
-                    for (final String job : jobs) {
+                    for (final String job : jobsToScripts) {
                         jobDsl scriptText: """
-                            pipelineJob("${job}") {
+                            pipelineJob("${job.key}") {
                                 definition {
                                     cpsScm {
                                         scm {
@@ -39,7 +52,7 @@ pipeline {
                                                 branch("${platform_branch}")
                                             }
                                         }
-                                        scriptPath("${platform_script_path}")
+                                        scriptPath("${job.value}")
                                         lightweight()
                                     }
                                 }

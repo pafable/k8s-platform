@@ -12,7 +12,22 @@ locals {
   values = [
     yamlencode({
       agent = {
-        podName = "${local.app_name}-agent"
+        image = {
+          repository = var.container_repository
+          tag        = var.container_tag
+        }
+
+        podName    = "${local.app_name}-agent"
+        privileged = true
+
+        volumes = [
+          {
+            # needed by docker because docker.sock is in this dir on the host node
+            type      = "hostPathVolume"
+            hostPath  = "/var/run"
+            mountPath = "/var/run"
+          }
+        ]
       }
 
       controller = {

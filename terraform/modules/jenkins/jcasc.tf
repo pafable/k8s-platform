@@ -9,6 +9,7 @@ locals {
       name = "main-config"
       script = {
         jenkins = {
+
           systemMessage = format(
             "${title(var.owner)}'s Jenkins Server. Created on %s EDT",
             formatdate("DD MMM YYYY hh:mm", local.edt_tz)
@@ -47,6 +48,12 @@ locals {
             EOT
           }
         ]
+
+        appearance = {
+          prism = {
+            theme = "TWILIGHT"
+          }
+        }
 
         security = {
           globalJobDslSecurityConfiguration = {

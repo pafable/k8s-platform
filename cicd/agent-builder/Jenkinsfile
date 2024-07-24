@@ -1,0 +1,26 @@
+final String agent_label = 'jenkins-jenkins-agent'
+
+pipeline {
+    agent {
+      label "${agent_label}"
+    }
+
+    options {
+        timeout(
+            time: 5,
+            unit: 'MINUTES'
+        )
+    }
+
+    stages{
+        stage('building image') {
+            steps {
+                script {
+                    sh """"
+                        docker-version
+                    """
+                }
+            }
+        }
+    }
+}
