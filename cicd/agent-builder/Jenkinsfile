@@ -9,7 +9,7 @@ pipeline {
         string(
             name: 'DOCKER_HUB_USER',
             defaultValue: '',
-            description: 'Username for Docker Hub'
+            description: 'Username for Docker Hub',
             trim: true
         )
     }
