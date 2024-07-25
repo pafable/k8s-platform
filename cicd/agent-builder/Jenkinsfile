@@ -34,10 +34,8 @@ pipeline {
                         ]
                     ) {
                             sh """
-                                echo user: ${params.DOCKER_HUB_USER}
-                                echo ${USERNAME}
-                                echo ${PASSWORD}
                                 docker version
+                                echo ${PASSWORD} | docker login --username ${USERNAME} --password-stdin
                                 task build-jagent-image
                                 task push-jagent-image
                             """
