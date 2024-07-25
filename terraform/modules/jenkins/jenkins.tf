@@ -30,8 +30,6 @@ locals {
         ]
       }
 
-      clusterZone = "${local.app_name}.local"
-
       controller = {
         installPlugins = local.plugins
         jenkinsUrl     = local.jenkins_url
