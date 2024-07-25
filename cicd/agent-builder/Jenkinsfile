@@ -5,15 +5,6 @@ pipeline {
       label "${agent_label}"
     }
 
-    parameters {
-        string(
-            name: 'DOCKER_HUB_USER',
-            defaultValue: '',
-            description: 'Username for Docker Hub',
-            trim: true
-        )
-    }
-
     options {
         timeout(
             time: 5,

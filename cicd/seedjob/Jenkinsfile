@@ -35,52 +35,24 @@ pipeline {
             steps {
                 script {
                     for (def job : jobs) {
-                        if (job != 'agent-builder') {
-                            jobDsl scriptText: """
-                                pipelineJob("${job}") {
-                                    definition {
-                                        cpsScm {
-                                            scm {
-                                                git {
-                                                    remote {
-                                                        url("${platform_repo}")
-                                                    }
-                                                    branch("${platform_branch}")
+                        jobDsl scriptText: """
+                            pipelineJob("${job}") {
+                                definition {
+                                    cpsScm {
+                                        scm {
+                                            git {
+                                                remote {
+                                                    url("${platform_repo}")
                                                 }
+                                                branch("${platform_branch}")
                                             }
-                                            scriptPath("${jobsToScripts[job]}")
-                                            lightweight()
                                         }
+                                        scriptPath("${jobsToScripts[job]}")
+                                        lightweight()
                                     }
                                 }
-                            """
-                        } else {
-                            jobDsl scriptText: """
-                                pipelineJob("${job}") {
-                                    parameters {
-                                        stringParam {
-                                            name('DOCKER_HUB_USER')
-                                            description('Username for Docker Hub')
-                                            trim(true)
-                                        }
-                                    }
-                                    definition {
-                                        cpsScm {
-                                            scm {
-                                                git {
-                                                    remote {
-                                                        url("${platform_repo}")
-                                                    }
-                                                    branch("${platform_branch}")
-                                                }
-                                            }
-                                            scriptPath("${jobsToScripts[job]}")
-                                            lightweight()
-                                        }
-                                    }
-                                }
-                            """
-                        }
+                            }
+                        """
                     }
                 }
             }
