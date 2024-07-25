@@ -37,6 +37,13 @@ pipeline {
                     for (def job : jobs) {
                         jobDsl scriptText: """
                             pipelineJob("${job}") {
+                                parameters {
+                                    stringParam {
+                                        name('DOCKER_HUB_USER')
+                                        description('Username for Docker Hub')
+                                        trim(true)
+                                    }
+                                }
                                 definition {
                                     cpsScm {
                                         scm {
