@@ -5,6 +5,15 @@ pipeline {
       label "${agent_label}"
     }
 
+    parameters {
+        string(
+            name: 'DOCKER_HUB_USER',
+            defaultValue: '',
+            description: 'Username for Docker Hub'
+            trim: true
+        )
+    }
+
     options {
         timeout(
             time: 5,
@@ -16,12 +25,24 @@ pipeline {
         stage('building image') {
             steps {
                 script {
-                    sh """
-                        docker version
-                        docker login
-                        task build-jagent-image
-                        task push-jagent-image
-                    """
+                    withCredentials(
+                        [
+                            usernamePassword(
+                                credentialsId: 'docker-hub-creds',
+                                usernameVariable: 'USERNAME',
+                                passwordVariable: 'PASSWORD'
+                            )
+                        ]
+                    ) {
+                            sh """
+                                echo user: ${params.DOCKER_HUB_USER}
+                                echo ${USERNAME}
+                                echo ${PASSWORD}
+                                docker version
+                                task build-jagent-image
+                                task push-jagent-image
+                            """
+                    }
                 }
             }
         }
