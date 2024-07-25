@@ -16,12 +16,22 @@ pipeline {
         stage('building image') {
             steps {
                 script {
-                    sh """
-                        docker version
-                        docker login
-                        task build-jagent-image
-                        task push-jagent-image
-                    """
+                    withCredentials(
+                        [
+                            usernamePassword(
+                                credentialsId: 'docker-hub-creds',
+                                usernameVariable: 'USERNAME',
+                                passwordVariable: 'PASSWORD'
+                            )
+                        ]
+                    ) {
+                            sh """
+                                docker version
+                                echo ${PASSWORD} | docker login --username ${USERNAME} --password-stdin
+                                task build-jagent-image
+                                task push-jagent-image
+                            """
+                    }
                 }
             }
         }
