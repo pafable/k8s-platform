@@ -2,10 +2,6 @@ final String agent_label = 'jenkins-jenkins-agent'
 final String platform_branch = 'refs/heads/master'
 final String platform_repo = 'https://github.com/pafable/k8s-platform.git'
 
-// script path
-final String agent_builder_script_path = 'cicd/agent-builder/Jenkinsfile'
-final String platform_script_path = 'cicd/deploy/Jenkinsfile'
-
 final def jobsToScripts = [
     'agent-builder': 'cicd/agent-builder/Jenkinsfile',
     'k8s-platform-create': 'cicd/deploy/Jenkinsfile',
