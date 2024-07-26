@@ -69,7 +69,7 @@ pipeline {
                                                         branch("${platform_branch}")
                                                     }
                                                 }
-                                                scriptPath("${jobsToScripts[job]}")
+                                                scriptPath("${path}")
                                                 lightweight()
                                             }
                                         }
