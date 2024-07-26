@@ -59,9 +59,9 @@ pipeline {
                                 pipelineJob("${job}") {
                                     parameters {
                                         stringParam(
-                                            description: 'Tag for Jenkins agent',
-                                            name: 'JENKINS_AGENT_TAG',
-                                            trim: true
+                                            description('Tag for Jenkins agent')
+                                            name('JENKINS_AGENT_TAG')
+                                            trim(true)
                                         )
                                     }
                                     definition {
