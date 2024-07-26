@@ -48,6 +48,7 @@ pipeline {
                             } else {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
+                                        description('Jenkins agent builder')
                                         parameters {
                                             stringParam {
                                                 description('Tag for Jenkins agent')
