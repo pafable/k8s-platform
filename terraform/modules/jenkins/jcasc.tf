@@ -19,7 +19,7 @@ locals {
         jobs = [
           {
             script = <<-EOT
-            pipelineJob('seed job') {
+            pipelineJob('seed-job') {
               description('seed job for jenkins.local')
 
               definition {
