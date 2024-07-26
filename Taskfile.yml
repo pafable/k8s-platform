@@ -478,7 +478,7 @@ tasks:
     dir: '{{ .JENKINS_AGENT_IMAGE_DIR }}'
     cmds:
       - docker build -t {{ .CONTAINER_REGISTRY }}/{{ .JENKINS_IMAGE }}:{{ .JENKINS_AGENT_TAG }} .
-      - docker images | grep {{ .CONTAINER_REGISTRY }}/{{ .JENKINS_IMAGE }}:{{ .JENKINS_AGENT_TAG }}
+      - docker images | grep {{ .CONTAINER_REGISTRY }}/{{ .JENKINS_IMAGE }}
 
   push-jagent-image:
     desc: Push jenkins docker image to a container registry
