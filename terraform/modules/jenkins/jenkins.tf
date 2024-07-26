@@ -12,6 +12,13 @@ locals {
   values = [
     yamlencode({
       agent = {
+        envVars = [
+          {
+            name  = "TZ"
+            value = var.timezone
+          }
+        ]
+
         image = {
           repository = var.agent_container_repository
           tag        = var.agent_container_tag
@@ -38,6 +45,13 @@ locals {
           existingSecret = kubernetes_secret_v1.jenkins_secret.metadata[0].name
         }
 
+        containerEnv = [
+          {
+            name  = "TZ"
+            value = var.timezone
+          }
+        ]
+
         JCasC = {
           configScripts = local.jcasc_scripts_map
         }
@@ -45,6 +59,10 @@ locals {
 
       persistence = {
         existingClaim = kubernetes_persistent_volume_claim_v1.jenkins_pvc.metadata[0].name
+      }
+
+      rbac = {
+        readSecrets = true
       }
     })
   ]

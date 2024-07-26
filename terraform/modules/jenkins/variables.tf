@@ -45,3 +45,9 @@ variable "timeout" {
   type        = number
   default     = 500
 }
+
+variable "timezone" {
+  description = "Timezone"
+  type        = string
+  default     = "Etc/UTC"
+}

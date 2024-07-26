@@ -6,16 +6,10 @@ final String platform_repo = 'https://github.com/pafable/k8s-platform.git'
 final String agent_builder_script_path = 'cicd/agent-builder/Jenkinsfile'
 final String platform_script_path = 'cicd/deploy/Jenkinsfile'
 
-final ArrayList jobs = [
-    'agent-builder',
-    'k8s-platform-create',
-    'k8s-platform-destroy'
-]
-
 final def jobsToScripts = [
-    'agent-builder': agent_builder_script_path,
-    'k8s-platform-create': platform_script_path,
-    'k8s-platform-destroy': platform_script_path
+    'agent-builder': 'cicd/agent-builder/Jenkinsfile',
+    'k8s-platform-create': 'cicd/deploy/Jenkinsfile',
+    'k8s-platform-destroy': 'cicd/deploy/Jenkinsfile'
 ]
 
 pipeline {
@@ -34,53 +28,54 @@ pipeline {
         stage('seeding') {
             steps {
                 script {
-                    for (def job : jobs) {
-                        if (job != jobs[0]) {
-                            jobDsl scriptText: """
-                                pipelineJob("${job}") {
-                                    definition {
-                                        cpsScm {
-                                            scm {
-                                                git {
-                                                    remote {
-                                                        url("${platform_repo}")
+                    jobsToScripts.each {
+                        final job, final path ->
+                            if (job != 'agent-builder') {
+                                jobDsl scriptText: """
+                                    pipelineJob("${job}") {
+                                        definition {
+                                            cpsScm {
+                                                scm {
+                                                    git {
+                                                        remote {
+                                                            url("${platform_repo}")
+                                                        }
+                                                        branch("${platform_branch}")
                                                     }
-                                                    branch("${platform_branch}")
                                                 }
+                                                scriptPath("${path}")
+                                                lightweight()
                                             }
-                                            scriptPath("${jobsToScripts[job]}")
-                                            lightweight()
                                         }
                                     }
-                                }
-                            """
-                        } else {
-                            jobDsl scriptText: """
-                                pipelineJob("${job}") {
-                                    parameters {
-                                        stringParam {
-                                            description('Tag for Jenkins agent')
-                                            name('JENKINS_AGENT_TAG')
-                                            trim(true)
+                                """
+                            } else {
+                                jobDsl scriptText: """
+                                    pipelineJob("${job}") {
+                                        parameters {
+                                            stringParam {
+                                                description('Tag for Jenkins agent')
+                                                name('JENKINS_AGENT_TAG')
+                                                trim(true)
+                                            }
                                         }
-                                    }
-                                    definition {
-                                        cpsScm {
-                                            scm {
-                                                git {
-                                                    remote {
-                                                        url("${platform_repo}")
+                                        definition {
+                                            cpsScm {
+                                                scm {
+                                                    git {
+                                                        remote {
+                                                            url("${platform_repo}")
+                                                        }
+                                                        branch("${platform_branch}")
                                                     }
-                                                    branch("${platform_branch}")
                                                 }
+                                                scriptPath("${path}")
+                                                lightweight()
                                             }
-                                            scriptPath("${jobsToScripts[job]}")
-                                            lightweight()
                                         }
                                     }
-                                }
-                            """
-                        }
+                                """
+                            }
                     }
                 }
             }

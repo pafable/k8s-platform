@@ -2,6 +2,7 @@ locals {
   plugins = [
     "ansicolor",
     "blueocean",
+    "cloudbees-disk-usage-simple",
     "configuration-as-code",
     "docker-workflow",
     "git",
@@ -9,6 +10,7 @@ locals {
     "javax-mail-api",
     "job-dsl",
     "kubernetes",
+    "kubernetes-credentials-provider",
     "login-theme",
     "matrix-auth",
     "pipeline-aws",

@@ -13,6 +13,7 @@ This serves all the necessary apps to bootstrap a kubernetes cluster. At the mom
 7. [Postgresql](https://github.com/bitnami/charts/tree/main/bitnami/postgresql)
 8. [Pgadmin4](https://hub.docker.com/r/dpage/pgadmin4/)
 9. [Trivy Operator](https://github.com/aquasecurity/trivy-operator)
+10. [Jenkins](https://github.com/jenkinsci/helm-charts)
 
 ### Prerequisites
 You will need the following installed on your machine before deploying:
