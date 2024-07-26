@@ -12,6 +12,13 @@ locals {
   values = [
     yamlencode({
       agent = {
+        envVars = [
+          {
+            name  = "TZ"
+            value = var.timezone
+          }
+        ]
+
         image = {
           repository = var.agent_container_repository
           tag        = var.agent_container_tag
@@ -37,6 +44,13 @@ locals {
         admin = {
           existingSecret = kubernetes_secret_v1.jenkins_secret.metadata[0].name
         }
+
+        containerEnv = [
+          {
+            name  = "TZ"
+            value = var.timezone
+          }
+        ]
 
         JCasC = {
           configScripts = local.jcasc_scripts_map
