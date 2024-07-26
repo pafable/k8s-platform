@@ -43,6 +43,9 @@ pipeline {
                                                 lightweight()
                                             }
                                         }
+                                        properties {
+                                            disableResume()
+                                        }
                                     }
                                 """
                             } else {
@@ -69,6 +72,9 @@ pipeline {
                                                 scriptPath("${path}")
                                                 lightweight()
                                             }
+                                        }
+                                        properties {
+                                            disableResume()
                                         }
                                     }
                                 """
