@@ -38,6 +38,7 @@ locals {
       }
 
       controller = {
+        executorMode   = "EXCLUSIVE"
         installPlugins = local.plugins
         jenkinsUrl     = local.jenkins_url
 
