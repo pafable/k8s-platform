@@ -28,9 +28,9 @@ env:
 
   TF_WORKSPACE: dev # sets the terraform workspace
 
+  # Agent tag
   JENKINS_AGENT_IMAGE_DIR: dockerfiles/jenkins-agents
   JENKINS_IMAGE: myagent
-  JENKINS_AGENT_TAG: 0.0.1
   CONTAINER_REGISTRY: boomb0x
 
   # Used for variables in Terraform
@@ -477,9 +477,9 @@ tasks:
     desc: Build jenkins agent image
     dir: '{{ .JENKINS_AGENT_IMAGE_DIR }}'
     cmds:
-      - docker build -t ${CONTAINER_REGISTRY}/${JENKINS_IMAGE}:${JENKINS_AGENT_TAG} .
+      - docker build -t {{ .CONTAINER_REGISTRY }}/{{ .JENKINS_IMAGE }}:{{ .JENKINS_AGENT_TAG }} .
 
   push-jagent-image:
     desc: Push jenkins docker image to a container registry
     cmds:
-      - docker push ${CONTAINER_REGISTRY}/${JENKINS_IMAGE}:${JENKINS_AGENT_TAG}
+      - docker push {{ .CONTAINER_REGISTRY }}/{{ .JENKINS_IMAGE }}:{{ .JENKINS_AGENT_TAG }}
