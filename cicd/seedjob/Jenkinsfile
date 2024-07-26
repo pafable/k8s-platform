@@ -35,24 +35,52 @@ pipeline {
             steps {
                 script {
                     for (def job : jobs) {
-                        jobDsl scriptText: """
-                            pipelineJob("${job}") {
-                                definition {
-                                    cpsScm {
-                                        scm {
-                                            git {
-                                                remote {
-                                                    url("${platform_repo}")
+                        if (job != jobs[0]) {
+                            jobDsl scriptText: """
+                                pipelineJob("${job}") {
+                                    definition {
+                                        cpsScm {
+                                            scm {
+                                                git {
+                                                    remote {
+                                                        url("${platform_repo}")
+                                                    }
+                                                    branch("${platform_branch}")
                                                 }
-                                                branch("${platform_branch}")
                                             }
+                                            scriptPath("${jobsToScripts[job]}")
+                                            lightweight()
                                         }
-                                        scriptPath("${jobsToScripts[job]}")
-                                        lightweight()
                                     }
                                 }
-                            }
-                        """
+                            """
+                        } else {
+                            jobDsl scriptText: """
+                                pipelineJob("${job}") {
+                                    parameters {
+                                        stringParam(
+                                            description('Tag for Jenkins agent'),
+                                            name('JENKINS_AGENT_TAG'),
+                                            trim(true)
+                                        )
+                                    }
+                                    definition {
+                                        cpsScm {
+                                            scm {
+                                                git {
+                                                    remote {
+                                                        url("${platform_repo}")
+                                                    }
+                                                    branch("${platform_branch}")
+                                                }
+                                            }
+                                            scriptPath("${jobsToScripts[job]}")
+                                            lightweight()
+                                        }
+                                    }
+                                }
+                            """
+                        }
                     }
                 }
             }
