@@ -46,6 +46,10 @@ locals {
       persistence = {
         existingClaim = kubernetes_persistent_volume_claim_v1.jenkins_pvc.metadata[0].name
       }
+
+      rbac = {
+        readSecrets = true
+      }
     })
   ]
 }

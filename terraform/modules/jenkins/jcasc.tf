@@ -11,7 +11,7 @@ locals {
         jenkins = {
 
           systemMessage = format(
-            "${title(var.owner)}'s Jenkins Server. Created on %s EDT",
+            "${title(var.owner)}'s Jenkins Server. Created on %s EDT. DO NOT MANUALLY EDIT!",
             formatdate("DD MMM YYYY hh:mm", local.edt_tz)
           )
         }
