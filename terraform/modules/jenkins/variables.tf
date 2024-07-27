@@ -16,6 +16,18 @@ variable "agent_container_tag" {
   default     = "3256.v88a_f6e922152-1"
 }
 
+variable "docker_hub_username" {
+  description = "Username for docker hub"
+  type        = string
+  default     = ""
+}
+
+variable "docker_hub_password" {
+  description = "Password for docker hub"
+  type        = string
+  default     = ""
+}
+
 variable "helm_chart_version" {
   description = "helm chart version"
   type        = string

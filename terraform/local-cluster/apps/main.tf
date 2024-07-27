@@ -41,6 +41,8 @@ module "jenkins" {
   source                     = "../../modules/jenkins"
   agent_container_repository = "boomb0x/myagent"
   agent_container_tag        = "0.0.1"
+  docker_hub_password        = data.aws_ssm_parameter.docker_password.value
+  docker_hub_username        = data.aws_ssm_parameter.docker_username.value
   depends_on                 = [module.cert_manager]
 }
 
