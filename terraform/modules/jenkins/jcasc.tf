@@ -8,8 +8,27 @@ locals {
     {
       name = "main-config"
       script = {
-        jenkins = {
+        credentials = {
+          system = {
+            domainCredentials = [
+              {
+                credentials = [
+                  {
+                    usernamePassword = {
+                      description = "docker hub credentials"
+                      id          = "docker-hub-creds"
+                      password    = var.docker_hub_password
+                      scope       = "GLOBAL"
+                      username    = var.docker_hub_username
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
 
+        jenkins = {
           systemMessage = format(
             "${title(var.owner)}'s Jenkins Server. Created on %s EDT. \nDO NOT MANUALLY EDIT!",
             formatdate("DD MMM YYYY hh:mm", local.edt_tz)
