@@ -38,12 +38,15 @@ module "kong_ingress" {
 # }
 
 module "jenkins" {
-  source                     = "../../modules/jenkins"
-  agent_container_repository = "boomb0x/myagent"
-  agent_container_tag        = "0.0.1"
-  docker_hub_password        = data.aws_ssm_parameter.docker_password.value
-  docker_hub_username        = data.aws_ssm_parameter.docker_username.value
-  depends_on                 = [module.cert_manager]
+  source                      = "../../modules/jenkins"
+  agent_container_repository  = "boomb0x/myagent"
+  agent_container_tag         = "0.0.2"
+  aws_dev_deployer_access_key = sensitive(data.aws_ssm_parameter.aws_dev_access_key.value)
+  aws_dev_deployer_secret_key = sensitive(data.aws_ssm_parameter.aws_dev_secret_key.value)
+  docker_hub_password         = sensitive(data.aws_ssm_parameter.docker_password.value)
+  docker_hub_username         = data.aws_ssm_parameter.docker_username.value
+  timeout                     = 800
+  depends_on                  = [module.cert_manager]
 }
 
 module "kube_prom_stack" {

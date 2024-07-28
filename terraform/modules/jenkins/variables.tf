@@ -4,6 +4,20 @@ variable "code" {
   default     = "k8s-platform"
 }
 
+variable "aws_dev_deployer_access_key" {
+  description = "AWS dev access key"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
+variable "aws_dev_deployer_secret_key" {
+  description = "AWS dev secret key"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
 variable "agent_container_repository" {
   description = "Container repo"
   type        = string
@@ -26,6 +40,7 @@ variable "docker_hub_password" {
   description = "Password for docker hub"
   type        = string
   default     = ""
+  sensitive   = true
 }
 
 variable "helm_chart_version" {

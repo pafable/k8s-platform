@@ -10,21 +10,7 @@ locals {
       script = {
         credentials = {
           system = {
-            domainCredentials = [
-              {
-                credentials = [
-                  {
-                    usernamePassword = {
-                      description = "docker hub credentials"
-                      id          = "docker-hub-creds"
-                      password    = var.docker_hub_password
-                      scope       = "GLOBAL"
-                      username    = var.docker_hub_username
-                    }
-                  }
-                ]
-              }
-            ]
+            domainCredentials = sensitive(local.domain_credentials)
           }
         }
 

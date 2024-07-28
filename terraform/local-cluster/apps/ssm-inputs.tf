@@ -7,3 +7,13 @@ data "aws_ssm_parameter" "docker_password" {
   provider = aws.parameters
   name     = "/docker/hub/password"
 }
+
+data "aws_ssm_parameter" "aws_dev_access_key" {
+  provider = aws.parameters
+  name     = "/account/dev/aws/deployer/access/key/id"
+}
+
+data "aws_ssm_parameter" "aws_dev_secret_key" {
+  provider = aws.parameters
+  name     = "/account/dev/aws/deployer/secret/access/key"
+}

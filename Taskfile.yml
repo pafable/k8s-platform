@@ -205,7 +205,7 @@ tasks:
     desc: Initialize Apps terraform
     cmds:
       - echo "+++++ Initializing Kube Apps +++++"
-      - terraform init -upgrade -reconfigure
+      - terraform init -upgrade -reconfigure -no-color
       - task: tf-validate
         vars: { DIR: '{{ .TF_APPS_LOCAL_DIR }}' }
       - task: tf-ws-list
@@ -221,8 +221,8 @@ tasks:
       - defer: |
           echo "Cleaning up terraform plans..."
           rm -f tfplan*
-      - terraform plan -out=tfplan
-      - terraform apply tfplan
+      - terraform plan -out=tfplan -no-color
+      - terraform apply tfplan -no-color
 
   destroy-apps-local:
     dir: '{{ .TF_APPS_LOCAL_DIR }}'
@@ -233,8 +233,8 @@ tasks:
       - defer: |
           echo "Cleaning up terraform plans..."
           rm -f tfplan*
-      - terraform plan -out=tfplan.destroy -destroy
-      - terraform apply tfplan.destroy
+      - terraform plan -out=tfplan.destroy -destroy -no-color
+      - terraform apply tfplan.destroy -no-color
       - task: delete-crds
     ignore_error: true
 
@@ -246,7 +246,7 @@ tasks:
     desc: Initialize EKS terraform
     cmds:
       - echo "+++++ Deploying EKS +++++"
-      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${TF_EKS_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure
+      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${TF_EKS_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure -no-color
 
   create-eks:
     dir: '{{ .TF_EKS_DIR }}'
@@ -257,8 +257,8 @@ tasks:
       - defer: |
           echo "Cleaning up..."
           rm -f tfplan
-      - terraform plan -var "branch=${BRANCH}" -out=tfplan
-      - terraform apply tfplan
+      - terraform plan -var "branch=${BRANCH}" -out=tfplan -no-color
+      - terraform apply tfplan -no-color
 
   destroy-eks:
     dir: '{{ .TF_EKS_DIR }}'
@@ -269,8 +269,8 @@ tasks:
       - defer: |
           echo "Cleaning up..."
           rm -f tfplan.destroy
-      - terraform plan -var "branch=${BRANCH}" -out=tfplan.destroy -destroy
-      - terraform apply tfplan.destroy
+      - terraform plan -var "branch=${BRANCH}" -out=tfplan.destroy -destroy -no-color
+      - terraform apply tfplan.destroy -no-color
 
 # Kube Support Resources
   init-kube-support:
@@ -280,7 +280,7 @@ tasks:
     desc: Initialize Kube Support
     cmds:
       - echo "+++++ Deploying Kube Support +++++"
-      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${TF_KUBE_SUPP_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure
+      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${TF_KUBE_SUPP_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure -no-color
       - task: tf-validate
         vars: { DIR: '{{ .TF_KUBE_SUPP_DIR }}' }
       - task: tf-ws-list
@@ -296,8 +296,8 @@ tasks:
       - defer: |
           echo "Cleaning up..."
           rm -f tfplan
-      - terraform plan -var "branch=${BRANCH}" -out=tfplan
-      - terraform apply tfplan
+      - terraform plan -var "branch=${BRANCH}" -out=tfplan -no-color
+      - terraform apply tfplan -no-color
 
   destroy-kube-support:
     dir: '{{ .TF_KUBE_SUPP_DIR }}'
@@ -308,8 +308,8 @@ tasks:
       - defer: |
           echo "Cleaning up..."
           rm -f tfplan.destroy
-      - terraform plan -var "branch=${BRANCH}" -out=tfplan.destroy -destroy
-      - terraform apply tfplan.destroy
+      - terraform plan -var "branch=${BRANCH}" -out=tfplan.destroy -destroy -no-color
+      - terraform apply tfplan.destroy -no-color
       - task: delete-crds
 
 # DNS Update
@@ -325,7 +325,7 @@ tasks:
     desc: Initialize DNS
     cmds:
       - echo "+++++ Deploying DNS +++++"
-      - terraform init -backend-config="bucket={$TF_BACKEND_BUCKET_PROD}" -backend-config="encrypt=true" -backend-config="key=terraform/dns/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure
+      - terraform init -backend-config="bucket={$TF_BACKEND_BUCKET_PROD}" -backend-config="encrypt=true" -backend-config="key=terraform/dns/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure -no-color
 
   create-dns:
     dir: '{{ .TF_DNS_DIR }}'
@@ -336,8 +336,8 @@ tasks:
       - defer: |
           echo "Cleaning up..."
           rm -f tfplan
-      - terraform plan -var "branch=${BRANCH}" -var "commit=${COMMIT}" -var "dns_zone=${DNS_ZONE}" -var "elb_dns_name=${ELB_DNS_NAME}" -out=tfplan
-      - terraform apply tfplan
+      - terraform plan -var "branch=${BRANCH}" -var "commit=${COMMIT}" -var "dns_zone=${DNS_ZONE}" -var "elb_dns_name=${ELB_DNS_NAME}" -out=tfplan -no-color
+      - terraform apply tfplan -no-color
 
   destroy-dns:
     dir: '{{ .TF_DNS_DIR }}'
@@ -348,8 +348,8 @@ tasks:
       - defer: |
           echo "Cleaning up..."
           rm -f tfplan.destroy
-      - terraform plan -out=tfplan.destroy -destroy
-      - terraform apply tfplan.destroy
+      - terraform plan -out=tfplan.destroy -destroy -no-color
+      - terraform apply tfplan.destroy -no-color
 
 # Create VPC
   init-vpc:
@@ -359,7 +359,7 @@ tasks:
     desc: Initialize VPC
     cmds:
       - echo "+++++ Deploying VPC +++++"
-      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${TF_VPC_AWS_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure
+      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${TF_VPC_AWS_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure -no-color
 
   create-vpc:
     dir: '{{ .TF_VPC_AWS_DIR }}'
@@ -370,8 +370,8 @@ tasks:
       - defer: |
           echo "Cleaning up..."
           rm -f tfplan
-      - terraform plan -var "branch=${BRANCH}" -out=tfplan
-      - terraform apply tfplan
+      - terraform plan -var "branch=${BRANCH}" -out=tfplan -no-color
+      - terraform apply tfplan -no-color
 
   destroy-vpc:
     dir: '{{ .TF_VPC_AWS_DIR }}'
@@ -382,8 +382,8 @@ tasks:
       - defer: |
           echo "Cleaning up..."
           rm -f tfplan.destroy
-      - terraform plan -var "branch=${BRANCH}" -out=tfplan.destroy -destroy
-      - terraform apply tfplan.destroy
+      - terraform plan -var "branch=${BRANCH}" -out=tfplan.destroy -destroy -no-color
+      - terraform apply tfplan.destroy -no-color
 
   # Create VPN
   init-vpn:
@@ -393,7 +393,7 @@ tasks:
     desc: Initialize VPN
     cmds:
       - echo "+++++ Deploying VPN +++++"
-      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${TF_CLIENT_VPN_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure
+      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${TF_CLIENT_VPN_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure -no-color
 
   create-vpn:
     dir: '{{ .TF_CLIENT_VPN_DIR }}'
@@ -404,8 +404,8 @@ tasks:
       - defer: |
           echo "Cleaning up..."
           rm -f tfplan
-      - terraform plan -var "branch=${BRANCH}" -out=tfplan
-      - terraform apply tfplan
+      - terraform plan -var "branch=${BRANCH}" -out=tfplan -no-color
+      - terraform apply tfplan -no-color
 
   destroy-vpn:
     dir: '{{ .TF_CLIENT_VPN_DIR }}'
@@ -416,8 +416,8 @@ tasks:
       - defer: |
           echo "Cleaning up..."
           rm -f tfplan.destroy
-      - terraform plan -var "branch=${BRANCH}" -out=tfplan.destroy -destroy
-      - terraform apply tfplan.destroy
+      - terraform plan -var "branch=${BRANCH}" -out=tfplan.destroy -destroy -no-color
+      - terraform apply tfplan.destroy -no-color
 
 # Deploy or Destroy cluster
   create-cluster:
