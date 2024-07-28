@@ -1,0 +1,19 @@
+final String agent_label = 'jenkins-jenkins-agent'
+
+pipeline {
+    agent {
+      label "${agent_label}"
+    }
+
+    stages{
+        stage('') {
+            steps {
+                script {
+                    sh """
+                        task create-apps-local
+                    """
+                }
+            }
+        }
+    }
+}
