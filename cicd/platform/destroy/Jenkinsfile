@@ -7,7 +7,7 @@ pipeline {
     }
 
     tools {
-        terraform ${tf_version}
+        terraform "${tf_version}"
     }
 
     stages{
