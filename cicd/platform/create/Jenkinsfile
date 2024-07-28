@@ -1,8 +1,13 @@
 final String agent_label = 'jenkins-jenkins-agent'
+final String tf_version = 'tf-1-9-2'
 
 pipeline {
     agent {
       label "${agent_label}"
+    }
+
+    tools {
+        terraform ${tf_version}
     }
 
     stages{
