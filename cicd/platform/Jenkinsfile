@@ -33,6 +33,7 @@ pipeline {
                 }
             }
         }
+
         stage('platforming') {
             steps {
                 script {
