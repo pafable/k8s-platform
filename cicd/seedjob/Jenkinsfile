@@ -36,7 +36,7 @@ pipeline {
                                         parameters {
                                             choiceParam(
                                                 'ACTIONS',
-                                                ['option 1 (default)', 'option 2', 'option 3'],
+                                                $task_names,
                                                 'Create or destroy'
                                             )
                                         }
