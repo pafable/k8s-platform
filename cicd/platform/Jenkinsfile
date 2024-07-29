@@ -24,12 +24,12 @@ pipeline {
 
     stages{
         stage('confirmation') {
-            steps {
-                sh "echo this will ${params.ACTIONS} the environment"
-            }
             input {
                 message "Continue with deployment?"
                 ok "Gogogog1!1!"
+            }
+            steps {
+                sh "echo this will ${params.ACTIONS} the environment"
             }
         }
 
