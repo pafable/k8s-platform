@@ -38,7 +38,10 @@ pipeline {
                                         parameters {
                                             choiceParam(
                                                 'ACTIONS',
-                                                [${task_names}],
+                                                [
+                                                    'create',
+                                                    'destroy'
+                                                ],
                                                 'Create or destroy'
                                             )
                                         }
