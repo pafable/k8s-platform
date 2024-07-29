@@ -34,11 +34,7 @@ pipeline {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
                                         parameters {
-                                            choiceParam(
-                                                'ACTION',
-                                                ${task_names},
-                                                'Create or destroy resources'
-                                            )
+                                            choiceParam('myParameterName', ['option 1 (default)', 'option 2', 'option 3'], 'my description')
                                         }
                                         definition {
                                             cpsScm {
