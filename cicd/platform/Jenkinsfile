@@ -26,10 +26,10 @@ pipeline {
         stage('confirmation') {
             input {
                 message "Continue with deployment?"
-                ok "gogogog1!1!"
+                ok "Gogogog1!1!"
             }
             steps {
-                sh "confirmed to ${params.ACTIONS}"
+                sh "echo confirmed to ${params.ACTIONS}"
             }
         }
 
