@@ -28,6 +28,8 @@ pipeline {
         stage('seeding') {
             steps {
                 script {
+                    println ${task_names}
+                    println ${task_names}.getClass()
                     jobsToScripts.each {
                         final job, final path ->
                             if (job != 'agent-builder') {
@@ -36,7 +38,7 @@ pipeline {
                                         parameters {
                                             choiceParam(
                                                 'ACTIONS',
-                                                "${task_names}",
+                                                \"${task_names}\",
                                                 'Create or destroy'
                                             )
                                         }
