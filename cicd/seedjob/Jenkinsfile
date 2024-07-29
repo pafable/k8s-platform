@@ -4,8 +4,12 @@ final String platform_repo = 'https://github.com/pafable/k8s-platform.git'
 
 final def jobsToScripts = [
     'agent-builder': 'cicd/agent-builder/Jenkinsfile',
-    'k8s-platform-create': 'cicd/platform/create/Jenkinsfile',
-    'k8s-platform-destroy': 'cicd/platform/destroy/Jenkinsfile'
+    'k8s-platform': 'cicd/platform/Jenkinsfile'
+]
+
+final ArrayList task_names [
+    'create',
+    'destroy'
 ]
 
 pipeline {
@@ -29,6 +33,13 @@ pipeline {
                             if (job != 'agent-builder') {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
+                                        parameters {
+                                            choiceParam(
+                                                'ACTION',
+                                                "${task_names}",
+                                                'Create or destroy resources
+                                            )
+                                        }
                                         definition {
                                             cpsScm {
                                                 scm {
