@@ -28,8 +28,8 @@ pipeline {
         stage('seeding') {
             steps {
                 script {
-                    println ${task_names}
-                    println ${task_names}.getClass()
+                    println task_names
+                    println task_names.getClass()
                     jobsToScripts.each {
                         final job, final path ->
                             if (job != 'agent-builder') {
