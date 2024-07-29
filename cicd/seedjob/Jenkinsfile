@@ -7,11 +7,6 @@ final def jobsToScripts = [
     'k8s-platform': 'cicd/platform/Jenkinsfile'
 ]
 
-final List task_names = [
-    'create',
-    'destroy'
-]
-
 pipeline {
     agent {
       label "${agent_label}"
@@ -28,8 +23,6 @@ pipeline {
         stage('seeding') {
             steps {
                 script {
-                    println task_names
-                    println task_names.getClass()
                     jobsToScripts.each {
                         final job, final path ->
                             if (job != 'agent-builder') {
