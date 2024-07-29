@@ -7,7 +7,7 @@ final def jobsToScripts = [
     'k8s-platform': 'cicd/platform/Jenkinsfile'
 ]
 
-final ArrayList task_names [
+final def task_names = [
     'create',
     'destroy'
 ]
