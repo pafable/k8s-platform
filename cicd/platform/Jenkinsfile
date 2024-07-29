@@ -1,7 +1,7 @@
 final String agent_label = 'jenkins-jenkins-agent'
 final String tf_version = 'tf-1-9-2'
 
-final ArrayList task_names [
+final ArrayList task_names = [
     'create',
     'destroy'
 ]
