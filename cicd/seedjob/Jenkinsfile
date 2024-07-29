@@ -37,7 +37,7 @@ pipeline {
                                             choiceParam(
                                                 'ACTION',
                                                 "${task_names}",
-                                                'Create or destroy resources
+                                                'Create or destroy resources'
                                             )
                                         }
                                         definition {
