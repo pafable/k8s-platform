@@ -1,0 +1,52 @@
+final String agent_label = 'jenkins-jenkins-agent'
+final String tf_version = 'tf-1-9-2'
+
+final def task_names = [
+    'create',
+    'destroy'
+]
+
+pipeline {
+    agent {
+      label "${agent_label}"
+    }
+
+    parameters {
+        choice choices: task_names,
+        description: 'Create or destroy actions',
+        name: 'ACTIONS'
+    }
+
+
+    tools {
+        terraform "${tf_version}"
+    }
+
+    stages{
+        stage('confirmation') {
+            input {
+                message "Continue with deployment?"
+                ok "Gogogog1!1!"
+            }
+            steps {
+                sh "echo this will ${params.ACTIONS} the environment"
+            }
+        }
+
+        stage('platforming') {
+            steps {
+                script {
+                    if (params.ACTIONS == 'create') {
+                        sh """
+                            task ${params.ACTIONS}-apps-local
+                        """
+                    } else {
+                        sh """
+                            task ${params.ACTIONS}-apps-local
+                        """
+                    }
+                }
+            }
+        }
+    }
+}
