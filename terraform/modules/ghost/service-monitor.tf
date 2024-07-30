@@ -1,4 +1,4 @@
-# This does not work becauase ghost does not expose any metrics by default
+# This does not work because ghost does not expose any metrics by default
 # Keeping this because it is a good example of how to create a service monitor
 resource "kubernetes_manifest" "ghost_service_monitor" {
   manifest = {
