@@ -104,26 +104,47 @@ locals {
     }
   }
 
+  prometheus_configs = {
+    prometheus = {
+      prometheusSpec = {
+        additionalScrapeConfigs = [
+          {
+            # prometheus will scrape jenkins server at jenkins.local/prometheus
+            job_name     = "jenkins"
+            metrics_path = "/prometheus"
+            static_configs = [
+              {
+                targets = ["10.1.37.202:8080"]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+
   values = [
     yamlencode(
       merge(
         local.global_configs,
         local.grafana_configs,
-        local.local_host_root
+        local.local_host_root,
+        local.prometheus_configs
       )
     )
   ]
 }
 
 resource "helm_release" "kube_prom_stack" {
-  chart            = local.kube_chart_name
-  create_namespace = false
-  force_update     = true
-  name             = var.app_name
-  namespace        = kubernetes_namespace_v1.kube_prom_ns.metadata.0.name
-  repository       = local.kube_chart_repo
-  values           = local.values
-  version          = var.chart_version
+  chart             = local.kube_chart_name
+  create_namespace  = false
+  dependency_update = true
+  force_update      = true
+  name              = var.app_name
+  namespace         = kubernetes_namespace_v1.kube_prom_ns.metadata.0.name
+  repository        = local.kube_chart_repo
+  values            = local.values
+  version           = var.chart_version
 }
 
 resource "kubernetes_namespace_v1" "kube_prom_ns" {
