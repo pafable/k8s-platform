@@ -85,7 +85,7 @@ resource "kubernetes_deployment_v1" "ghost_deployment" {
 # service to expose the ghost application
 resource "kubernetes_service_v1" "ghost_service" {
   metadata {
-    name      = "${local.ghost_app}-svc"
+    name      = "${var.app_name}-svc"
     namespace = kubernetes_namespace_v1.ghost_namespace.metadata.0.name
     labels    = local.app_labels
 
