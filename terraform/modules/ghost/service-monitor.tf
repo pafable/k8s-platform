@@ -6,10 +6,10 @@ resource "kubernetes_manifest" "ghost_service_monitor" {
     kind       = "ServiceMonitor"
 
     metadata = {
-      name = "${local.ghost_app}-svc-monitor"
+      name = "${var.app_name}-svc-monitor"
       #       namespace = kubernetes_namespace_v1.ghost_namespace.metadata.0.name
       namespace = "monitoring"
-      labels    = local.labels
+      labels    = local.app_labels
     }
 
     spec = {

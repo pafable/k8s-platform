@@ -1,5 +1,4 @@
 locals {
-  app_name            = "ghost"
   domain_name         = "ghost.local"
   exposed_port        = 80
   owner               = "devops"
@@ -12,25 +11,27 @@ locals {
 
   labels = {
     "kuma.io/sidecar-injection"    = "enabled" # adds any pods and services deployed to this namespace to the kong/kuma mesh
-    "app.kubernetes.io/name"       = local.app_name
+    "app.kubernetes.io/name"       = var.app_name
     "app.kubernetes.io/managed-by" = "terraform"
     "app.kubernetes.io/owner"      = local.owner
     jobLabel                       = local.ghost_app
   }
+
+  app_labels = merge(local.labels, var.app_version)
 }
 
 resource "kubernetes_namespace_v1" "ghost_namespace" {
   metadata {
-    name   = local.ghost_app
-    labels = local.labels
+    name   = var.namespace
+    labels = local.app_labels
   }
 }
 
 resource "kubernetes_deployment_v1" "ghost_deployment" {
   metadata {
-    name      = local.ghost_app
+    name      = var.app_name
     namespace = kubernetes_namespace_v1.ghost_namespace.metadata.0.name
-    labels    = local.labels
+    labels    = local.app_labels
 
     annotations = {
       "kuma.io/gateway" = "enabled"
@@ -46,6 +47,14 @@ resource "kubernetes_deployment_v1" "ghost_deployment" {
       }
     }
 
+    strategy {
+      type = "RollingUpdate"
+      rolling_update {
+        max_surge       = 3
+        max_unavailable = 1
+      }
+    }
+
     template {
       metadata {
         labels = {
@@ -56,7 +65,7 @@ resource "kubernetes_deployment_v1" "ghost_deployment" {
       spec {
         container {
           image = local.ghost_image
-          name  = local.ghost_app
+          name  = var.app_name
 
           env {
             name  = "NODE_ENV"
@@ -78,7 +87,7 @@ resource "kubernetes_service_v1" "ghost_service" {
   metadata {
     name      = "${local.ghost_app}-svc"
     namespace = kubernetes_namespace_v1.ghost_namespace.metadata.0.name
-    labels    = local.labels
+    labels    = local.app_labels
 
     annotations = {
       "ingress.kubernetes.io/service-upstream" = true
