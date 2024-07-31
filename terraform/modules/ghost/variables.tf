@@ -17,3 +17,9 @@ variable "namespace" {
   type        = string
   default     = "ghost"
 }
+
+variable "replicas" {
+  description = "Replica count"
+  type        = number
+  default     = 1
+}

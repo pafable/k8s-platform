@@ -39,7 +39,7 @@ resource "kubernetes_deployment_v1" "ghost_deployment" {
   }
 
   spec {
-    replicas = 1
+    replicas = var.replicas
 
     selector {
       match_labels = {
