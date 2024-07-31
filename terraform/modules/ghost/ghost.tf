@@ -95,10 +95,10 @@ resource "kubernetes_service_v1" "ghost_service" {
   }
 
   spec {
-    selector = {
-      "app.kubernetes.io/name" = local.ghost_app
-      version                  = var.app_version["version"]
-    }
+    selector = merge(
+      { "app.kubernetes.io/name" = local.ghost_app },
+      var.app_version
+    )
 
     port {
       name        = local.ghost_app
