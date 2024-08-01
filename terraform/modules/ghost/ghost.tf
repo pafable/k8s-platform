@@ -57,9 +57,10 @@ resource "kubernetes_deployment_v1" "ghost_deployment" {
 
     template {
       metadata {
-        labels = {
-          "app.kubernetes.io/name" = local.ghost_app
-        }
+        labels = merge(
+          { "app.kubernetes.io/name" = local.ghost_app },
+          var.app_version
+        )
       }
 
       spec {
