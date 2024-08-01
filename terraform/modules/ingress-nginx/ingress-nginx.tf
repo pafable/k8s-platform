@@ -28,4 +28,5 @@ resource "helm_release" "ingress_nginx_controller" {
   repository        = local.chart_repo
   version           = var.chart_version
   timeout           = var.timeout
+  wait              = false
 }

@@ -36,6 +36,7 @@ resource "helm_release" "kong_ingress" {
   timeout           = var.timeout
   values            = local.values
   version           = var.chart_version
+  wait              = false
 
   depends_on = [kubernetes_manifest.kong_gateway_class]
 }

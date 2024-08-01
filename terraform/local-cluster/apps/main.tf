@@ -23,14 +23,12 @@ module "chaos_mesh" {
 #   depends_on     = [module.kube_prom_stack]
 # }
 
-# module "ingress_nginx" {
-#   source  = "../../modules/ingress-nginx"
-#   timeout = 800
-# }
+module "ingress_nginx" {
+  source = "../../modules/ingress-nginx"
+}
 
 module "kong_ingress" {
-  source  = "../../modules/kong-ingress"
-  timeout = 500
+  source = "../../modules/kong-ingress"
 }
 
 # module "kong_mesh" {
