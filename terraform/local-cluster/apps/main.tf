@@ -63,20 +63,20 @@ module "postgresql_db_01" {
   depends_on = [module.cert_manager]
 }
 
-module "ghost_1" {
-  source    = "../../modules/ghost"
-  app_name  = "ghost-1"
-  namespace = "ghost-1"
-  replicas  = 5
-}
-
-module "ghost_2" {
-  source      = "../../modules/ghost"
-  app_name    = "ghost-2"
-  app_version = { version = "green" }
-  namespace   = "ghost-2"
-  replicas    = 5
-}
+# module "ghost_1" {
+#   source    = "../../modules/ghost"
+#   app_name  = "ghost-1"
+#   namespace = "ghost-1"
+#   replicas  = 5
+# }
+#
+# module "ghost_2" {
+#   source      = "../../modules/ghost"
+#   app_name    = "ghost-2"
+#   app_version = { version = "green" }
+#   namespace   = "ghost-2"
+#   replicas    = 5
+# }
 
 # module "trivy_operator" {
 #   source = "../../modules/trivy-operator"
