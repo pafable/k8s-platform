@@ -1,4 +1,4 @@
-ARG VERSION=3256.v88a_f6e922152-1
+ARG VERSION=3261.v9c670a_4748a_9-1
 FROM jenkins/inbound-agent:$VERSION
 
 USER root
