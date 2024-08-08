@@ -27,7 +27,7 @@ variable "agent_container_repository" {
 variable "agent_container_tag" {
   description = "Container tag"
   type        = string
-  default     = "3256.v88a_f6e922152-1"
+  default     = "3261.v9c670a_4748a_9-1"
 }
 
 variable "docker_hub_username" {
