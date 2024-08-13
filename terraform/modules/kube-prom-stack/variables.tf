@@ -6,7 +6,7 @@ variable "app_name" {
 variable "chart_version" {
   description = "The version of the Helm chart to install"
   type        = string
-  default     = "61.3.1"
+  default     = "61.8.0"
 }
 
 variable "grafana_image_repo" {
@@ -18,7 +18,7 @@ variable "grafana_image_repo" {
 variable "grafana_image_tag" {
   description = "Grafana image tag"
   type        = string
-  default     = "11.1.0"
+  default     = "11.1.3"
 }
 
 variable "is_cloud" {
