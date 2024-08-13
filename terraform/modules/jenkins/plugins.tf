@@ -1,6 +1,7 @@
 locals {
   plugins = [
     "ansicolor",
+    "aws-secrets-manager-credentials-provider",
     "blueocean",
     "cloudbees-disk-usage-simple",
     "configuration-as-code",
