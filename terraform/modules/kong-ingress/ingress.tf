@@ -12,6 +12,11 @@ locals {
 
   values = [
     yamlencode({
+      ingressController = {
+        ingressClassAnnotations = {
+          "ingressclass.kubernetes.io/is-default-class" = true
+        }
+      }
       extraLabels = local.labels
     })
   ]
