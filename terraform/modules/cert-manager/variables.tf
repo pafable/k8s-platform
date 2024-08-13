@@ -1,7 +1,7 @@
 variable "cert_manager_version" {
   description = "Cert Manager version"
   type        = string
-  default     = "v1.15.1"
+  default     = "v1.15.2"
 }
 
 variable "owner" {
