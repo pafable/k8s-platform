@@ -67,6 +67,12 @@ variable "owner" {
   default     = "devops"
 }
 
+variable "secrets_manager_region" {
+  description = "Secrets AWS region"
+  type        = string
+  default     = "us-east-1"
+}
+
 variable "timeout" {
   description = "Timeout for the resource"
   type        = number

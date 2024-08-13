@@ -67,6 +67,18 @@ locals {
         }
 
         unclassified = {
+          awsCredentialsProvider = {
+            cache = true
+            client = {
+              credentialsProvider = {
+                static = {
+                  accessKey = sensitive(var.aws_dev_deployer_access_key)
+                  secretKey = sensitive(var.aws_dev_deployer_secret_key)
+                }
+              }
+              region = var.secrets_manager_region
+            }
+          }
           timestamper = {
             allPipelines = true
           }

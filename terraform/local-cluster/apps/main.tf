@@ -43,7 +43,6 @@ module "jenkins" {
   aws_dev_deployer_secret_key = sensitive(data.aws_ssm_parameter.aws_dev_secret_key.value)
   docker_hub_password         = sensitive(data.aws_ssm_parameter.docker_password.value)
   docker_hub_username         = data.aws_ssm_parameter.docker_username.value
-  timeout                     = 800
   depends_on                  = [module.cert_manager]
 }
 
