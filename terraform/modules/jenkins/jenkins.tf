@@ -70,6 +70,18 @@ locals {
                       name        = "admin"
                       pattern     = ".*"
                       permissions = ["Overall/Administer"]
+                    },
+                    {
+                      description = "Jenkins Read Only"
+                      entries     = null
+                      name        = "read-only"
+                      pattern     = ".*"
+                      permissions = [
+                        "Overall/Read",
+                        "Job/Read",
+                        "Metrics/View",
+                        "View/Read"
+                      ]
                     }
                   ]
                 }
