@@ -38,6 +38,7 @@ locals {
       }
 
       controller = {
+        disableRememberMe     = true
         executorMode          = "EXCLUSIVE"
         installPlugins        = local.plugins
         jenkinsUrl            = local.jenkins_url
