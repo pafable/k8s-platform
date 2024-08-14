@@ -38,11 +38,12 @@ locals {
       }
 
       controller = {
-        disableRememberMe     = true
-        executorMode          = "EXCLUSIVE"
-        installPlugins        = local.plugins
-        jenkinsUrl            = local.jenkins_url
-        projectNamingStrategy = "roleBased"
+        disableRememberMe             = true
+        executorMode                  = "EXCLUSIVE"
+        installPlugins                = local.plugins
+        installLatestSpecifiedPlugins = true
+        jenkinsUrl                    = local.jenkins_url
+        projectNamingStrategy         = "roleBased"
 
         admin = {
           existingSecret = kubernetes_secret_v1.jenkins_secret.metadata[0].name
@@ -65,7 +66,7 @@ locals {
                   global = [
                     {
                       description = "Jenkins Administrators"
-                      entries     = [{ user = "jenkins-user" }]
+                      entries     = local.admin_list
                       name        = "admin"
                       pattern     = ".*"
                       permissions = ["Overall/Administer"]
