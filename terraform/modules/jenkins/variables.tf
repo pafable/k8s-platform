@@ -46,7 +46,7 @@ variable "docker_hub_password" {
 variable "helm_chart_version" {
   description = "helm chart version"
   type        = string
-  default     = "5.5.5"
+  default     = "5.5.7"
 }
 
 variable "helm_repo" {

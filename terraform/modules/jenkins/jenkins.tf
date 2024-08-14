@@ -38,9 +38,10 @@ locals {
       }
 
       controller = {
-        executorMode   = "EXCLUSIVE"
-        installPlugins = local.plugins
-        jenkinsUrl     = local.jenkins_url
+        executorMode          = "EXCLUSIVE"
+        installPlugins        = local.plugins
+        jenkinsUrl            = local.jenkins_url
+        projectNamingStrategy = "roleBased"
 
         admin = {
           existingSecret = kubernetes_secret_v1.jenkins_secret.metadata[0].name
@@ -55,6 +56,19 @@ locals {
 
         JCasC = {
           configScripts = local.jcasc_scripts_map
+          # Do not use yamlencode here, it needs to be a string
+          authorizationStrategy = <<-EOF
+            roleBased:
+              roles:
+                global:
+                - description: "Jenkins Administrators"
+                  entries:
+                  - user: "jenkins-user"
+                  name: "admin"
+                  pattern: ".*"
+                  permissions:
+                  - "Overall/Administer"
+          EOF
         }
       }
 
