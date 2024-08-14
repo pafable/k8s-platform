@@ -5,6 +5,7 @@ locals {
     "blueocean",
     "cloudbees-disk-usage-simple",
     "configuration-as-code",
+    "dark-theme",
     "docker-workflow",
     "git",
     "github",

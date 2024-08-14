@@ -58,6 +58,9 @@ locals {
           prism = {
             theme = "TWILIGHT"
           }
+          themeManager = {
+            theme = "dark"
+          }
         }
 
         security = {
