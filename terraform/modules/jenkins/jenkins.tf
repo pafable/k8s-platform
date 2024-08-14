@@ -56,19 +56,24 @@ locals {
 
         JCasC = {
           configScripts = local.jcasc_scripts_map
-          # Do not use yamlencode here, it needs to be a string
-          authorizationStrategy = <<-EOF
-            roleBased:
-              roles:
-                global:
-                - description: "Jenkins Administrators"
-                  entries:
-                  - user: "jenkins-user"
-                  name: "admin"
-                  pattern: ".*"
-                  permissions:
-                  - "Overall/Administer"
-          EOF
+
+          authorizationStrategy = tostring(
+            yamlencode({
+              roleBased = {
+                roles = {
+                  global = [
+                    {
+                      description = "Jenkins Administrators"
+                      entries     = [{ user = "jenkins-user" }]
+                      name        = "admin"
+                      pattern     = ".*"
+                      permissions = ["Overall/Administer"]
+                    }
+                  ]
+                }
+              }
+            })
+          )
         }
       }
 
