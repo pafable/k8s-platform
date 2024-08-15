@@ -88,12 +88,6 @@ locals {
               }
             })
           )
-
-          securityRealm = tostring(
-            yamlencode({
-
-            })
-          )
         }
       }
 
