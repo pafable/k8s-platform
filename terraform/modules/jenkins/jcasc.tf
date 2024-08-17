@@ -82,6 +82,26 @@ locals {
               region = var.secrets_manager_region
             }
           }
+
+          globalLibraries = {
+            libraries = [
+              {
+                defaultVersion = "master"
+                name           = "shared-library"
+                retriever = {
+                  modernSCM = {
+                    scm = {
+                      git = {
+                        remote = "https://github.com/pafable/k8s-platform.git"
+                        traits = ["gitBranchDiscovery"]
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+
           timestamper = {
             allPipelines = true
           }
