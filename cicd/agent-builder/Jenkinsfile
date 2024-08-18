@@ -30,7 +30,7 @@ pipeline {
                 script {
                     sh """
                         docker version
-                        echo $DOCKER_CRED | docker login --username $DOCKER_CRED_PSW --password-stdin
+                        echo $DOCKER_CRED_PSW | docker login --username $DOCKER_CRED_USR --password-stdin
                         task build-jagent-image JENKINS_AGENT_TAG=${params.JENKINS_AGENT_TAG}
                         task push-jagent-image JENKINS_AGENT_TAG=${params.JENKINS_AGENT_TAG}
                     """
