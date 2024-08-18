@@ -22,6 +22,7 @@ pipeline {
     stages{
         stage('running phil test') {
             steps {
+                helloWorld()
                 script {
                     sh """
                         printenv
