@@ -8,7 +8,7 @@ pipeline {
       label "${agent_label}"
     }
 
-    environment = {
+    environment {
         DOCKER_CREDS = credentials('docker-hub-creds')
     }
 
