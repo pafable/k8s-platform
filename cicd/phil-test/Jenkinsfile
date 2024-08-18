@@ -8,9 +8,9 @@ pipeline {
       label "${agent_label}"
     }
 
-//     environment = {
-//         DOCKER_CREDS = credentials('docker-hub-creds')
-//     }
+    environment = {
+        DOCKER_CREDS = credentials('docker-hub-creds')
+    }
 
     options {
         timeout(
