@@ -5,6 +5,10 @@ pipeline {
       label "${agent_label}"
     }
 
+    environment {
+        DOCKER_CRED = credentials('docker-hub-creds')
+    }
+
     options {
         timeout(
             time: 20,
@@ -24,22 +28,12 @@ pipeline {
         stage('building image') {
             steps {
                 script {
-                    withCredentials(
-                        [
-                            usernamePassword(
-                                credentialsId: 'docker-hub-creds',
-                                usernameVariable: 'USERNAME',
-                                passwordVariable: 'PASSWORD'
-                            )
-                        ]
-                    ) {
-                            sh """
-                                docker version
-                                echo $PASSWORD | docker login --username $USERNAME --password-stdin
-                                task build-jagent-image JENKINS_AGENT_TAG=${params.JENKINS_AGENT_TAG}
-                                task push-jagent-image JENKINS_AGENT_TAG=${params.JENKINS_AGENT_TAG}
-                            """
-                    }
+                    sh """
+                        docker version
+                        echo $DOCKER_CRED_USR | docker login --username $DOCKER_CRED_PSW --password-stdin
+                        task build-jagent-image JENKINS_AGENT_TAG=${params.JENKINS_AGENT_TAG}
+                        task push-jagent-image JENKINS_AGENT_TAG=${params.JENKINS_AGENT_TAG}
+                    """
                 }
             }
         }
