@@ -10,95 +10,99 @@ locals {
   }
 
   values = [
-    yamlencode({
-      agent = {
-        envVars = [
-          {
-            name  = "TZ"
-            value = var.timezone
-          }
-        ]
+    yamlencode(
+      {
+        agent = {
+          envVars = [
+            {
+              name  = "TZ"
+              value = var.timezone
+            }
+          ]
 
-        image = {
-          repository = var.agent_container_repository
-          tag        = var.agent_container_tag
+          image = {
+            repository = var.agent_container_repository
+            tag        = var.agent_container_tag
+          }
+
+          podName    = "${local.app_name}-agent"
+          privileged = true
+
+          volumes = [
+            {
+              # needed by docker because docker.sock is in this dir on the host node
+              type      = "hostPathVolume"
+              hostPath  = "/var/run"
+              mountPath = "/var/run"
+            }
+          ]
         }
 
-        podName    = "${local.app_name}-agent"
-        privileged = true
+        controller = {
+          disableRememberMe             = true
+          executorMode                  = "EXCLUSIVE"
+          installPlugins                = local.plugins
+          installLatestSpecifiedPlugins = true
+          jenkinsUrl                    = local.jenkins_url
+          projectNamingStrategy         = "roleBased"
 
-        volumes = [
-          {
-            # needed by docker because docker.sock is in this dir on the host node
-            type      = "hostPathVolume"
-            hostPath  = "/var/run"
-            mountPath = "/var/run"
+          admin = {
+            existingSecret = kubernetes_secret_v1.jenkins_secret.metadata[0].name
           }
-        ]
-      }
 
-      controller = {
-        disableRememberMe             = true
-        executorMode                  = "EXCLUSIVE"
-        installPlugins                = local.plugins
-        installLatestSpecifiedPlugins = true
-        jenkinsUrl                    = local.jenkins_url
-        projectNamingStrategy         = "roleBased"
+          containerEnv = [
+            {
+              name  = "TZ"
+              value = var.timezone
+            }
+          ]
 
-        admin = {
-          existingSecret = kubernetes_secret_v1.jenkins_secret.metadata[0].name
-        }
+          JCasC = {
+            configScripts = local.jcasc_scripts_map
 
-        containerEnv = [
-          {
-            name  = "TZ"
-            value = var.timezone
-          }
-        ]
-
-        JCasC = {
-          configScripts = local.jcasc_scripts_map
-
-          authorizationStrategy = tostring(
-            yamlencode({
-              roleBased = {
-                roles = {
-                  global = [
-                    {
-                      description = "Jenkins Administrators"
-                      entries     = local.admin_list
-                      name        = "admin"
-                      pattern     = ".*"
-                      permissions = ["Overall/Administer"]
-                    },
-                    {
-                      description = "Jenkins Read Only"
-                      entries     = null
-                      name        = "read-only"
-                      pattern     = ".*"
-                      permissions = [
-                        "Overall/Read",
-                        "Job/Read",
-                        "Metrics/View",
-                        "View/Read"
+            authorizationStrategy = tostring(
+              yamlencode(
+                {
+                  roleBased = {
+                    roles = {
+                      global = [
+                        {
+                          description = "Jenkins Administrators"
+                          entries     = local.admin_list
+                          name        = "admin"
+                          pattern     = ".*"
+                          permissions = ["Overall/Administer"]
+                        },
+                        {
+                          description = "Jenkins Read Only"
+                          entries     = null
+                          name        = "read-only"
+                          pattern     = ".*"
+                          permissions = [
+                            "Overall/Read",
+                            "Job/Read",
+                            "Metrics/View",
+                            "View/Read"
+                          ]
+                        }
                       ]
                     }
-                  ]
+                  }
                 }
-              }
-            })
-          )
+              )
+            )
+          }
+        }
+
+        persistence = {
+          existingClaim = kubernetes_persistent_volume_claim_v1.jenkins_pvc.metadata[0].name
+        }
+
+        rbac = {
+          readSecrets = true
         }
       }
-
-      persistence = {
-        existingClaim = kubernetes_persistent_volume_claim_v1.jenkins_pvc.metadata[0].name
-      }
-
-      rbac = {
-        readSecrets = true
-      }
-    })
+    )
   ]
 }
 
