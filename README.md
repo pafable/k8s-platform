@@ -41,6 +41,7 @@ In order to access apps without port forwarding, you will need to add the follow
 127.0.0.1  my-helm-chart.dev.local
 127.0.0.1  pgadmin.local
 127.0.0.1  prometheus.local
+127.0.0.1  jenkins.local
 ```
 
 ### Destroy
