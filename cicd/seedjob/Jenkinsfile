@@ -4,8 +4,7 @@ final String platform_repo = 'https://github.com/pafable/k8s-platform.git'
 
 final def jobsToScripts = [
     'agent-builder': 'cicd/agent-builder/Jenkinsfile',
-    'k8s-platform': 'cicd/platform/Jenkinsfile',
-    'phil-test': 'cicd/phil-test/Jenkinsfile'
+    'k8s-platform': 'cicd/platform/Jenkinsfile'
 ]
 
 pipeline {
