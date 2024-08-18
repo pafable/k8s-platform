@@ -2,6 +2,7 @@
 _
 
 final String agent_label = 'jenkins-jenkins-agent'
+helloWorld()
 
 pipeline {
     agent {
@@ -24,8 +25,9 @@ pipeline {
             steps {
                 helloWorld()
                 script {
+                    helloWorld()
                     sh """
-                        printenv
+                        helloWorld()
                     """
                 }
             }
