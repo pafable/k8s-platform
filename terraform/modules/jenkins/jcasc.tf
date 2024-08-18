@@ -1,8 +1,12 @@
 locals {
-  edt_tz           = timeadd(timestamp(), "-4h") # EDT is -4h from UTC
-  seed_branch      = "refs/heads/master"
-  seed_git_url     = "https://github.com/pafable/k8s-platform.git"
-  seed_script_path = "cicd/seedjob/Jenkinsfile"
+  edt_tz                = timeadd(timestamp(), "-4h") # EDT is -4h from UTC
+  seed_branch           = "refs/heads/master"
+  seed_git_url          = "https://github.com/pafable/k8s-platform.git"
+  seed_script_path      = "cicd/seedjob/Jenkinsfile"
+  shared_library_branch = "master"
+  shared_library_name   = "shared-library"
+  shared_library_repo   = "https://github.com/pafable/devops-libs.git"
+  shared_library_traits = ["gitBranchDiscovery"]
 
   jcasc_scripts = [
     {
@@ -58,6 +62,7 @@ locals {
           prism = {
             theme = "TWILIGHT"
           }
+
           themeManager = {
             theme = "dark"
           }
@@ -82,6 +87,26 @@ locals {
               region = var.secrets_manager_region
             }
           }
+
+          globalLibraries = {
+            libraries = [
+              {
+                defaultVersion = local.shared_library_branch
+                name           = local.shared_library_name
+                retriever = {
+                  modernSCM = {
+                    scm = {
+                      git = {
+                        remote = local.shared_library_repo
+                        traits = local.shared_library_traits
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+
           timestamper = {
             allPipelines = true
           }
