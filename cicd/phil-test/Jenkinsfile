@@ -1,0 +1,33 @@
+@Library('shared-library')
+_
+
+final String agent_label = 'jenkins-jenkins-agent'
+
+pipeline {
+    agent {
+      label "${agent_label}"
+    }
+
+//     environment = {
+//         DOCKER_CREDS = credentials('docker-hub-creds')
+//     }
+
+    options {
+        timeout(
+            time: 20,
+            unit: 'MINUTES'
+        )
+    }
+
+    stages{
+        stage('running phil test') {
+            steps {
+                script {
+                    sh """
+                        printenv
+                    """
+                }
+            }
+        }
+    }
+}
