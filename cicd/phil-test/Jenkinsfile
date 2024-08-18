@@ -26,9 +26,6 @@ pipeline {
                 helloWorld()
                 script {
                     helloWorld()
-                    sh """
-                        helloWorld()
-                    """
                 }
             }
         }
