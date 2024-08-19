@@ -19,6 +19,14 @@ locals {
             scope       = "GLOBAL"
             secretKey   = sensitive(var.aws_dev_deployer_secret_key)
           }
+        },
+        {
+          string = {
+            description = "github token"
+            id          = "github-token"
+            scope       = "GLOBAL"
+            secret      = var.jenkins_github_token
+          }
         }
       ]
     }

@@ -43,6 +43,13 @@ variable "docker_hub_password" {
   sensitive   = true
 }
 
+variable "jenkins_github_token" {
+  description = "Github token"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
 variable "helm_chart_version" {
   description = "helm chart version"
   type        = string

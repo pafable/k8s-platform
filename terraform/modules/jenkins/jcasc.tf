@@ -88,6 +88,16 @@ locals {
             }
           }
 
+          gitHubPluginConfig = {
+            configs = [
+              {
+                credentialsId = "github-token"
+                manageHooks   = false
+                name          = "github"
+              }
+            ]
+          }
+
           globalLibraries = {
             libraries = [
               {

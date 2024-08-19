@@ -43,6 +43,7 @@ module "jenkins" {
   aws_dev_deployer_secret_key = sensitive(data.aws_ssm_parameter.aws_dev_secret_key.value)
   docker_hub_password         = sensitive(data.aws_ssm_parameter.docker_password.value)
   docker_hub_username         = data.aws_ssm_parameter.docker_username.value
+  jenkins_github_token        = data.aws_ssm_parameter.jenkins_github_token.value
   depends_on                  = [module.cert_manager]
 }
 
