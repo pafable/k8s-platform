@@ -1,11 +1,11 @@
 locals {
   app_name   = "elastic"
-  chart_name = "${local.app_name}-operator"
+  chart_name = "eck-operator"
 
   labels = {
-    "app.kubernetes.io/name"       = local.app_name
-    "app.kubernetes.io/managed-by" = "terraform"
-    "app.kubernetes.io/owner"      = var.owner
+    "app.kubernetes.io/name"        = local.app_name
+    "app.kubernetes.io/deployed-by" = "terraform"
+    "app.kubernetes.io/owner"       = var.owner
   }
 }
 
