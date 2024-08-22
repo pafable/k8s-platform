@@ -63,9 +63,9 @@ module "postgresql_db_01" {
   depends_on = [module.cert_manager]
 }
 
-# module "eck" {
-#   source = "../../modules/eck"
-# }
+module "eck" {
+  source = "../../modules/eck"
+}
 
 # module "ghost_1" {
 #   source    = "../../modules/ghost"

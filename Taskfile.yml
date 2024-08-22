@@ -120,11 +120,6 @@ tasks:
       - kubectl apply -f https://raw.githubusercontent.com/aws/karpenter/main/pkg/apis/crds/karpenter.sh_nodepools.yaml
       - kubectl apply -f https://raw.githubusercontent.com/aws/karpenter/main/pkg/apis/crds/karpenter.sh_nodeclaims.yaml
       - kubectl apply -f https://raw.githubusercontent.com/aws/karpenter/main/pkg/apis/crds/karpenter.k8s.aws_ec2nodeclasses.yaml
-      # Elasticsearch CRDs
-      - kubectl apply -f https://download.elastic.co/downloads/eck/2.14.0/crds.yaml
-      # Elasticsearch operator and RBAC rules
-      - kubectl apply -f https://download.elastic.co/downloads/eck/2.14.0/operator.yaml
-
 
   # Delete CRDs
   delete-crds:
