@@ -22,6 +22,12 @@ variable "namespace" {
   default     = "elastic"
 }
 
+variable "ou" {
+  description = "The organizational unit"
+  type        = string
+  default     = "devops"
+}
+
 variable "owner" {
   description = "Owner of resource"
   type        = string

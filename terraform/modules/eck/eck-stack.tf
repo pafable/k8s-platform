@@ -14,7 +14,7 @@ resource "helm_release" "eck_stack" {
   values = [
     yamlencode(
       {
-        installCRDs = false
+        installCRDs = false # this is installed by eck-operator
       }
     )
   ]

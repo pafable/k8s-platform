@@ -6,14 +6,6 @@ locals {
     "app.kubernetes.io/deployed-by" = "terraform"
     "app.kubernetes.io/owner"       = var.owner
   }
-
-  values = [
-    yamlencode(
-      {
-        installCRDs = true
-      }
-    )
-  ]
 }
 
 resource "kubernetes_namespace_v1" "eck_op_ns" {
