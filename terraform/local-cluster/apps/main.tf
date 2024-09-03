@@ -1,20 +1,25 @@
-module "argocd" {
-  source   = "../../modules/argocd"
-  app_repo = "https://github.com/pafable/argo-examples"
-  depends_on = [
-    module.cert_manager,
-    module.kong_ingress
-  ]
-}
+# module "argocd" {
+#   source   = "../../modules/argocd"
+#   app_repo = "https://github.com/pafable/argo-examples"
+#   depends_on = [
+#     module.cert_manager,
+#     module.kong_ingress
+#   ]
+# }
 
 module "cert_manager" {
   source = "../../modules/cert-manager"
 }
 
-module "chaos_mesh" {
-  source                        = "../../modules/chaos-mesh"
-  is_dashboard_security_enabled = false
-  depends_on                    = [module.cert_manager]
+# module "chaos_mesh" {
+#   source                        = "../../modules/chaos-mesh"
+#   is_dashboard_security_enabled = false
+#   depends_on                    = [module.cert_manager]
+# }
+
+module "gitlab" {
+  source     = "../../modules/gitlab"
+  depends_on = [module.cert_manager]
 }
 
 # module "grafana_dashboards" {
@@ -63,9 +68,9 @@ module "postgresql_db_01" {
   depends_on = [module.cert_manager]
 }
 
-module "eck" {
-  source = "../../modules/eck"
-}
+# module "eck" {
+#   source = "../../modules/eck"
+# }
 
 # module "ghost_1" {
 #   source    = "../../modules/ghost"
