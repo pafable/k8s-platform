@@ -26,6 +26,9 @@ env:
   # Terraform modules
   TF_MODULES_DIR: terraform/modules
 
+  # Proxmox dirs
+  PROXMOX_INFRA_DIR: terraform/proxmox-cluster/infra
+
   TF_WORKSPACE: dev # sets the terraform workspace
 
   # Agent tag
@@ -484,3 +487,29 @@ tasks:
     desc: Push jenkins docker image to a container registry
     cmds:
       - docker push {{ .CONTAINER_REGISTRY }}/{{ .JENKINS_IMAGE }}:{{ .JENKINS_AGENT_TAG }}
+
+  proxmox-infra-create:
+    desc: Create Proxmox infrastructure
+    dir: '{{ .PROXMOX_INFRA_DIR }}'
+    deps:
+      - task: fmt
+    cmds:
+      - defer: |
+          echo "Cleaning up..."
+          rm -f tfplan
+      - terraform init
+      - terraform plan -out=tfplan
+      - terraform apply tfplan
+
+  proxmox-infra-destroy:
+    desc: Destroy Proxmox infrastructure
+    dir: '{{ .PROXMOX_INFRA_DIR }}'
+    deps:
+      - task: fmt
+    cmds:
+      - defer: |
+          echo "Cleaning up..."
+          rm -f tfplan-destroy
+      - terraform init
+      - terraform plan -out=tfplan-destroy -destroy
+      - terraform apply tfplan-destroy
