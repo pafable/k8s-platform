@@ -1,3 +1,8 @@
+variable "clone" {
+  description = "Name of clone"
+  type        = string
+}
+
 variable "cores" {
   description = "Number of cores"
   type        = number

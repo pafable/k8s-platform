@@ -3,6 +3,7 @@ locals {
 }
 
 resource "proxmox_vm_qemu" "vm" {
+  clone       = var.clone
   cores       = var.cores
   cpu         = var.cpu_type
   desc        = var.desc
@@ -11,6 +12,7 @@ resource "proxmox_vm_qemu" "vm" {
   name        = var.name
   os_type     = var.os_type
   scsihw      = var.scsihw
+  sockets     = 1
   tags        = var.tags
   target_node = var.host_node
 
