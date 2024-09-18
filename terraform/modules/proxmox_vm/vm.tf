@@ -1,6 +1,7 @@
 locals {
   local_storage_pool = "local"
   pve_node           = "horde"
+  creation_date      = timestamp()
 }
 
 resource "proxmox_cloud_init_disk" "cloudinit" {
@@ -15,7 +16,15 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
 
   user_data = <<-EOT
   #cloud-config
-  ssh_pwauth: True
+  ssh_pwauth: true
+  package_update: true
+  package_upgrade: true
+  write_files:
+    - path: /etc/creation_date.txt
+      owner: nobody:nobody
+      content: |
+        Name: ${var.name}
+        Created: ${local.creation_date}
   EOT
 
   #   network_config = yamlencode({
@@ -47,7 +56,7 @@ resource "proxmox_vm_qemu" "vm" {
   os_type     = var.os_type
   scsihw      = var.scsihw
   sockets     = 1
-  tags        = var.tags
+  tags        = "${var.tags}"
   target_node = var.host_node
 
   disks {
