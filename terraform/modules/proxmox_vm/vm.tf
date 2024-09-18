@@ -15,7 +15,7 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
 
   user_data = <<-EOT
   #cloud-config
-  echo "hello world" > /tmp/hello.txt
+  ssh_pwauth: True
   EOT
 
   #   network_config = yamlencode({
