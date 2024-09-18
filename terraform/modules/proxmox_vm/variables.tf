@@ -27,9 +27,10 @@ variable "host_node" {
   default     = "horde"
 }
 
-variable "iso" {
-  description = "ISO name"
+variable "isSSD" {
+  description = "Is drive SSD?"
   type        = string
+  default     = true
 }
 
 variable "main_disk_size" {

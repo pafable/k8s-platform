@@ -1,5 +1,39 @@
 locals {
   local_storage_pool = "local"
+  pve_node           = "horde"
+}
+
+resource "proxmox_cloud_init_disk" "cloudinit" {
+  name     = "${var.name}-cloudinit"
+  pve_node = local.pve_node
+  storage  = local.local_storage_pool
+
+  meta_data = yamlencode({
+    instance_id    = sha1(var.name)
+    local-hostname = var.name
+  })
+
+  user_data = <<-EOT
+  #cloud-config
+  echo "hello world" > /tmp/hello.txt
+  EOT
+
+  #   network_config = yamlencode({
+  #     version = 1
+  #     config = [{
+  #       type = "physical"
+  #       name = "eth0"
+  #       subnets = [{
+  #         type    = "static"
+  #         address = "192.168.1.100/24"
+  #         gateway = "192.168.1.1"
+  #         dns_nameservers = [
+  #           "1.1.1.1",
+  #           "8.8.8.8"
+  #         ]
+  #       }]
+  #     }]
+  #   })
 }
 
 resource "proxmox_vm_qemu" "vm" {
@@ -18,9 +52,9 @@ resource "proxmox_vm_qemu" "vm" {
 
   disks {
     ide {
-      ide2 {
+      ide0 {
         cdrom {
-          iso = "${local.local_storage_pool}:iso/${var.iso}"
+          iso = proxmox_cloud_init_disk.cloudinit.id
         }
       }
     }
@@ -28,8 +62,9 @@ resource "proxmox_vm_qemu" "vm" {
     scsi {
       scsi0 {
         disk {
-          size    = var.main_disk_size
-          storage = var.storage_location
+          emulatessd = var.isSSD
+          size       = var.main_disk_size
+          storage    = var.storage_location
         }
       }
     }
