@@ -56,7 +56,7 @@ resource "proxmox_vm_qemu" "vm" {
   os_type     = var.os_type
   scsihw      = var.scsihw
   sockets     = 1
-  tags        = "${var.tags}"
+  tags        = var.tags
   target_node = var.host_node
 
   disks {
