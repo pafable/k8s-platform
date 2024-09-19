@@ -1,3 +1,7 @@
+locals {
+  default_tags = "phil,test"
+}
+
 module "k3s_master" {
   source   = "../../modules/proxmox_vm"
   clone    = "orc-template"
@@ -5,7 +9,7 @@ module "k3s_master" {
   name     = "uruk-hai-01"
   os_type  = "cloud-init"
   pve_node = "horde"
-  tags     = "phil,test"
+  tags     = local.default_tags
 }
 
 module "k3s_worker1" {
@@ -16,7 +20,7 @@ module "k3s_worker1" {
   name      = "uruk-hai-02"
   os_type   = "cloud-init"
   pve_node  = "ninja"
-  tags      = "phil,test"
+  tags      = local.default_tags
 }
 
 module "k3s_worker2" {
@@ -27,5 +31,5 @@ module "k3s_worker2" {
   name      = "uruk-hai-03"
   os_type   = "cloud-init"
   pve_node  = "ninja"
-  tags      = "phil,test"
+  tags      = local.default_tags
 }
