@@ -56,6 +56,11 @@ variable "os_type" {
   default     = "Linux 6.x - 2.6 Kernel"
 }
 
+variable "pve_node" {
+  description = "PVE node to deploy to"
+  type        = string
+}
+
 variable "scsihw" {
   description = "SCSI HW type"
   type        = string

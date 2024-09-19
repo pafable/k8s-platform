@@ -1,12 +1,11 @@
 locals {
   local_storage_pool = "local"
-  pve_node           = "horde"
   creation_date      = timestamp()
 }
 
 resource "proxmox_cloud_init_disk" "cloudinit" {
   name     = "${var.name}-cloudinit"
-  pve_node = local.pve_node
+  pve_node = var.pve_node
   storage  = local.local_storage_pool
 
   meta_data = yamlencode({
