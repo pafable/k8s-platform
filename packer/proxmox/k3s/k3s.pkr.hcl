@@ -15,7 +15,7 @@ source "proxmox-iso" "golden-image" {
   #   cloud_init               = true
   #   cloud_init_storage_pool  = "local-lvm"
   #   communicator             = "ssh"
-  cores                    = 2
+  cores                    = 4
   cpu_type                 = "host"
   http_directory           = "../http"
   insecure_skip_tls_verify = true
