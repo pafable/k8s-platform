@@ -28,7 +28,7 @@ env:
 
   # Proxmox dirs
   PROXMOX_INFRA_DIR: terraform/proxmox-cluster/infra
-  PACKER_PROXMOX_DIR: packer/proxmox/k3s
+  PACKER_PROXMOX_ORACLE_DIR: packer/proxmox/oracle-linux
 
   TF_WORKSPACE: dev # sets the terraform workspace
 
@@ -527,9 +527,9 @@ tasks:
       - terraform plan -out=tfplan-destroy -destroy
       - terraform apply tfplan-destroy
 
-  packer-build:
+  packer-ol-build:
     desc: Build packer image
-    dir: '{{ .PACKER_PROXMOX_DIR }}'
+    dir: '{{ .PACKER_PROXMOX_ORACLE_DIR }}'
     deps:
       - task: fmt
     cmds:

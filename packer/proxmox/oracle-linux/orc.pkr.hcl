@@ -10,11 +10,8 @@ packer {
 source "proxmox-iso" "golden-image" {
   boot_wait = "3s"
   boot_command = [
-    "<esc> linux ip=dhcp inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait60>"
+    "<esc> linux ip=dhcp inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter>"
   ]
-  #   cloud_init               = true
-  #   cloud_init_storage_pool  = "local-lvm"
-  #   communicator             = "ssh"
   cores                    = 4
   cpu_type                 = "host"
   http_directory           = "../http"
@@ -28,8 +25,9 @@ source "proxmox-iso" "golden-image" {
   password                 = var.password
   proxmox_url              = "${var.proxmox_url}:8006/api2/json"
   scsi_controller          = "virtio-scsi-single"
-  ssh_username             = var.ssh_username
   ssh_password             = var.ssh_password
+  ssh_username             = var.ssh_username
+  ssh_timeout              = "30m"
   tags                     = "packer"
   template_description     = "Base template for orc"
   template_name            = "orc-template-1"
