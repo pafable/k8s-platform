@@ -28,6 +28,7 @@ env:
 
   # Proxmox dirs
   PROXMOX_INFRA_DIR: terraform/proxmox-cluster/infra
+  PACKER_PROXMOX_ORACLE_DIR: packer/proxmox/oracle-linux
 
   TF_WORKSPACE: dev # sets the terraform workspace
 
@@ -54,6 +55,7 @@ tasks:
 #      - install-prereqs
     cmds:
       - terraform -chdir=terraform fmt --recursive
+      - packer fmt -recursive packer
 
   connect-eks-cluster:
     desc: Connect to EKS cluster
@@ -524,3 +526,13 @@ tasks:
           rm -f tfplan-destroy
       - terraform plan -out=tfplan-destroy -destroy
       - terraform apply tfplan-destroy
+
+  packer-ol-build:
+    desc: Build packer image
+    dir: '{{ .PACKER_PROXMOX_ORACLE_DIR }}'
+    deps:
+      - task: fmt
+    cmds:
+      - packer init .
+      - packer validate -var-file=vars.pkrvars.hcl .
+      - packer build -var-file=vars.pkrvars.hcl .
