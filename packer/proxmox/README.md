@@ -8,6 +8,7 @@ Current list of images being created.
 |      OS      | Version |
 |:------------:|:-------:|
 | Oracle Linux |   9.4   |
+| Rocky Linux  |   9.4   |
 
 
 ## Prerequistes:
