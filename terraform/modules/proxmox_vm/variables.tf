@@ -27,7 +27,7 @@ variable "host_node" {
   default     = "horde"
 }
 
-variable "isSSD" {
+variable "is_SSD" {
   description = "Is drive SSD?"
   type        = string
   default     = true

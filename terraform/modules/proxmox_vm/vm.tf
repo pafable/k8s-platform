@@ -70,7 +70,7 @@ resource "proxmox_vm_qemu" "vm" {
     scsi {
       scsi0 {
         disk {
-          emulatessd = var.isSSD
+          emulatessd = var.is_SSD
           size       = var.main_disk_size
           storage    = var.storage_location
         }
