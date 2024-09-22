@@ -14,7 +14,7 @@ source "proxmox-iso" "golden-image" {
   cpu_type                 = "host"
   http_directory           = "../kickstarts/http/rocky"
   insecure_skip_tls_verify = true
-  iso_file                 = "local:iso/Rocky-9.4-x86_64-minimal.iso"
+  iso_file                 = "local:iso/Rocky-9.4-x86_64-boot.iso"
   iso_storage_pool         = "local"
   memory                   = 8192
   node                     = "horde"
