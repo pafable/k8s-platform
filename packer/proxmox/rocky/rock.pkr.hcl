@@ -12,7 +12,7 @@ source "proxmox-iso" "golden-image" {
   boot_wait                = "3s"
   cores                    = 4
   cpu_type                 = "host"
-  http_directory           = "../http"
+  http_directory           = "../kickstarts/http/oracle"
   insecure_skip_tls_verify = true
   iso_file                 = "local:iso/Rocky-9.4-x86_64-minimal.iso"
   iso_storage_pool         = "local"
