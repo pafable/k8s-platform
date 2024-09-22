@@ -33,7 +33,7 @@ source "proxmox-iso" "golden-image" {
   vm_name                  = "packer-image-builder"
 
   boot_command = [
-    "<esc> ip=dhcp inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter>"
+    "<esc> linux ip=dhcp inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter>"
   ]
 
   disks {
