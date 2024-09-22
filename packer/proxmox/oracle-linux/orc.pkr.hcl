@@ -53,4 +53,8 @@ source "proxmox-iso" "golden-image" {
 build {
   name    = "builder"
   sources = ["proxmox-iso.golden-image"]
+
+  provisioner "shell" {
+    inline = ["date > /home/${var.ssh_username}/image_creation_date"]
+  }
 }
