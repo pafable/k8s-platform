@@ -28,7 +28,8 @@ env:
 
   # Proxmox dirs
   PROXMOX_INFRA_DIR: terraform/proxmox-cluster/infra
-  PACKER_PROXMOX_ORACLE_DIR: packer/proxmox/oracle-linux
+  PROXMOX_PACKER_ORACLE_DIR: packer/proxmox/oracle
+  PROXMOX_PACKER_ROCKY_DIR: packer/proxmox/rocky
 
   TF_WORKSPACE: dev # sets the terraform workspace
 
@@ -528,8 +529,18 @@ tasks:
       - terraform apply tfplan-destroy
 
   packer-ol-build:
-    desc: Build packer image
-    dir: '{{ .PACKER_PROXMOX_ORACLE_DIR }}'
+    desc: Build Oracle linux image
+    dir: '{{ .PROXMOX_PACKER_ORACLE_DIR }}'
+    deps:
+      - task: fmt
+    cmds:
+      - packer init .
+      - packer validate -var-file=vars.pkrvars.hcl .
+      - packer build -var-file=vars.pkrvars.hcl .
+
+  packer-rocky-build:
+    desc: Build Rocky linux image
+    dir: '{{ .PROXMOX_PACKER_ROCKY_DIR }}'
     deps:
       - task: fmt
     cmds:

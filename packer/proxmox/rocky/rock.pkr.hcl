@@ -14,7 +14,7 @@ source "proxmox-iso" "golden-image" {
   cpu_type                 = "host"
   http_directory           = "../http"
   insecure_skip_tls_verify = true
-  iso_file                 = "local:iso/OracleLinux-R9-U4-x86_64-boot.iso"
+  iso_file                 = "local:iso/Rocky-9.4-x86_64-minimal.iso"
   iso_storage_pool         = "local"
   memory                   = 8192
   node                     = "horde"
@@ -33,7 +33,7 @@ source "proxmox-iso" "golden-image" {
   vm_name                  = "packer-image-builder"
 
   boot_command = [
-    "<esc> linux ip=dhcp inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter>"
+    "<esc> ip=dhcp inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter>"
   ]
 
   disks {
