@@ -18,7 +18,8 @@ This serves all the necessary apps to bootstrap a kubernetes cluster. At the mom
 ### Prerequisites
 You will need the following installed on your machine before deploying:
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- [Kubernetes cluster](https://docs.docker.com/desktop/kubernetes/) created from Docker Desktop 
+- [Kubernetes cluster](https://docs.docker.com/desktop/kubernetes/) created from Docker Desktop
+- [Packer](https://developer.hashicorp.com/packer/install?ajs_aid=e65b25ce-401d-4cf0-bb32-ebafbd96b908&product_intent=packer)
 - [Taskfile](https://taskfile.dev/)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/)
 - [Terraform](https://developer.hashicorp.com/terraform/install)
@@ -61,3 +62,7 @@ task create-cluster
 ```shell
 task destroy-cluster
 ```
+
+---
+## Creating Proxmox Images
+See [proxmox readme](packer/proxmox/README.md).
