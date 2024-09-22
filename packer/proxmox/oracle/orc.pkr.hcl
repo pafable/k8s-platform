@@ -12,7 +12,7 @@ source "proxmox-iso" "golden-image" {
   boot_wait                = "3s"
   cores                    = 4
   cpu_type                 = "host"
-  http_directory           = "../kickstarts/http/oracle"
+  http_directory           = "../http"
   insecure_skip_tls_verify = true
   iso_file                 = "local:iso/OracleLinux-R9-U4-x86_64-boot.iso"
   iso_storage_pool         = "local"
