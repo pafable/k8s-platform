@@ -19,17 +19,17 @@ source "proxmox-iso" "golden-image" {
   memory                   = 8192
   node                     = "horde"
   os                       = "l26"
-  password                 = var.password
-  proxmox_url              = "${var.proxmox_url}:8006/api2/json"
+  password                 = var.proxmox_password
+  proxmox_url              = "https://${var.proxmox_url}:8006/api2/json"
   scsi_controller          = "virtio-scsi-single"
   ssh_password             = var.ssh_password
   ssh_timeout              = "30m"
   ssh_username             = var.ssh_username
-  tags                     = "packer"
+  tags                     = var.template_name
   template_description     = "Base template for orc"
-  template_name            = "orc-template-1"
+  template_name            = var.template_name
   unmount_iso              = true
-  username                 = var.username
+  username                 = var.proxmox_username
   vm_name                  = "packer-image-builder"
 
   boot_command = [

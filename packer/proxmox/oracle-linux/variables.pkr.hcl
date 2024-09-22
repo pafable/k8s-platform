@@ -1,4 +1,4 @@
-variable "password" {
+variable "proxmox_password" {
   description = "Password for PVE"
   sensitive   = true
   type        = string
@@ -9,7 +9,7 @@ variable "proxmox_url" {
   type        = string
 }
 
-variable "username" {
+variable "proxmox_username" {
   description = "Username for PVE"
   sensitive   = true
   type        = string
@@ -24,5 +24,10 @@ variable "ssh_password" {
 variable "ssh_username" {
   description = "ssh username"
   sensitive   = true
+  type        = string
+}
+
+variable "template_name" {
+  description = "Template name"
   type        = string
 }

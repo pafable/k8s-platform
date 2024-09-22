@@ -18,11 +18,12 @@ Create a `vars.pkr.hcl` file and write in entries for proxmox user and password 
 
 example vars.pkr.hcl
 ```
-password     = <PROXMOX_PASSWORD>
-proxmox_url  = "https://<YOUR_PROXMOX_URL>"
-username     = "<PROXMOX_USER>"
-ssh_username = "SSH_USER"
-ssh_password = "<SSH_PASS>"
+password      = <PROXMOX_PASSWORD>
+proxmox_url   = "https://<YOUR_PROXMOX_URL>"
+username      = "<PROXMOX_USER>"
+ssh_username  = "<SSH_USER>"
+ssh_password  = "<SSH_PASS>"
+template_name = "<TEMPLATE_NAME>"
 ```
 
 ## Create Image:
