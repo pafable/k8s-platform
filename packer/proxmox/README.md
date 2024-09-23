@@ -23,8 +23,8 @@ example vars.pkr.hcl
 proxmox_password = <PROXMOX_PASSWORD>
 proxmox_url      = "https://<YOUR_PROXMOX_URL>"
 proxmox_username = "<PROXMOX_USER>"
-ssh_username     = "<SSH_USER>"
 ssh_password     = "<SSH_PASS>"
+ssh_username     = "<SSH_USER>"
 template_name    = "<TEMPLATE_NAME>"
 ```
 
