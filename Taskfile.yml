@@ -538,7 +538,7 @@ tasks:
       - packer validate -var-file=vars.pkrvars.hcl .
       - packer build -var-file=vars.pkrvars.hcl .
 
-  packer-rocky-build:
+  packer-rl-build:
     desc: Build Rocky linux image
     dir: '{{ .PROXMOX_PACKER_ROCKY_DIR }}'
     deps:
