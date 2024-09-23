@@ -27,7 +27,12 @@ ssh_password  = "<SSH_PASS>"
 template_name = "<TEMPLATE_NAME>"
 ```
 
-## Create Image:
+## Create Oracle Linux Image:
 ```shell
 task packer-ol-build
+```
+
+## Create Rocky Linux Image:
+```shell
+task packer-rocky-build
 ```
