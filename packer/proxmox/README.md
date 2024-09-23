@@ -20,7 +20,7 @@ Create a `vars.pkr.hcl` file and write in entries for proxmox user and password 
 
 example vars.pkr.hcl
 ```
-proxmox_password = <PROXMOX_PASSWORD>
+proxmox_password = "<PROXMOX_PASSWORD>"
 proxmox_url      = "https://<YOUR_PROXMOX_URL>"
 proxmox_username = "<PROXMOX_USER>"
 ssh_password     = "<SSH_PASS>"
