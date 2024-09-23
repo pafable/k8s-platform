@@ -35,5 +35,5 @@ task packer-ol-build
 
 ## Create Rocky Linux Image:
 ```shell
-task packer-rocky-build
+task packer-rl-build
 ```
