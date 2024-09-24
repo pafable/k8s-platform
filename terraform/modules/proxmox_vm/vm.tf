@@ -24,7 +24,7 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
   runcmd:
     - ${var.runcmd}
   write_files:
-    - path: /etc/creation_date.txt
+    - path: /home/packer/instance_creation_date
       owner: nobody:nobody
       content: |
         Name: ${var.name}
