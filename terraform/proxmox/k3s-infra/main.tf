@@ -25,7 +25,7 @@ module "k3s_worker1" {
   source    = "../../modules/proxmox_vm"
   clone     = local.worker_template
   host_node = local.worker_node
-  memory    = 8192
+  memory    = 16384
   name      = "${local.host_name}-02"
   os_type   = "cloud-init"
   pve_node  = local.worker_node

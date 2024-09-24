@@ -1,6 +1,7 @@
 locals {
   local_storage_pool = "local"
   creation_date      = timestamp()
+  description        = "${var.desc}. Instance launched on ${local.creation_date}"
 }
 
 resource "proxmox_cloud_init_disk" "cloudinit" {
@@ -52,7 +53,7 @@ resource "proxmox_vm_qemu" "vm" {
   clone       = var.clone
   cores       = var.cores
   cpu         = var.cpu_type
-  desc        = var.desc
+  desc        = local.description
   ipconfig0   = "ip=dhcp"
   memory      = var.memory
   name        = var.name
@@ -86,4 +87,6 @@ resource "proxmox_vm_qemu" "vm" {
     model  = "virtio"
     bridge = "vmbr0"
   }
+
+  depends_on = [proxmox_cloud_init_disk.cloudinit]
 }

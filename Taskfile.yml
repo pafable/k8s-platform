@@ -27,7 +27,7 @@ env:
   TF_MODULES_DIR: terraform/modules
 
   # Proxmox dirs
-  PROXMOX_K3S_INFRA_DIR: terraform/proxmox-cluster/k3s-infra
+  PROXMOX_K3S_INFRA_DIR: terraform/proxmox/k3s-infra
   PROXMOX_PACKER_ORACLE_DIR: packer/proxmox/oracle
   PROXMOX_PACKER_ROCKY_DIR: packer/proxmox/rocky
 
