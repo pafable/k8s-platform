@@ -61,6 +61,12 @@ variable "pve_node" {
   type        = string
 }
 
+variable "runcmd" {
+  description = "Command to run on initial instance initialization"
+  type        = string
+  default     = ""
+}
+
 variable "scsihw" {
   description = "SCSI HW type"
   type        = string

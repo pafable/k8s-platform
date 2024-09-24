@@ -18,6 +18,7 @@ module "k3s_master" {
   name     = "${local.host_name}-01"
   os_type  = "cloud-init"
   pve_node = local.controller_node
+  runcmd   = "curl -sfL https://get.k3s.io | sh -"
   tags     = local.default_tags
 }
 
@@ -33,12 +34,13 @@ module "k3s_worker1" {
 }
 
 module "k3s_worker2" {
-  source    = "../../modules/proxmox_vm"
-  clone     = local.worker_template
-  host_node = local.worker_node
-  memory    = 8192
-  name      = "${local.host_name}-03"
-  os_type   = "cloud-init"
-  pve_node  = local.worker_node
-  tags      = local.default_tags
+  source     = "../../modules/proxmox_vm"
+  clone      = local.worker_template
+  host_node  = local.worker_node
+  memory     = 8192
+  name       = "${local.host_name}-03"
+  os_type    = "cloud-init"
+  pve_node   = local.worker_node
+  tags       = local.default_tags
+  depends_on = [module.k3s_worker1]
 }

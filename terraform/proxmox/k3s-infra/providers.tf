@@ -10,3 +10,7 @@ terraform {
 module "terraform_version" {
   source = "../../modules/versions/terraform"
 }
+
+provider "proxmox" {
+  pm_api_url = "https://horde.home.pafable.com:8006/api2/json"
+}
