@@ -18,12 +18,16 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
   ssh_pwauth: true
   package_update: true
   package_upgrade: true
+  packages:
+    - ansible
+    - lynx
   write_files:
     - path: /etc/creation_date.txt
       owner: nobody:nobody
       content: |
         Name: ${var.name}
         Created: ${local.creation_date}
+        image_template: ${var.clone}
   EOT
 
   #   network_config = yamlencode({
