@@ -1,3 +1,8 @@
+variable "proxmox_node" {
+  description = "Proxmox node"
+  type        = string
+}
+
 variable "proxmox_password" {
   description = "Password for PVE"
   sensitive   = true

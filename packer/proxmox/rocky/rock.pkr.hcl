@@ -17,7 +17,7 @@ source "proxmox-iso" "golden-image" {
   iso_file                 = "local:iso/Rocky-9.4-x86_64-boot.iso"
   iso_storage_pool         = "local"
   memory                   = 8192
-  node                     = "horde"
+  node                     = var.proxmox_node
   os                       = "l26"
   password                 = var.proxmox_password
   proxmox_url              = "https://${var.proxmox_url}:8006/api2/json"
@@ -26,7 +26,7 @@ source "proxmox-iso" "golden-image" {
   ssh_timeout              = "30m"
   ssh_username             = var.ssh_username
   tags                     = var.template_name
-  template_description     = "Base template for orc"
+  template_description     = "Base template for Rocky Linux 9.4"
   template_name            = var.template_name
   unmount_iso              = true
   username                 = var.proxmox_username
