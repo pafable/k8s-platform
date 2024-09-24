@@ -20,7 +20,6 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
   package_update: true
   package_upgrade: true
   packages:
-    - ansible
     - lynx
   runcmd:
     - ${var.runcmd}
