@@ -22,6 +22,8 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
   packages:
     - ansible
     - lynx
+  runcmd:
+    - ${var.runcmd}
   write_files:
     - path: /etc/creation_date.txt
       owner: nobody:nobody
