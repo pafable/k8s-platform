@@ -21,7 +21,7 @@ env:
   TF_VPC_AWS_DIR: terraform/aws/vpc
 
   # Terraform Directories for Local Cluster
-  TF_APPS_LOCAL_DIR: terraform/local-cluster/apps
+  TF_APPS_LOCAL_DIR: terraform/local/apps
 
   # Terraform modules
   TF_MODULES_DIR: terraform/modules
