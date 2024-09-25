@@ -27,7 +27,7 @@ env:
   TF_MODULES_DIR: terraform/modules
 
   # Proxmox dirs
-  PROXMOX_INFRA_DIR: terraform/proxmox-cluster/infra
+  PROXMOX_K3S_INFRA_DIR: terraform/proxmox/k3s-infra
   PROXMOX_PACKER_ORACLE_DIR: packer/proxmox/oracle
   PROXMOX_PACKER_ROCKY_DIR: packer/proxmox/rocky
 
@@ -491,24 +491,24 @@ tasks:
     cmds:
       - docker push {{ .CONTAINER_REGISTRY }}/{{ .JENKINS_IMAGE }}:{{ .JENKINS_AGENT_TAG }}
 
-  proxmox-infra-init:
-    dir: '{{ .PROXMOX_INFRA_DIR }}'
+  proxmox-k3s-infra-init:
+    dir: '{{ .PROXMOX_K3S_INFRA_DIR }}'
     deps:
       - task: fmt
     desc: Initialize Proxmox infra
     cmds:
-      - echo "+++++ Initializing Proxmox Infra +++++"
-      - terraform init -upgrade -reconfigure -no-color
+      - echo "+++++ Initializing Proxmox K3S Infra +++++"
+      - terraform init -upgrade -reconfigure
       - task: tf-validate
-        vars: { DIR: '{{ .PROXMOX_INFRA_DIR }}' }
+        vars: { DIR: '{{ .PROXMOX_K3S_INFRA_DIR }}' }
       - task: tf-ws-list
-        vars: { DIR: '{{ .PROXMOX_INFRA_DIR }}' }
+        vars: { DIR: '{{ .PROXMOX_K3S_INFRA_DIR }}' }
 
-  proxmox-infra-create:
+  proxmox-k3s-infra-create:
     desc: Create Proxmox infrastructure
-    dir: '{{ .PROXMOX_INFRA_DIR }}'
+    dir: '{{ .PROXMOX_K3S_INFRA_DIR }}'
     deps:
-      - task: proxmox-infra-init
+      - task: proxmox-k3s-infra-init
     cmds:
       - defer: |
           echo "Cleaning up..."
@@ -516,11 +516,11 @@ tasks:
       - terraform plan -out=tfplan
       - terraform apply tfplan
 
-  proxmox-infra-destroy:
+  proxmox-k3s-infra-destroy:
     desc: Destroy Proxmox infrastructure
-    dir: '{{ .PROXMOX_INFRA_DIR }}'
+    dir: '{{ .PROXMOX_K3S_INFRA_DIR }}'
     deps:
-      - task: proxmox-infra-init
+      - task: proxmox-k3s-infra-init
     cmds:
       - defer: |
           echo "Cleaning up..."

@@ -18,7 +18,7 @@ variable "cpu_type" {
 variable "desc" {
   description = "Description"
   type        = string
-  default     = "created and managed by terraform"
+  default     = "Created and managed by terraform"
 }
 
 variable "host_node" {
@@ -59,6 +59,12 @@ variable "os_type" {
 variable "pve_node" {
   description = "PVE node to deploy to"
   type        = string
+}
+
+variable "runcmd" {
+  description = "Command to run on initial instance initialization"
+  type        = string
+  default     = ""
 }
 
 variable "scsihw" {

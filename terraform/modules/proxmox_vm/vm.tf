@@ -1,6 +1,7 @@
 locals {
   local_storage_pool = "local"
   creation_date      = timestamp()
+  description        = "${var.desc}. Instance launched on ${local.creation_date}"
 }
 
 resource "proxmox_cloud_init_disk" "cloudinit" {
@@ -18,12 +19,20 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
   ssh_pwauth: true
   package_update: true
   package_upgrade: true
+  packages:
+    - lynx
+  runcmd:
+    - ${var.runcmd}
+    - firewall-cmd --add-port=6443/tcp --permanent
+    - firewall-cmd --add-port=10250/tcp --permanent
+    - firewall-cmd --reload
   write_files:
-    - path: /etc/creation_date.txt
+    - path: /home/packer/instance_creation_date
       owner: nobody:nobody
       content: |
         Name: ${var.name}
         Created: ${local.creation_date}
+        image_template: ${var.clone}
   EOT
 
   #   network_config = yamlencode({
@@ -48,7 +57,7 @@ resource "proxmox_vm_qemu" "vm" {
   clone       = var.clone
   cores       = var.cores
   cpu         = var.cpu_type
-  desc        = var.desc
+  desc        = local.description
   ipconfig0   = "ip=dhcp"
   memory      = var.memory
   name        = var.name
@@ -82,4 +91,6 @@ resource "proxmox_vm_qemu" "vm" {
     model  = "virtio"
     bridge = "vmbr0"
   }
+
+  depends_on = [proxmox_cloud_init_disk.cloudinit]
 }
