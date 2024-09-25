@@ -23,7 +23,9 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
     - lynx
   runcmd:
     - ${var.runcmd}
-    - "firewall-cmd --add-port=6443/tcp --permanent && firewall-cmd --reload"
+    - firewall-cmd --add-port=6443/tcp --permanent
+    - firewall-cmd --add-port=10250/tcp --permanent
+    - firewall-cmd --reload
   write_files:
     - path: /home/packer/instance_creation_date
       owner: nobody:nobody
