@@ -42,5 +42,5 @@ module "k3s_worker2" {
   os_type    = "cloud-init"
   pve_node   = local.worker_node
   tags       = local.default_tags
-  depends_on = [module.k3s_worker1]
+  depends_on = [module.k3s_worker1] # waits for worker1 to complete to release lock on node before creating worker2
 }
