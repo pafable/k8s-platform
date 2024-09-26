@@ -4,7 +4,7 @@ locals {
 
   # proxmox templates
   controller_template = "orc-tmpl-1"
-  worker_template     = "roc-tmpl-1"
+  worker_template     = "orc-tmpl-1"
 
   # k8s nodes
   controller_node = "horde"
@@ -12,14 +12,15 @@ locals {
 }
 
 module "k3s_master" {
-  source   = "../../modules/proxmox_vm"
-  clone    = local.controller_template
-  memory   = 16384
-  name     = "${local.host_name}-01"
-  os_type  = "cloud-init"
-  pve_node = local.controller_node
-  runcmd   = "curl -sfL https://get.k3s.io | sh -"
-  tags     = local.default_tags
+  source              = "../../modules/proxmox_vm"
+  clone_template      = local.controller_template
+  host_node           = local.worker_node
+  memory              = 16384
+  name                = "${local.host_name}-01"
+  os_type             = "cloud-init"
+  cloud_init_pve_node = local.worker_node
+  runcmd              = "curl -sfL https://get.k3s.io | sh -"
+  tags                = local.default_tags
 }
 
 # module "k3s_worker1" {

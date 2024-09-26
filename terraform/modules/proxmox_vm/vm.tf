@@ -6,7 +6,7 @@ locals {
 
 resource "proxmox_cloud_init_disk" "cloudinit" {
   name     = "${var.name}-cloudinit"
-  pve_node = var.pve_node
+  pve_node = var.cloud_init_pve_node
   storage  = local.local_storage_pool
 
   meta_data = yamlencode({
@@ -32,7 +32,7 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
       content: |
         Name: ${var.name}
         Created: ${local.creation_date}
-        image_template: ${var.clone}
+        image_template: ${var.clone_template}
   EOT
 
   #   network_config = yamlencode({
@@ -54,7 +54,7 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
 }
 
 resource "proxmox_vm_qemu" "vm" {
-  clone       = var.clone
+  clone       = var.clone_template
   cores       = var.cores
   cpu         = var.cpu_type
   desc        = local.description
