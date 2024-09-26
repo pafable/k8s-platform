@@ -1,6 +1,6 @@
 locals {
   local_storage_pool = "local"
-  creation_date      = timestamp()
+  creation_date      = timestamp() # timestamps are in Zulu aka UTC time
   description        = "${var.desc}. Instance launched on ${local.creation_date}"
 }
 
