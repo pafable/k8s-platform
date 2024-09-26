@@ -1,21 +1,21 @@
-module "argocd" {
-  source   = "../../modules/argocd"
-  app_repo = "https://github.com/pafable/argo-examples"
-  depends_on = [
-    module.cert_manager,
-    module.kong_ingress
-  ]
-}
+# module "argocd" {
+#   source   = "../../modules/argocd"
+#   app_repo = "https://github.com/pafable/argo-examples"
+#   depends_on = [
+#     module.cert_manager,
+#     module.kong_ingress
+#   ]
+# }
 
 module "cert_manager" {
   source = "../../modules/cert-manager"
 }
 
-module "chaos_mesh" {
-  source                        = "../../modules/chaos-mesh"
-  is_dashboard_security_enabled = false
-  depends_on                    = [module.cert_manager]
-}
+# module "chaos_mesh" {
+#   source                        = "../../modules/chaos-mesh"
+#   is_dashboard_security_enabled = false
+#   depends_on                    = [module.cert_manager]
+# }
 
 # module "grafana_dashboards" {
 #   source         = "../../modules/grafana-dashboards"
@@ -35,17 +35,17 @@ module "kong_ingress" {
 #   source = "../../modules/kong-mesh"
 # }
 
-module "jenkins" {
-  source                      = "../../modules/jenkins"
-  agent_container_repository  = "boomb0x/myagent"
-  agent_container_tag         = "0.0.3"
-  aws_dev_deployer_access_key = sensitive(data.aws_ssm_parameter.aws_dev_access_key.value)
-  aws_dev_deployer_secret_key = sensitive(data.aws_ssm_parameter.aws_dev_secret_key.value)
-  docker_hub_password         = sensitive(data.aws_ssm_parameter.docker_password.value)
-  docker_hub_username         = data.aws_ssm_parameter.docker_username.value
-  jenkins_github_token        = data.aws_ssm_parameter.jenkins_github_token.value
-  depends_on                  = [module.cert_manager]
-}
+# module "jenkins" {
+#   source                      = "../../modules/jenkins"
+#   agent_container_repository  = "boomb0x/myagent"
+#   agent_container_tag         = "0.0.3"
+#   aws_dev_deployer_access_key = sensitive(data.aws_ssm_parameter.aws_dev_access_key.value)
+#   aws_dev_deployer_secret_key = sensitive(data.aws_ssm_parameter.aws_dev_secret_key.value)
+#   docker_hub_password         = sensitive(data.aws_ssm_parameter.docker_password.value)
+#   docker_hub_username         = data.aws_ssm_parameter.docker_username.value
+#   jenkins_github_token        = data.aws_ssm_parameter.jenkins_github_token.value
+#   depends_on                  = [module.cert_manager]
+# }
 
 module "kube_prom_stack" {
   source     = "../../modules/kube-prom-stack"
@@ -53,19 +53,19 @@ module "kube_prom_stack" {
   depends_on = [module.cert_manager]
 }
 
-module "metrics_server" {
-  source   = "../../modules/metrics-server"
-  is_cloud = false
-}
+# module "metrics_server" {
+#   source = "../../modules/metrics-server"
+#     is_cloud = false
+# }
 
-module "postgresql_db_01" {
-  source     = "../../modules/postgresql"
-  depends_on = [module.cert_manager]
-}
+# module "postgresql_db_01" {
+#   source     = "../../modules/postgresql"
+#   depends_on = [module.cert_manager]
+# }
 
-module "eck" {
-  source = "../../modules/eck"
-}
+# module "eck" {
+#   source = "../../modules/eck"
+# }
 
 # module "ghost_1" {
 #   source    = "../../modules/ghost"
