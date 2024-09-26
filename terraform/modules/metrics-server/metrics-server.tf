@@ -4,8 +4,8 @@ locals {
   args     = var.is_cloud ? [] : ["--kubelet-insecure-tls"]
 
   labels = {
-    "app.kubernetes.io/app"        = local.app_name
-    "app.kubernetes.io/owner"      = var.owner
+    "app.kubernetes.io/app"   = local.app_name
+    "app.kubernetes.io/owner" = var.owner
   }
 
   values = [
