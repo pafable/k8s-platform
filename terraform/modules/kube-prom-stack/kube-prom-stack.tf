@@ -1,4 +1,5 @@
 locals {
+  domain              = "home.pafable.com"
   kube_chart_name     = "kube-prometheus-stack"
   kube_chart_repo     = "https://prometheus-community.github.io/helm-charts"
   kube_name           = "monitoring"
@@ -8,8 +9,8 @@ locals {
   grafana_db_password = local.enable_grafana_db ? "REPLACE_WITH_YOUR_PW" : null
   grafana_db_type     = local.enable_grafana_db ? "postgres" : null
   grafana_db_user     = local.enable_grafana_db ? "REPLACE_WITH_YOUR_DB_USER" : null
-  grafana_domain      = "grafana.local"
-  prom_domain         = "prometheus.local"
+  grafana_domain      = "grafana.${local.domain}"
+  prom_domain         = "prometheus.${local.domain}"
   self_signed_ca_name = "self-signed-cluster-ca-issuer"
 
   labels = {
