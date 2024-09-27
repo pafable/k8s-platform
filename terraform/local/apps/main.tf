@@ -23,9 +23,9 @@ module "cert_manager" {
 #   depends_on     = [module.kube_prom_stack]
 # }
 
-module "ingress_nginx" {
-  source = "../../modules/ingress-nginx"
-}
+# module "ingress_nginx" {
+#   source = "../../modules/ingress-nginx"
+# }
 
 # module "kong_ingress" {
 #   source = "../../modules/kong-ingress"
