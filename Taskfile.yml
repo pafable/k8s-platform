@@ -46,7 +46,7 @@ env:
 
   # if this is set to k3s-config
   # it will be deployed to k3s cluster
-#  KUBECONFIG: ~/.kube/k3s-config
+  KUBECONFIG: ~/.kube/k3s-config
 
 tasks:
   install-prereqs:
