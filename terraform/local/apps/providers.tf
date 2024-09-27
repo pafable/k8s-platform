@@ -1,3 +1,7 @@
+terraform {
+  backend "s3" {}
+}
+
 locals {
   config_path    = "~/.kube/k3s-config"
   config_context = "default"

@@ -37,10 +37,10 @@ resource "kubernetes_ingress_v1" "prometheus_ingress" {
       }
     }
 
-    tls {
-      hosts       = [local.prom_domain]
-      secret_name = kubernetes_manifest.cert.manifest.spec.secretName
-    }
+    #     tls {
+    #       hosts       = [local.prom_domain]
+    #       secret_name = kubernetes_manifest.cert.manifest.spec.secretName
+    #     }
   }
 
   depends_on = [helm_release.kube_prom_stack]
