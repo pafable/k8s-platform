@@ -1,5 +1,5 @@
 locals {
-  domain              = "home.pafable.com"
+  domain              = var.is_docker_desktop ? "local" : "home.pafable.com"
   kube_chart_name     = "kube-prometheus-stack"
   kube_chart_repo     = "https://prometheus-community.github.io/helm-charts"
   kube_name           = "monitoring"

@@ -27,6 +27,12 @@ variable "is_cloud" {
   default     = true
 }
 
+variable "is_docker_desktop" {
+  description = "Checks to see if deploying to docker-desktop"
+  type        = bool
+  default     = false
+}
+
 variable "ou" {
   description = "The organizational unit"
   type        = string

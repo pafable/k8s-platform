@@ -12,7 +12,7 @@ locals {
 }
 
 module "k3s_master" {
-  source              = "../../modules/proxmox_vm"
+  source              = "../../modules/proxmox-vm"
   clone_template      = local.controller_template
   cores               = 4
   host_node           = local.worker_node
