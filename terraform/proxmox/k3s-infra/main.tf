@@ -15,11 +15,11 @@ module "k3s_master" {
   source              = "../../modules/proxmox_vm"
   clone_template      = local.controller_template
   host_node           = local.worker_node
-  memory              = 16384
+  memory              = 20480
   name                = "${local.host_name}-01"
   os_type             = "cloud-init"
   cloud_init_pve_node = local.worker_node
-  runcmd              = "curl -sfL https://get.k3s.io | sh -"
+  runcmd              = "curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='--disable traefik' sh -"
   tags                = local.default_tags
 }
 
