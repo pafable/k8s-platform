@@ -1,5 +1,5 @@
 locals {
-  domain       = "${local.app_name}.local"
+  domain       = "${local.app_name}.${var.domain}"
   port         = 8080
   service_name = local.app_name
 }

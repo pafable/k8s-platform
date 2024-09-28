@@ -4,6 +4,11 @@ variable "code" {
   default     = "k8s-platform"
 }
 
+variable "domain" {
+  description = "Domain"
+  type        = string
+}
+
 variable "aws_dev_deployer_access_key" {
   description = "AWS dev access key"
   type        = string
