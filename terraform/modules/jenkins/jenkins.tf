@@ -125,7 +125,7 @@ resource "kubernetes_secret_v1" "jenkins_secret" {
   }
 
   data = {
-    jenkins-admin-user     = "${local.app_name}-user"
+    jenkins-admin-user     = "${local.app_name}-admin"
     jenkins-admin-password = sensitive(random_password.password.result)
   }
 
