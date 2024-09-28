@@ -147,7 +147,26 @@ resource "kubernetes_persistent_volume_claim_v1" "jenkins_pvc" {
         storage = "10Gi"
       }
     }
-    volume_mode = "Fileesystem"
+  }
+}
+
+resource "kubernetes_persistent_volume_v1" "jenkins_pv" {
+  metadata {
+    name   = "${local.app_name}-pv"
+    labels = local.labels
+  }
+  spec {
+    capacity = {
+      storage = "10Gi"
+    }
+    access_modes                     = ["ReadWriteOnce"]
+    persistent_volume_reclaim_policy = "Retain"
+    storage_class_name               = var.storage_class_name
+    persistent_volume_source {
+      host_path {
+        path = "/tmp"
+      }
+    }
   }
 }
 
