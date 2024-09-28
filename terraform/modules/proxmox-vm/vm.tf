@@ -21,6 +21,22 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
   package_upgrade: true
   packages:
     - lynx
+  write_files:
+    - path: /home/packer/k3s_storage_class.yaml
+      content: |
+        apiVersion: storage.k8s.io/v1
+        kind: StorageClass
+        metadata:
+          name: ${var.name}-sc
+        provisioner: rancher.io/local-path
+        reclaimPolicy: Delete
+        volumeBindingMode: Immediate
+    - path: /home/packer/instance_creation_date
+      owner: nobody:nobody
+      content: |
+        Name: ${var.name}
+        Created: ${local.creation_date}
+        image_template: ${var.clone_template}
   runcmd:
     - ${var.runcmd}
     - firewall-cmd --add-port=6443/tcp --permanent
@@ -28,31 +44,8 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
     - firewall-cmd --permanent --zone=trusted --add-source=10.42.0.0/16 --permanent # pods
     - firewall-cmd --permanent --zone=trusted --add-source=10.43.0.0/16 --permanent # services
     - firewall-cmd --reload
-  write_files:
-    - path: /home/packer/instance_creation_date
-      owner: nobody:nobody
-      content: |
-        Name: ${var.name}
-        Created: ${local.creation_date}
-        image_template: ${var.clone_template}
+    - kubectl apply -f /home/packer/k3s_storage_class.yaml
   EOT
-
-  #   network_config = yamlencode({
-  #     version = 1
-  #     config = [{
-  #       type = "physical"
-  #       name = "eth0"
-  #       subnets = [{
-  #         type    = "static"
-  #         address = "192.168.1.100/24"
-  #         gateway = "192.168.1.1"
-  #         dns_nameservers = [
-  #           "1.1.1.1",
-  #           "8.8.8.8"
-  #         ]
-  #       }]
-  #     }]
-  #   })
 }
 
 resource "proxmox_vm_qemu" "vm" {
