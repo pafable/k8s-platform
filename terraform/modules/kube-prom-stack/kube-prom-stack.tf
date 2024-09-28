@@ -34,8 +34,6 @@ locals {
     }
   }
 
-  grafana_admin_pw = sensitive(random_password.grafana_admin_password.result)
-
   grafana_configs = {
     grafana = {
       assertNoLeakedSecrets = false
