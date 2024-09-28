@@ -4,17 +4,19 @@ resource "kubernetes_ingress_v1" "prometheus_ingress" {
     namespace = kubernetes_namespace_v1.kube_prom_ns.metadata.0.name
     labels    = local.labels
 
-    # annotations = {
-    #   "konghq.com/strip-path"                 = true
-    #   "konghq.com/protocols"                  = "https"
-    #   "konghq.com/https-redirect-status-code" = 301
-    # }
+    annotations = {
+      # "konghq.com/strip-path"                 = true
+      # "konghq.com/protocols"                  = "https"
+      # "konghq.com/https-redirect-status-code" = 301
+      "traefik.ingress.kubernetes.io/router.entrypoints" = "websecure"
+      "traefik.ingress.kubernetes.io/router.tls"         = true
+    }
   }
 
   wait_for_load_balancer = true
 
   spec {
-    # ingress_class_name = "ingress-nginx"
+    ingress_class_name = "traefik"
 
     rule {
       host = local.prom_domain
@@ -37,10 +39,10 @@ resource "kubernetes_ingress_v1" "prometheus_ingress" {
       }
     }
 
-    # tls {
-    #   hosts       = [local.prom_domain]
-    #   secret_name = kubernetes_manifest.cert.manifest.spec.secretName
-    # }
+    tls {
+      hosts       = [local.prom_domain]
+      secret_name = kubernetes_manifest.cert.manifest.spec.secretName
+    }
   }
 
   depends_on = [helm_release.kube_prom_stack]
@@ -52,17 +54,19 @@ resource "kubernetes_ingress_v1" "grafana_ingress" {
     namespace = kubernetes_namespace_v1.kube_prom_ns.metadata.0.name
     labels    = local.labels
 
-    # annotations = {
-    #   "konghq.com/strip-path"                 = true
-    #   "konghq.com/protocols"                  = "https"
-    #   "konghq.com/https-redirect-status-code" = 301
-    # }
+    annotations = {
+      # "konghq.com/strip-path"                 = true
+      # "konghq.com/protocols"                  = "https"
+      # "konghq.com/https-redirect-status-code" = 301
+      "traefik.ingress.kubernetes.io/router.entrypoints" = "websecure"
+      "traefik.ingress.kubernetes.io/router.tls"         = true
+    }
   }
 
   wait_for_load_balancer = true
 
   spec {
-    # ingress_class_name = "ingress-nginx"
+    ingress_class_name = "traefik"
 
     rule {
       host = local.grafana_domain
@@ -70,7 +74,7 @@ resource "kubernetes_ingress_v1" "grafana_ingress" {
       http {
         path {
           path      = "/"
-          path_type = "ImplementationSpecific"
+          path_type = "Prefix"
 
           backend {
             service {
@@ -85,10 +89,10 @@ resource "kubernetes_ingress_v1" "grafana_ingress" {
       }
     }
 
-    # tls {
-    #   hosts       = [local.grafana_domain]
-    #   secret_name = kubernetes_manifest.cert.manifest.spec.secretName
-    # }
+    tls {
+      hosts       = [local.grafana_domain]
+      secret_name = kubernetes_manifest.cert.manifest.spec.secretName
+    }
   }
 
   depends_on = [helm_release.kube_prom_stack]
