@@ -140,7 +140,8 @@ resource "kubernetes_persistent_volume_claim_v1" "jenkins_pvc" {
   }
 
   spec {
-    access_modes = ["ReadWriteMany"]
+    storage_class_name = "local-path"
+    access_modes       = ["ReadWriteMany"]
     resources {
       requests = {
         storage = "10Gi"

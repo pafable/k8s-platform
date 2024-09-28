@@ -25,8 +25,8 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
     - ${var.runcmd}
     - firewall-cmd --add-port=6443/tcp --permanent
     - firewall-cmd --add-port=10250/tcp --permanent
-    - firewall-cmd --add-port=80/tcp --permanent
-    - firewall-cmd --add-port=443/tcp --permanent
+    - firewall-cmd --permanent --zone=trusted --add-source=10.42.0.0/16 --permanent # pods
+    - firewall-cmd --permanent --zone=trusted --add-source=10.43.0.0/16 --permanent # services
     - firewall-cmd --reload
   write_files:
     - path: /home/packer/instance_creation_date

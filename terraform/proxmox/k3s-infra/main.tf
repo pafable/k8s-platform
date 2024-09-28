@@ -20,7 +20,7 @@ module "k3s_master" {
   name                = "${local.host_name}-01"
   os_type             = "cloud-init"
   cloud_init_pve_node = local.worker_node
-  runcmd              = "curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='--disable traefik --disable servicelb --cluster-init' sh -"
+  runcmd              = "curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='--cluster-init --etcd-expose-metrics --disable=traefik' sh -"
   tags                = local.default_tags
 }
 
