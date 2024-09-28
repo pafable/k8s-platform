@@ -35,17 +35,17 @@ module "kong_ingress" {
 #   source = "../../modules/kong-mesh"
 # }
 
-# module "jenkins" {
-#   source                      = "../../modules/jenkins"
-#   agent_container_repository  = "boomb0x/myagent"
-#   agent_container_tag         = "0.0.3"
-#   aws_dev_deployer_access_key = sensitive(data.aws_ssm_parameter.aws_dev_access_key.value)
-#   aws_dev_deployer_secret_key = sensitive(data.aws_ssm_parameter.aws_dev_secret_key.value)
-#   docker_hub_password         = sensitive(data.aws_ssm_parameter.docker_password.value)
-#   docker_hub_username         = data.aws_ssm_parameter.docker_username.value
-#   jenkins_github_token        = data.aws_ssm_parameter.jenkins_github_token.value
-#   depends_on                  = [module.cert_manager]
-# }
+module "jenkins" {
+  source                      = "../../modules/jenkins"
+  agent_container_repository  = "boomb0x/myagent"
+  agent_container_tag         = "0.0.3"
+  aws_dev_deployer_access_key = sensitive(data.aws_ssm_parameter.aws_dev_access_key.value)
+  aws_dev_deployer_secret_key = sensitive(data.aws_ssm_parameter.aws_dev_secret_key.value)
+  docker_hub_password         = sensitive(data.aws_ssm_parameter.docker_password.value)
+  docker_hub_username         = data.aws_ssm_parameter.docker_username.value
+  jenkins_github_token        = data.aws_ssm_parameter.jenkins_github_token.value
+  depends_on                  = [module.cert_manager]
+}
 
 module "kube_prom_stack" {
   source     = "../../modules/kube-prom-stack"
@@ -80,10 +80,6 @@ module "kube_prom_stack" {
 #   app_version = { version = "green" }
 #   namespace   = "ghost-2"
 #   replicas    = 5
-# }
-
-# module "trivy_operator" {
-#   source = "../../modules/trivy-operator"
 # }
 
 ## this is testing how to deploy a helm chart
