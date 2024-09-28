@@ -14,11 +14,10 @@ resource "kubernetes_manifest" "jenkins_cert" {
     }
 
     spec = {
-      commonName = local.domain
+      commonName = "${local.app_name}.${local.domain}"
 
       dnsNames = [
-        "${local.app_name}.localhost",
-        "${local.app_name}.local"
+        "${local.app_name}.${var.domain}"
       ]
 
       isCA = true
