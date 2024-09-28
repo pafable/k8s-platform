@@ -85,10 +85,16 @@ variable "secrets_manager_region" {
   default     = "us-east-1"
 }
 
+variable "storage_class_name" {
+  description = "Storage class name"
+  type        = string
+  default     = "local-path"
+}
+
 variable "timeout" {
   description = "Timeout for the resource"
   type        = number
-  default     = 500
+  default     = 300
 }
 
 variable "timezone" {

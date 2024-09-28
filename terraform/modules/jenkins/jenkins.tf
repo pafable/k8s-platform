@@ -140,13 +140,14 @@ resource "kubernetes_persistent_volume_claim_v1" "jenkins_pvc" {
   }
 
   spec {
-    storage_class_name = "local-path"
-    access_modes       = ["ReadWriteMany"]
+    storage_class_name = var.storage_class_name
+    access_modes       = ["ReadWriteOnce"]
     resources {
       requests = {
         storage = "10Gi"
       }
     }
+    volume_mode = "Fileesystem"
   }
 }
 
@@ -159,5 +160,6 @@ resource "helm_release" "jenkins" {
   namespace         = kubernetes_namespace_v1.jenkins_ns.metadata.0.name
   repository        = var.helm_repo
   values            = local.values
+  timeout           = var.timeout
   version           = var.helm_chart_version
 }
