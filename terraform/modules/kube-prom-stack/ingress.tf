@@ -5,18 +5,16 @@ resource "kubernetes_ingress_v1" "prometheus_ingress" {
     labels    = local.labels
 
     annotations = {
-      # "konghq.com/strip-path"                 = true
-      # "konghq.com/protocols"                  = "https"
-      # "konghq.com/https-redirect-status-code" = 301
-      "traefik.ingress.kubernetes.io/router.entrypoints" = "websecure"
-      "traefik.ingress.kubernetes.io/router.tls"         = true
+      "konghq.com/strip-path"                 = true
+      "konghq.com/protocols"                  = "https"
+      "konghq.com/https-redirect-status-code" = 301
     }
   }
 
   wait_for_load_balancer = true
 
   spec {
-    ingress_class_name = "traefik"
+    ingress_class_name = "kong"
 
     rule {
       host = local.prom_domain
@@ -55,18 +53,16 @@ resource "kubernetes_ingress_v1" "grafana_ingress" {
     labels    = local.labels
 
     annotations = {
-      # "konghq.com/strip-path"                 = true
-      # "konghq.com/protocols"                  = "https"
-      # "konghq.com/https-redirect-status-code" = 301
-      "traefik.ingress.kubernetes.io/router.entrypoints" = "websecure"
-      "traefik.ingress.kubernetes.io/router.tls"         = true
+      "konghq.com/strip-path"                 = true
+      "konghq.com/protocols"                  = "https"
+      "konghq.com/https-redirect-status-code" = 301
     }
   }
 
   wait_for_load_balancer = true
 
   spec {
-    ingress_class_name = "traefik"
+    ingress_class_name = "kong"
 
     rule {
       host = local.grafana_domain
