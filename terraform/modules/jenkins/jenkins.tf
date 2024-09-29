@@ -26,9 +26,8 @@ locals {
           #   tag        = var.agent_container_tag
           # }
 
-          podName       = "${local.app_name}-agent"
-          privileged    = true
-          skipTlsVerify = true
+          podName    = "${local.app_name}-agent"
+          privileged = true
 
           volumes = [
             {
