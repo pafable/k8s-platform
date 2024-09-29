@@ -1,5 +1,5 @@
 locals {
-  helper_path = "${abspath(path.root)}/../../modules/helper-scripts"
+  helper_path = "${abspath(path.root)}/../modules/helper-scripts"
 }
 
 data "external" "check_crd" {

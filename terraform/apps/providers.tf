@@ -8,15 +8,15 @@ locals {
 }
 
 module "aws" {
-  source = "../../modules/versions/aws"
+  source = "../modules/versions/aws"
 }
 
 module "terraform_version" {
-  source = "../../modules/versions/terraform"
+  source = "../modules/versions/terraform"
 }
 
 module "grafana_version" {
-  source = "../../modules/versions/grafana"
+  source = "../modules/versions/grafana"
 }
 
 provider "aws" {
@@ -33,7 +33,7 @@ provider "helm" {
 }
 
 module "helm_version" {
-  source = "../../modules/versions/helm"
+  source = "../modules/versions/helm"
 }
 
 provider "kubernetes" {
@@ -42,9 +42,9 @@ provider "kubernetes" {
 }
 
 module "kubernetes_version" {
-  source = "../../modules/versions/kubernetes"
+  source = "../modules/versions/kubernetes"
 }
 
 module "random_version" {
-  source = "../../modules/versions/random"
+  source = "../modules/versions/random"
 }
