@@ -20,6 +20,7 @@ You will need the following installed on your machine before deploying:
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - [Kubernetes cluster](https://docs.docker.com/desktop/kubernetes/) created from Docker Desktop
 - [Packer](https://developer.hashicorp.com/packer/install?ajs_aid=e65b25ce-401d-4cf0-bb32-ebafbd96b908&product_intent=packer)
+- [Proxmox](https://www.proxmox.com/en/)
 - [Taskfile](https://taskfile.dev/)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/)
 - [Terraform](https://developer.hashicorp.com/terraform/install)
