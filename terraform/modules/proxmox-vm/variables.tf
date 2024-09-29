@@ -1,5 +1,10 @@
-variable "clone" {
+variable "clone_template" {
   description = "Name of clone"
+  type        = string
+}
+
+variable "cloud_init_pve_node" {
+  description = "PVE node to deploy to"
   type        = string
 }
 
@@ -54,11 +59,6 @@ variable "os_type" {
   description = "OS type"
   type        = string
   default     = "Linux 6.x - 2.6 Kernel"
-}
-
-variable "pve_node" {
-  description = "PVE node to deploy to"
-  type        = string
 }
 
 variable "runcmd" {

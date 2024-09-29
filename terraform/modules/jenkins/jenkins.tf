@@ -1,7 +1,7 @@
 locals {
   app_name    = "jenkins"
   chart_name  = local.app_name
-  jenkins_url = "https://${local.app_name}.local"
+  jenkins_url = "https://${local.app_name}.${var.domain}"
 
   labels = {
     "app.kubernetes.io/name"       = local.app_name
@@ -20,10 +20,11 @@ locals {
             }
           ]
 
-          image = {
-            repository = var.agent_container_repository
-            tag        = var.agent_container_tag
-          }
+          # image = {
+          ## My custom image does not work on k3s!
+          #   repository = var.agent_container_repository
+          #   tag        = var.agent_container_tag
+          # }
 
           podName    = "${local.app_name}-agent"
           privileged = true
@@ -125,7 +126,7 @@ resource "kubernetes_secret_v1" "jenkins_secret" {
   }
 
   data = {
-    jenkins-admin-user     = "${local.app_name}-user"
+    jenkins-admin-user     = "${local.app_name}-admin"
     jenkins-admin-password = sensitive(random_password.password.result)
   }
 
@@ -140,10 +141,31 @@ resource "kubernetes_persistent_volume_claim_v1" "jenkins_pvc" {
   }
 
   spec {
-    access_modes = ["ReadWriteMany"]
+    storage_class_name = var.storage_class_name
+    access_modes       = ["ReadWriteOnce"]
     resources {
       requests = {
         storage = "10Gi"
+      }
+    }
+  }
+}
+
+resource "kubernetes_persistent_volume_v1" "jenkins_pv" {
+  metadata {
+    name   = "${local.app_name}-pv"
+    labels = local.labels
+  }
+  spec {
+    capacity = {
+      storage = "10Gi"
+    }
+    access_modes                     = ["ReadWriteOnce"]
+    persistent_volume_reclaim_policy = "Retain"
+    storage_class_name               = var.storage_class_name
+    persistent_volume_source {
+      host_path {
+        path = "/tmp"
       }
     }
   }
@@ -158,5 +180,6 @@ resource "helm_release" "jenkins" {
   namespace         = kubernetes_namespace_v1.jenkins_ns.metadata.0.name
   repository        = var.helm_repo
   values            = local.values
+  timeout           = var.timeout
   version           = var.helm_chart_version
 }

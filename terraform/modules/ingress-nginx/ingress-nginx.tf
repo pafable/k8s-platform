@@ -4,10 +4,8 @@ locals {
   chart_repo = "https://kubernetes.github.io/ingress-nginx"
 
   labels = {
-    "kuma.io/sidecar-injection"    = "enabled"
-    "app.kubernetes.io/app"        = local.chart_name
-    "app.kubernetes.io/managed-by" = "terraform"
-    "app.kubernetes.io/owner"      = var.owner
+    "app.kubernetes.io/app"   = local.chart_name
+    "app.kubernetes.io/owner" = var.owner
   }
 }
 

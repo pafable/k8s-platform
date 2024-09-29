@@ -1,12 +1,12 @@
 locals {
   local_storage_pool = "local"
-  creation_date      = timestamp()
+  creation_date      = timestamp() # timestamps are in Zulu aka UTC time
   description        = "${var.desc}. Instance launched on ${local.creation_date}"
 }
 
 resource "proxmox_cloud_init_disk" "cloudinit" {
   name     = "${var.name}-cloudinit"
-  pve_node = var.pve_node
+  pve_node = var.cloud_init_pve_node
   storage  = local.local_storage_pool
 
   meta_data = yamlencode({
@@ -21,40 +21,35 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
   package_upgrade: true
   packages:
     - lynx
-  runcmd:
-    - ${var.runcmd}
-    - firewall-cmd --add-port=6443/tcp --permanent
-    - firewall-cmd --add-port=10250/tcp --permanent
-    - firewall-cmd --reload
   write_files:
+    - path: /home/packer/k3s_storage_class.yaml
+      content: |
+        apiVersion: storage.k8s.io/v1
+        kind: StorageClass
+        metadata:
+          name: ${var.name}-sc
+        provisioner: rancher.io/local-path
+        reclaimPolicy: Delete
+        volumeBindingMode: Immediate
     - path: /home/packer/instance_creation_date
       owner: nobody:nobody
       content: |
         Name: ${var.name}
         Created: ${local.creation_date}
-        image_template: ${var.clone}
+        image_template: ${var.clone_template}
+  runcmd:
+    - ${var.runcmd}
+    - firewall-cmd --add-port=6443/tcp --permanent
+    - firewall-cmd --add-port=10250/tcp --permanent
+    - firewall-cmd --permanent --zone=trusted --add-source=10.42.0.0/16 --permanent # pods
+    - firewall-cmd --permanent --zone=trusted --add-source=10.43.0.0/16 --permanent # services
+    - firewall-cmd --reload
+    - kubectl apply -f /home/packer/k3s_storage_class.yaml
   EOT
-
-  #   network_config = yamlencode({
-  #     version = 1
-  #     config = [{
-  #       type = "physical"
-  #       name = "eth0"
-  #       subnets = [{
-  #         type    = "static"
-  #         address = "192.168.1.100/24"
-  #         gateway = "192.168.1.1"
-  #         dns_nameservers = [
-  #           "1.1.1.1",
-  #           "8.8.8.8"
-  #         ]
-  #       }]
-  #     }]
-  #   })
 }
 
 resource "proxmox_vm_qemu" "vm" {
-  clone       = var.clone
+  clone       = var.clone_template
   cores       = var.cores
   cpu         = var.cpu_type
   desc        = local.description

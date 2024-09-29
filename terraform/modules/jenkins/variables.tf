@@ -4,6 +4,11 @@ variable "code" {
   default     = "k8s-platform"
 }
 
+variable "domain" {
+  description = "Domain"
+  type        = string
+}
+
 variable "aws_dev_deployer_access_key" {
   description = "AWS dev access key"
   type        = string
@@ -53,7 +58,7 @@ variable "jenkins_github_token" {
 variable "helm_chart_version" {
   description = "helm chart version"
   type        = string
-  default     = "5.5.7"
+  default     = "5.7.0"
 }
 
 variable "helm_repo" {
@@ -80,10 +85,16 @@ variable "secrets_manager_region" {
   default     = "us-east-1"
 }
 
+variable "storage_class_name" {
+  description = "Storage class name"
+  type        = string
+  default     = "local-path"
+}
+
 variable "timeout" {
   description = "Timeout for the resource"
   type        = number
-  default     = 500
+  default     = 300
 }
 
 variable "timezone" {

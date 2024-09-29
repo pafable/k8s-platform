@@ -70,7 +70,7 @@ resource "kubernetes_ingress_v1" "grafana_ingress" {
       http {
         path {
           path      = "/"
-          path_type = "ImplementationSpecific"
+          path_type = "Prefix"
 
           backend {
             service {

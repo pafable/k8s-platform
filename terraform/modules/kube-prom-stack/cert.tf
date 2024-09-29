@@ -13,10 +13,8 @@ resource "kubernetes_manifest" "cert" {
       commonName = local.prom_domain
 
       dnsNames = [
-        "prom.localhost",
-        "prom.local",
-        "prometheus.localhost",
-        "prometheus.local"
+        "prom.home.pafable.com",
+        "prometheus.home.pafable.com"
       ]
 
       isCA = true

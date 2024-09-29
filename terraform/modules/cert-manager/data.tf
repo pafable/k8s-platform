@@ -1,5 +1,5 @@
 locals {
-  helper_path   = "${abspath(path.root)}/../../modules/helper-scripts"
+  helper_path   = "${abspath(path.root)}/../modules/helper-scripts"
   install_count = tobool(data.external.check_crd.result["installed"]) ? 1 : 0
 }
 
