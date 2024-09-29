@@ -1,7 +1,7 @@
 locals {
   app_name    = "jenkins"
   chart_name  = local.app_name
-  jenkins_url = "https://${local.app_name}.local"
+  jenkins_url = "https://${local.app_name}.${var.domain}"
 
   labels = {
     "app.kubernetes.io/name"       = local.app_name
@@ -20,13 +20,15 @@ locals {
             }
           ]
 
-          image = {
-            repository = var.agent_container_repository
-            tag        = var.agent_container_tag
-          }
+          # image = {
+          ## My custom image does not work on k3s!
+          #   repository = var.agent_container_repository
+          #   tag        = var.agent_container_tag
+          # }
 
-          podName    = "${local.app_name}-agent"
-          privileged = true
+          podName       = "${local.app_name}-agent"
+          privileged    = true
+          skipTlsVerify = true
 
           volumes = [
             {
