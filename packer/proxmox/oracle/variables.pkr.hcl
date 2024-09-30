@@ -1,10 +1,33 @@
+variable "cores" {
+  description = "CPU cores on the packer builder vm"
+  type        = number
+  default     = 4
+}
+
+variable "disk_size" {
+  description = "Disk size on the packer builder vm"
+  type        = string
+  default     = "32G"
+}
+
+variable "iso_name" {
+  description = "ISO name"
+  type        = string
+}
+
+variable "memory" {
+  description = "Memory on the packer builder vm"
+  type        = number
+  default     = 16384
+}
+
 variable "proxmox_node" {
   description = "Proxmox node"
   type        = string
 }
 
-variable "proxmox_password" {
-  description = "Password for PVE"
+variable "proxmox_token" {
+  description = "Token for PVE"
   sensitive   = true
   type        = string
 }

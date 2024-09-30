@@ -21,9 +21,9 @@ Create a `vars.pkr.hcl` file and write in entries for proxmox user and password 
 example vars.pkr.hcl
 ```
 proxmox_node     = "<PROXMOX_NODE>"
-proxmox_password = "<PROXMOX_PASSWORD>"
+proxmox_token    = "<PROXMOX_TOKEN>"
 proxmox_url      = "https://<YOUR_PROXMOX_URL>"
-proxmox_username = "<PROXMOX_USER>"
+proxmox_username = "<PROXMOX_USER_OR_TOKEN_ID>"
 ssh_password     = "<SSH_PASS>"
 ssh_username     = "<SSH_USER>"
 template_name    = "<TEMPLATE_NAME>"

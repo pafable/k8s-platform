@@ -10,16 +10,16 @@ packer {
 source "proxmox-iso" "golden-image" {
   ballooning_minimum       = 0
   boot_wait                = "3s"
-  cores                    = 4
+  cores                    = var.cores
   cpu_type                 = "host"
   http_directory           = "../kickstarts/http/rocky"
   insecure_skip_tls_verify = true
-  iso_file                 = "local:iso/Rocky-9.4-x86_64-boot.iso"
+  iso_file                 = "local:iso/${var.iso_name}"
   iso_storage_pool         = "local"
-  memory                   = 8192
+  memory                   = var.memory
   node                     = var.proxmox_node
   os                       = "l26"
-  password                 = var.proxmox_password
+  token                    = var.proxmox_token
   proxmox_url              = "https://${var.proxmox_url}:8006/api2/json"
   scsi_controller          = "virtio-scsi-single"
   ssh_password             = var.ssh_password
