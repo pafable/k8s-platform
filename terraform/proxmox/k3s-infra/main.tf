@@ -1,14 +1,14 @@
 locals {
   default_tags = "k3s"
-  host_name    = "uruk-hai"
+  host_name    = "norn-queen"
 
   # proxmox templates
   controller_template = "orc-tmpl-1"
   worker_template     = "orc-tmpl-1"
 
   # k8s nodes
-  controller_node = "horde"
-  worker_node     = "ninja"
+  controller_node = "behemoth"
+  worker_node     = "kraken"
 }
 
 module "k3s_master" {
@@ -17,7 +17,7 @@ module "k3s_master" {
   cloud_init_pve_node = local.controller_node
   cores               = 4
   host_node           = local.controller_node
-  memory              = 16384
+  memory              = 20480
   name                = "${local.host_name}-01"
   os_type             = "cloud-init"
   runcmd              = "curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='--cluster-init --etcd-expose-metrics --disable=traefik' sh - && kubectl apply -f /home/packer/k3s_storage_class.yaml"
@@ -25,15 +25,15 @@ module "k3s_master" {
 }
 
 module "k3s_worker1" {
-  source    = "../../modules/proxmox-vm"
-  clone_template     = local.worker_template
-  cloud_init_pve_node  = local.worker_node
-  cores = 4
-  host_node = local.worker_node
-  memory    = 20480
-  name      = "${local.host_name}-02"
-  os_type   = "cloud-init"
-  tags      = local.default_tags
+  source              = "../../modules/proxmox-vm"
+  clone_template      = local.worker_template
+  cloud_init_pve_node = local.worker_node
+  cores               = 4
+  host_node           = local.worker_node
+  memory              = 20480
+  name                = "${local.host_name}-02"
+  os_type             = "cloud-init"
+  tags                = local.default_tags
 }
 
 # module "k3s_worker2" {
