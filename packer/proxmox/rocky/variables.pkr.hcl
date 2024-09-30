@@ -18,7 +18,7 @@ variable "iso_name" {
 variable "memory" {
   description = "Memory on the packer builder vm"
   type        = number
-  default     = 16384
+  default     = 8192
 }
 
 variable "proxmox_node" {
