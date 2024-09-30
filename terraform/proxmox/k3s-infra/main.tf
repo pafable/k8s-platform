@@ -14,26 +14,27 @@ locals {
 module "k3s_master" {
   source              = "../../modules/proxmox-vm"
   clone_template      = local.controller_template
+  cloud_init_pve_node = local.controller_node
   cores               = 4
-  host_node           = local.worker_node
-  memory              = 20480
+  host_node           = local.controller_node
+  memory              = 16384
   name                = "${local.host_name}-01"
   os_type             = "cloud-init"
-  cloud_init_pve_node = local.worker_node
-  runcmd              = "curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='--cluster-init --etcd-expose-metrics --disable=traefik' sh -"
+  runcmd              = "curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='--cluster-init --etcd-expose-metrics --disable=traefik' sh - && kubectl apply -f /home/packer/k3s_storage_class.yaml"
   tags                = local.default_tags
 }
 
-# module "k3s_worker1" {
-#   source    = "../../modules/proxmox_vm"
-#   clone     = local.worker_template
-#   host_node = local.worker_node
-#   memory    = 16384
-#   name      = "${local.host_name}-02"
-#   os_type   = "cloud-init"
-#   pve_node  = local.worker_node
-#   tags      = local.default_tags
-# }
+module "k3s_worker1" {
+  source    = "../../modules/proxmox-vm"
+  clone_template     = local.worker_template
+  cloud_init_pve_node  = local.worker_node
+  cores = 4
+  host_node = local.worker_node
+  memory    = 20480
+  name      = "${local.host_name}-02"
+  os_type   = "cloud-init"
+  tags      = local.default_tags
+}
 
 # module "k3s_worker2" {
 #   source     = "../../modules/proxmox_vm"
