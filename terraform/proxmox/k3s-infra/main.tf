@@ -20,7 +20,7 @@ module "k3s_master" {
   memory              = 20480
   name                = "${local.host_name}-01"
   os_type             = "cloud-init"
-  runcmd              = "curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='--cluster-init --etcd-expose-metrics --disable=traefik' sh - && kubectl apply -f /home/packer/k3s_storage_class.yaml"
+  runcmd              = "curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='--cluster-init --etcd-expose-metrics --disable=traefik --token ${var.k3s_token}' sh - && kubectl apply -f /home/packer/k3s_storage_class.yaml"
   tags                = local.default_tags
 }
 
