@@ -19,7 +19,7 @@ resource "null_resource" "time_delay" {
 }
 
 module "k3s_controller" {
-  source              = "../../modules/proxmox-vm"
+  source              = "../../modules/proxmox-k3s-vm"
   clone_template      = local.controller_template
   cloud_init_pve_node = local.controller_node
   cores               = 4
@@ -33,7 +33,7 @@ module "k3s_controller" {
 }
 
 module "k3s_agent1" {
-  source              = "../../modules/proxmox-vm"
+  source              = "../../modules/proxmox-k3s-vm"
   clone_template      = local.worker_template
   cloud_init_pve_node = local.worker_node
   cores               = 4
@@ -52,13 +52,20 @@ module "k3s_agent1" {
 }
 
 # module "k3s_agent2" {
-#   source     = "../../modules/proxmox_vm"
-#   clone      = local.worker_template
-#   host_node  = local.worker_node
-#   memory     = 8192
-#   name       = "${local.host_name}-03"
-#   os_type    = "cloud-init"
-#   pve_node   = local.worker_node
-#   tags       = local.default_tags
-#   depends_on = [module.k3s_worker1] # waits for worker1 to complete to release lock on node before creating worker2
+#   source     = "../../modules/proxmox-k3s-vm"
+#   clone_template      = local.worker_template
+#   cloud_init_pve_node = local.worker_node
+#   cores               = 4
+#   host_node           = local.worker_node
+#   memory              = 20480
+#   name                = "${local.host_name}-03"
+#   os_type             = "cloud-init"
+#   runcmd              = "curl -sfL https://get.k3s.io | K3S_URL=https://${module.k3s_controller.ipv4_address}:6443 K3S_TOKEN=${var.k3s_token} sh -"
+#   ssh_username        = var.ssh_username
+#   tags                = local.default_tags
+
+    ## waits for agent1 to complete to release lock on node before creating agent2
+#   depends_on = [
+#     module.k3s_agent1
+#   ]
 # }
