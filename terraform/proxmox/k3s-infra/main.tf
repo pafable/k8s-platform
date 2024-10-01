@@ -14,7 +14,7 @@ locals {
 resource "null_resource" "time_delay" {
   provisioner "local-exec" {
     interpreter = ["bash", "-c"]
-    command     = "sleep 120"
+    command     = "sleep 180" # sleep for 3 mins to allow k3s controller to install and initialize before creating the agent
   }
 }
 
