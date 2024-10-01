@@ -22,7 +22,7 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
   packages:
     - lynx
   write_files:
-    - path: /home/packer/k3s_storage_class.yaml
+    - path: /home/${var.ssh_username}/k3s_storage_class.yaml
       content: |
         apiVersion: storage.k8s.io/v1
         kind: StorageClass
@@ -31,7 +31,7 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
         provisioner: rancher.io/local-path
         reclaimPolicy: Delete
         volumeBindingMode: Immediate
-    - path: /home/packer/instance_creation_date
+    - path: /home/${var.ssh_username}/instance_creation_date
       owner: nobody:nobody
       content: |
         Name: ${var.name}
@@ -44,11 +44,11 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
     - firewall-cmd --permanent --zone=trusted --add-source=10.42.0.0/16 --permanent # pods
     - firewall-cmd --permanent --zone=trusted --add-source=10.43.0.0/16 --permanent # services
     - firewall-cmd --reload
-    - kubectl apply -f /home/packer/k3s_storage_class.yaml
   EOT
 }
 
 resource "proxmox_vm_qemu" "vm" {
+  agent       = 1
   clone       = var.clone_template
   cores       = var.cores
   cpu         = var.cpu_type
@@ -74,6 +74,7 @@ resource "proxmox_vm_qemu" "vm" {
     scsi {
       scsi0 {
         disk {
+          discard    = true
           emulatessd = var.is_SSD
           size       = var.main_disk_size
           storage    = var.storage_location

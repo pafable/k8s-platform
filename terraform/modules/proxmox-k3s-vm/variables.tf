@@ -73,6 +73,11 @@ variable "scsihw" {
   default     = "virtio-scsi-single"
 }
 
+variable "ssh_username" {
+  description = "ssh_username"
+  type        = string
+}
+
 variable "storage_location" {
   description = "Storage location"
   type        = string
