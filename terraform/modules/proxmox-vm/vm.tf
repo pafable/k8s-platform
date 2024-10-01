@@ -22,7 +22,7 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
   packages:
     - lynx
   write_files:
-    - path: /home/packer/k3s_storage_class.yaml
+    - path: /home/${var.ssh_username}/k3s_storage_class.yaml
       content: |
         apiVersion: storage.k8s.io/v1
         kind: StorageClass
@@ -31,7 +31,7 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
         provisioner: rancher.io/local-path
         reclaimPolicy: Delete
         volumeBindingMode: Immediate
-    - path: /home/packer/instance_creation_date
+    - path: /home/${var.ssh_username}/instance_creation_date
       owner: nobody:nobody
       content: |
         Name: ${var.name}

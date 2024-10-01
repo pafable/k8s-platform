@@ -27,7 +27,8 @@ module "k3s_controller" {
   memory              = 20480
   name                = "${local.host_name}-01"
   os_type             = "cloud-init"
-  runcmd              = "curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='server --cluster-init --etcd-expose-metrics --disable=traefik --token ${var.k3s_token}' sh - && kubectl apply -f /home/packer/k3s_storage_class.yaml"
+  runcmd              = "curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='server --cluster-init --etcd-expose-metrics --disable=traefik --token ${var.k3s_token}' sh - && kubectl apply -f /home/${var.ssh_username}/k3s_storage_class.yaml"
+  ssh_username        = var.ssh_username
   tags                = local.default_tags
 }
 
@@ -41,6 +42,7 @@ module "k3s_agent1" {
   name                = "${local.host_name}-02"
   os_type             = "cloud-init"
   runcmd              = "curl -sfL https://get.k3s.io | K3S_URL=https://${module.k3s_controller.ipv4_address}:6443 K3S_TOKEN=${var.k3s_token} sh -"
+  ssh_username        = var.ssh_username
   tags                = local.default_tags
 
   depends_on = [
