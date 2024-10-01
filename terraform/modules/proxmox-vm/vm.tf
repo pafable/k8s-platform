@@ -48,6 +48,7 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
 }
 
 resource "proxmox_vm_qemu" "vm" {
+  agent       = 1
   clone       = var.clone_template
   cores       = var.cores
   cpu         = var.cpu_type
@@ -73,6 +74,7 @@ resource "proxmox_vm_qemu" "vm" {
     scsi {
       scsi0 {
         disk {
+          discard    = true
           emulatessd = var.is_SSD
           size       = var.main_disk_size
           storage    = var.storage_location
