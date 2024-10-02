@@ -1,5 +1,5 @@
 locals {
-  argo_domain         = "${local.app_name}.local"
+  argo_domain         = "${local.app_name}.${var.domain}"
   argo_server_service = "argocd-server"
   argo_server_port    = 443
 }

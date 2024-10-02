@@ -4,6 +4,12 @@ variable "chart_version" {
   default     = "15.5.21"
 }
 
+variable "domain" {
+  description = "Domain"
+  type        = string
+  default     = "local"
+}
+
 variable "namespace" {
   description = "The namespace to install the Helm chart into"
   type        = string
