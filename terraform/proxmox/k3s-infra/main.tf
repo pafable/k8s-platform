@@ -9,6 +9,9 @@ locals {
   # k8s nodes
   controller_node = "behemoth"
   worker_node     = "kraken"
+
+  # home network
+  home_network = "192.168.109.0/24"
 }
 
 resource "null_resource" "time_delay" {
@@ -23,7 +26,7 @@ module "k3s_controller" {
   clone_template      = local.controller_template
   cloud_init_pve_node = local.controller_node
   cores               = 4
-  home_network        = "192.168.109.0/24"
+  home_network        = local.home_network
   host_node           = local.controller_node
   memory              = 22528
   name                = "${local.host_name}-01"
@@ -38,9 +41,9 @@ module "k3s_agent1" {
   clone_template      = local.worker_template
   cloud_init_pve_node = local.worker_node
   cores               = 4
-  home_network        = "192.168.109.0/24"
+  home_network        = local.home_network
   host_node           = local.worker_node
-  memory              = 22528
+  memory              = 30720
   name                = "${local.host_name}-02"
   os_type             = "cloud-init"
   runcmd              = "curl -sfL https://get.k3s.io | K3S_URL=https://${module.k3s_controller.ipv4_address}:6443 K3S_TOKEN=${var.k3s_token} sh -"
