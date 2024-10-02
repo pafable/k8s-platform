@@ -45,7 +45,7 @@ module "jenkins" {
   docker_hub_username         = data.aws_ssm_parameter.docker_username.value
   domain                      = "home.pafable.com"
   jenkins_github_token        = data.aws_ssm_parameter.jenkins_github_token.value
-  storage_class_name          = "uruk-hai-01-sc"
+  storage_class_name          = "hive-ship-01-sc"
   depends_on                  = [module.cert_manager]
 }
 

@@ -26,6 +26,12 @@ variable "desc" {
   default     = "Created and managed by terraform"
 }
 
+variable "home_network" {
+  description = "Home network"
+  type        = string
+  default     = "192.168.1.0/24"
+}
+
 variable "host_node" {
   description = "Node to host vm"
   type        = string

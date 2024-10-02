@@ -23,8 +23,9 @@ module "k3s_controller" {
   clone_template      = local.controller_template
   cloud_init_pve_node = local.controller_node
   cores               = 4
+  home_network        = "192.168.109.0/24"
   host_node           = local.controller_node
-  memory              = 20480
+  memory              = 22528
   name                = "${local.host_name}-01"
   os_type             = "cloud-init"
   runcmd              = "curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='server --cluster-init --etcd-expose-metrics --disable=traefik --token ${var.k3s_token}' sh - && kubectl apply -f /home/${var.ssh_username}/k3s_storage_class.yaml"
@@ -37,8 +38,9 @@ module "k3s_agent1" {
   clone_template      = local.worker_template
   cloud_init_pve_node = local.worker_node
   cores               = 4
+  home_network        = "192.168.109.0/24"
   host_node           = local.worker_node
-  memory              = 20480
+  memory              = 22528
   name                = "${local.host_name}-02"
   os_type             = "cloud-init"
   runcmd              = "curl -sfL https://get.k3s.io | K3S_URL=https://${module.k3s_controller.ipv4_address}:6443 K3S_TOKEN=${var.k3s_token} sh -"
@@ -52,19 +54,19 @@ module "k3s_agent1" {
 }
 
 # module "k3s_agent2" {
-#   source     = "../../modules/proxmox-k3s-vm"
+#   source              = "../../modules/proxmox-k3s-vm"
 #   clone_template      = local.worker_template
 #   cloud_init_pve_node = local.worker_node
 #   cores               = 4
 #   host_node           = local.worker_node
-#   memory              = 20480
+#   memory              = 22528
 #   name                = "${local.host_name}-03"
 #   os_type             = "cloud-init"
 #   runcmd              = "curl -sfL https://get.k3s.io | K3S_URL=https://${module.k3s_controller.ipv4_address}:6443 K3S_TOKEN=${var.k3s_token} sh -"
 #   ssh_username        = var.ssh_username
 #   tags                = local.default_tags
-
-    ## waits for agent1 to complete to release lock on node before creating agent2
+#
+#   # waits for agent1 to complete to release lock on node before creating agent2
 #   depends_on = [
 #     module.k3s_agent1
 #   ]

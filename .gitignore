@@ -3,4 +3,5 @@
 .terraform*
 *.tfstate*
 tfplan*
-grafana.tvars
+*.tvars
+*.pkrvars.hcl
