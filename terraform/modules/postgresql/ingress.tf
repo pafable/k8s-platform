@@ -1,5 +1,5 @@
 locals {
-  pgadmin_domain = "pgadmin.local"
+  pgadmin_domain = "${local.pg_name}.${var.domain}"
 }
 
 resource "kubernetes_ingress_v1" "pgadmin_ingress" {

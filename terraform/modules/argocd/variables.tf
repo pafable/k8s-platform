@@ -9,6 +9,12 @@ variable "app_repo" {
   type        = string
 }
 
+variable "domain" {
+  description = "Domain"
+  type        = string
+  default     = "local"
+}
+
 variable "ou" {
   description = "The organizational unit"
   type        = string

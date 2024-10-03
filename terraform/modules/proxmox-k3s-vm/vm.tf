@@ -58,6 +58,7 @@ resource "proxmox_vm_qemu" "vm" {
   ipconfig0   = "ip=dhcp"
   memory      = var.memory
   name        = var.name
+  onboot      = true
   os_type     = var.os_type
   scsihw      = var.scsihw
   sockets     = 1
