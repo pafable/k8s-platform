@@ -6,6 +6,7 @@ This script will check a proxmox's cluster
 """
 
 import configparser
+import os
 import pprint
 from proxmoxer import ProxmoxAPI
 
@@ -15,10 +16,17 @@ pp = pprint.PrettyPrinter(indent=4)
 config = configparser.ConfigParser()
 config.read("config.ini")
 
-HOST = config.get("DEFAULT", "HOST")
-USER = config.get("DEFAULT", "USER")
-TOKEN_NAME = config.get("DEFAULT", "TOKEN_NAME")
-TOKEN_VALUE = config.get("DEFAULT", "TOKEN_VALUE")
+try:
+    SECTION = "DEFAULT"
+    HOST = config.get(SECTION, "PM_HOST")
+    USER = config.get(SECTION, "PM_USER")
+    TOKEN_NAME = config.get(SECTION, "PM_TOKEN_NAME")
+    TOKEN_VALUE = config.get(SECTION, "PM_TOKEN_VALUE")
+except configparser.NoOptionError:
+    HOST = os.environ.get("PM_HOST")
+    USER = os.environ.get("PM_USER")
+    TOKEN_NAME = os.environ.get("PM_TOKEN_NAME")
+    TOKEN_VALUE = os.environ.get("PM_TOKEN_VALUE")
 
 
 class PMSession:
