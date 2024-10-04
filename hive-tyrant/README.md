@@ -10,4 +10,4 @@ PM_TOKEN_NAME = <TOKEN_NAME>
 PM_TOKEN_VALUE = <TOKEN_VALUE>
 ```
 
-You can also set environment variables instead of using a `config.ini`, however if a `config.ini` it will take precedence over environment variables.
+You can also set environment variables instead of using a `config.ini`, however if a `config.ini` exists it will take precedence over environment variables.
