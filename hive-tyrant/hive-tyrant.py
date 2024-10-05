@@ -57,6 +57,12 @@ class PMSession:
         return proxmox.nodes.get()
 
 
+    def get_proxmox_version(self) -> str:
+        proxmox = self._authenticate()
+        return proxmox("version").get()["version"]
+
+
+
 def main():
     p1 = PMSession(
         HOST,
@@ -67,6 +73,8 @@ def main():
 
     for node in p1.get_all_nodes():
         pp.pprint(node)
+
+    pp.pprint(p1.get_proxmox_version())
 
 
 if __name__ == '__main__':
