@@ -7,5 +7,5 @@ variable "k3s_token" {
 variable "ssh_username" {
   description = "SSH username"
   type        = string
-  default     = "packer"
+  default     = "provisioner"
 }
