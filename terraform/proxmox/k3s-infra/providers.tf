@@ -1,3 +1,7 @@
+module "aws" {
+  source = "../../modules/versions/aws"
+}
+
 terraform {
   required_providers {
     proxmox = {
@@ -15,4 +19,9 @@ module "terraform_version" {
 
 provider "proxmox" {
   pm_api_url = "https://behemoth.fleet.pafable.com:8006/api2/json"
+}
+
+provider "aws" {
+  alias  = "parameters"
+  region = "us-east-1"
 }
