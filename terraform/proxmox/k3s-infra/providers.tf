@@ -24,4 +24,12 @@ provider "proxmox" {
 provider "aws" {
   alias  = "parameters"
   region = "us-east-1"
+
+  default_tags {
+    tags = {
+      code_location = "k8s-platform/terraform/proxmox/k3s-infra"
+      managed_by    = "terraform"
+      owner         = "pafable"
+    }
+  }
 }
