@@ -559,9 +559,33 @@ tasks:
       - task: fmt
     desc: Initialize DNS on Proxmox
     cmds:
-      - echo "+++++ Initializing Proxmox K3S Infra +++++"
+      - echo "+++++ Initializing Proxmox DNS +++++"
       - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${PROXMOX_DNS_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure
       - task: tf-validate
         vars: { DIR: '{{ .PROXMOX_DNS_DIR }}' }
       - task: tf-ws-list
         vars: { DIR: '{{ .PROXMOX_DNS_DIR }}' }
+
+  proxmox-dns-create:
+    desc: Create DNS entries
+    dir: '{{ .PROXMOX_DNS_DIR }}'
+    deps:
+      - task: proxmox-dns-init
+    cmds:
+      - defer: |
+          echo "Cleaning up..."
+          rm -f tfplan
+      - terraform plan -out=tfplan
+      - terraform apply tfplan
+
+  proxmox-dns-destroy:
+    desc: Destroy DNS entries
+    dir: '{{ .PROXMOX_DNS_DIR }}'
+    deps:
+      - task: proxmox-dns-init
+    cmds:
+      - defer: |
+          echo "Cleaning up..."
+          rm -f tfplan-destroy
+      - terraform plan -out=tfplan-destroy -destroy
+      - terraform apply tfplan-destroy
