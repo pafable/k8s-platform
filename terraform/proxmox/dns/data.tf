@@ -1,11 +1,11 @@
-data "aws_ssm_parameter" "controller_ip" {
+data "aws_ssm_parameter" "behemoth_ip" {
   provider = aws.parameters
-  name     = "/proxmox/k3s/controller/ipv4"
+  name     = "/proxmox/node/behemoth/ipv4"
 }
 
-data "aws_ssm_parameter" "agent1_ip" {
+data "aws_ssm_parameter" "kraken_ip" {
   provider = aws.parameters
-  name     = "/proxmox/k3s/agent1/ipv4"
+  name     = "/proxmox/node/kraken/ipv4"
 }
 
 data "aws_ssm_parameter" "dns_server_ip" {
