@@ -4,6 +4,12 @@ variable "domain" {
   default     = "home.pafable.com"
 }
 
+variable "ou" {
+  description = "Organization unit"
+  type        = string
+  default     = "devops"
+}
+
 variable "owner" {
   description = "Owner"
   type        = string
