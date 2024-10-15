@@ -1,6 +1,6 @@
 locals {
   app_name   = "vault"
-  chart_name = "hashicorp/${local.app_name}"
+  chart_name = local.app_name
   helm_repo  = "https://helm.releases.hashicorp.com"
 
   tf_labels = {
@@ -8,6 +8,21 @@ locals {
     "app.kubernetes.io/managed-by" = "terraform"
     "app.kubernetes.io/owner"      = var.owner
   }
+
+  values = [
+    yamlencode({
+      server = {
+        dev = {
+          enabled = true
+        }
+      }
+
+      ui = {
+        enabled     = true
+        serviceType = "LoadBalancer"
+      }
+    })
+  ]
 }
 
 resource "kubernetes_namespace_v1" "vault_ns" {
@@ -25,5 +40,6 @@ resource "helm_release" "vault" {
   name              = local.app_name
   namespace         = kubernetes_namespace_v1.vault_ns.metadata.0.name
   repository        = local.helm_repo
+  values            = local.values
   version           = var.vault_version
 }

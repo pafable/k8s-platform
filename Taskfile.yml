@@ -209,7 +209,7 @@ tasks:
     ignore_error: true
 
   # apps
-  init-apps:
+  apps-init:
     dir: '{{ .TF_APPS_DIR }}'
     deps:
       - task: fmt
@@ -222,11 +222,11 @@ tasks:
       - task: tf-ws-list
         vars: { DIR: '{{ .TF_APPS_DIR }}' }
 
-  create-apps:
+  apps-create:
     dir: '{{ .TF_APPS_DIR }}'
     deps:
       - task: install-crds
-      - task: init-apps
+      - task: apps-init
     desc: Create Apps terraform
     cmds:
       - defer: |
@@ -235,11 +235,11 @@ tasks:
       - terraform plan -out=tfplan -no-color
       - terraform apply tfplan -no-color
 
-  destroy-apps:
+  apps-destroy:
     dir: '{{ .TF_APPS_DIR }}'
     desc: Destroy Apps terraform
     deps:
-      - task: init-apps
+      - task: apps-init
     cmds:
       - defer: |
           echo "Cleaning up terraform plans..."
