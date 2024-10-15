@@ -32,34 +32,25 @@ except configparser.NoOptionError:
 class PMSession:
     def __init__(self, host, token_name, token_value, user, verify_ssl=False):
         self.host = host
-        self.token_name = token_name
-        self.token_value = token_value
-        self.user = user
-        self.verify_ssl = verify_ssl
+        self.proxmox = ProxmoxAPI(
+                    host=host,
+                    token_name=token_name,
+                    token_value=token_value,
+                    user=user,
+                    verify_ssl=verify_ssl
+                )
 
 
     def __str__(self) -> str:
         return f"Session for {self.host}"
 
 
-    def _authenticate(self) -> ProxmoxAPI:
-        return ProxmoxAPI(
-            host=self.host,
-            token_name=self.token_name,
-            token_value=self.token_value,
-            user=self.user,
-            verify_ssl=False
-        )
-
-
     def get_all_nodes(self) -> list:
-        proxmox = self._authenticate()
-        return proxmox.nodes.get()
+        return self.proxmox.nodes.get()
 
 
     def get_proxmox_version(self) -> str:
-        proxmox = self._authenticate()
-        return proxmox("version").get()["version"]
+        return self.proxmox("version").get()["version"]
 
 
 
