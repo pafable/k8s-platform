@@ -93,3 +93,14 @@ resource "dns_a_record_set" "prometheus" {
 
   ttl = 300
 }
+
+resource "dns_a_record_set" "vault" {
+  name = "vault"
+  zone = local.home_domain
+
+  addresses = [
+    data.aws_ssm_parameter.k3s_controller_ip.value
+  ]
+
+  ttl = 300
+}
