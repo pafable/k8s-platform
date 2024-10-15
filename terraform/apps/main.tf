@@ -113,4 +113,5 @@ module "postgresql_db_01" {
 
 module "vault" {
   source = "../modules/vault"
+  is_dev = true
 }

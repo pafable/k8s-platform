@@ -4,6 +4,12 @@ variable "domain" {
   default     = "home.pafable.com"
 }
 
+variable "is_dev" {
+  description = "Is this a dev environment"
+  type        = bool
+  default     = false
+}
+
 variable "ou" {
   description = "Organization unit"
   type        = string

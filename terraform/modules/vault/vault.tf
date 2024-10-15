@@ -13,7 +13,7 @@ locals {
     yamlencode({
       server = {
         dev = {
-          enabled = true
+          enabled = var.is_dev
         }
       }
 
