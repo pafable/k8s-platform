@@ -1,7 +1,7 @@
 locals {
   vault_domain         = "${local.app_name}.${var.domain}"
-  vault_server_service = "vault-server"
-  vault_server_port    = 443
+  vault_server_service = "${local.app_name}-ui"
+  vault_server_port    = 8200
 }
 
 resource "kubernetes_ingress_v1" "vault_ingress" {

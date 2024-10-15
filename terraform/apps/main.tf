@@ -111,6 +111,6 @@ module "postgresql_db_01" {
 #   ]
 # }
 
-module "vault" {
-  source = "../modules/vault"
-}
+# module "vault" {
+#   source = "../modules/vault"
+# }
