@@ -14,6 +14,7 @@ This serves all the necessary apps to bootstrap a kubernetes cluster. At the mom
 8. [Pgadmin4](https://hub.docker.com/r/dpage/pgadmin4/)
 9. [Trivy Operator](https://github.com/aquasecurity/trivy-operator)
 10. [Jenkins](https://github.com/jenkinsci/helm-charts)
+11. [Vault](https://developer.hashicorp.com/vault/docs/platform/k8s/helm)
 
 ### Prerequisites
 You will need the following installed on your machine before deploying:
