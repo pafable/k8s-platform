@@ -62,10 +62,12 @@ def main():
         USER
     )
 
+    pp.pprint(p1.__str__())
+
     for node in p1.get_all_nodes():
         pp.pprint(node)
 
-    pp.pprint(p1.get_proxmox_version())
+    pp.pprint(f"proxmox_version: {p1.get_proxmox_version()}")
 
 
 if __name__ == '__main__':
