@@ -55,7 +55,7 @@ resource "dns_a_record_set" "host_records" {
 
   addresses = [
     data.aws_ssm_parameter.k3s_controller_ip.value,
-    data.aws_ssm_parameter.kraken_ip.value
+    data.aws_ssm_parameter.k3s_agent1_ip.value
   ]
 
   ttl = 300
