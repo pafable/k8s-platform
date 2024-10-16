@@ -112,6 +112,6 @@ module "postgresql_db_01" {
 # }
 
 module "vault" {
-  source = "../modules/vault"
-  is_dev = true
+  source     = "../modules/vault"
+  depends_on = [module.cert_manager]
 }
