@@ -33,12 +33,12 @@ class PMSession:
     def __init__(self, host, token_name, token_value, user, verify_ssl=False):
         self.host = host
         self.proxmox = ProxmoxAPI(
-                    host=host,
-                    token_name=token_name,
-                    token_value=token_value,
-                    user=user,
-                    verify_ssl=verify_ssl
-                )
+                            host=host,
+                            token_name=token_name,
+                            token_value=token_value,
+                            user=user,
+                            verify_ssl=verify_ssl
+                        )
 
 
     def __str__(self) -> str:
@@ -46,12 +46,19 @@ class PMSession:
 
 
     def get_all_nodes(self) -> list:
+        """
+        Get all nodes in the Proxmox cluster
+        :return:
+        """
         return self.proxmox.nodes.get()
 
 
     def get_proxmox_version(self) -> str:
+        """
+        Get Proxmox version
+        :return:
+        """
         return self.proxmox("version").get()["version"]
-
 
 
 def main():
@@ -65,7 +72,7 @@ def main():
     pp.pprint(p1.__str__())
 
     for node in p1.get_all_nodes():
-        pp.pprint(node)
+        pp.pprint(node["id"])
 
     pp.pprint(f"proxmox_version: {p1.get_proxmox_version()}")
 
