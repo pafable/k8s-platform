@@ -11,17 +11,18 @@ locals {
 
   values = [
     yamlencode({
-      ha = {
-        enabled  = true
-        replicas = 3
-        raft = {
-          enabled = true
-        }
-      }
-
       server = {
+
         dev = {
           enabled = var.is_dev
+        }
+
+        ha = {
+          enabled = true
+
+          raft = {
+            enabled = true
+          }
         }
       }
 
