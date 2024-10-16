@@ -31,3 +31,8 @@ data "aws_ssm_parameter" "k3s_agent1_ip" {
   provider = aws.parameters
   name     = "/proxmox/k3s/agent1/ipv4"
 }
+
+data "aws_ssm_parameter" "k3s_agent2_ip" {
+  provider = aws.parameters
+  name     = "/proxmox/k3s/agent2/ipv4"
+}

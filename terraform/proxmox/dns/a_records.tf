@@ -2,7 +2,7 @@ locals {
   fleet_domain = "fleet.pafable.com." # DO NOT FORGET TO INCLUDE "." AT THE END FOR ALL ZONES!
   home_domain  = "home.pafable.com."  # DO NOT FORGET TO INCLUDE "." AT THE END FOR ALL ZONES!
 
-  home_hosts = toset([
+  home_k3s_apps = toset([
     "argocd",
     "grafana",
     "jenkins",
@@ -48,14 +48,15 @@ resource "dns_a_record_set" "kraken" {
 }
 
 # home domains
-resource "dns_a_record_set" "host_records" {
-  for_each = local.home_hosts
+resource "dns_a_record_set" "k3s_apps_host_records" {
+  for_each = local.home_k3s_apps
   name     = each.value
   zone     = local.home_domain
 
   addresses = [
     data.aws_ssm_parameter.k3s_controller_ip.value,
-    data.aws_ssm_parameter.k3s_agent1_ip.value
+    data.aws_ssm_parameter.k3s_agent1_ip.value,
+    data.aws_ssm_parameter.k3s_agent2_ip.value
   ]
 
   ttl = 300
