@@ -17,8 +17,7 @@ resource "kubernetes_manifest" "pgadmin_cert" {
       commonName = local.pgadmin_domain
 
       dnsNames = [
-        "pgadmin.localhost",
-        "pgadmin.local"
+        local.pgadmin_domain
       ]
 
       isCA = true

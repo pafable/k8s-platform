@@ -17,8 +17,7 @@ resource "kubernetes_manifest" "argocd_cert" {
       commonName = local.argo_domain
 
       dnsNames = [
-        "${local.app_name}.localhost",
-        "${local.app_name}.local"
+        local.argo_domain
       ]
 
       isCA = true

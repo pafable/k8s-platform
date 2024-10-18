@@ -17,7 +17,7 @@ resource "kubernetes_manifest" "jenkins_cert" {
       commonName = local.domain
 
       dnsNames = [
-        var.domain
+        local.domain
       ]
 
       isCA = true
