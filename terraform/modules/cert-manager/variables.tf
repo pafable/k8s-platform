@@ -1,13 +1,13 @@
 variable "ca_cert" {
   description = "CA cert"
-  type = string
-  sensitive = true
+  type        = string
+  sensitive   = true
 }
 
 variable "ca_key" {
   description = "CA private key"
-  type = string
-  sensitive = true
+  type        = string
+  sensitive   = true
 }
 
 variable "cert_manager_version" {
