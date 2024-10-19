@@ -1,11 +1,3 @@
-terraform {
-  required_providers {
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "2.31.0"
-    }
-  }
-}
 ## Cert manager helm chart needs to be installed before creating the issuer
 ## Because the issuer is a CRD
 ## Comment out this line on initial deployment to new kubernetes clusters
