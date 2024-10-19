@@ -41,8 +41,6 @@ resource "kubernetes_secret_v1" "ca_secret" {
     namespace = kubernetes_namespace_v1.cert_manager_ns.metadata[0].name
   }
 
-  type = "Opaque"
-
   data = {
     "tls.crt" = var.ca_cert
     "tls.key" = var.ca_key
