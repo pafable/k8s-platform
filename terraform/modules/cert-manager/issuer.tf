@@ -18,32 +18,33 @@ resource "kubernetes_manifest" "self_signed_cluster_issuer" {
     kind       = "ClusterIssuer"
 
     metadata = {
-      name   = "self-signed-cluster-ca-issuer"
+      name   = "self-signed-ca-cluster-issuer"
       labels = local.labels
     }
 
     spec = {
       ca = {
-        secretName = kubernetes_secret_v1.ca_secret.metadata[0].name
+        secretName = "ca-tls-secret"
       }
     }
   }
 
   depends_on = [
     helm_release.cert_manager,
-    kubernetes_secret_v1.ca_secret
+    # kubernetes_secret_v1.ca_secret
   ]
 }
 
-resource "kubernetes_secret_v1" "ca_secret" {
-  metadata {
-    name      = "self-signed-ca-secret"
-    namespace = kubernetes_namespace_v1.cert_manager_ns.metadata[0].name
-  }
-
-  data = {
-    "ca.crt"  = var.ca_cert
-    "tls.crt" = var.ca_cert
-    "tls.key" = var.ca_key
-  }
-}
+# resource "kubernetes_secret_v1" "ca_secret" {
+#   metadata {
+#     name      = "self-signed-ca-secret"
+#     namespace = kubernetes_namespace_v1.cert_manager_ns.metadata[0].name
+#   }
+#
+#   type = "kubernetes.io/tls"
+#
+#   data = {
+#     "tls.crt" = ""
+#     "tls.key" = ""
+#   }
+# }

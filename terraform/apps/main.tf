@@ -30,9 +30,9 @@ module "cert_manager" {
 #   source = "../../modules/ingress-nginx"
 # }
 
-module "kong_ingress" {
-  source = "../modules/kong-ingress"
-}
+# module "kong_ingress" {
+#   source = "../modules/kong-ingress"
+# }
 
 # module "kong_mesh" {
 #   source = "../../modules/kong-mesh"
