@@ -42,6 +42,7 @@ resource "kubernetes_secret_v1" "ca_secret" {
   }
 
   data = {
+    "ca.crt"  = var.ca_cert
     "tls.crt" = var.ca_cert
     "tls.key" = var.ca_key
   }

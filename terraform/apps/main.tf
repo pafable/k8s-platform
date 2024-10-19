@@ -65,11 +65,11 @@ module "kong_ingress" {
 #     is_cloud = false
 # }
 
-module "postgresql_db_01" {
-  source     = "../modules/postgresql"
-  domain     = var.domain
-  depends_on = [module.cert_manager]
-}
+# module "postgresql_db_01" {
+#   source     = "../modules/postgresql"
+#   domain     = var.domain
+#   depends_on = [module.cert_manager]
+# }
 
 # module "eck" {
 #   source = "../../modules/eck"
