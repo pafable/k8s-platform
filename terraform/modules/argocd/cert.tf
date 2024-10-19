@@ -20,18 +20,18 @@ resource "kubernetes_manifest" "argocd_cert" {
         local.argo_domain
       ]
 
-      isCA = true
+      isCA = false
 
       issuerRef = {
         name = local.self_signed_ca_name
         kind = "ClusterIssuer"
       }
 
-      privateKey = {
-        algorithm = "ECDSA"
-        encoding  = "PKCS1"
-        size      = 256
-      }
+      # privateKey = {
+      #   algorithm = "ECDSA"
+      #   encoding  = "PKCS1"
+      #   size      = 256
+      # }
 
       secretName = "${local.app_name}-tls"
 

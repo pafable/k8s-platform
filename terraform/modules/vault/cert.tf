@@ -27,11 +27,11 @@ resource "kubernetes_manifest" "vault_cert" {
         kind = "ClusterIssuer"
       }
 
-      privateKey = {
-        algorithm = "ECDSA"
-        encoding  = "PKCS1"
-        size      = 256
-      }
+      # privateKey = {
+      #   algorithm = "ECDSA"
+      #   encoding  = "PKCS1"
+      #   size      = 256
+      # }
 
       secretName = "${local.app_name}-tls"
 

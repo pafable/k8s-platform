@@ -13,22 +13,21 @@ resource "kubernetes_manifest" "cert" {
       commonName = local.prom_domain
 
       dnsNames = [
+        "grafana.home.pafable.com",
+        "grafana.home.pafable.com",
         "prom.home.pafable.com",
         "prometheus.home.pafable.com"
       ]
 
-      isCA = true
+      isCA = false
 
-      issuerRef = {
-        name = local.self_signed_ca_name
-        kind = "ClusterIssuer"
-      }
+      issuerRef = local.issuerRef
 
-      privateKey = {
-        algorithm = "ECDSA"
-        encoding  = "PKCS1"
-        size      = 256
-      }
+      # privateKey = {
+      #   algorithm = "ECDSA"
+      #   encoding  = "PKCS1"
+      #   size      = 256
+      # }
 
       secretName = "prometheus-tls"
 

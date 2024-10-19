@@ -20,18 +20,18 @@ resource "kubernetes_manifest" "jenkins_cert" {
         local.domain
       ]
 
-      isCA = true
+      isCA = false
 
       issuerRef = {
         name = local.self_signed_ca_name
         kind = "ClusterIssuer"
       }
 
-      privateKey = {
-        algorithm = "ECDSA"
-        encoding  = "PKCS1"
-        size      = 521
-      }
+      # privateKey = {
+      #   algorithm = "ECDSA"
+      #   encoding  = "PKCS1"
+      #   size      = 521
+      # }
 
       secretName = "${local.app_name}-tls"
 

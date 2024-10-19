@@ -1,12 +1,12 @@
-module "argocd" {
-  source   = "../modules/argocd"
-  app_repo = "https://github.com/pafable/argo-examples"
-  domain   = var.domain
-  depends_on = [
-    module.cert_manager,
-    module.kong_ingress
-  ]
-}
+# module "argocd" {
+#   source   = "../modules/argocd"
+#   app_repo = "https://github.com/pafable/argo-examples"
+#   domain   = var.domain
+#   depends_on = [
+#     module.cert_manager,
+#     module.kong_ingress
+#   ]
+# }
 
 module "cert_manager" {
   source = "../modules/cert-manager"
@@ -111,7 +111,7 @@ module "postgresql_db_01" {
 #   ]
 # }
 
-module "vault" {
-  source     = "../modules/vault"
-  depends_on = [module.cert_manager]
-}
+# module "vault" {
+#   source     = "../modules/vault"
+#   depends_on = [module.cert_manager]
+# }

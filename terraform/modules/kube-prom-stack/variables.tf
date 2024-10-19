@@ -3,10 +3,17 @@ variable "app_name" {
   type        = string
   default     = "monitoring"
 }
+
 variable "chart_version" {
   description = "The version of the Helm chart to install"
   type        = string
   default     = "61.8.0"
+}
+
+variable "domain" {
+  description = "Domain"
+  type        = string
+  default     = "home.pafable.com"
 }
 
 variable "grafana_image_repo" {
