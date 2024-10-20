@@ -14,12 +14,11 @@ resource "kubernetes_manifest" "cert" {
 
       dnsNames = [
         "grafana.home.pafable.com",
-        "grafana.home.pafable.com",
         "prom.home.pafable.com",
         "prometheus.home.pafable.com"
       ]
 
-      isCA = false
+      isCA = true
 
       issuerRef = local.issuer
 
