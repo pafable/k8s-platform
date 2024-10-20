@@ -20,7 +20,7 @@ resource "kubernetes_manifest" "argocd_cert" {
         local.argo_domain
       ]
 
-      isCA = false
+      isCA = true
 
       issuerRef = {
         name = local.issuer

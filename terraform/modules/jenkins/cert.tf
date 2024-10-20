@@ -20,7 +20,7 @@ resource "kubernetes_manifest" "jenkins_cert" {
         local.domain
       ]
 
-      isCA = false
+      isCA = true
 
       issuerRef = {
         name = local.issuer
