@@ -4,7 +4,7 @@ resource "kubernetes_manifest" "cert" {
     kind       = "Certificate"
 
     metadata = {
-      name      = "ghost-self-signed-cert"
+      name      = "ghost-cert"
       namespace = kubernetes_namespace_v1.ghost_namespace.metadata.0.name # certs are bound to namespaces
       labels = {
         app   = var.app_name

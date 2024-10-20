@@ -4,7 +4,7 @@ resource "kubernetes_manifest" "cert" {
     kind       = "Certificate"
 
     metadata = {
-      name      = "monitoring-self-signed-cert"
+      name      = "monitoring-cert"
       namespace = kubernetes_namespace_v1.kube_prom_ns.metadata.0.name # certs are bound to namespaces
       labels    = local.labels
     }
@@ -29,7 +29,7 @@ resource "kubernetes_manifest" "cert" {
         size      = 256
       }
 
-      secretName = "prometheus-tls"
+      secretName = "kube-prom-tls"
 
       subject = {
         organizations = [

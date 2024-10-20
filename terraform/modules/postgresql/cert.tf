@@ -8,7 +8,7 @@ resource "kubernetes_manifest" "pgadmin_cert" {
     kind       = "Certificate"
 
     metadata = {
-      name      = "${local.pg_name}-self-signed-cert"
+      name      = "${local.pg_name}-cert"
       namespace = kubernetes_namespace_v1.postgresql_ns.metadata.0.name # certs are bound to namespaces
       labels    = local.labels
     }
