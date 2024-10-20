@@ -1,5 +1,5 @@
 locals {
-  self_signed_ca_name = "self-signed-cluster-ca-issuer"
+  issuer = "self-signed-ca-cluster-issuer"
 }
 
 resource "kubernetes_manifest" "jenkins_cert" {
@@ -23,15 +23,15 @@ resource "kubernetes_manifest" "jenkins_cert" {
       isCA = false
 
       issuerRef = {
-        name = local.self_signed_ca_name
+        name = local.issuer
         kind = "ClusterIssuer"
       }
 
-      # privateKey = {
-      #   algorithm = "ECDSA"
-      #   encoding  = "PKCS1"
-      #   size      = 521
-      # }
+      privateKey = {
+        algorithm = "ECDSA"
+        encoding  = "PKCS1"
+        size      = 521
+      }
 
       secretName = "${local.app_name}-tls"
 

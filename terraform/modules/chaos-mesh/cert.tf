@@ -19,7 +19,7 @@ resource "kubernetes_manifest" "cert" {
       isCA = true
 
       issuerRef = {
-        name = local.self_signed_ca_name
+        name = local.issuer
         kind = "ClusterIssuer"
       }
 

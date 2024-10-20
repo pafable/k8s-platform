@@ -12,8 +12,8 @@ locals {
   grafana_domain      = "grafana.${local.domain}"
   prom_domain         = "prometheus.${local.domain}"
 
-  issuerRef = {
-    name = "self-signed-cluster-ca-issuer"
+  issuer = {
+    name = "self-signed-ca-cluster-issuer"
     kind = "ClusterIssuer"
   }
 

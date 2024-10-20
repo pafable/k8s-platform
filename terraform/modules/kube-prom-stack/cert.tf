@@ -21,13 +21,13 @@ resource "kubernetes_manifest" "cert" {
 
       isCA = false
 
-      issuerRef = local.issuerRef
+      issuerRef = local.issuer
 
-      # privateKey = {
-      #   algorithm = "ECDSA"
-      #   encoding  = "PKCS1"
-      #   size      = 256
-      # }
+      privateKey = {
+        algorithm = "ECDSA"
+        encoding  = "PKCS1"
+        size      = 256
+      }
 
       secretName = "prometheus-tls"
 
