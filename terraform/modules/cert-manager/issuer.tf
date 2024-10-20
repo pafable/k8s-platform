@@ -36,7 +36,9 @@ resource "kubernetes_secret_v1" "ca_secret" {
   type = "kubernetes.io/tls"
 
   data = {
-    "tls.crt" = file("${path.module}/certs/ca.crt")
+    # DO NOT encode in base64.
+    # these will automatically be encoded in base64.
+    "tls.crt" = file("${path.module}/certs/ca.pem")
     "tls.key" = file("${path.module}/certs/ca-key.pem")
   }
 }
