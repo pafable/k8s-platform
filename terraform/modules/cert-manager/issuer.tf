@@ -16,7 +16,7 @@ resource "kubernetes_manifest" "self_signed_cluster_issuer" {
 
     spec = {
       ca = {
-        secretName = "ca-tls-secret"
+        secretName = kubernetes_secret_v1.ca_secret.metadata[0].name
       }
     }
   }
