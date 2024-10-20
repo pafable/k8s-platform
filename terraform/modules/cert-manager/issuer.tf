@@ -15,9 +15,15 @@ resource "kubernetes_manifest" "self_signed_cluster_issuer" {
     }
 
     spec = {
+      # you can only use one of these ClusterIssuer resource
+
+      # ca allows you to use existing CA cert and CA private key
       ca = {
         secretName = kubernetes_secret_v1.ca_secret.metadata[0].name
       }
+
+      ## allows cert manager to create the CA cert and CA private key automatically
+      # self = {}
     }
   }
 
