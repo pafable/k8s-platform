@@ -1,5 +1,5 @@
 locals {
-  self_signed_ca_name = "self-signed-cluster-ca-issuer"
+  issuer = "self-signed-ca-cluster-issuer"
 }
 
 resource "kubernetes_manifest" "jenkins_cert" {
@@ -8,7 +8,7 @@ resource "kubernetes_manifest" "jenkins_cert" {
     kind       = "Certificate"
 
     metadata = {
-      name      = "${local.app_name}-self-signed-cert"
+      name      = "${local.app_name}-cert"
       namespace = kubernetes_namespace_v1.jenkins_ns.metadata.0.name # certs are bound to namespaces
       labels    = local.labels
     }
@@ -23,7 +23,7 @@ resource "kubernetes_manifest" "jenkins_cert" {
       isCA = true
 
       issuerRef = {
-        name = local.self_signed_ca_name
+        name = local.issuer
         kind = "ClusterIssuer"
       }
 

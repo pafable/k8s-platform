@@ -1,10 +1,10 @@
 locals {
-  app_name            = "chaos-mesh"
-  container_runtime   = var.container_runtime == "docker" ? "docker" : "containerd"
-  domain_name         = "chaos.local"
-  repo                = "https://charts.chaos-mesh.org"
-  self_signed_ca_name = "self-signed-cluster-ca-issuer"
-  socket_path         = var.container_runtime == "docker" ? "/var/run/docker.sock" : (var.container_runtime == "k3s" ? "/run/k3s/containerd/containerd.sock" : "/run/containerd/containerd.sock")
+  app_name          = "chaos-mesh"
+  container_runtime = var.container_runtime == "docker" ? "docker" : "containerd"
+  domain_name       = "chaos.local"
+  repo              = "https://charts.chaos-mesh.org"
+  issuer            = "self-signed-ca-cluster-issuer"
+  socket_path       = var.container_runtime == "docker" ? "/var/run/docker.sock" : (var.container_runtime == "k3s" ? "/run/k3s/containerd/containerd.sock" : "/run/containerd/containerd.sock")
 
   labels = {
     "app.kubernetes.io/app"        = local.app_name

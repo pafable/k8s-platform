@@ -45,6 +45,7 @@ locals {
           installPlugins                = local.plugins
           installLatestSpecifiedPlugins = true
           jenkinsUrl                    = local.jenkins_url
+          jenkinsUrlProtocol            = "https"
           projectNamingStrategy         = "roleBased"
 
           admin = {

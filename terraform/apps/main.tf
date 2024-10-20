@@ -9,7 +9,9 @@ module "argocd" {
 }
 
 module "cert_manager" {
-  source = "../modules/cert-manager"
+  source  = "../modules/cert-manager"
+  ca_cert = data.aws_ssm_parameter.ca_cert.value
+  ca_key  = data.aws_ssm_parameter.ca_key.value
 }
 
 # module "chaos_mesh" {

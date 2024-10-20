@@ -10,14 +10,41 @@ resource "kubernetes_manifest" "self_signed_cluster_issuer" {
     kind       = "ClusterIssuer"
 
     metadata = {
-      name   = "self-signed-cluster-ca-issuer"
+      name   = "self-signed-ca-cluster-issuer"
       labels = local.labels
     }
 
     spec = {
-      selfSigned = {}
+      # you can only use one of these ClusterIssuer resource
+
+      # ca allows you to use existing CA cert and CA private key
+      ca = {
+        secretName = kubernetes_secret_v1.ca_secret.metadata[0].name
+      }
+
+      ## allows cert manager to create the CA cert and CA private key automatically
+      # self = {}
     }
   }
 
-  depends_on = [helm_release.cert_manager]
+  depends_on = [
+    helm_release.cert_manager,
+    kubernetes_secret_v1.ca_secret
+  ]
+}
+
+resource "kubernetes_secret_v1" "ca_secret" {
+  metadata {
+    name      = "self-signed-ca-secret"
+    namespace = kubernetes_namespace_v1.cert_manager_ns.metadata[0].name
+  }
+
+  data = {
+    # DO NOT encode in base64.
+    # these will automatically be encoded in base64.
+    "tls.crt" = file("${path.module}/certs/ca.pem")
+    "tls.key" = file("${path.module}/certs/ca-key.pem")
+  }
+
+  type = "kubernetes.io/tls"
 }

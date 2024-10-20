@@ -4,7 +4,7 @@ resource "kubernetes_manifest" "cert" {
     kind       = "Certificate"
 
     metadata = {
-      name      = "chaos-mesh-self-signed-cert"
+      name      = "chaos-mesh-cert"
       namespace = kubernetes_namespace_v1.chaos_ns.metadata.0.name # certs are bound to namespaces
       labels    = local.labels
     }
@@ -19,7 +19,7 @@ resource "kubernetes_manifest" "cert" {
       isCA = true
 
       issuerRef = {
-        name = local.self_signed_ca_name
+        name = local.issuer
         kind = "ClusterIssuer"
       }
 

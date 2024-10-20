@@ -1,5 +1,5 @@
 locals {
-  domain              = var.is_docker_desktop ? "local" : "home.pafable.com"
+  domain              = var.is_docker_desktop ? "local" : var.domain
   kube_chart_name     = "kube-prometheus-stack"
   kube_chart_repo     = "https://prometheus-community.github.io/helm-charts"
   kube_name           = "monitoring"
@@ -11,7 +11,11 @@ locals {
   grafana_db_user     = local.enable_grafana_db ? "REPLACE_WITH_YOUR_DB_USER" : null
   grafana_domain      = "grafana.${local.domain}"
   prom_domain         = "prometheus.${local.domain}"
-  self_signed_ca_name = "self-signed-cluster-ca-issuer"
+
+  issuer = {
+    name = "self-signed-ca-cluster-issuer"
+    kind = "ClusterIssuer"
+  }
 
   labels = {
     "app.kubernetes.io/app"        = local.kube_name
