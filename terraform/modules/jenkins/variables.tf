@@ -58,7 +58,7 @@ variable "jenkins_github_token" {
 variable "helm_chart_version" {
   description = "helm chart version"
   type        = string
-  default     = "5.7.0"
+  default     = "5.7.7"
 }
 
 variable "helm_repo" {
