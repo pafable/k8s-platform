@@ -39,12 +39,12 @@ resource "kubernetes_secret_v1" "ca_secret" {
     namespace = kubernetes_namespace_v1.cert_manager_ns.metadata[0].name
   }
 
-  type = "kubernetes.io/tls"
-
   data = {
     # DO NOT encode in base64.
     # these will automatically be encoded in base64.
     "tls.crt" = file("${path.module}/certs/ca.pem")
     "tls.key" = file("${path.module}/certs/ca-key.pem")
   }
+
+  type = "kubernetes.io/tls"
 }
