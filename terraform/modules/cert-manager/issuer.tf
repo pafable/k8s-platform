@@ -23,20 +23,20 @@ resource "kubernetes_manifest" "self_signed_cluster_issuer" {
 
   depends_on = [
     helm_release.cert_manager,
-    # kubernetes_secret_v1.ca_secret
+    kubernetes_secret_v1.ca_secret
   ]
 }
 
-# resource "kubernetes_secret_v1" "ca_secret" {
-#   metadata {
-#     name      = "self-signed-ca-secret"
-#     namespace = kubernetes_namespace_v1.cert_manager_ns.metadata[0].name
-#   }
-#
-#   type = "kubernetes.io/tls"
-#
-#   data = {
-#     "tls.crt" = ""
-#     "tls.key" = ""
-#   }
-# }
+resource "kubernetes_secret_v1" "ca_secret" {
+  metadata {
+    name      = "self-signed-ca-secret"
+    namespace = kubernetes_namespace_v1.cert_manager_ns.metadata[0].name
+  }
+
+  type = "kubernetes.io/tls"
+
+  data = {
+    "tls.crt" = file("${path.module}/new-certs/ca.pem")
+    "tls.key" = file("${path.module}/new-certs/ca-key.pem")
+  }
+}
