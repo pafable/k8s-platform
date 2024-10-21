@@ -7,6 +7,12 @@ locals {
     "app.kubernetes.io/app"   = local.chart_name
     "app.kubernetes.io/owner" = var.owner
   }
+
+  values = [
+    yamlencode({
+
+    })
+  ]
 }
 
 resource "kubernetes_namespace_v1" "ingress_nginx_ns" {
@@ -24,7 +30,8 @@ resource "helm_release" "ingress_nginx_controller" {
   name              = local.chart_name
   namespace         = kubernetes_namespace_v1.ingress_nginx_ns.metadata[0].name
   repository        = local.chart_repo
-  version           = var.chart_version
   timeout           = var.timeout
+  values = local.values
+  version           = var.chart_version
   wait              = false
 }
