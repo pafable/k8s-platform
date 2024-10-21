@@ -15,6 +15,12 @@ variable "domain" {
   default     = "local"
 }
 
+variable "ingress_name" {
+  description = "Ingress to use"
+  type        = string
+  default     = "nginx"
+}
+
 variable "ou" {
   description = "The organizational unit"
   type        = string

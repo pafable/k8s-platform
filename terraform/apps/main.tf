@@ -4,7 +4,7 @@ module "argocd" {
   domain   = var.domain
   depends_on = [
     module.cert_manager,
-    module.kong_ingress
+    module.ingress_nginx
   ]
 }
 
@@ -26,13 +26,13 @@ module "cert_manager" {
 #   depends_on     = [module.kube_prom_stack]
 # }
 
-# module "ingress_nginx" {
-#   source = "../../modules/ingress-nginx"
-# }
-
-module "kong_ingress" {
-  source = "../modules/kong-ingress"
+module "ingress_nginx" {
+  source = "../modules/ingress-nginx"
 }
+
+# module "kong_ingress" {
+#   source = "../modules/kong-ingress"
+# }
 
 # module "kong_mesh" {
 #   source = "../../modules/kong-mesh"
@@ -47,15 +47,17 @@ module "jenkins" {
   docker_hub_password         = sensitive(data.aws_ssm_parameter.docker_password.value)
   docker_hub_username         = data.aws_ssm_parameter.docker_username.value
   domain                      = var.domain
+  ingress_name                = var.ingress
   jenkins_github_token        = data.aws_ssm_parameter.jenkins_github_token.value
   storage_class_name          = "hive-ship-sc" # this is needed for k3s deployment
   depends_on                  = [module.cert_manager]
 }
 
 module "kube_prom_stack" {
-  source     = "../modules/kube-prom-stack"
-  is_cloud   = false
-  depends_on = [module.cert_manager]
+  source       = "../modules/kube-prom-stack"
+  ingress_name = var.ingress
+  is_cloud     = false
+  depends_on   = [module.cert_manager]
 }
 
 ## k3s already has this baked in
@@ -66,9 +68,10 @@ module "kube_prom_stack" {
 # }
 
 module "postgresql_db_01" {
-  source     = "../modules/postgresql"
-  domain     = var.domain
-  depends_on = [module.cert_manager]
+  source       = "../modules/postgresql"
+  domain       = var.domain
+  ingress_name = var.ingress
+  depends_on   = [module.cert_manager]
 }
 
 # module "eck" {
@@ -114,6 +117,7 @@ module "postgresql_db_01" {
 # }
 
 module "vault" {
-  source     = "../modules/vault"
-  depends_on = [module.cert_manager]
+  source       = "../modules/vault"
+  ingress_name = var.ingress
+  depends_on   = [module.cert_manager]
 }

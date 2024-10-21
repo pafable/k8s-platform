@@ -14,7 +14,7 @@ resource "kubernetes_ingress_v1" "chaos_mesh_ingress" {
   wait_for_load_balancer = true
 
   spec {
-    ingress_class_name = "kong"
+    ingress_class_name = "ingress-nginx"
 
     rule {
       host = local.domain_name

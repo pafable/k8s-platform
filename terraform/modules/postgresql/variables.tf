@@ -10,6 +10,12 @@ variable "domain" {
   default     = "local"
 }
 
+variable "ingress_name" {
+  description = "Ingress to use"
+  type        = string
+  default     = "nginx"
+}
+
 variable "namespace" {
   description = "The namespace to install the Helm chart into"
   type        = string

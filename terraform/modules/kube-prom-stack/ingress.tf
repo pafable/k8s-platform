@@ -14,7 +14,7 @@ resource "kubernetes_ingress_v1" "prometheus_ingress" {
   wait_for_load_balancer = true
 
   spec {
-    ingress_class_name = "kong"
+    ingress_class_name = "ingress-nginx"
 
     rule {
       host = local.prom_domain
@@ -62,7 +62,7 @@ resource "kubernetes_ingress_v1" "grafana_ingress" {
   wait_for_load_balancer = true
 
   spec {
-    ingress_class_name = "kong"
+    ingress_class_name = var.ingress_name
 
     rule {
       host = local.grafana_domain

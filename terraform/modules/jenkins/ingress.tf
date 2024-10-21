@@ -20,7 +20,7 @@ resource "kubernetes_ingress_v1" "jenkins_ingress" {
   wait_for_load_balancer = true
 
   spec {
-    ingress_class_name = "kong"
+    ingress_class_name = var.ingress_name
 
     rule {
       host = local.domain

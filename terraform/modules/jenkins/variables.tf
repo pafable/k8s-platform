@@ -48,6 +48,12 @@ variable "docker_hub_password" {
   sensitive   = true
 }
 
+variable "ingress_name" {
+  description = "Ingress to use"
+  type        = string
+  default     = "nginx"
+}
+
 variable "jenkins_github_token" {
   description = "Github token"
   type        = string

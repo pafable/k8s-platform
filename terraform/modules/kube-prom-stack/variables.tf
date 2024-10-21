@@ -28,6 +28,12 @@ variable "grafana_image_tag" {
   default     = "11.1.3"
 }
 
+variable "ingress_name" {
+  description = "Ingress to use"
+  type        = string
+  default     = "nginx"
+}
+
 variable "is_cloud" {
   description = "Whether the cluster is local"
   type        = bool

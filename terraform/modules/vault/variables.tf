@@ -4,6 +4,12 @@ variable "domain" {
   default     = "home.pafable.com"
 }
 
+variable "ingress_name" {
+  description = "Ingress to use"
+  type        = string
+  default     = "nginx"
+}
+
 variable "is_dev" {
   description = "Is this a dev environment"
   type        = bool
