@@ -16,6 +16,12 @@ variable "helm_repo" {
   default     = "https://helm.elastic.co"
 }
 
+variable "ingress_name" {
+  description = "Ingress to use"
+  type        = string
+  default     = "nginx"
+}
+
 variable "namespace" {
   description = "Namespace"
   type        = string

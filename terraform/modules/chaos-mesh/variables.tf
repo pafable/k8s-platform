@@ -11,6 +11,12 @@ variable "container_runtime" {
   default     = "docker"
 }
 
+variable "ingress_name" {
+  description = "Ingress to use"
+  type        = string
+  default     = "nginx"
+}
+
 variable "is_dashboard_security_enabled" {
   description = "Enable dashboard security"
   type        = bool

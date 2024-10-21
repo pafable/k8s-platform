@@ -1,7 +1,13 @@
 variable "chart_version" {
   description = "The version of the Helm chart to install"
   type        = string
-  default     = "4.11.0"
+  default     = "4.11.3"
+}
+
+variable "external_ips" {
+  description = "External IPs, this is only required for on-prem clusters (e.g. k3s)"
+  type        = list(string)
+  default     = []
 }
 
 variable "namespace" {

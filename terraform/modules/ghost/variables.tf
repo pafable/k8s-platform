@@ -12,6 +12,12 @@ variable "app_version" {
   default = { version = "blue" }
 }
 
+variable "ingress_name" {
+  description = "Ingress to use"
+  type        = string
+  default     = "nginx"
+}
+
 variable "namespace" {
   description = "Namespace to deploy to"
   type        = string

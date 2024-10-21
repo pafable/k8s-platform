@@ -32,3 +32,18 @@ data "aws_ssm_parameter" "jenkins_github_token" {
   provider = aws.parameters
   name     = "/jenkins/github/token"
 }
+
+data "aws_ssm_parameter" "k3s_controller_ipv4" {
+  provider = aws.parameters
+  name     = "/proxmox/k3s/controller/ipv4"
+}
+
+data "aws_ssm_parameter" "k3s_agent1_ipv4" {
+  provider = aws.parameters
+  name     = "/proxmox/k3s/agent1/ipv4"
+}
+
+data "aws_ssm_parameter" "k3s_agent2_ipv4" {
+  provider = aws.parameters
+  name     = "/proxmox/k3s/agent2/ipv4"
+}
