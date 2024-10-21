@@ -9,7 +9,7 @@
 # }
 
 module "cert_manager" {
-  source  = "../modules/cert-manager"
+  source = "../modules/cert-manager"
 }
 
 # module "chaos_mesh" {
