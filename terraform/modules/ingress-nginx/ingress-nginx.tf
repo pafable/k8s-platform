@@ -10,7 +10,11 @@ locals {
 
   values = [
     yamlencode({
-
+      controller = {
+        service = {
+          externalIPs = var.external_ips
+        }
+      }
     })
   ]
 }
@@ -31,7 +35,7 @@ resource "helm_release" "ingress_nginx_controller" {
   namespace         = kubernetes_namespace_v1.ingress_nginx_ns.metadata[0].name
   repository        = local.chart_repo
   timeout           = var.timeout
-  values = local.values
+  values            = local.values
   version           = var.chart_version
   wait              = false
 }
