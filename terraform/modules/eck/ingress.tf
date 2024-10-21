@@ -10,18 +10,12 @@ resource "kubernetes_ingress_v1" "kibana_ingress" {
     name      = "${local.kibana_name}-ingress"
     namespace = kubernetes_namespace_v1.eck_op_ns.metadata.0.name
     labels    = local.labels
-
-    annotations = {
-      "konghq.com/strip-path"                 = true
-      "konghq.com/protocols"                  = "https"
-      "konghq.com/https-redirect-status-code" = 301
-    }
   }
 
   wait_for_load_balancer = true
 
   spec {
-    ingress_class_name = "ingress-nginx"
+    ingress_class_name = var.ingress_name
 
     rule {
       host = local.kibana_domain

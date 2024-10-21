@@ -13,7 +13,7 @@ resource "kubernetes_ingress_v1" "ghost_ingress" {
   wait_for_load_balancer = true
 
   spec {
-    ingress_class_name = "ingress-nginx"
+    ingress_class_name = var.ingress_name
     rule {
       host = local.domain_name
       http {
