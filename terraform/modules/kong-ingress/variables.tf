@@ -1,7 +1,7 @@
 variable "chart_version" {
   description = "The version of the Helm chart to install"
   type        = string
-  default     = "2.40.0"
+  default     = "2.42.0"
 }
 
 variable "namespace" {
