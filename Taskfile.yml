@@ -620,7 +620,7 @@ tasks:
 
   core-destroy:
     dir: '{{ .TF_CORE_DIR }}'
-    desc: Destroy Apps terraform
+    desc: Destroy Core terraform
     deps:
       - task: apps-init
     cmds:
