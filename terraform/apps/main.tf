@@ -2,16 +2,11 @@
 #   source   = "../modules/argocd"
 #   app_repo = "https://github.com/pafable/argo-examples"
 #   domain   = var.domain
-#   depends_on = [
-#     module.cert_manager,
-#     module.ingress_nginx
-#   ]
 # }
 
 # module "chaos_mesh" {
 #   source                        = "../../modules/chaos-mesh"
 #   is_dashboard_security_enabled = false
-#   depends_on                    = [module.cert_manager]
 # }
 
 # module "grafana_dashboards" {
@@ -20,27 +15,11 @@
 #   depends_on     = [module.kube_prom_stack]
 # }
 
-
-# module "kong_ingress" {
-#   source = "../modules/kong-ingress"
-# }
-
-# module "kong_mesh" {
-#   source = "../../modules/kong-mesh"
-# }
-
 module "kube_prom_stack" {
   source       = "../modules/kube-prom-stack"
   ingress_name = var.ingress
   is_cloud     = false
 }
-
-## k3s already has this baked in
-## do not deploy on k3s
-# module "metrics_server" {
-#   source = "../../modules/metrics-server"
-#     is_cloud = false
-# }
 
 module "postgresql_db_01" {
   source       = "../modules/postgresql"
@@ -73,7 +52,7 @@ module "postgresql_db_01" {
 #     name = "my-app-ns"
 #   }
 # }
-#
+
 # resource "helm_release" "my_app" {
 #   chart            = "../../../charts/my-helm-chart"
 #   create_namespace = false
@@ -88,10 +67,4 @@ module "postgresql_db_01" {
 #       }
 #     })
 #   ]
-# }
-
-# module "vault" {
-#   source       = "../modules/vault"
-#   ingress_name = var.ingress
-#   depends_on   = [module.cert_manager]
 # }

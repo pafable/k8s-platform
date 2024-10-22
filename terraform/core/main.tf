@@ -30,3 +30,16 @@ module "jenkins" {
   storage_class_name          = "hive-ship-sc" # this is needed for k3s deployment
   depends_on                  = [module.cert_manager]
 }
+
+## k3s already has this baked in
+## do not deploy on k3s
+# module "metrics_server" {
+#   source = "../../modules/metrics-server"
+#     is_cloud = false
+# }
+
+module "vault" {
+  source       = "../modules/vault"
+  ingress_name = var.ingress
+  depends_on   = [module.cert_manager]
+}
