@@ -1,29 +1,12 @@
-locals {
-  ext_ips = toset([
-    data.aws_ssm_parameter.k3s_agent1_ipv4.value,
-    data.aws_ssm_parameter.k3s_agent2_ipv4.value,
-    data.aws_ssm_parameter.k3s_controller_ipv4.value
-  ])
-}
-
 # module "argocd" {
 #   source   = "../modules/argocd"
 #   app_repo = "https://github.com/pafable/argo-examples"
 #   domain   = var.domain
-#   depends_on = [
-#     module.cert_manager,
-#     module.ingress_nginx
-#   ]
 # }
-
-module "cert_manager" {
-  source = "../modules/cert-manager"
-}
 
 # module "chaos_mesh" {
 #   source                        = "../../modules/chaos-mesh"
 #   is_dashboard_security_enabled = false
-#   depends_on                    = [module.cert_manager]
 # }
 
 # module "grafana_dashboards" {
@@ -32,54 +15,16 @@ module "cert_manager" {
 #   depends_on     = [module.kube_prom_stack]
 # }
 
-module "ingress_nginx" {
-  source = "../modules/ingress-nginx"
-  # this is necessary on k3s only
-  external_ips = local.ext_ips
-}
-
-# module "kong_ingress" {
-#   source = "../modules/kong-ingress"
-# }
-
-# module "kong_mesh" {
-#   source = "../../modules/kong-mesh"
-# }
-
-module "jenkins" {
-  source                      = "../modules/jenkins"
-  agent_container_repository  = "boomb0x/myagent"
-  agent_container_tag         = "0.0.3"
-  aws_dev_deployer_access_key = sensitive(data.aws_ssm_parameter.aws_dev_access_key.value)
-  aws_dev_deployer_secret_key = sensitive(data.aws_ssm_parameter.aws_dev_secret_key.value)
-  docker_hub_password         = sensitive(data.aws_ssm_parameter.docker_password.value)
-  docker_hub_username         = data.aws_ssm_parameter.docker_username.value
-  domain                      = var.domain
-  ingress_name                = var.ingress
-  jenkins_github_token        = data.aws_ssm_parameter.jenkins_github_token.value
-  storage_class_name          = "hive-ship-sc" # this is needed for k3s deployment
-  depends_on                  = [module.cert_manager]
-}
-
 module "kube_prom_stack" {
   source       = "../modules/kube-prom-stack"
   ingress_name = var.ingress
   is_cloud     = false
-  depends_on   = [module.cert_manager]
 }
-
-## k3s already has this baked in
-## do not deploy on k3s
-# module "metrics_server" {
-#   source = "../../modules/metrics-server"
-#     is_cloud = false
-# }
 
 module "postgresql_db_01" {
   source       = "../modules/postgresql"
   domain       = var.domain
   ingress_name = var.ingress
-  depends_on   = [module.cert_manager]
 }
 
 # module "eck" {
@@ -107,7 +52,7 @@ module "postgresql_db_01" {
 #     name = "my-app-ns"
 #   }
 # }
-#
+
 # resource "helm_release" "my_app" {
 #   chart            = "../../../charts/my-helm-chart"
 #   create_namespace = false
@@ -122,10 +67,4 @@ module "postgresql_db_01" {
 #       }
 #     })
 #   ]
-# }
-
-# module "vault" {
-#   source       = "../modules/vault"
-#   ingress_name = var.ingress
-#   depends_on   = [module.cert_manager]
 # }
