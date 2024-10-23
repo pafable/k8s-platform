@@ -14,6 +14,7 @@ RUN apt update \
       groff \
       jq \
       less \
+      make \
       python3 \
       unzip \
       wget
