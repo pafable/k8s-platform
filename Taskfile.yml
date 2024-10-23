@@ -30,6 +30,7 @@ env:
   # Proxmox dirs
   PROXMOX_K3S_INFRA_DIR: terraform/proxmox/k3s-infra
   PROXMOX_PACKER_ORACLE_DIR: packer/proxmox/oracle
+  PROXMOX_PACKER_RH_DIR: packer/proxmox/rh
   PROXMOX_PACKER_ROCKY_DIR: packer/proxmox/rocky
   PROXMOX_DNS_DIR: terraform/proxmox/dns
 
@@ -536,23 +537,23 @@ tasks:
 
   packer-ol-build:
     desc: Build Oracle linux image
-    dir: '{{ .PROXMOX_PACKER_ORACLE_DIR }}'
+    dir: '{{ .PROXMOX_PACKER_RH_DIR }}'
     deps:
       - task: fmt
     cmds:
       - packer init .
-      - packer validate -var-file=vars.pkrvars.hcl .
-      - packer build -var-file=vars.pkrvars.hcl .
+      - packer validate -var-file=orc-vars.pkrvars.hcl .
+      - packer build -var-file=orc-vars.pkrvars.hcl .
 
   packer-rl-build:
     desc: Build Rocky linux image
-    dir: '{{ .PROXMOX_PACKER_ROCKY_DIR }}'
+    dir: '{{ .PROXMOX_PACKER_RH_DIR }}'
     deps:
       - task: fmt
     cmds:
       - packer init .
-      - packer validate -var-file=vars.pkrvars.hcl .
-      - packer build -var-file=vars.pkrvars.hcl .
+      - packer validate -var-file=roc-vars.pkrvars.hcl .
+      - packer build -var-file=roc-vars.pkrvars.hcl .
 
   proxmox-dns-init:
     dir: '{{ .PROXMOX_DNS_DIR }}'

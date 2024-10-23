@@ -51,7 +51,7 @@ source "proxmox-iso" "golden-image" {
 }
 
 build {
-  name    = "builder"
+  name = "builder"
   sources = [
     "proxmox-iso.golden-image"
   ]
