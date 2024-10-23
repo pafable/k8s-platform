@@ -16,7 +16,7 @@ Current list of images being created.
 - Add ISOs into your Proxmox server.
 
 ## Create a Vars File
-Create a `roc-vars.pkr.hcl` for Rocky Linux and `orc-vars.pkr.hcl` for Oracle Linux. File and write in entries for proxmox user and password and ssh user and pass if required.
+Create a `roc-vars.pkr.hcl` for Rocky Linux and `orc-vars.pkr.hcl` for Oracle Linux in the rh (Red Hat based distros) folder. File and write in entries for proxmox user and password and ssh user and pass if required.
 
 example vars.pkr.hcl
 ```

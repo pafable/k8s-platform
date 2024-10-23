@@ -29,9 +29,7 @@ env:
 
   # Proxmox dirs
   PROXMOX_K3S_INFRA_DIR: terraform/proxmox/k3s-infra
-  PROXMOX_PACKER_ORACLE_DIR: packer/proxmox/oracle
   PROXMOX_PACKER_RH_DIR: packer/proxmox/rh
-  PROXMOX_PACKER_ROCKY_DIR: packer/proxmox/rocky
   PROXMOX_DNS_DIR: terraform/proxmox/dns
 
   TF_WORKSPACE: dev # sets the terraform workspace
