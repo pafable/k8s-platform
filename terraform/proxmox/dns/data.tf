@@ -21,7 +21,7 @@ data "aws_ssm_parameter" "kraken_ip" {
   name     = "/proxmox/node/kraken/ipv4"
 }
 
-data "aws_ssm_parameter" "kraken_ip" {
+data "aws_ssm_parameter" "leviathan_ip" {
   provider = aws.parameters
   name     = "/proxmox/node/leviathan/ipv4"
 }

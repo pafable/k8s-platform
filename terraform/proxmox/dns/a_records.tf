@@ -4,13 +4,16 @@ locals {
 
   fleet_domains = toset([
     {
-      behemoth = { ipv4 = data.aws_ssm_parameter.behemoth_ip.value }
+      ipv4 = nonsensitive(data.aws_ssm_parameter.behemoth_ip.value)
+      name = "behemoth"
     },
     {
-      kraken = { ipv4 = data.aws_ssm_parameter.kraken_ip.value }
+      ipv4 = nonsensitive(data.aws_ssm_parameter.kraken_ip.value)
+      name = "kraken"
     },
     {
-      leviathan = { ipv4 = data.aws_ssm_parameter.leviathan_ip.value }
+      ipv4 = nonsensitive(data.aws_ssm_parameter.leviathan_ip.value)
+      name = "leviathan"
     }
   ])
 
@@ -25,15 +28,17 @@ locals {
 }
 
 # fleet domains
-resource "dns_a_record_set" "behemoth" {
-  name = "behemoth"
-  zone = local.fleet_domain
+resource "dns_a_record_set" "fleet_domains" {
+  for_each = {
+    for v in local.fleet_domains : v.name => {
+      ip = v.ipv4
+    }
+  }
 
-  addresses = [
-    data.aws_ssm_parameter.behemoth_ip.value
-  ]
-
-  ttl = 300
+  addresses = [each.value.ip]
+  name      = each.key
+  ttl       = 300
+  zone      = local.fleet_domain
 }
 
 resource "dns_a_record_set" "hive" {
@@ -42,18 +47,8 @@ resource "dns_a_record_set" "hive" {
 
   addresses = [
     data.aws_ssm_parameter.behemoth_ip.value,
-    data.aws_ssm_parameter.kraken_ip.value
-  ]
-
-  ttl = 300
-}
-
-resource "dns_a_record_set" "kraken" {
-  name = "kraken"
-  zone = local.fleet_domain
-
-  addresses = [
-    data.aws_ssm_parameter.kraken_ip.value
+    data.aws_ssm_parameter.kraken_ip.value,
+    data.aws_ssm_parameter.leviathan_ip.value
   ]
 
   ttl = 300
