@@ -12,7 +12,7 @@ source "proxmox-iso" "golden-image" {
   boot_wait                = "3s"
   cores                    = var.cores
   cpu_type                 = "host"
-  http_directory           = "../kickstarts/http/oracle"
+  http_directory           = var.http_directory
   insecure_skip_tls_verify = true
   iso_file                 = "local:iso/${var.iso_name}"
   iso_storage_pool         = "local"
@@ -26,7 +26,7 @@ source "proxmox-iso" "golden-image" {
   ssh_timeout              = "30m"
   ssh_username             = var.ssh_username
   tags                     = var.template_name
-  template_description     = "Base template for Oracle Linux 9.4"
+  template_description     = var.template_description
   template_name            = var.template_name
   unmount_iso              = true
   username                 = var.proxmox_username

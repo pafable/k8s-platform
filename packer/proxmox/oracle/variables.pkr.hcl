@@ -10,6 +10,11 @@ variable "disk_size" {
   default     = "32G"
 }
 
+variable "http_directory" {
+  description = "Directory for ks server"
+  type        = string
+}
+
 variable "iso_name" {
   description = "ISO name"
   type        = string
@@ -52,6 +57,11 @@ variable "ssh_password" {
 variable "ssh_username" {
   description = "ssh username"
   sensitive   = true
+  type        = string
+}
+
+variable "template_description" {
+  description = "Template description"
   type        = string
 }
 
