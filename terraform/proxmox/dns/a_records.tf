@@ -4,13 +4,13 @@ locals {
 
   fleet_domains = toset([
     {
-      ipv4 = data.aws_ssm_parameter.behemoth_ip.value
+      behemoth = { ipv4 = data.aws_ssm_parameter.behemoth_ip.value }
     },
     {
-      ipv4 = data.aws_ssm_parameter.kraken_ip.value
+      kraken = { ipv4 = data.aws_ssm_parameter.kraken_ip.value }
     },
     {
-      ipv4 = data.aws_ssm_parameter.leviathan_ip.value
+      leviathan = { ipv4 = data.aws_ssm_parameter.leviathan_ip.value }
     }
   ])
 
