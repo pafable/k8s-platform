@@ -2,6 +2,18 @@ locals {
   fleet_domain = "fleet.pafable.com." # DO NOT FORGET TO INCLUDE "." AT THE END FOR ALL ZONES!
   home_domain  = "home.pafable.com."  # DO NOT FORGET TO INCLUDE "." AT THE END FOR ALL ZONES!
 
+  fleet_domains = toset([
+    {
+      ipv4 = data.aws_ssm_parameter.behemoth_ip.value
+    },
+    {
+      ipv4 = data.aws_ssm_parameter.kraken_ip.value
+    },
+    {
+      ipv4 = data.aws_ssm_parameter.leviathan_ip.value
+    }
+  ])
+
   home_k3s_apps = toset([
     "argocd",
     "grafana",
