@@ -4,15 +4,21 @@ locals {
 
   fleet_domains = toset([
     {
-      ipv4 = nonsensitive(data.aws_ssm_parameter.behemoth_ip.value)
+      ipv4 = [
+        nonsensitive(data.aws_ssm_parameter.behemoth_ip.value)
+      ]
       name = "behemoth"
     },
     {
-      ipv4 = nonsensitive(data.aws_ssm_parameter.kraken_ip.value)
+      ipv4 = [
+        nonsensitive(data.aws_ssm_parameter.kraken_ip.value)
+      ]
       name = "kraken"
     },
     {
-      ipv4 = nonsensitive(data.aws_ssm_parameter.leviathan_ip.value)
+      ipv4 = [
+        nonsensitive(data.aws_ssm_parameter.leviathan_ip.value)
+      ]
       name = "leviathan"
     }
   ])
@@ -31,11 +37,11 @@ locals {
 resource "dns_a_record_set" "fleet_domains" {
   for_each = {
     for v in local.fleet_domains : v.name => {
-      ip = v.ipv4
+      ipv4 = v.ipv4
     }
   }
 
-  addresses = [each.value.ip]
+  addresses = each.value.ipv4
   name      = each.key
   ttl       = 300
   zone      = local.fleet_domain
