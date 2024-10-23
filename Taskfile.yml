@@ -5,6 +5,11 @@ dotenv: ['.env']
 vars:
   PROXMOX_PACKER_RH_DIR: packer/proxmox/rh
 
+  # Agent tag
+  JENKINS_AGENT_IMAGE_DIR: dockerfiles/jenkins-agents
+  JENKINS_IMAGE: myagent
+  CONTAINER_REGISTRY: boomb0x
+
 env:
   AWS_REGION: us-east-1
   DNS_ZONE: YOUR-DNS-ZONE
@@ -35,11 +40,6 @@ env:
   PROXMOX_DNS_DIR: terraform/proxmox/dns
 
   TF_WORKSPACE: dev # sets the terraform workspace
-
-  # Agent tag
-  JENKINS_AGENT_IMAGE_DIR: dockerfiles/jenkins-agents
-  JENKINS_IMAGE: myagent
-  CONTAINER_REGISTRY: boomb0x
 
   # Used for variables in Terraform
   BRANCH:
