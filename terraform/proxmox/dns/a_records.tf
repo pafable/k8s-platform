@@ -2,6 +2,21 @@ locals {
   fleet_domain = "fleet.pafable.com." # DO NOT FORGET TO INCLUDE "." AT THE END FOR ALL ZONES!
   home_domain  = "home.pafable.com."  # DO NOT FORGET TO INCLUDE "." AT THE END FOR ALL ZONES!
 
+  fleet_domains = toset([
+    {
+      ipv4 = nonsensitive(data.aws_ssm_parameter.behemoth_ip.value)
+      name = "behemoth"
+    },
+    {
+      ipv4 = nonsensitive(data.aws_ssm_parameter.kraken_ip.value)
+      name = "kraken"
+    },
+    {
+      ipv4 = nonsensitive(data.aws_ssm_parameter.leviathan_ip.value)
+      name = "leviathan"
+    }
+  ])
+
   home_k3s_apps = toset([
     "argocd",
     "grafana",
@@ -13,15 +28,17 @@ locals {
 }
 
 # fleet domains
-resource "dns_a_record_set" "behemoth" {
-  name = "behemoth"
-  zone = local.fleet_domain
+resource "dns_a_record_set" "fleet_domains" {
+  for_each = {
+    for v in local.fleet_domains : v.name => {
+      ip = v.ipv4
+    }
+  }
 
-  addresses = [
-    data.aws_ssm_parameter.behemoth_ip.value
-  ]
-
-  ttl = 300
+  addresses = [each.value.ip]
+  name      = each.key
+  ttl       = 300
+  zone      = local.fleet_domain
 }
 
 resource "dns_a_record_set" "hive" {
@@ -30,18 +47,8 @@ resource "dns_a_record_set" "hive" {
 
   addresses = [
     data.aws_ssm_parameter.behemoth_ip.value,
-    data.aws_ssm_parameter.kraken_ip.value
-  ]
-
-  ttl = 300
-}
-
-resource "dns_a_record_set" "kraken" {
-  name = "kraken"
-  zone = local.fleet_domain
-
-  addresses = [
-    data.aws_ssm_parameter.kraken_ip.value
+    data.aws_ssm_parameter.kraken_ip.value,
+    data.aws_ssm_parameter.leviathan_ip.value
   ]
 
   ttl = 300
