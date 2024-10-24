@@ -4,7 +4,7 @@ final String platform_repo = 'https://github.com/pafable/k8s-platform.git'
 
 final def jobsToScripts = [
     'agent-builder': 'cicd/agent-builder/Jenkinsfile',
-    'k8s-platform': 'cicd/platform/Jenkinsfile'
+    'apps-deployer': 'cicd/platform/Jenkinsfile'
 ]
 
 pipeline {
@@ -13,6 +13,7 @@ pipeline {
     }
 
     options {
+        ansiColor('gnome-terminal')
         timeout(
             time: 5,
             unit: 'MINUTES'

@@ -16,8 +16,11 @@ pipeline {
     }
 
     options {
-        ansiColor('xterm')
-        timeout(time: 5)
+        ansiColor('gnome-terminal')
+        timeout(
+            time: 5,
+            unit: 'MINUTES'
+        )
     }
 
     parameters {
