@@ -33,7 +33,10 @@ locals {
           privileged = true
 
           resources = {
-            limits = {}
+            limits = {
+              cpu    = ""
+              memory = ""
+            }
             requests = {
               cpu    = "1024m"
               memory = "1024Mi"

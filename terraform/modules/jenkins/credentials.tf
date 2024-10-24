@@ -22,6 +22,7 @@ locals {
         },
         {
           file = {
+            description = "Kubeconfig for k3s"
             fileName    = "k3s-config"
             id          = "hive-fleet-k3s-config"
             scope       = "GLOBAL"
