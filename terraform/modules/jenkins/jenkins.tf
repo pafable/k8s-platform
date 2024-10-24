@@ -14,7 +14,6 @@ locals {
       {
         agent = {
           alwaysPullImage  = true
-          directConnection = true
 
           envVars = [
             {
