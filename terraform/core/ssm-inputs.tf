@@ -1,4 +1,4 @@
-data "aws_ssm_parameter" "docker_username" {
+data "aws_ssm_parameter" "docker_hub_username" {
   provider = aws.parameters
   name     = "/docker/hub/username"
 }
