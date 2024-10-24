@@ -45,7 +45,7 @@ pipeline {
         stage('platforming') {
             steps {
                 script {
-                    withKubeConfig([credentialsId: 'hive-fleet-k3s-config', serverUrl: 'https://192.168.109.188:6443']) {
+                    withKubeConfig([credentialsId: 'hive-fleet-k3s-config']) {
                         if (params.ACTIONS == 'create') {
                             sh """
                                 kubectl version
