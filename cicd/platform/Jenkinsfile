@@ -55,6 +55,7 @@ pipeline {
                                 ls -ahl /tmp
                                 ls -ahl /etc
                                 echo $KUBECONFIG
+                                cat $KUBECONFIG
                                 task apps-${params.ACTIONS}
                             """
                         } else {
