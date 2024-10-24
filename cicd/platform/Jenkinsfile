@@ -17,7 +17,7 @@ pipeline {
 
     options {
         ansiColor('xterm')
-        timeout(time: 8)
+        timeout(time: 5)
     }
 
     parameters {
