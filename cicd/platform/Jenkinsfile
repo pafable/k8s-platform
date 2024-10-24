@@ -11,12 +11,15 @@ pipeline {
       label "${agent_label}"
     }
 
+    options {
+        timeout(time: 30)
+    }
+
     parameters {
         choice choices: task_names,
         description: 'Create or destroy actions',
         name: 'ACTIONS'
     }
-
 
     tools {
         terraform "${tf_version}"

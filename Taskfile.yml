@@ -15,11 +15,12 @@ vars:
   JENKINS_AGENT_TAG: 0.0.4
   CONTAINER_REGISTRY: boomb0x
 
-env:
-  AWS_REGION: us-east-1
-  DNS_ZONE: YOUR-DNS-ZONE
-  EKS_CLUSTER_NAME: k8s-platform
-  ELB_DNS_NAME: elb-dns-name
+  # Terraform Directories for cluster apps
+  TF_CORE_DIR: terraform/core
+  TF_APPS_DIR: terraform/apps
+
+  # Terraform modules
+  TF_MODULES_DIR: terraform/modules
 
   # Terraform Backend Buckets
   TF_BACKEND_BUCKET_DEV: pafable-tfstates-100
@@ -33,20 +34,20 @@ env:
   TF_KUBE_SUPP_DIR: terraform/aws/kube-support
   TF_VPC_AWS_DIR: terraform/aws/vpc
 
-  # Terraform Directories for cluster apps
-  TF_CORE_DIR: terraform/core
-  TF_APPS_DIR: terraform/apps
-
-  # Terraform modules
-  TF_MODULES_DIR: terraform/modules
-
-  TF_WORKSPACE: dev # sets the terraform workspace
+  DNS_ZONE: YOUR-DNS-ZONE
+  EKS_CLUSTER_NAME: k8s-platform
+  ELB_DNS_NAME: elb-dns-name
 
   # Used for variables in Terraform
   BRANCH:
     sh: git rev-parse --abbrev-ref HEAD
   COMMIT:
     sh: git rev-parse HEAD
+
+env:
+  AWS_REGION: us-east-1
+
+  TF_WORKSPACE: dev # sets the terraform workspace
 
   # if this is set to k3s-config
   # it will be deployed to k3s cluster
@@ -487,14 +488,14 @@ tasks:
     cmds:
       - trivy config . --severity HIGH,CRITICAL
 
-  build-jagent-image:
+  jagent-image-create:
     desc: Build jenkins agent image
     dir: '{{ .JENKINS_AGENT_IMAGE_DIR }}'
     cmds:
       - docker build -t {{ .CONTAINER_REGISTRY }}/{{ .JENKINS_IMAGE }}:{{ .JENKINS_AGENT_TAG }} .
       - docker images | grep {{ .CONTAINER_REGISTRY }}/{{ .JENKINS_IMAGE }}
 
-  push-jagent-image:
+  jagent-image-push:
     desc: Push jenkins docker image to a container registry
     cmds:
       - docker push {{ .CONTAINER_REGISTRY }}/{{ .JENKINS_IMAGE }}:{{ .JENKINS_AGENT_TAG }}
