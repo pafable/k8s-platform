@@ -49,7 +49,8 @@ pipeline {
                     withKubeConfig([credentialsId: 'hive-fleet-k3s-config']) {
                         if (params.ACTIONS == 'create') {
                             sh """
-                                cat $KUBECONFIG > ~/.kube/k3s-config
+                                echo $KUBECONFIG
+                                cat $KUBECONFIG
                                 task apps-${params.ACTIONS}
                             """
                         } else {
