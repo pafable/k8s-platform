@@ -44,15 +44,17 @@ pipeline {
         stage('platforming') {
             steps {
                 script {
-                    if (params.ACTIONS == 'create') {
-                        sh """
-                            kubectl version
-                            /home/jenkins/task apps-${params.ACTIONS}
-                        """
-                    } else {
-                        sh """
-                            /home/jenkins/task apps-${params.ACTIONS}
-                        """
+                    withKubeConfig(credentialsId: 'hive-fleet-k3s-config') {
+                        if (params.ACTIONS == 'create') {
+                            sh """
+                                kubectl version
+                                /home/jenkins/task apps-${params.ACTIONS}
+                            """
+                        } else {
+                            sh """
+                                /home/jenkins/task apps-${params.ACTIONS}
+                            """
+                        }
                     }
                 }
             }
