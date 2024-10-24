@@ -1,0 +1,60 @@
+final String agent_label = 'jenkins-jenkins-agent'
+final String aws_creds = 'aws-dev-deployer-creds'
+final String tf_version = 'tf-1-9-8'
+
+final def task_names = [
+    'create',
+    'destroy'
+]
+
+pipeline {
+    agent {
+      label agent_label
+    }
+
+    environment {
+        UNUSED = credentials(aws_creds)
+    }
+
+    options {
+        ansiColor('xterm')
+        timeout(
+            time: 5,
+            unit: 'MINUTES'
+        )
+    }
+
+    tools {
+        terraform "${tf_version}"
+    }
+
+    stages{
+        stage('confirmation') {
+            input {
+                message "Continue with deployment?"
+                ok "Gogogog1!1!"
+            }
+            steps {
+                sh """
+                    echo this will ${params.ACTIONS} the environment
+                """
+            }
+        }
+
+        stage('updating dns') {
+            steps {
+                script {
+                    if (params.ACTIONS == 'create') {
+                        sh """
+                            task apps-${params.ACTIONS}
+                        """
+                    } else {
+                        sh """
+                            task apps-${params.ACTIONS}
+                        """
+                    }
+                }
+            }
+        }
+    }
+}
