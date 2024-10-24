@@ -27,7 +27,7 @@ module "jenkins" {
   domain                      = var.domain
   ingress_name                = var.ingress
   jenkins_github_token        = data.aws_ssm_parameter.jenkins_github_token.value
-  k3s_config_file             = data.aws_ssm_parameter.k3s_kubeconfig_file.value
+  k3s_config_file             = sensitive(data.aws_ssm_parameter.k3s_kubeconfig_file.value)
   storage_class_name          = "hive-ship-sc" # this is needed for k3s deployment
   depends_on                  = [module.cert_manager]
 }
