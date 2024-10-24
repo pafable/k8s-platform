@@ -14,14 +14,6 @@ vars:
   JENKINS_AGENT_TAG: 0.0.4
   CONTAINER_REGISTRY: boomb0x
 
-  # Terraform Backend Buckets
-  TF_BACKEND_BUCKET_DEV: pafable-tfstates-100
-  TF_BACKEND_BUCKET_PROD: YOUR-TF-BACKEND-BUCKET-PROD
-
-  # Terraform Directories for cluster apps
-  TF_CORE_DIR: terraform/core
-  TF_APPS_DIR: terraform/apps
-
   # Terraform modules
   TF_MODULES_DIR: terraform/modules
 
@@ -47,6 +39,14 @@ env:
   AWS_REGION: us-east-1
 
   TF_WORKSPACE: dev # sets the terraform workspace
+
+  # Terraform Backend Buckets
+  TF_BACKEND_BUCKET_DEV: pafable-tfstates-100
+  TF_BACKEND_BUCKET_PROD: YOUR-TF-BACKEND-BUCKET-PROD
+
+  # Terraform Directories for cluster apps
+  TF_CORE_DIR: terraform/core
+  TF_APPS_DIR: terraform/apps
 
   # if this is set to k3s-config
   # it will be deployed to k3s cluster
@@ -600,7 +600,6 @@ tasks:
       - task: fmt
     desc: Initialize Core terraform
     cmds:
-      - echo ${TF_BACKEND_BUCKET_DEV}
       - echo "+++++ Initializing Core +++++"
       - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${TF_CORE_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure -no-color
       - task: tf-validate
