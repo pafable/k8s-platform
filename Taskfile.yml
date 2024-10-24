@@ -12,6 +12,7 @@ vars:
   # Agent tag
   JENKINS_AGENT_IMAGE_DIR: dockerfiles/jenkins-agents
   JENKINS_IMAGE: myagent
+  JENKINS_AGENT_TAG: 0.0.4
   CONTAINER_REGISTRY: boomb0x
 
 env:

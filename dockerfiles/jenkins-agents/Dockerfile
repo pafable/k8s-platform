@@ -20,7 +20,7 @@ RUN apt update \
       wget
 
 # Installs docker
-RUN curl -fsSL https://get.docker.com | sh
+#RUN curl -fsSL https://get.docker.com | sh
 
 # Installs kubectl
 RUN    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
@@ -31,6 +31,6 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     && unzip awscliv2.zip \
     && sh ./aws/install
 
-RUN usermod -aG docker jenkins
+RUN #usermod -aG docker jenkins
 
-USER root
+#USER jenkins

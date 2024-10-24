@@ -20,11 +20,11 @@ locals {
             }
           ]
 
-          # image = {
-          #   # My custom image does not work on k3s!
-          #   repository = var.agent_container_repository
-          #   tag        = var.agent_container_tag
-          # }
+          image = {
+            # My custom image does not work on k3s!
+            repository = var.agent_container_repository
+            tag        = var.agent_container_tag
+          }
 
           podName    = "${local.app_name}-agent"
           privileged = true
