@@ -46,6 +46,7 @@ pipeline {
                 script {
                     if (params.ACTIONS == 'create') {
                         sh '''
+                            ls -ahl ~
                             ~/task apps-${params.ACTIONS}
                         '''
                     } else {
