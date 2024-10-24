@@ -66,8 +66,7 @@ pipeline {
                                         }
                                     }
                                 """
-                            } else if
-                            {
+                            } else if (job == 'dns-updater') {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
                                         description(${jenkins_desc})
@@ -91,9 +90,7 @@ pipeline {
                                         }
                                     }
                                 """
-                            }
-                            else
-                            {
+                            } else {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
                                         description(${jenkins_desc})
