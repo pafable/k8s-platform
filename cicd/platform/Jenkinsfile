@@ -37,8 +37,7 @@ pipeline {
             }
             steps {
                 sh """
-                cat /etc/os-release
-                echo this will ${params.ACTIONS} the environment
+                    echo this will ${params.ACTIONS} the environment
                 """
             }
         }
@@ -50,6 +49,7 @@ pipeline {
                         if (params.ACTIONS == 'create') {
                             sh """
                                 kubectl version
+                                ls -ahl ~/.kube
                                 task apps-${params.ACTIONS}
                             """
                         } else {
