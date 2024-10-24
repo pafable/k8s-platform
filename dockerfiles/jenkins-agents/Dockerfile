@@ -1,4 +1,4 @@
-ARG VERSION=3261.v9c670a_4748a_9-1
+ARG VERSION=3273.v4cfe589b_fd83-1
 FROM jenkins/inbound-agent:$VERSION
 
 USER root
@@ -19,9 +19,6 @@ RUN apt update \
       unzip \
       wget
 
-# Installs docker
-#RUN curl -fsSL https://get.docker.com | sh
-
 # Installs kubectl
 RUN    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
        && install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
@@ -31,6 +28,4 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     && unzip awscliv2.zip \
     && sh ./aws/install
 
-RUN #usermod -aG docker jenkins
-
-#USER jenkins
+USER jenkins
