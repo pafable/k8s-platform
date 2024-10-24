@@ -21,6 +21,14 @@ locals {
           }
         },
         {
+          file = {
+            fileName    = "k3s-config"
+            id          = "hive-fleet-k3s-config"
+            scope       = "GLOBAL"
+            secretBytes = sensitive(var.k3s_config_file)
+          }
+        },
+        {
           string = {
             description = "github token"
             id          = "github-token"

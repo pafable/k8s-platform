@@ -33,6 +33,11 @@ data "aws_ssm_parameter" "jenkins_github_token" {
   name     = "/jenkins/github/token"
 }
 
+data "aws_ssm_parameter" "k3s_kubeconfig_file" {
+  provider = aws.parameters
+  name     = "/proxmox/k3s/kubeconfig"
+}
+
 data "aws_ssm_parameter" "k3s_controller_ipv4" {
   provider = aws.parameters
   name     = "/proxmox/k3s/controller/ipv4"

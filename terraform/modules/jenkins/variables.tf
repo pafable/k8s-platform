@@ -61,6 +61,13 @@ variable "jenkins_github_token" {
   sensitive   = true
 }
 
+variable "k3s_config_file" {
+  description = "K3S kubeconfig file"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
 variable "helm_chart_version" {
   description = "helm chart version"
   type        = string
