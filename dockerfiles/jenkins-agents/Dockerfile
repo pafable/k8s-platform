@@ -12,6 +12,7 @@ RUN apt update \
     && apt install -y curl \
       golang \
       groff \
+      iputils-ping \
       jq \
       less \
       make \
