@@ -28,6 +28,12 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     && unzip awscliv2.zip \
     && sh ./aws/install
 
+# Installs packer
+RUN curl -o /tmp/packer_1.11.2_linux_amd64.zip "https://releases.hashicorp.com/packer/1.11.2/packer_1.11.2_linux_amd64.zip" \
+    && unzip /tmp/packer_1.11.2_linux_amd64.zip -d /tmp \
+    && mv /tmp/packer /usr/local/bin \
+    && rm -f /tmp/packer* LICENSE.txt
+
 USER jenkins
 
 ENTRYPOINT ["/usr/local/bin/jenkins-agent"]

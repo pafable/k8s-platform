@@ -11,6 +11,10 @@ pipeline {
       label "${agent_label}"
     }
 
+    environment {
+        UNUSED = credentials('aws-dev-deployer-creds')
+    }
+
     options {
         timeout(time: 30)
     }
