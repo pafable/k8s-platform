@@ -46,6 +46,7 @@ pipeline {
                 script {
                     if (params.ACTIONS == 'create') {
                         sh """
+                            kubectl version
                             /home/jenkins/task apps-${params.ACTIONS}
                         """
                     } else {
