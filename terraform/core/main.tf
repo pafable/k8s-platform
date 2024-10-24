@@ -19,14 +19,15 @@ module "ingress_nginx" {
 module "jenkins" {
   source                      = "../modules/jenkins"
   agent_container_repository  = "boomb0x/myagent"
-  agent_container_tag         = "0.0.3"
+  agent_container_tag         = "0.0.4"
   aws_dev_deployer_access_key = sensitive(data.aws_ssm_parameter.aws_dev_access_key.value)
   aws_dev_deployer_secret_key = sensitive(data.aws_ssm_parameter.aws_dev_secret_key.value)
-  docker_hub_password         = sensitive(data.aws_ssm_parameter.docker_password.value)
-  docker_hub_username         = data.aws_ssm_parameter.docker_username.value
+  docker_hub_password         = sensitive(data.aws_ssm_parameter.docker_hub_password.value)
+  docker_hub_username         = sensitive(data.aws_ssm_parameter.docker_hub_username.value)
   domain                      = var.domain
   ingress_name                = var.ingress
   jenkins_github_token        = data.aws_ssm_parameter.jenkins_github_token.value
+  k3s_config_file             = sensitive(data.aws_ssm_parameter.k3s_kubeconfig_file.value)
   storage_class_name          = "hive-ship-sc" # this is needed for k3s deployment
   depends_on                  = [module.cert_manager]
 }

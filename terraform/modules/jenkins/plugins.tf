@@ -12,6 +12,7 @@ locals {
     "javax-mail-api",
     "job-dsl",
     "kubernetes",
+    "kubernetes-cli",
     "kubernetes-credentials-provider",
     "login-theme",
     "matrix-auth",
@@ -26,6 +27,6 @@ locals {
     "timestamper",
     "trilead-api",
     "workflow-aggregator",
-    "ws-cleanup",
+    "ws-cleanup"
   ]
 }

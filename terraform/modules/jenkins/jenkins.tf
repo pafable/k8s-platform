@@ -13,6 +13,8 @@ locals {
     yamlencode(
       {
         agent = {
+          alwaysPullImage = true
+
           envVars = [
             {
               name  = "TZ"
@@ -20,23 +22,34 @@ locals {
             }
           ]
 
-          # image = {
-          ## My custom image does not work on k3s!
-          #   repository = var.agent_container_repository
-          #   tag        = var.agent_container_tag
-          # }
+          image = {
+            # My custom image does not work on k3s!
+            repository = var.agent_container_repository
+            tag        = var.agent_container_tag
+          }
 
           podName    = "${local.app_name}-agent"
           privileged = true
 
-          volumes = [
-            {
-              # needed by docker because docker.sock is in this dir on the host node
-              type      = "hostPathVolume"
-              hostPath  = "/var/run"
-              mountPath = "/var/run"
+          resources = {
+            limits = {
+              cpu    = ""
+              memory = ""
             }
-          ]
+            requests = {
+              cpu    = "1024m"
+              memory = "1024Mi"
+            }
+          }
+
+          # volumes = [
+          #   {
+          #     # needed by docker because docker.sock is in this dir on the host node
+          #     type      = "hostPathVolume"
+          #     hostPath  = "/var/run"
+          #     mountPath = "/var/run"
+          #   }
+          # ]
         }
 
         controller = {
