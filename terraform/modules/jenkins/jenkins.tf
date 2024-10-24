@@ -13,6 +13,8 @@ locals {
     yamlencode(
       {
         agent = {
+          alwaysPullImage = true
+
           envVars = [
             {
               name  = "TZ"

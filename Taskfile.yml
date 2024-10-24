@@ -8,12 +8,15 @@ vars:
   PROXMOX_K3S_INFRA_DIR: terraform/proxmox/k3s-infra
   PROXMOX_DNS_DIR: terraform/proxmox/dns
 
-
   # Agent tag
   JENKINS_AGENT_IMAGE_DIR: dockerfiles/jenkins-agents
   JENKINS_IMAGE: myagent
   JENKINS_AGENT_TAG: 0.0.4
   CONTAINER_REGISTRY: boomb0x
+
+  # Terraform Backend Buckets
+  TF_BACKEND_BUCKET_DEV: pafable-tfstates-100
+  TF_BACKEND_BUCKET_PROD: YOUR-TF-BACKEND-BUCKET-PROD
 
   # Terraform Directories for cluster apps
   TF_CORE_DIR: terraform/core
@@ -21,10 +24,6 @@ vars:
 
   # Terraform modules
   TF_MODULES_DIR: terraform/modules
-
-  # Terraform Backend Buckets
-  TF_BACKEND_BUCKET_DEV: pafable-tfstates-100
-  TF_BACKEND_BUCKET_PROD: YOUR-TF-BACKEND-BUCKET-PROD
 
   # Terraform Directories for AWS
   TF_ATLANTIS_DIR: terraform/aws/atlantis
@@ -601,7 +600,8 @@ tasks:
       - task: fmt
     desc: Initialize Core terraform
     cmds:
-      - echo "+++++ Initializing Kube Apps +++++"
+      - echo ${TF_BACKEND_BUCKET_DEV}
+      - echo "+++++ Initializing Core +++++"
       - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${TF_CORE_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure -no-color
       - task: tf-validate
         vars: { DIR: '{{ .TF_CORE_DIR }}' }
