@@ -50,6 +50,7 @@ pipeline {
                         sh """
                             mkdir ~/.kube
                             cp $KUBECONFIG ~/.kube/k3s-config
+                            cat ~/.kube/k3s-config
                         """
 
                         if (params.ACTIONS == 'create') {
