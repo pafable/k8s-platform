@@ -51,6 +51,7 @@ pipeline {
                             sh """
                                 echo $KUBECONFIG
                                 ls -ahl ~
+                                mkdir ~/.kube
                                 cp $KUBECONFIG ~/.kube/k3s-config
                                 task apps-${params.ACTIONS}
                             """
