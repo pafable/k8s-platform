@@ -32,7 +32,10 @@ pipeline {
                 ok "Gogogog1!1!"
             }
             steps {
-                sh "echo this will ${params.ACTIONS} the environment"
+                sh """
+                cat /etc/os-release
+                echo this will ${params.ACTIONS} the environment
+                """
             }
         }
 
