@@ -69,7 +69,7 @@ pipeline {
                             } else if (job == 'dns-updater') {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
-                                        description(${jenkins_desc})
+                                        description("${jenkins_desc}")
                                         definition {
                                             cpsScm {
                                                 scm {
@@ -93,11 +93,11 @@ pipeline {
                             } else {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
-                                        description(${jenkins_desc})
+                                        description("${jenkins_desc}")
                                         parameters {
                                             stringParam {
-                                                description(${jenkins_param_desc})
-                                                name(${jenkins_param_name})
+                                                description("${jenkins_param_desc}")
+                                                name("${jenkins_param_name}")
                                                 trim(true)
                                             }
                                         }
