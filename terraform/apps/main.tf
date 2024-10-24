@@ -21,11 +21,11 @@ module "kube_prom_stack" {
   is_cloud     = false
 }
 
-# module "postgresql_db_01" {
-#   source       = "../modules/postgresql"
-#   domain       = var.domain
-#   ingress_name = var.ingress
-# }
+module "postgresql_db_01" {
+  source       = "../modules/postgresql"
+  domain       = var.domain
+  ingress_name = var.ingress
+}
 
 # module "eck" {
 #   source = "../../modules/eck"
