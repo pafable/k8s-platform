@@ -36,7 +36,6 @@ pipeline {
         stage('install task') {
             steps {
                 sh '''
-                    make --version
                     sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b ~
                 '''
             }
@@ -46,13 +45,13 @@ pipeline {
             steps {
                 script {
                     if (params.ACTIONS == 'create') {
-                        sh """
-                            task apps-${params.ACTIONS}
-                        """
+                        sh '''
+                            ~/task apps-${params.ACTIONS}
+                        '''
                     } else {
-                        sh """
-                            task apps-${params.ACTIONS}
-                        """
+                        sh '''
+                            ~/task apps-${params.ACTIONS}
+                        '''
                     }
                 }
             }
