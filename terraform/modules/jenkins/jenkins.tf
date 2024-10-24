@@ -32,6 +32,13 @@ locals {
           podName    = "${local.app_name}-agent"
           privileged = true
 
+          resources = {
+            requests = {
+              cpu    = "512m"
+              memory = "512Mi"
+            }
+          }
+
           # volumes = [
           #   {
           #     # needed by docker because docker.sock is in this dir on the host node
