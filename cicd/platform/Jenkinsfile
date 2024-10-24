@@ -51,6 +51,7 @@ pipeline {
                             mkdir ~/.kube
                             cp $KUBECONFIG ~/.kube/k3s-config
                             cat ~/.kube/k3s-config
+                            ping -c3 google.com
                         """
 
                         if (params.ACTIONS == 'create') {
