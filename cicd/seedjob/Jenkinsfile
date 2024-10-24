@@ -1,10 +1,11 @@
 final String agent_label = 'jenkins-jenkins-agent'
-final String platform_branch = 'refs/heads/master'
-final String platform_repo = 'https://github.com/pafable/k8s-platform.git'
 final String apps_desc = 'Apps deployer'
+final String dns_desc = "DNS updater"
 final String jenkins_desc = 'Jenkins agent builder'
 final String jenkins_param_desc = 'Tag for Jenkins agent'
 final String jenkins_param_name = 'JENKINS_AGENT_TAG'
+final String platform_branch = 'refs/heads/master'
+final String platform_repo = 'https://github.com/pafable/k8s-platform.git'
 
 final def jobsToScripts = [
     'agent-builder': 'cicd/agent-builder/Jenkinsfile',
@@ -69,7 +70,17 @@ pipeline {
                             } else if (job == 'dns-updater') {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
-                                        description("${jenkins_desc}")
+                                        description("${dns_desc}")
+                                        parameters {
+                                            choiceParam(
+                                                'ACTIONS',
+                                                [
+                                                    'create',
+                                                    'destroy'
+                                                ],
+                                                'Create or destroy'
+                                            )
+                                        }
                                         definition {
                                             cpsScm {
                                                 scm {
