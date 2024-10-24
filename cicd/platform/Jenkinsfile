@@ -46,14 +46,10 @@ pipeline {
         stage('platforming') {
             steps {
                 script {
-                    withKubeConfig([credentialsId: 'hive-fleet-k3s-config', serverUrl: 'https://192.168.109.188']) {
+                    withKubeConfig([credentialsId: 'hive-fleet-k3s-config']) {
                         sh """
                             mkdir ~/.kube
-                            # cp $KUBECONFIG ~/.kube/k3s-config
                             ln -s $KUBECONFIG ~/.kube/k3s-config
-                            ls -ahl ~/.kube/k3s-config
-                            cat ~/.kube/k3s-config
-                            ping -c3 google.com
                         """
 
                         if (params.ACTIONS == 'create') {
