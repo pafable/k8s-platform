@@ -36,8 +36,9 @@ pipeline {
         stage('install task') {
             steps {
                 sh '''
+                    whoami
                     echo $PATH
-                    sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /bin
+                    sudo sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /bin
                 '''
             }
         }
