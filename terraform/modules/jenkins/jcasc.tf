@@ -144,14 +144,14 @@ locals {
                 ]
               },
               {
-                name = "tf-1-9-2"
+                name = "tf-1-9-8"
                 properties = [
                   {
                     installSource = {
                       installers = [
                         {
                           terraformInstaller = {
-                            id = "1.9.2-linux-amd64"
+                            id = "1.9.8-linux-amd64"
                           }
                         }
                       ]
