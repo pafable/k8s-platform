@@ -35,11 +35,9 @@ pipeline {
 
         stage('install task') {
             steps {
-                script {
-                    sh """
-                        sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
-                    """
-                }
+                sh """
+                    sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
+                """
             }
         }
 
