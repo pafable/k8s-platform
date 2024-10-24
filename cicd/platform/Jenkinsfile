@@ -46,7 +46,7 @@ pipeline {
         stage('platforming') {
             steps {
                 script {
-                    withKubeConfig([credentialsId: 'hive-fleet-k3s-config']) {
+                    withKubeConfig([credentialsId: 'hive-fleet-k3s-config', serverUrl: 'https://192.168.109.188']) {
                         sh """
                             mkdir ~/.kube
                             cp $KUBECONFIG ~/.kube/k3s-config
