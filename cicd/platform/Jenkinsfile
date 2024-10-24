@@ -50,6 +50,7 @@ pipeline {
                         sh """
                             mkdir ~/.kube
                             ln -s $KUBECONFIG ~/.kube/k3s-config
+                            kubectl get all -o wide -A
                         """
 
                         if (params.ACTIONS == 'create') {
