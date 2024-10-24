@@ -38,7 +38,7 @@ vars:
 env:
   AWS_REGION: us-east-1
 
-  TF_LOG: DEBUG
+  TF_LOG: WARN
   TF_WORKSPACE: dev # sets the terraform workspace
 
   # Terraform Backend Buckets
