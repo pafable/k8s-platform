@@ -33,7 +33,7 @@ pipeline {
             }
         }
 
-        stage('install task') {z
+        stage('install task') {
             steps {
                 sh '''
                     echo $PATH
