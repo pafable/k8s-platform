@@ -50,7 +50,10 @@ pipeline {
                         if (params.ACTIONS == 'create') {
                             sh """
                                 kubectl version
+                                ls -ahl ~
                                 ls -ahl ~/.kube
+                                ls -ahl /tmp
+                                ls -ahl /etc
                                 task apps-${params.ACTIONS}
                             """
                         } else {
