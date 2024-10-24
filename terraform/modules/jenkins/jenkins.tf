@@ -13,7 +13,7 @@ locals {
     yamlencode(
       {
         agent = {
-          alwaysPullImage = true
+          alwaysPullImage  = true
           directConnection = true
 
           envVars = [
