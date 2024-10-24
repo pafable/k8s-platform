@@ -16,7 +16,7 @@ pipeline {
     }
 
     options {
-        ansiColor('gnome-terminal')
+        ansiColor('vga')
         timeout(
             time: 5,
             unit: 'MINUTES'
