@@ -47,7 +47,7 @@ pipeline {
                     if (params.ACTIONS == 'create') {
                         sh '''
                             ls -ahl ~
-                            /home/jenkins/task apps-${params.ACTIONS}
+                            /home/jenkins/task #apps-${params.ACTIONS}
                         '''
                     } else {
                         sh '''
