@@ -24,6 +24,12 @@ pipeline {
         )
     }
 
+    parameters {
+        choice choices: task_names,
+        description: 'Create or destroy actions',
+        name: 'ACTIONS'
+    }
+
     tools {
         terraform "${tf_version}"
     }
