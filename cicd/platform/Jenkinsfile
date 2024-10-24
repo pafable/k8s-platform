@@ -33,10 +33,11 @@ pipeline {
             }
         }
 
-        stage('install task') {
+        stage('install task') {z
             steps {
                 sh '''
-                    sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
+                    echo $PATH
+                    #sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
                 '''
             }
         }
