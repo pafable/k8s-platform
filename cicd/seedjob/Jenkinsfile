@@ -25,13 +25,14 @@ pipeline {
         )
     }
 
-    stages{
+    stages {
         stage('seeding') {
             steps {
                 script {
                     jobsToScripts.each {
                         final job, final path ->
-                            if (job != 'agent-builder' && job != 'dns-updater') {
+                            if (job != 'agent-builder' && job != 'dns-updater')
+                            {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
                                         description("${apps_desc}")
@@ -65,7 +66,8 @@ pipeline {
                                         }
                                     }
                                 """
-                            } else if {
+                            } else if
+                            {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
                                         description(${jenkins_desc})
@@ -89,7 +91,9 @@ pipeline {
                                         }
                                     }
                                 """
-                            } else {
+                            }
+                            else
+                            {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
                                         description(${jenkins_desc})

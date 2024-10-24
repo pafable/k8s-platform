@@ -28,7 +28,7 @@ pipeline {
         terraform "${tf_version}"
     }
 
-    stages{
+    stages {
         stage('confirmation') {
             input {
                 message "Continue with deployment?"
