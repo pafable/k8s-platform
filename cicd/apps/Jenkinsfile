@@ -16,7 +16,7 @@ pipeline {
     }
 
     options {
-        ansiColor('vga')
+        ansiColor('css')
         timeout(
             time: 5,
             unit: 'MINUTES'
