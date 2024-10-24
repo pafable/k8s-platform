@@ -33,7 +33,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 RUN curl -o /tmp/packer_1.11.2_linux_amd64.zip "https://releases.hashicorp.com/packer/1.11.2/packer_1.11.2_linux_amd64.zip" \
     && unzip /tmp/packer_1.11.2_linux_amd64.zip -d /tmp \
     && mv /tmp/packer /usr/local/bin \
-    && rm -f /tmp/packer* LICENSE.txt
+    && rm -fv /tmp/packer* /tmp/LICENSE.txt
 
 USER jenkins
 
