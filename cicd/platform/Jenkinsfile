@@ -50,6 +50,7 @@ pipeline {
                         if (params.ACTIONS == 'create') {
                             sh """
                                 echo $KUBECONFIG
+                                ls -ahl ~
                                 cp $KUBECONFIG ~/.kube/k3s-config
                                 task apps-${params.ACTIONS}
                             """
