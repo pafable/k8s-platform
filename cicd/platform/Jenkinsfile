@@ -45,14 +45,13 @@ pipeline {
             steps {
                 script {
                     if (params.ACTIONS == 'create') {
-                        sh '''
-                            ls -ahl ~
-                            /home/jenkins/task #apps-${params.ACTIONS}
-                        '''
-                    } else {
-                        sh '''
+                        sh """
                             /home/jenkins/task apps-${params.ACTIONS}
-                        '''
+                        """
+                    } else {
+                        sh """
+                            /home/jenkins/task apps-${params.ACTIONS}
+                        """
                     }
                 }
             }
