@@ -31,7 +31,7 @@ locals {
           {
             script = <<-EOT
             pipelineJob('seed-job') {
-              description('seed job for jenkins.local')
+              description("seed job for ${replace(local.jenkins_url, "https://", "")}")
 
               definition {
                 cpsScm {

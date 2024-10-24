@@ -29,6 +29,7 @@ pipeline {
                             if (job != 'agent-builder') {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
+                                        description('Apps deployer')
                                         parameters {
                                             choiceParam(
                                                 'ACTIONS',
