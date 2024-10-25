@@ -16,8 +16,8 @@ pipeline {
     environment {
         UNUSED = credentials("${awsDevCreds}")
         PROXMOX = credentials("${proxmoxCreds}")
-        PM_API_TOKEN_ID = ${PROXMOX_USR}
-        PM_API_TOKEN_SECRET = ${PROXMOX_PSW}
+        PM_API_TOKEN_ID = "${PROXMOX_USR}"
+        PM_API_TOKEN_SECRET = "${PROXMOX_PSW}"
     }
 
     options {
