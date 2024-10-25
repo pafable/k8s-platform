@@ -15,11 +15,6 @@ locals {
 
   agent_runcmd      = "curl -sfL https://get.k3s.io | K3S_URL=https://${module.k3s_controller.ipv4_address}:6443 K3S_TOKEN=${data.aws_ssm_parameter.k3s_join_token.value} sh -"
   controller_runcmd = "curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='server --cluster-init --etcd-expose-metrics --disable=traefik --token ${data.aws_ssm_parameter.k3s_join_token.value}' sh - && kubectl apply -f /home/${var.ssh_username}/k3s_storage_class.yaml"
-
-  agent_depends = [
-    module.k3s_controller,
-    null_resource.time_delay
-  ]
 }
 
 resource "null_resource" "time_delay" {
@@ -58,7 +53,10 @@ module "k3s_agent1" {
   ssh_username        = var.ssh_username
   tags                = local.default_tags
 
-  depends_on = local.agent_depends
+  depends_on = [
+    module.k3s_controller,
+    null_resource.time_delay
+  ]
 }
 
 module "k3s_agent2" {
@@ -76,7 +74,10 @@ module "k3s_agent2" {
   tags                = local.default_tags
 
   # waits for agent1 to complete to release lock on node before creating agent2
-  depends_on = local.agent_depends
+  depends_on = [
+    module.k3s_controller,
+    null_resource.time_delay
+  ]
 }
 
 module "k3s_agent3" {
@@ -94,5 +95,8 @@ module "k3s_agent3" {
   tags                = local.default_tags
 
   # waits for agent1 to complete to release lock on node before creating agent2
-  depends_on = local.agent_depends
+  depends_on = [
+    module.k3s_controller,
+    null_resource.time_delay
+  ]
 }
