@@ -6,7 +6,6 @@ vars:
   # Proxmox dirs
   PROXMOX_PACKER_RH_DIR: packer/proxmox/rh
   PROXMOX_K3S_INFRA_DIR: terraform/proxmox/k3s-infra
-  PROXMOX_DNS_DIR: terraform/proxmox/dns
 
   # Agent tag
   JENKINS_AGENT_IMAGE_DIR: dockerfiles/jenkins-agents
@@ -37,6 +36,8 @@ vars:
 
 env:
   AWS_REGION: us-east-1
+
+  PROXMOX_DNS_DIR: terraform/proxmox/dns
 
   TF_WORKSPACE: dev # sets the terraform workspace
 
@@ -601,7 +602,7 @@ tasks:
     desc: Initialize Core terraform
     cmds:
       - echo "+++++ Initializing Core +++++"
-      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${.TF_CORE_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure -no-color
+      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${TF_CORE_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure -no-color
       - task: tf-validate
         vars: { DIR: '{{ .TF_CORE_DIR }}' }
       - task: tf-ws-list
