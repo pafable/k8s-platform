@@ -12,6 +12,15 @@ locals {
           }
         },
         {
+          usernamePassword = {
+            description = "Proxmox API creds"
+            id          = "proxmox-api-creds"
+            password    = sensitive(var.proxmox_token_secret)
+            scope       = "GLOBAL"
+            username    = var.proxmox_token_id
+          }
+        },
+        {
           aws = {
             accessKey   = sensitive(var.aws_dev_deployer_access_key)
             description = "AWS credentials for dev account"

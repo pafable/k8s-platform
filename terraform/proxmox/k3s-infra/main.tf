@@ -72,6 +72,28 @@ module "k3s_agent2" {
 
   # waits for agent1 to complete to release lock on node before creating agent2
   depends_on = [
-    module.k3s_agent1
+    module.k3s_controller,
+    null_resource.time_delay
+  ]
+}
+
+module "k3s_agent3" {
+  source              = "../../modules/proxmox-k3s-vm"
+  clone_template      = local.worker_template
+  cloud_init_pve_node = "leviathan"
+  cores               = 8
+  home_network        = local.home_network
+  host_node           = "leviathan"
+  memory              = 10240
+  name                = "${local.host_name}-03"
+  os_type             = "cloud-init"
+  runcmd              = "curl -sfL https://get.k3s.io | K3S_URL=https://${module.k3s_controller.ipv4_address}:6443 K3S_TOKEN=${var.k3s_token} sh -"
+  ssh_username        = var.ssh_username
+  tags                = local.default_tags
+
+  # waits for agent1 to complete to release lock on node before creating agent2
+  depends_on = [
+    module.k3s_controller,
+    null_resource.time_delay
   ]
 }

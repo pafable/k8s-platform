@@ -92,6 +92,19 @@ variable "owner" {
   default     = "devops"
 }
 
+variable "proxmox_token_id" {
+  description = "Proxmox token id"
+  type        = string
+  default     = ""
+}
+
+variable "proxmox_token_secret" {
+  description = "Proxmox token secret"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
 variable "secrets_manager_region" {
   description = "Secrets AWS region"
   type        = string
