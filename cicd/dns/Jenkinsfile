@@ -1,4 +1,5 @@
 final String agent_label = 'jenkins-jenkins-agent'
+final String aws_creds = 'aws-dev-deployer-creds'
 final String tf_version = 'tf-1-9-8'
 
 final def task_names = [
@@ -8,11 +9,11 @@ final def task_names = [
 
 pipeline {
     agent {
-      label "${agent_label}"
+      label agent_label
     }
 
     environment {
-        UNUSED = credentials('aws-dev-deployer-creds')
+        UNUSED = credentials("${aws_creds}")
     }
 
     options {
@@ -46,24 +47,17 @@ pipeline {
             }
         }
 
-        stage('platforming') {
+        stage('updating dns') {
             steps {
                 script {
-                    withKubeConfig([credentialsId: 'hive-fleet-k3s-config']) {
+                    if (params.ACTIONS == 'create') {
                         sh """
-                            mkdir ~/.kube
-                            ln -s $KUBECONFIG ~/.kube/k3s-config
+                            task proxmox-dns-${params.ACTIONS}
                         """
-
-                        if (params.ACTIONS == 'create') {
-                            sh """
-                                task apps-${params.ACTIONS}
-                            """
-                        } else {
-                            sh """
-                                task apps-${params.ACTIONS}
-                            """
-                        }
+                    } else {
+                        sh """
+                            task proxmox-dns-${params.ACTIONS}
+                        """
                     }
                 }
             }
