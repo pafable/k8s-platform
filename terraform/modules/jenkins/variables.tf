@@ -32,7 +32,7 @@ variable "agent_container_repository" {
 variable "agent_container_tag" {
   description = "Container tag"
   type        = string
-  default     = "3261.v9c670a_4748a_9-1"
+  default     = "3273.v4cfe589b_fd83-1"
 }
 
 variable "docker_hub_username" {
