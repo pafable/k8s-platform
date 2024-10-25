@@ -34,7 +34,7 @@ pipeline {
                 script {
                     jobsToScripts.each {
                         final job, final path ->
-                            if (job != 'agent-builder' && job != 'dns-updater')
+                            if (job != 'agent-builder' && job != 'dns-updater' && job != 'k3s-infra-factory')
                             {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
