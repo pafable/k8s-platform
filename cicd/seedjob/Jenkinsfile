@@ -1,4 +1,4 @@
-final String agent_label = 'jenkins-jenkins-agent'
+final String agent_label = 'jenkins-agent'
 final String apps_desc = 'Apps deployer'
 final String dns_desc = "DNS updater"
 final String jenkins_desc = 'Jenkins agent builder'

@@ -1,4 +1,4 @@
-final String agentLabel = 'jenkins-jenkins-agent'
+final String agentLabel = 'jenkins-agent'
 final String awsDevCreds = 'aws-dev-deployer-creds'
 final String proxmoxCreds = 'proxmox-api-creds'
 final String tfVersion = 'tf-1-9-8'
