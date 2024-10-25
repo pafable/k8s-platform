@@ -14,6 +14,8 @@ locals {
       {
         agent = {
           alwaysPullImage = true
+          # # this is necessary because labels on the pod template will be set to "jenkins-${podName}"
+          componentName = "agent"
 
           envVars = [
             {
@@ -34,7 +36,7 @@ locals {
           resources = {
             limits = {
               cpu    = ""
-              memory = ""
+              memory = "1024Mi"
             }
             requests = {
               cpu    = "1024m"

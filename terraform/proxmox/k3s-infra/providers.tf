@@ -18,7 +18,7 @@ module "terraform_version" {
 }
 
 provider "proxmox" {
-  pm_api_url = "https://behemoth.fleet.pafable.com:8006/api2/json"
+  pm_api_url = "https://${data.aws_ssm_parameter.main_proxmox_node.value}:8006/api2/json"
 }
 
 provider "aws" {

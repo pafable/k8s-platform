@@ -28,6 +28,8 @@ module "jenkins" {
   ingress_name                = var.ingress
   jenkins_github_token        = data.aws_ssm_parameter.jenkins_github_token.value
   k3s_config_file             = sensitive(data.aws_ssm_parameter.k3s_kubeconfig_file.value)
+  proxmox_token_id            = sensitive(data.aws_ssm_parameter.proxmox_token_id.value)
+  proxmox_token_secret        = sensitive(data.aws_ssm_parameter.proxmox_token_secret.value)
   storage_class_name          = "hive-ship-sc" # this is needed for k3s deployment
   depends_on                  = [module.cert_manager]
 }

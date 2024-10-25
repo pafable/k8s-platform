@@ -32,7 +32,7 @@ variable "agent_container_repository" {
 variable "agent_container_tag" {
   description = "Container tag"
   type        = string
-  default     = "3261.v9c670a_4748a_9-1"
+  default     = "3273.v4cfe589b_fd83-1"
 }
 
 variable "docker_hub_username" {
@@ -90,6 +90,19 @@ variable "owner" {
   description = "Owner of resource"
   type        = string
   default     = "devops"
+}
+
+variable "proxmox_token_id" {
+  description = "Proxmox token id"
+  type        = string
+  default     = ""
+}
+
+variable "proxmox_token_secret" {
+  description = "Proxmox token secret"
+  type        = string
+  default     = ""
+  sensitive   = true
 }
 
 variable "secrets_manager_region" {

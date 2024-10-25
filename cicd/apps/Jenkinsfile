@@ -1,4 +1,4 @@
-final String agent_label = 'jenkins-jenkins-agent'
+final String agent_label = 'jenkins-agent'
 final String tf_version = 'tf-1-9-8'
 
 final def task_names = [
