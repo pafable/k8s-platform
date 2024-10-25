@@ -88,7 +88,7 @@ module "k3s_agent3" {
   home_network        = local.home_network
   host_node           = "leviathan"
   memory              = 10240
-  name                = "${local.host_name}-03"
+  name                = "${local.host_name}-04"
   os_type             = "cloud-init"
   runcmd              = local.agent_runcmd
   ssh_username        = var.ssh_username
