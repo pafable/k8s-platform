@@ -1,0 +1,70 @@
+final String agentLabel = 'jenkins-jenkins-agent'
+final String awsDevCreds = 'aws-dev-deployer-creds'
+final String proxmoxCreds = 'proxmox-api-creds'
+final String tfVersion = 'tf-1-9-8'
+
+final def taskNames = [
+    'create',
+    'destroy'
+]
+
+pipeline {
+    agent {
+      label agentLabel
+    }
+
+    environment {
+        UNUSED = credentials("${awsDevCreds}")
+        PROXMOX = credentials("${proxmoxCreds}")
+        PM_API_TOKEN_ID = ${PROXMOX_USR}
+        PM_API_TOKEN_SECRET = ${PROXMOX_PSW}
+    }
+
+    options {
+        ansiColor('xterm')
+        timeout(
+            time: 5,
+            unit: 'MINUTES'
+        )
+    }
+
+    parameters {
+        choice choices: taskNames,
+        description: 'Create or destroy actions',
+        name: 'ACTIONS'
+    }
+
+    tools {
+        terraform "${tfVersion}"
+    }
+
+    stages {
+        stage('confirmation') {
+            input {
+                message "Continue with deployment?"
+                ok "Gogogog1!1!"
+            }
+            steps {
+                sh """
+                    echo this will ${params.ACTIONS} the environment
+                """
+            }
+        }
+
+        stage('modifying k3s cluster') {
+            steps {
+                script {
+                    if (params.ACTIONS == 'create') {
+                        sh """
+                            task apps-${params.ACTIONS}
+                        """
+                    } else {
+                        sh """
+                            task apps-${params.ACTIONS}
+                        """
+                    }
+                }
+            }
+        }
+    }
+}

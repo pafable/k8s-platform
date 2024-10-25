@@ -17,7 +17,7 @@ locals {
             id          = "proxmox-api-creds"
             password    = sensitive(var.proxmox_token_secret)
             scope       = "GLOBAL"
-            username    = var.proxmox_token_id
+            username    = sensitive(var.proxmox_token_id)
           }
         },
         {
