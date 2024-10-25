@@ -12,7 +12,7 @@ final def jobsToScripts = [
     'agent-builder': 'cicd/agent-builder/Jenkinsfile',
     'apps-deployer': 'cicd/apps/Jenkinsfile',
     'dns-updater': 'cicd/dns/Jenkinsfile',
-    'k3s-infra-factory': 'cicd/proxmox-k3s/Jenkinsfile'
+    'k3s-infra-factory': 'cicd/k3s/Jenkinsfile'
 ]
 
 pipeline {
