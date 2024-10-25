@@ -56,11 +56,11 @@ pipeline {
                 script {
                     if (params.ACTIONS == 'create') {
                         sh """
-                            task apps-${params.ACTIONS}
+                            task proxmox-k3s-infra-${params.ACTIONS}
                         """
                     } else {
                         sh """
-                            task apps-${params.ACTIONS}
+                            task proxmox-k3s-infra-${params.ACTIONS}
                         """
                     }
                 }

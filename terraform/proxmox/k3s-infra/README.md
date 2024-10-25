@@ -15,5 +15,5 @@ export PM_API_TOKEN_ID='<YOUR-PROXMOX-TOKEN-ID>' \
 
 Deploy K3S cluster
 ```shell
-task proxmox-infra-create
+task proxmox-k3s-infra-create
 ```
