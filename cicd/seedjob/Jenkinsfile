@@ -4,13 +4,15 @@ final String dns_desc = "DNS updater"
 final String jenkins_desc = 'Jenkins agent builder'
 final String jenkins_param_desc = 'Tag for Jenkins agent'
 final String jenkins_param_name = 'JENKINS_AGENT_TAG'
+final String k3sInfraDesc = 'Builds k3s infra'
 final String platform_branch = 'refs/heads/master'
 final String platform_repo = 'https://github.com/pafable/k8s-platform.git'
 
 final def jobsToScripts = [
     'agent-builder': 'cicd/agent-builder/Jenkinsfile',
     'apps-deployer': 'cicd/apps/Jenkinsfile',
-    'dns-updater': 'cicd/dns/Jenkinsfile'
+    'dns-updater': 'cicd/dns/Jenkinsfile',
+    'k3s-infra-factory': 'cid/proxmox-k3s/Jenkinsfile'
 ]
 
 pipeline {
@@ -71,6 +73,40 @@ pipeline {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
                                         description("${dns_desc}")
+                                        parameters {
+                                            choiceParam(
+                                                'ACTIONS',
+                                                [
+                                                    'create',
+                                                    'destroy'
+                                                ],
+                                                'Create or destroy'
+                                            )
+                                        }
+                                        definition {
+                                            cpsScm {
+                                                scm {
+                                                    git {
+                                                        remote {
+                                                            url("${platform_repo}")
+                                                        }
+                                                        branch("${platform_branch}")
+                                                    }
+                                                }
+                                                scriptPath("${path}")
+                                                lightweight()
+                                            }
+                                        }
+                                        properties {
+                                            disableConcurrentBuilds()
+                                            disableResume()
+                                        }
+                                    }
+                                """
+                            } else if (job == 'k3s-infra-factory') {
+                                jobDsl scriptText: """
+                                    pipelineJob("${job}") {
+                                        description("${k3sInfraDesc}")
                                         parameters {
                                             choiceParam(
                                                 'ACTIONS',
