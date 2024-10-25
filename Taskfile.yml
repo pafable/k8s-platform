@@ -5,7 +5,6 @@ dotenv: ['.env']
 vars:
   # Proxmox dirs
   PROXMOX_PACKER_RH_DIR: packer/proxmox/rh
-  PROXMOX_K3S_INFRA_DIR: terraform/proxmox/k3s-infra
 
   # Agent tag
   JENKINS_AGENT_IMAGE_DIR: dockerfiles/jenkins-agents
@@ -38,6 +37,7 @@ env:
   AWS_REGION: us-east-1
 
   PROXMOX_DNS_DIR: terraform/proxmox/dns
+  PROXMOX_K3S_INFRA_DIR: terraform/proxmox/k3s-infra
 
   TF_WORKSPACE: dev # sets the terraform workspace
 
@@ -500,7 +500,7 @@ tasks:
     cmds:
       - docker push {{ .CONTAINER_REGISTRY }}/{{ .JENKINS_IMAGE }}:{{ .JENKINS_AGENT_TAG }}
 
-  proxmox-k3s-infra-init:
+  k3s-infra-init:
     dir: '{{ .PROXMOX_K3S_INFRA_DIR }}'
     deps:
       - task: fmt
@@ -513,11 +513,11 @@ tasks:
       - task: tf-ws-list
         vars: { DIR: '{{ .PROXMOX_K3S_INFRA_DIR }}' }
 
-  proxmox-k3s-infra-create:
+  k3s-infra-create:
     desc: Create Proxmox infrastructure
     dir: '{{ .PROXMOX_K3S_INFRA_DIR }}'
     deps:
-      - task: proxmox-k3s-infra-init
+      - task: k3s-infra-init
     cmds:
       - defer: |
           echo "Cleaning up..."
@@ -525,11 +525,11 @@ tasks:
       - terraform plan -out=tfplan
       - terraform apply tfplan
 
-  proxmox-k3s-infra-destroy:
+  k3s-infra-destroy:
     desc: Destroy Proxmox infrastructure
     dir: '{{ .PROXMOX_K3S_INFRA_DIR }}'
     deps:
-      - task: proxmox-k3s-infra-init
+      - task: k3s-infra-init
     cmds:
       - defer: |
           echo "Cleaning up..."
