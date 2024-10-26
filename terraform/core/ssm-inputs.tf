@@ -43,6 +43,16 @@ data "aws_ssm_parameter" "k3s_agent2_ipv4" {
   name     = "/proxmox/k3s/agent2/ipv4"
 }
 
+data "aws_ssm_parameter" "packer_ssh_password" {
+  provider = aws.parameters
+  name     = "/packer/ssh/password"
+}
+
+data "aws_ssm_parameter" "packer_ssh_username" {
+  provider = aws.parameters
+  name     = "/packer/ssh/username"
+}
+
 data "aws_ssm_parameter" "proxmox_token_id" {
   provider = aws.parameters
   name     = "/proxmox/api/token/id"

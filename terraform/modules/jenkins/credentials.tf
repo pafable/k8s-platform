@@ -24,9 +24,9 @@ locals {
           usernamePassword = {
             description = "Test ssh creds for packer"
             id          = "packer-test-ssh-creds"
-            password    = sensitive(var.proxmox_token_secret)
+            password    = sensitive(var.packer_ssh_password)
             scope       = "GLOBAL"
-            username    = sensitive(var.proxmox_token_id)
+            username    = sensitive(var.packer_ssh_username)
           }
         },
         {

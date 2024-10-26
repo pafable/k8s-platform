@@ -92,6 +92,18 @@ variable "owner" {
   default     = "devops"
 }
 
+variable "packer_ssh_password" {
+  description = "Packer ssh password"
+  type        = string
+  sensitive   = true
+}
+
+variable "packer_ssh_username" {
+  description = "Packer ssh username"
+  type        = string
+  sensitive   = true
+}
+
 variable "proxmox_token_id" {
   description = "Proxmox token id"
   type        = string
