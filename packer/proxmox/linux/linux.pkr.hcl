@@ -50,7 +50,9 @@ source "proxmox-iso" "linux_golden_image" {
   vm_name                  = "packer-image-builder"
 
   boot_iso {
-
+    iso_file = "local:iso/${var.iso_name}"
+    unmount  = true
+    type     = "scsi"
   }
 
   disks {
