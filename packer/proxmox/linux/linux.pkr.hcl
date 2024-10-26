@@ -53,6 +53,7 @@ source "proxmox-iso" "linux_golden_image" {
     iso_file = "local:iso/${var.iso_name}"
     unmount  = true
     type     = "scsi"
+    format   = raw
   }
 
   disks {
