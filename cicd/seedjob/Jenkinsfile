@@ -185,7 +185,7 @@ pipeline {
                                         description("${packyDesc}")
                                         parameters {
                                             choiceParam(
-                                                'DISTRIBUTION',
+                                                'DISTRO',
                                                 [
                                                     'oracle',
                                                     'rocky',
