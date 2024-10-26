@@ -9,14 +9,20 @@ packer {
 
 locals {
   rh_cmd = ["<esc> linux ip=dhcp inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter>"]
+
   ubuntu_cmd = [
-    "c", "<wait3s>",
-  "<e> autoinstall ip=dhcp ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort}}/ --- <enter>"]
-  orig = [
-    "c", "<wait3s>",
-    "linux ip=dhcp autoinstall ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort}}/autoinstall.yml --- <enter>"
+    "<esc><esc><esc><esc>e<wait>", "<del><del><del><del><del><del><del><del>",
+    "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>",
+    "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>",
+    "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>",
+    "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>",
+    "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>",
+    "linux /casper/vmlinuz --- ip=dhcp autoinstall ds=\"nocloud-net;seedfrom=http://{{ .HTTPIP }}:{{ .HTTPPort }}/\"<enter><wait>",
+    "initrd /casper/initrd<enter><wait>",
+    "boot<enter>", "<enter><f10><wait>"
   ]
-  boot_cmd = var.distro_family == "debian" ? local.orig : local.rh_cmd
+
+  boot_cmd = var.distro_family == "debian" ? local.ubuntu_cmd : local.rh_cmd
 }
 
 source "proxmox-iso" "golden_image" {
