@@ -158,8 +158,7 @@ pipeline {
                                             stringParam(
                                                 'TEMPLATE_NAME',
                                                 '',
-                                                'template name',
-                                                true
+                                                'template name'
                                             )
                                         }
                                         definition {
