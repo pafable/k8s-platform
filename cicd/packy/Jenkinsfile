@@ -60,12 +60,13 @@ pipeline {
         stage('confirmation') {
             input {
                 message """
-                    building a Proxmox template from ${params.ISO_NAME}
-                    distribution: ${params.DISTRIBUTION}
-                    iso name: ${params.ISO_NAME}
-                    proxmox node: ${params.PROXMOX_NODE}
-                    template name: ${params.TEMPLATE_NAME}
-                    Continue with deployment?
+                building a Proxmox template from ${params.ISO_NAME}
+                 distribution: ${params.DISTRIBUTION}
+                     iso name: ${params.ISO_NAME}
+                 proxmox node: ${params.PROXMOX_NODE}
+                template name: ${params.TEMPLATE_NAME}
+
+                Continue with deployment?
                 """
                 ok "Gogogog1!1!"
             }
