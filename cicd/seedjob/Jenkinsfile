@@ -38,8 +38,7 @@ pipeline {
                 script {
                     jobsToScripts.each {
                         final job, final path ->
-                            if (job != 'agent-builder' && job != 'dns-updater' && job != 'k3s-infra-factory' && job != 'packy')
-                            {
+                            if (job == 'apps-deployer') {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
                                         description("${apps_desc}")
@@ -73,7 +72,9 @@ pipeline {
                                         }
                                     }
                                 """
-                            } else if (job == 'dns-updater') {
+                            }
+
+                            if (job == 'dns-updater') {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
                                         description("${dns_desc}")
