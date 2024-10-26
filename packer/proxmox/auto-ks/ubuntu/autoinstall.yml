@@ -33,7 +33,7 @@ autoinstall:
     install: false
   identity:
     hostname: ubuntu-builder
-    password: $6$3w/2MTJ7Wan2DokZ$lrCa1trHurHiEOlQTWvJey8njc7P7Vxn4K.okbhyZ8AynAxx4lSEfWwy8rksPg4U/U4.D3ePSI0v4HnFh6Zpn.
+    password: $6$ZIBCtTofTzCA7ZvP$kUOekNB3DeYzfb7vNr2sDbbe9t5pmuNjc6nGwSWE.OthxMHbxFRW5bN625O5ag46QsDAYq/RQHeicnbuxZ2ar/
     realname: provisioner
     username: provisioner
   kernel:
@@ -94,7 +94,7 @@ autoinstall:
       id: format-0
       type: format
     - device: disk-sda
-      size: 105223553024
+      size: 32209108992
       wipe: superblock
       number: 3
       preserve: false
@@ -111,7 +111,7 @@ autoinstall:
       type: lvm_volgroup
     - name: ubuntu-lv
       volgroup: lvm_volgroup-0
-      size: 52609155072B
+      size: 16101933056B
       wipe: superblock
       preserve: false
       path: /dev/ubuntu-vg/ubuntu-lv
