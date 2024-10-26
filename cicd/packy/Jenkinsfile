@@ -87,10 +87,10 @@ pipeline {
         stage('packing image') {
             environment {
                 PKR_VAR_http_directory = "../auto-ks/ubuntu"
-                PKR_VAR_iso_name = params.ISO_NAME
-                PKR_VAR_distro = params.DISTRO
-                PKR_VAR_proxmox_node = params.PROXMOX_NODE
-                PKR_VAR_template_node = params.TEMPLATE_NAME
+                PKR_VAR_iso_name = "${params.ISO_NAME}"
+                PKR_VAR_distro = "${params.DISTRO}"
+                PKR_VAR_proxmox_node = "${params.PROXMOX_NODE}"
+                PKR_VAR_template_node = "${params.TEMPLATE_NAME}"
                 PKR_VAR_template_description = "Base template for ${params.DISTRO}. Creation date: %s"
             }
 
