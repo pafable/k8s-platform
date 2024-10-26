@@ -11,7 +11,7 @@ variable "disk_size" {
 }
 
 variable "distro" {
-  description = "Distribution family"
+  description = "Linux distribution"
   type        = string
 }
 

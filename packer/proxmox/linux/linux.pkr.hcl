@@ -47,7 +47,7 @@ source "proxmox-iso" "linux_golden_image" {
   template_name            = var.template_name
   token                    = var.proxmox_token
   username                 = var.proxmox_username
-  vm_name                  = "packer-image-builder"
+  vm_name                  = "packer-${var.distro}-image-builder"
 
   boot_iso {
     iso_file = "local:iso/${var.iso_name}"
