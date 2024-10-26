@@ -96,7 +96,7 @@ pipeline {
                 PKR_VAR_iso_name = "${params.ISO_NAME}"
                 PKR_VAR_distro = "${params.DISTRO}"
                 PKR_VAR_proxmox_node = "${params.PROXMOX_NODE}"
-                PKR_VAR_template_description = "Base template for ${params.DISTRO}. Creation date: %s"
+                PKR_VAR_template_description = "Base template for ${params.ISO_NAME}. Creation date: %s"
                 PKR_VAR_template_name = "${params.TEMPLATE_NAME}"
             }
 
