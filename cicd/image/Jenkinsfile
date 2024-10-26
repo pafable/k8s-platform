@@ -85,8 +85,7 @@ pipeline {
                 ok "Gogogog1!1!"
             }
             steps {
-
-                    println "building a Proxmox template from ${params.ISO_NAME}"
+                println "building a Proxmox template from ${params.ISO_NAME}"
             }
         }
 
@@ -94,14 +93,12 @@ pipeline {
             steps {
                 script {
                     if (params.ACTIONS == 'build') {
-                        sh """
-                            echo ${params.ACTIONS}
-                            echo ${params.DISTRIBUTION}
-                            echo ${params.DISTRO_FAMILY}
-                            echo ${params.ISO_NAME}
-                            echo ${params.PROXMOX_NODE}
-                            echo ${params.TEMPLATE_NAME}
-                        """
+                        println ${params.ACTIONS}
+                        println ${params.DISTRIBUTION}
+                        println ${params.DISTRO_FAMILY}
+                        println ${params.ISO_NAME}
+                        println ${params.PROXMOX_NODE}
+                        println ${params.TEMPLATE_NAME}
                     } else {
                         sh """
                             task packer-${params.DISTRIBUTION}-${params.ACTIONS}
