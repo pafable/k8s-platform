@@ -34,8 +34,6 @@ source "proxmox-iso" "linux_golden_image" {
   cpu_type                 = "host"
   http_directory           = var.http_directory
   insecure_skip_tls_verify = true
-  iso_file                 = "local:iso/${var.iso_name}"
-  iso_storage_pool         = "local"
   memory                   = var.memory
   node                     = var.proxmox_node
   os                       = "l26"
@@ -48,7 +46,6 @@ source "proxmox-iso" "linux_golden_image" {
   template_description     = format(var.template_description, convert(timestamp(), string))
   template_name            = var.template_name
   token                    = var.proxmox_token
-  unmount_iso              = true
   username                 = var.proxmox_username
   vm_name                  = "packer-image-builder"
 
