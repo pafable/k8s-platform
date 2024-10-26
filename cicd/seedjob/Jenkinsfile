@@ -193,6 +193,46 @@ pipeline {
                                                 'build or destroy'
                                             )
 
+                                            choiceParam(
+                                                'DISTRIBUTION',
+                                                [
+                                                    'oracle_linux',
+                                                    'rocky_linux',
+                                                    'ubuntu'
+                                                ],
+                                                'linux distribution'
+                                            )
+
+                                            choiceParam(
+                                                'DISTRO_FAMILY',
+                                                [
+                                                    'debian',
+                                                    'red_hat'
+                                                ],
+                                                'linux family distribution'
+                                            )
+
+                                            choiceParam(
+                                                'ISO_NAME',
+                                                [
+                                                    'OracleLinux-R9-U4-x86_64-boot.iso',
+                                                    'Rocky-9.4-x86_64-boot.iso',
+                                                    'debian-12.7.0-amd64-netinst.iso',
+                                                    'ubuntu-24.04.1-live-server-amd64.iso'
+                                                ],
+                                                'iso names'
+                                            )
+
+                                            choiceParam(
+                                                'PROXMOX_NODE',
+                                                [
+                                                    'behemoth',
+                                                    'kraken',
+                                                    'leviathan'
+                                                ],
+                                                'proxmox nodes'
+                                            )
+
                                             stringParam(
                                                 'TEMPLATE_NAME',
                                                 null,
