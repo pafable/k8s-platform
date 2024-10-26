@@ -11,8 +11,8 @@ locals {
   rh_cmd = ["<esc> linux ip=dhcp inst.ks=http://${local.http_ip}/ks.cfg<enter>"]
 
   ubuntu_cmd = [
-    "<esc><esc><esc><esc>e<wait>", "<del><del><del><del><del><del><del><del>",
-    "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>",
+    "<esc><esc><esc><esc>e<wait>",
+    "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>",
     "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>",
     "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>",
     "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>",
@@ -22,7 +22,7 @@ locals {
     "boot<enter>", "<enter><f10><wait>"
   ]
 
-  boot_cmd = var.distro_family == "debian" ? local.ubuntu_cmd : local.rh_cmd
+  boot_cmd = var.distro == "debian" || var.distro == "ubuntu" ? local.ubuntu_cmd : local.rh_cmd
   http_ip  = var.is_local ? "{{ .HTTPIP }}:{{ .HTTPPort }}" : "192.168.109.210:8080"
 }
 

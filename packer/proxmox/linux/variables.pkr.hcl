@@ -10,10 +10,9 @@ variable "disk_size" {
   default     = "50G"
 }
 
-variable "distro_family" {
+variable "distro" {
   description = "Distribution family"
   type        = string
-  default     = "red_hat"
 }
 
 variable "http_directory" {

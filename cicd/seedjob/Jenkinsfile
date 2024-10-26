@@ -204,15 +204,6 @@ pipeline {
                                             )
 
                                             choiceParam(
-                                                'DISTRO_FAMILY',
-                                                [
-                                                    'debian',
-                                                    'red_hat'
-                                                ],
-                                                'linux family distribution'
-                                            )
-
-                                            choiceParam(
                                                 'ISO_NAME',
                                                 [
                                                     'OracleLinux-R9-U4-x86_64-boot.iso',

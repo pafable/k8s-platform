@@ -21,7 +21,7 @@ Create a `roc-vars.pkr.hcl` for Rocky Linux and `orc-vars.pkr.hcl` for Oracle Li
 
 example vars.pkr.hcl
 ```
-distro_family        = "<DISTRIBUTION FAMILY>"
+distro               = "<LINUX DISTRIBUTION>"
 http_directory       = "<DIRECTORY FOR KICKSTART FILES>"
 is_local             = "<SET THIS TO FALSE IF YOU'RE RUNNING AN HTTP SERVER ON A DIFFERENT MACHINE>"
 iso_name             = "<ISO NAME>"

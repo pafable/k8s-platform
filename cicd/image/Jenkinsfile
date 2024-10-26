@@ -57,10 +57,6 @@ pipeline {
         description: 'linux distribution',
         name: 'DISTRIBUTION'
 
-        choice choices: distroFamily,
-        description: 'linux family distribution',
-        name: 'DISTRO_FAMILY'
-
         choice choices: isoNames,
         description: 'iso names',
         name: 'ISO_NAME'
