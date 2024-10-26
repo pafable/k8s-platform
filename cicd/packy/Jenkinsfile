@@ -84,7 +84,10 @@ pipeline {
             steps {
                 script {
                     println "task packer-${params.DISTRIBUTION}-build"
-                    sh "env"
+                    sh """
+                        env
+                        task packer-${params.DISTRIBUTION}-build
+                    """
                 }
             }
         }
