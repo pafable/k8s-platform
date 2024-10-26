@@ -60,6 +60,10 @@ pipeline {
         name: 'TEMPLATE_NAME'
     }
 
+    tools {
+        terraform tfVersion
+    }
+
     stages {
         stage('confirmation') {
             input {
