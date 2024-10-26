@@ -65,6 +65,10 @@ pipeline {
         description: 'proxmox nodes',
         name: 'PROXMOX_NODE'
 
+        string description: 'template description',
+        trim: true,
+        name: 'TEMPLATE_DESC'
+
         string description: 'template name',
         trim: true,
         name: 'TEMPLATE_NAME'
@@ -81,9 +85,8 @@ pipeline {
                 ok "Gogogog1!1!"
             }
             steps {
-                sh """
-                    echo building a Proxmox template from ${params.ISO_NAME}
-                """
+
+                    println "building a Proxmox template from ${params.ISO_NAME}"
             }
         }
 
