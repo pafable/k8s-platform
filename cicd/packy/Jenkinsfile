@@ -70,6 +70,9 @@ pipeline {
                 """
                 ok "Gogogog1!1!"
             }
+            steps {
+                println "packer doing packing things..."
+            }
         }
 
         stage('packing image') {
