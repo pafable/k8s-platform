@@ -185,15 +185,6 @@ pipeline {
                                         description("${packyDesc}")
                                         parameters {
                                             choiceParam(
-                                                'ACTIONS',
-                                                [
-                                                    'build',
-                                                    'demolish'
-                                                ],
-                                                'build or destroy'
-                                            )
-
-                                            choiceParam(
                                                 'DISTRIBUTION',
                                                 [
                                                     'oracle',
