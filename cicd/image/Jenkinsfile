@@ -92,18 +92,12 @@ pipeline {
         stage('packing image') {
             steps {
                 script {
-                    if (params.ACTIONS == 'build') {
-                        println ${params.ACTIONS}
-                        println ${params.DISTRIBUTION}
-                        println ${params.DISTRO_FAMILY}
-                        println ${params.ISO_NAME}
-                        println ${params.PROXMOX_NODE}
-                        println ${params.TEMPLATE_NAME}
-                    } else {
-                        sh """
-                            task packer-${params.DISTRIBUTION}-${params.ACTIONS}
-                        """
-                    }
+                    println "${params.ACTIONS}"
+                    println "${params.DISTRIBUTION}"
+                    println "${params.DISTRO_FAMILY}"
+                    println "${params.ISO_NAME}"
+                    println "${params.PROXMOX_NODE}"
+                    println "${params.TEMPLATE_NAME}"
                 }
             }
         }
