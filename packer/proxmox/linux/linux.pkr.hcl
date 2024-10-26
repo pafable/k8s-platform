@@ -32,6 +32,7 @@ source "proxmox-iso" "linux_golden_image" {
   boot_wait                = "3s"
   cores                    = var.cores
   cpu_type                 = "host"
+  format                   = "raw"
   http_directory           = var.http_directory
   insecure_skip_tls_verify = true
   memory                   = var.memory
