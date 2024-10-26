@@ -86,7 +86,7 @@ pipeline {
             }
             steps {
                 sh """
-                    echo this will ${params.ACTIONS} an image from ${params.ISO_NAME} image
+                    echo building a Proxmox template from ${params.ISO_NAME}
                 """
             }
         }
