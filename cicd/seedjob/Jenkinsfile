@@ -16,7 +16,7 @@ final def jobsToScripts = [
     'apps-deployer': 'cicd/apps/Jenkinsfile',
     'dns-updater': 'cicd/dns/Jenkinsfile',
     'k3s-infra-factory': 'cicd/k3s/Jenkinsfile',
-    'packy': 'cicd/image/Jenkinsfile'
+    'packy': 'cicd/packy/Jenkinsfile'
 ]
 
 pipeline {
