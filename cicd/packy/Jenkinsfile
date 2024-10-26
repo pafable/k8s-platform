@@ -70,13 +70,6 @@ pipeline {
                 """
                 ok "Gogogog1!1!"
             }
-            steps {
-                println "building a Proxmox template from ${params.ISO_NAME}"
-                println " distribution: ${params.DISTRIBUTION}"
-                println "     iso name: ${params.ISO_NAME}"
-                println " proxmox node: ${params.PROXMOX_NODE}"
-                println "template name: ${params.TEMPLATE_NAME}"
-            }
         }
 
         stage('packing image') {
