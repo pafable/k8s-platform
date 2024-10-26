@@ -8,11 +8,6 @@ final def distros = [
     'ubuntu'
 ]
 
-final def distroFamily = [
-    'debian',
-    'red_hat'
-]
-
 final def isoNames = [
     'OracleLinux-R9-U4-x86_64-boot.iso',
     'Rocky-9.4-x86_64-boot.iso',
@@ -29,10 +24,6 @@ final def proxmoxNodes = [
 pipeline {
     agent {
       label agentLabel
-    }
-
-    environment {
-        UNUSED = credentials("${awsCreds}")
     }
 
     options {
@@ -55,10 +46,6 @@ pipeline {
         choice choices: proxmoxNodes,
         description: 'proxmox nodes',
         name: 'PROXMOX_NODE'
-
-        string description: 'template description',
-        trim: true,
-        name: 'TEMPLATE_DESC'
 
         string description: 'template name',
         trim: true,
