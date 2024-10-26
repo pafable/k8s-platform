@@ -168,7 +168,7 @@ pipeline {
                                                         remote {
                                                             url("${platform_repo}")
                                                         }
-                                                        branch("${platform_branch}")
+                                                        branch("refs/heads/packy")
                                                     }
                                                 }
                                                 scriptPath("${path}")
