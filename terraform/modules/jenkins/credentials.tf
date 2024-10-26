@@ -21,6 +21,15 @@ locals {
           }
         },
         {
+          usernamePassword = {
+            description = "Test ssh creds for packer"
+            id          = "packer-test-ssh-creds"
+            password    = sensitive(var.proxmox_token_secret)
+            scope       = "GLOBAL"
+            username    = sensitive(var.proxmox_token_id)
+          }
+        },
+        {
           aws = {
             accessKey   = sensitive(var.aws_dev_deployer_access_key)
             description = "AWS credentials for dev account"
