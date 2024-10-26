@@ -196,8 +196,8 @@ pipeline {
                                             choiceParam(
                                                 'DISTRIBUTION',
                                                 [
-                                                    'oracle_linux',
-                                                    'rocky_linux',
+                                                    'oracle',
+                                                    'rocky',
                                                     'ubuntu'
                                                 ],
                                                 'linux distribution'
