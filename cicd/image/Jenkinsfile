@@ -26,11 +26,6 @@ final def proxmoxNodes = [
     'leviathan'
 ]
 
-final def taskNames = [
-    'build',
-    'demolish'
-]
-
 pipeline {
     agent {
       label agentLabel
@@ -49,10 +44,6 @@ pipeline {
     }
 
     parameters {
-        choice choices: taskNames,
-        description: 'create or destroy actions',
-        name: 'ACTIONS'
-
         choice choices: distros,
         description: 'linux distribution',
         name: 'DISTRIBUTION'
@@ -92,11 +83,10 @@ pipeline {
         stage('packing image') {
             steps {
                 script {
-                    println "${params.ACTIONS}"
                     println "${params.DISTRIBUTION}"
-                    println "${params.DISTRO_FAMILY}"
                     println "${params.ISO_NAME}"
                     println "${params.PROXMOX_NODE}"
+                    println "${params.TEMPLATE_DESC}"
                     println "${params.TEMPLATE_NAME}"
                 }
             }
