@@ -87,10 +87,10 @@ pipeline {
         stage('packing image') {
             steps {
                 script {
-                    println "task packer-${params.DISTRIBUTION}-build"
+                    println "task packer-${params.DISTRIBUTION}-build-cicd"
                     sh """
                         env
-                        task packer-${params.DISTRIBUTION}-build
+                        task packer-${params.DISTRIBUTION}-build-cicd
                     """
                 }
             }
