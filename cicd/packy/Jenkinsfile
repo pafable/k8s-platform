@@ -1,5 +1,6 @@
 final String agentLabel = 'jenkins-agent'
 final String awsCreds = 'aws-dev-deployer-creds'
+final String httpServer = 'http-server'
 final String packerSshCreds = 'packer-test-ssh-creds'
 final String proxmoxCreds = 'proxmox-api-creds'
 final String proxmoxIP = '192.168.109.2'
@@ -30,6 +31,7 @@ pipeline {
     }
 
     environment {
+        PKR_VAR_http_server = credentials("${httpServer}")
         PROXMOX = credentials("${proxmoxCreds}")
         PKR_VAR_proxmox_username = "${PROXMOX_USR}"
         PKR_VAR_proxmox_token = "${PROXMOX_PSW}"
