@@ -26,7 +26,7 @@ locals {
   http_ip  = var.is_local ? "{{ .HTTPIP }}:{{ .HTTPPort }}" : "192.168.109.210:8080"
 }
 
-source "proxmox-iso" "golden_image" {
+source "proxmox-iso" "linux_golden_image" {
   ballooning_minimum       = 0
   boot_command             = local.boot_cmd
   boot_wait                = "3s"
@@ -45,7 +45,7 @@ source "proxmox-iso" "golden_image" {
   ssh_timeout              = "30m"
   ssh_username             = var.ssh_username
   tags                     = var.template_name
-  template_description     = var.template_description
+  template_description     = format(var.template_description, convert(timestamp(), string))
   template_name            = var.template_name
   token                    = var.proxmox_token
   unmount_iso              = true
@@ -69,7 +69,7 @@ source "proxmox-iso" "golden_image" {
 build {
   name = "builder"
   sources = [
-    "proxmox-iso.golden_image"
+    "proxmox-iso.linux_golden_image"
   ]
 
   provisioner "shell" {
