@@ -67,7 +67,7 @@ pipeline {
                  proxmox node: ${params.PROXMOX_NODE}
                 template name: ${params.TEMPLATE_NAME}
 
-                Continue with deployment?
+                CONTINUE WITH BUILDING?
                 """
                 ok "Gogogog1!1!"
             }
