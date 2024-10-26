@@ -23,7 +23,7 @@ locals {
   ]
 
   boot_cmd = var.distro == "debian" || var.distro == "ubuntu" ? local.ubuntu_cmd : local.rh_cmd
-  http_ip  = var.is_local ? "{{ .HTTPIP }}:{{ .HTTPPort }}" : "192.168.109.210:8080"
+  http_ip  = var.is_local ? "{{ .HTTPIP }}:{{ .HTTPPort }}" : "192.168.109.183:8080"
 }
 
 source "proxmox-iso" "linux_golden_image" {
