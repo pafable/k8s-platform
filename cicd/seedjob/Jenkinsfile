@@ -38,6 +38,39 @@ pipeline {
                 script {
                     jobsToScripts.each {
                         final job, final path ->
+                            if (job == 'agent-builder') {
+                                jobDsl scriptText: """
+                                    pipelineJob("${job}") {
+                                        description("${jenkins_desc}")
+                                        parameters {
+                                            stringParam {
+                                                description("${jenkins_param_desc}")
+                                                name("${jenkins_param_name}")
+                                                trim(true)
+                                            }
+                                        }
+                                        definition {
+                                            cpsScm {
+                                                scm {
+                                                    git {
+                                                        remote {
+                                                            url("${platform_repo}")
+                                                        }
+                                                        branch("${platform_branch}")
+                                                    }
+                                                }
+                                                scriptPath("${path}")
+                                                lightweight()
+                                            }
+                                        }
+                                        properties {
+                                            disableConcurrentBuilds()
+                                            disableResume()
+                                        }
+                                    }
+                                """
+                            }
+
                             if (job == 'apps-deployer') {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
@@ -108,7 +141,9 @@ pipeline {
                                         }
                                     }
                                 """
-                            } else if (job == 'k3s-infra-factory') {
+                            }
+
+                            if (job == 'k3s-infra-factory') {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
                                         description("${k3sInfraDesc}")
@@ -142,7 +177,9 @@ pipeline {
                                         }
                                     }
                                 """
-                            } else if (job == 'packy') {
+                            }
+
+                            if (job == 'packy') {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
                                         description("${packyDesc}")
@@ -158,7 +195,7 @@ pipeline {
 
                                             stringParam(
                                                 'TEMPLATE_NAME',
-                                                '',
+                                                null,
                                                 'template name'
                                             )
                                         }
@@ -170,37 +207,6 @@ pipeline {
                                                             url("${platform_repo}")
                                                         }
                                                         branch("refs/heads/packy")
-                                                    }
-                                                }
-                                                scriptPath("${path}")
-                                                lightweight()
-                                            }
-                                        }
-                                        properties {
-                                            disableConcurrentBuilds()
-                                            disableResume()
-                                        }
-                                    }
-                                """
-                            } else {
-                                jobDsl scriptText: """
-                                    pipelineJob("${job}") {
-                                        description("${jenkins_desc}")
-                                        parameters {
-                                            stringParam {
-                                                description("${jenkins_param_desc}")
-                                                name("${jenkins_param_name}")
-                                                trim(true)
-                                            }
-                                        }
-                                        definition {
-                                            cpsScm {
-                                                scm {
-                                                    git {
-                                                        remote {
-                                                            url("${platform_repo}")
-                                                        }
-                                                        branch("${platform_branch}")
                                                     }
                                                 }
                                                 scriptPath("${path}")
