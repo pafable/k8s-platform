@@ -50,28 +50,28 @@ pipeline {
 
     parameters {
         choice choices: taskNames,
-        description: 'Create or destroy actions',
+        description: 'create or destroy actions',
         name: 'ACTIONS'
 
         choice choices: distros,
-        description: 'Linux distributions',
+        description: 'linux distributions',
         name: 'DISTRO'
 
         choice choices: distroFamily,
-        description: 'Linux family distribution',
+        description: 'linux family distribution',
         name: 'DISTRO_FAMILY'
 
         choice choices: isoNames,
-        description: 'ISO names',
+        description: 'iso names',
         name: 'ISO_NAME'
 
         choice choices: proxmoxNodes,
-        description: 'Proxmox nodes',
+        description: 'proxmox nodes',
         name: 'PROXMOX_NODE'
 
-        string description: 'Template name',
+        string description: 'template name',
         trim: true,
-        name: 'TMPL_NAME'
+        name: 'TEMPLATE_NAME'
     }
 
     tools {
@@ -101,7 +101,7 @@ pipeline {
                             echo ${params.DISTRO_FAMILY}
                             echo ${params.ISO_NAME}
                             echo ${params.PROXMOX_NODE}
-                            echo ${params.TMPL_NAME}
+                            echo ${params.TEMPLATE_NAME}
                         """
                     } else {
                         sh """

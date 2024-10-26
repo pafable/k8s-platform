@@ -154,6 +154,13 @@ pipeline {
                                                 ],
                                                 'build or destroy'
                                             )
+
+                                            stringParam(
+                                                'TEMPLATE_NAME',
+                                                '',
+                                                'template name',
+                                                true
+                                            )
                                         }
                                         definition {
                                             cpsScm {
