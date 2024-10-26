@@ -7,7 +7,7 @@ variable "cores" {
 variable "disk_size" {
   description = "Disk size on the packer builder vm"
   type        = string
-  default     = "100G"
+  default     = "50G"
 }
 
 variable "distro_family" {
