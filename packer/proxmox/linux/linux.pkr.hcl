@@ -8,7 +8,7 @@ packer {
 }
 
 locals {
-  boot_command = var.distro_family == "debian" ? [""] : ["<esc> linux ip=dhcp inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter>"]
+  boot_command = var.distro_family == "debian" ? ["<esc> autoinstall ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort}}/ --- <enter>"] : ["<esc> linux ip=dhcp inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter>"]
 }
 
 source "proxmox-iso" "golden_image" {

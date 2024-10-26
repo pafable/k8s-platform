@@ -50,6 +50,15 @@ autoinstall:
     version: 2
   oem:
     install: auto
+  packages:
+    - build-essential
+    - screenfetch
+    - podman
+    - podman-compose
+    - qemu-guest-agent
+  refresh-installer:
+    update: true
+    channel: stable/ubuntu-$REL
   source:
     id: ubuntu-server
     search_drivers: false

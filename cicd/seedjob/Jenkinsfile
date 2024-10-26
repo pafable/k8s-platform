@@ -1,18 +1,22 @@
 final String agent_label = 'jenkins-agent'
+final String jenkins_param_name = 'JENKINS_AGENT_TAG'
+final String platform_branch = 'refs/heads/master'
+final String platform_repo = 'https://github.com/pafable/k8s-platform.git'
+
+// job descriptions
 final String apps_desc = 'Apps deployer'
 final String dns_desc = "DNS updater"
 final String jenkins_desc = 'Jenkins agent builder'
 final String jenkins_param_desc = 'Tag for Jenkins agent'
-final String jenkins_param_name = 'JENKINS_AGENT_TAG'
 final String k3sInfraDesc = 'Builds k3s infra'
-final String platform_branch = 'refs/heads/master'
-final String platform_repo = 'https://github.com/pafable/k8s-platform.git'
+final String packyDesc = 'Builds images'
 
 final def jobsToScripts = [
     'agent-builder': 'cicd/agent-builder/Jenkinsfile',
     'apps-deployer': 'cicd/apps/Jenkinsfile',
     'dns-updater': 'cicd/dns/Jenkinsfile',
-    'k3s-infra-factory': 'cicd/k3s/Jenkinsfile'
+    'k3s-infra-factory': 'cicd/k3s/Jenkinsfile',
+    'packy': 'cicd/image/Jenkinsfile'
 ]
 
 pipeline {
@@ -34,7 +38,7 @@ pipeline {
                 script {
                     jobsToScripts.each {
                         final job, final path ->
-                            if (job != 'agent-builder' && job != 'dns-updater' && job != 'k3s-infra-factory')
+                            if (job != 'agent-builder' && job != 'dns-updater' && job != 'k3s-infra-factory' && job != 'packy')
                             {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
@@ -115,6 +119,40 @@ pipeline {
                                                     'destroy'
                                                 ],
                                                 'Create or destroy'
+                                            )
+                                        }
+                                        definition {
+                                            cpsScm {
+                                                scm {
+                                                    git {
+                                                        remote {
+                                                            url("${platform_repo}")
+                                                        }
+                                                        branch("${platform_branch}")
+                                                    }
+                                                }
+                                                scriptPath("${path}")
+                                                lightweight()
+                                            }
+                                        }
+                                        properties {
+                                            disableConcurrentBuilds()
+                                            disableResume()
+                                        }
+                                    }
+                                """
+                            } else if (job == 'packy') {
+                                jobDsl scriptText: """
+                                    pipelineJob("${job}") {
+                                        description("${packyDesc}")
+                                        parameters {
+                                            choiceParam(
+                                                'ACTIONS',
+                                                [
+                                                    'build',
+                                                    'destroy'
+                                                ],
+                                                'build or destroy'
                                             )
                                         }
                                         definition {
