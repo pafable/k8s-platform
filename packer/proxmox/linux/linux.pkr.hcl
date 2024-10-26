@@ -32,7 +32,6 @@ source "proxmox-iso" "linux_golden_image" {
   boot_wait                = "3s"
   cores                    = var.cores
   cpu_type                 = "host"
-  format                   = "raw"
   http_directory           = var.http_directory
   insecure_skip_tls_verify = true
   memory                   = var.memory
@@ -54,12 +53,12 @@ source "proxmox-iso" "linux_golden_image" {
     iso_file = "local:iso/${var.iso_name}"
     unmount  = true
     type     = "scsi"
-    format   = raw
   }
 
   disks {
     discard      = true
     disk_size    = var.disk_size
+    format       = "raw"
     storage_pool = "local-lvm"
     ssd          = true
     type         = "scsi"
