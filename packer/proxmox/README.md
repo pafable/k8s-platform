@@ -23,6 +23,7 @@ example vars.pkr.hcl
 ```
 distro_family        = "<DISTRIBUTION FAMILY>"
 http_directory       = "<DIRECTORY FOR KICKSTART FILES>"
+is_local             = "<SET THIS TO FALSE IF YOU'RE RUNNING AN HTTP SERVER ON A DIFFERENT MACHINE>"
 iso_name             = "<ISO NAME>"
 proxmox_node         = "<PROXMOX_NODE>"
 proxmox_token        = "<PROXMOX_TOKEN>"

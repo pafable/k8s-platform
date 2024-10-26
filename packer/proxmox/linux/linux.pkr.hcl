@@ -8,7 +8,7 @@ packer {
 }
 
 locals {
-  rh_cmd = ["<esc> linux ip=dhcp inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter>"]
+  rh_cmd = ["<esc> linux ip=dhcp inst.ks=http://${local.http_ip}/ks.cfg<enter>"]
 
   ubuntu_cmd = [
     "<esc><esc><esc><esc>e<wait>", "<del><del><del><del><del><del><del><del>",
@@ -17,12 +17,13 @@ locals {
     "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>",
     "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>",
     "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>",
-    "linux /casper/vmlinuz --- ip=dhcp autoinstall ds=\"nocloud-net;seedfrom=http://{{ .HTTPIP }}:{{ .HTTPPort }}/\"<enter><wait>",
+    "linux /casper/vmlinuz --- ip=dhcp autoinstall ds=\"nocloud-net;seedfrom=http://${local.http_ip}/ubuntu\"<enter><wait>",
     "initrd /casper/initrd<enter><wait>",
     "boot<enter>", "<enter><f10><wait>"
   ]
 
   boot_cmd = var.distro_family == "debian" ? local.ubuntu_cmd : local.rh_cmd
+  http_ip  = var.is_local ? "{{ .HTTPIP }}:{{ .HTTPPort }}" : "192.168.109.210:8080"
 }
 
 source "proxmox-iso" "golden_image" {

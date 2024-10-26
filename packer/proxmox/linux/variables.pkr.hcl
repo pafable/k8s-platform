@@ -21,6 +21,12 @@ variable "http_directory" {
   type        = string
 }
 
+variable "is_local" {
+  description = "Is http server on your workstation?"
+  type        = bool
+  default     = true
+}
+
 variable "iso_name" {
   description = "ISO name"
   type        = string
