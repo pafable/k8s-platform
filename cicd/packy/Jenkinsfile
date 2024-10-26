@@ -1,5 +1,6 @@
 final String agentLabel = 'jenkins-agent'
 final String awsCreds = 'aws-dev-deployer-creds'
+final String proxmoxCreds = 'proxmox-api-creds'
 final String tfVersion = 'tf-1-9-8'
 
 final def distros = [
