@@ -10,6 +10,12 @@ variable "disk_size" {
   default     = "32G"
 }
 
+variable "distro_family" {
+  description = "Distribution family"
+  type        = string
+  default     = "red_hat"
+}
+
 variable "http_directory" {
   description = "Directory for ks server"
   type        = string

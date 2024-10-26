@@ -1,0 +1,134 @@
+#cloud-config
+# See the autoinstall documentation at:
+# https://canonical-subiquity.readthedocs-hosted.com/en/latest/reference/autoinstall-reference.html
+autoinstall:
+  apt:
+    disable_components: []
+    fallback: offline-install
+    geoip: true
+    mirror-selection:
+      primary:
+      - country-mirror
+      - arches: &id001
+        - amd64
+        - i386
+        uri: http://archive.ubuntu.com/ubuntu/
+      - arches: &id002
+        - s390x
+        - arm64
+        - armhf
+        - powerpc
+        - ppc64el
+        - riscv64
+        uri: http://ports.ubuntu.com/ubuntu-ports
+    preserve_sources_list: false
+    security:
+    - arches: *id001
+      uri: http://security.ubuntu.com/ubuntu/
+    - arches: *id002
+      uri: http://ports.ubuntu.com/ubuntu-ports
+  codecs:
+    install: false
+  drivers:
+    install: false
+  identity:
+    hostname: ubuntu-builder
+    password: $6$3w/2MTJ7Wan2DokZ$lrCa1trHurHiEOlQTWvJey8njc7P7Vxn4K.okbhyZ8AynAxx4lSEfWwy8rksPg4U/U4.D3ePSI0v4HnFh6Zpn.
+    realname: provisioner
+    username: provisioner
+  kernel:
+    package: linux-generic
+  keyboard:
+    layout: us
+    toggle: null
+    variant: ''
+  locale: en_US.UTF-8
+  network:
+    ethernets:
+      ens18:
+        dhcp4: true
+    version: 2
+  oem:
+    install: auto
+  source:
+    id: ubuntu-server
+    search_drivers: false
+  ssh:
+    allow-pw: true
+    authorized-keys: []
+    install-server: true
+  storage:
+    config:
+    - ptable: gpt
+      serial: 0QEMU_QEMU_HARDDISK_drive-scsi0
+      path: /dev/sda
+      wipe: superblock-recursive
+      preserve: false
+      name: ''
+      grub_device: true
+      id: disk-sda
+      type: disk
+    - device: disk-sda
+      size: 1048576
+      flag: bios_grub
+      number: 1
+      preserve: false
+      grub_device: false
+      offset: 1048576
+      path: /dev/sda1
+      id: partition-0
+      type: partition
+    - device: disk-sda
+      size: 2147483648
+      wipe: superblock
+      number: 2
+      preserve: false
+      grub_device: false
+      offset: 2097152
+      path: /dev/sda2
+      id: partition-1
+      type: partition
+    - fstype: ext4
+      volume: partition-1
+      preserve: false
+      id: format-0
+      type: format
+    - device: disk-sda
+      size: 105223553024
+      wipe: superblock
+      number: 3
+      preserve: false
+      grub_device: false
+      offset: 2149580800
+      path: /dev/sda3
+      id: partition-2
+      type: partition
+    - name: ubuntu-vg
+      devices:
+      - partition-2
+      preserve: false
+      id: lvm_volgroup-0
+      type: lvm_volgroup
+    - name: ubuntu-lv
+      volgroup: lvm_volgroup-0
+      size: 52609155072B
+      wipe: superblock
+      preserve: false
+      path: /dev/ubuntu-vg/ubuntu-lv
+      id: lvm_partition-0
+      type: lvm_partition
+    - fstype: ext4
+      volume: lvm_partition-0
+      preserve: false
+      id: format-1
+      type: format
+    - path: /
+      device: format-1
+      id: mount-1
+      type: mount
+    - path: /boot
+      device: format-0
+      id: mount-0
+      type: mount
+  updates: security
+  version: 1

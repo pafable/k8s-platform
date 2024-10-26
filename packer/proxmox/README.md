@@ -20,6 +20,7 @@ Create a `roc-vars.pkr.hcl` for Rocky Linux and `orc-vars.pkr.hcl` for Oracle Li
 
 example vars.pkr.hcl
 ```
+distro_family        = "<DISTRIBUTION FAMILY>"
 http_directory       = "<DIRECTORY FOR KICKSTART FILES>"
 iso_name             = "<ISO NAME>"
 proxmox_node         = "<PROXMOX_NODE>"

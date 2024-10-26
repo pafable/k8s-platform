@@ -4,7 +4,7 @@ dotenv: ['.env']
 
 vars:
   # Proxmox dirs
-  PROXMOX_PACKER_RH_DIR: packer/proxmox/rh
+  PROXMOX_PACKER_LINUX_DIR: packer/proxmox/linux
 
   # Agent tag
   JENKINS_AGENT_IMAGE_DIR: dockerfiles/jenkins-agents
@@ -539,7 +539,7 @@ tasks:
 
   packer-ol-build:
     desc: Build Oracle linux image
-    dir: '{{ .PROXMOX_PACKER_RH_DIR }}'
+    dir: '{{ .PROXMOX_PACKER_LINUX_DIR }}'
     deps:
       - task: fmt
     cmds:
@@ -549,7 +549,7 @@ tasks:
 
   packer-rl-build:
     desc: Build Rocky linux image
-    dir: '{{ .PROXMOX_PACKER_RH_DIR }}'
+    dir: '{{ .PROXMOX_PACKER_LINUX_DIR }}'
     deps:
       - task: fmt
     cmds:
