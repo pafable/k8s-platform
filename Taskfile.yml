@@ -557,6 +557,16 @@ tasks:
       - packer validate -var-file=roc-vars.pkrvars.hcl .
       - packer build -var-file=roc-vars.pkrvars.hcl .
 
+  packer-ubu-build:
+    desc: Build Ubuntu image
+    dir: '{{ .PROXMOX_PACKER_LINUX_DIR }}'
+    deps:
+      - task: fmt
+    cmds:
+      - packer init .
+      - packer validate -var-file=ubu-vars.pkrvars.hcl .
+      - packer build -var-file=ubu-vars.pkrvars.hcl .
+
   proxmox-dns-init:
     dir: '{{ .PROXMOX_DNS_DIR }}'
     deps:

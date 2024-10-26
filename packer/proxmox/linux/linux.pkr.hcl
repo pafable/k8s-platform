@@ -8,12 +8,20 @@ packer {
 }
 
 locals {
-  boot_command = var.distro_family == "debian" ? ["<esc> autoinstall ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort}}/ --- <enter>"] : ["<esc> linux ip=dhcp inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter>"]
+  rh_cmd = ["<esc> linux ip=dhcp inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter>"]
+  ubuntu_cmd = [
+    "c", "<wait3s>",
+  "<e> autoinstall ip=dhcp ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort}}/ --- <enter>"]
+  orig = [
+    "c", "<wait3s>",
+    "linux ip=dhcp autoinstall ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort}}/autoinstall.yml --- <enter>"
+  ]
+  boot_cmd = var.distro_family == "debian" ? local.orig : local.rh_cmd
 }
 
 source "proxmox-iso" "golden_image" {
   ballooning_minimum       = 0
-  boot_command             = local.boot_command
+  boot_command             = local.boot_cmd
   boot_wait                = "3s"
   cores                    = var.cores
   cpu_type                 = "host"
