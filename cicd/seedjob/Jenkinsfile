@@ -150,7 +150,7 @@ pipeline {
                                                 'ACTIONS',
                                                 [
                                                     'build',
-                                                    'destroy'
+                                                    'demolish'
                                                 ],
                                                 'build or destroy'
                                             )
