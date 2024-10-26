@@ -3,9 +3,9 @@ final String awsCreds = 'aws-dev-deployer-creds'
 final String tfVersion = 'tf-1-9-8'
 
 final def distros = [
-    'ol', # oracle linux
-    'rl', # rocky linux
-    'ubu' # ubuntu
+    'ol', // oracle linux
+    'rl', // rocky linux
+    'ubu' // ubuntu
 ]
 
 final def distroFamily = [
