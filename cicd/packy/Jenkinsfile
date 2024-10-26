@@ -2,6 +2,7 @@ final String agentLabel = 'jenkins-agent'
 final String awsCreds = 'aws-dev-deployer-creds'
 final String packerSshCreds = 'packer-test-ssh-creds'
 final String proxmoxCreds = 'proxmox-api-creds'
+final String proxmoxIP = '192.168.109.2'
 final String tfVersion = 'tf-1-9-8'
 
 final def distros = [
@@ -32,7 +33,7 @@ pipeline {
         PROXMOX = credentials("${proxmoxCreds}")
         PKR_VAR_proxmox_username = "${PROXMOX_USR}"
         PKR_VAR_proxmox_token = "${PROXMOX_PSW}"
-        PKR_VAR_proxmox_url = "192.168.109.2"
+        PKR_VAR_proxmox_url = "${proxmoxIP}"
         SSH_CREDS = credentials("${packerSshCreds}")
         PKR_VAR_ssh_password = "${SSH_CREDS_PSW}"
         PKR_VAR_ssh_username = "${SSH_CREDS_USR}"
