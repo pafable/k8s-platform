@@ -69,8 +69,8 @@ pipeline {
         description: 'Proxmox nodes',
         name: 'PROXMOX_NODE'
 
-        string description: 'Template name'
-        trim: true
+        string description: 'Template name',
+        trim: true,
         name: 'TMPL_NAME'
     }
 
