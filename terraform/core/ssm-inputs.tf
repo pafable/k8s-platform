@@ -18,6 +18,11 @@ data "aws_ssm_parameter" "aws_dev_secret_key" {
   name     = "/account/dev/aws/deployer/secret/access/key"
 }
 
+data "aws_ssm_parameter" "http_server" {
+  provider = aws.parameters
+  name     = "/proxmox/dns/server/ip"
+}
+
 data "aws_ssm_parameter" "jenkins_github_token" {
   provider = aws.parameters
   name     = "/jenkins/github/token"

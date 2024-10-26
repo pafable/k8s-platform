@@ -54,6 +54,14 @@ locals {
             scope       = "GLOBAL"
             secret      = var.jenkins_github_token
           }
+        },
+        {
+          string = {
+            description = "http server for packer"
+            id          = "http-server"
+            scope       = "GLOBAL"
+            secret      = var.http_server
+          }
         }
       ]
     }

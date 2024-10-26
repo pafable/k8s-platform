@@ -20,6 +20,11 @@ variable "http_directory" {
   type        = string
 }
 
+variable "http_server" {
+  description = "HTTP server"
+  type        = string
+}
+
 variable "is_local" {
   description = "Is http server on your workstation?"
   type        = bool

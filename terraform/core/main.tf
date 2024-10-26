@@ -25,6 +25,7 @@ module "jenkins" {
   docker_hub_password         = sensitive(data.aws_ssm_parameter.docker_hub_password.value)
   docker_hub_username         = sensitive(data.aws_ssm_parameter.docker_hub_username.value)
   domain                      = var.domain
+  http_server                 = sensitive(data.aws_ssm_parameter.http_server.value)
   ingress_name                = var.ingress
   jenkins_github_token        = data.aws_ssm_parameter.jenkins_github_token.value
   k3s_config_file             = sensitive(data.aws_ssm_parameter.k3s_kubeconfig_file.value)

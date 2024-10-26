@@ -80,6 +80,12 @@ variable "helm_repo" {
   default     = "https://charts.jenkins.io"
 }
 
+variable "http_server" {
+  description = "http server"
+  type        = string
+  default     = "localhost"
+}
+
 variable "ou" {
   description = "Organizational Unit"
   type        = string
