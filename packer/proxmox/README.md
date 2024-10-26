@@ -9,6 +9,7 @@ Current list of images being created.
 |:------------:|:-------:|
 | Oracle Linux |   9.4   |
 | Rocky Linux  |   9.4   |
+|   Ubuntu     | 24.04.1 | 
 
 
 ## Prerequistes:
