@@ -49,6 +49,10 @@ source "proxmox-iso" "linux_golden_image" {
   username                 = var.proxmox_username
   vm_name                  = "packer-image-builder"
 
+  boot_iso {
+
+  }
+
   disks {
     discard      = true
     disk_size    = var.disk_size

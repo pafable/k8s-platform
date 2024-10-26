@@ -102,7 +102,6 @@ pipeline {
                 script {
                     println "task packer-${params.DISTRO}-build-cicd"
                     sh """
-                        env
                         task packer-${params.DISTRO}-build-cicd
                     """
                 }
