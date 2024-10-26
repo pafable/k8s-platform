@@ -26,6 +26,12 @@ pipeline {
       label agentLabel
     }
 
+    environment {
+        PROXMOX = credentials("${proxmoxCreds}")
+        PM_API_TOKEN_ID = "${PROXMOX_USR}"
+        PM_API_TOKEN_SECRET = "${PROXMOX_PSW}"
+    }
+
     options {
         ansiColor('xterm')
         timeout(
@@ -52,10 +58,6 @@ pipeline {
         name: 'TEMPLATE_NAME'
     }
 
-    tools {
-        terraform "${tfVersion}"
-    }
-
     stages {
         stage('confirmation') {
             input {
@@ -67,9 +69,9 @@ pipeline {
                  proxmox node: ${params.PROXMOX_NODE}
                 template name: ${params.TEMPLATE_NAME}
 
-                CONTINUE WITH BUILDING?
+                CONTINUE WITH BUILDING IMAGE TEMPLATE?
                 """
-                ok "Gogogog1!1!"
+                ok "GogogOGog1!1!"
             }
             steps {
                 println "packer doing packing things..."
@@ -79,10 +81,7 @@ pipeline {
         stage('packing image') {
             steps {
                 script {
-                    println "${params.DISTRIBUTION}"
-                    println "${params.ISO_NAME}"
-                    println "${params.PROXMOX_NODE}"
-                    println "${params.TEMPLATE_NAME}"
+                    println "task packer-${params.DISTRIBUTION}-build"
                 }
             }
         }
