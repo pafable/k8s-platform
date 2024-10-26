@@ -29,8 +29,9 @@ pipeline {
 
     environment {
         PROXMOX = credentials("${proxmoxCreds}")
-        PM_API_TOKEN_ID = "${PROXMOX_USR}"
-        PM_API_TOKEN_SECRET = "${PROXMOX_PSW}"
+        PKR_VAR_proxmox_username = "${PROXMOX_USR}"
+        PKR_VAR_proxmox_token = "${PROXMOX_PSW}"
+        PKR_VAR_proxmox_url = "192.168.109.2"
     }
 
     options {
@@ -83,6 +84,7 @@ pipeline {
             steps {
                 script {
                     println "task packer-${params.DISTRIBUTION}-build"
+                    sh "env"
                 }
             }
         }
