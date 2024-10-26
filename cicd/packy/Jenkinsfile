@@ -100,10 +100,10 @@ pipeline {
 
             steps {
                 script {
-                    println "task packer-${params.DISTRIBUTION}-build-cicd"
+                    println "task packer-${params.DISTRO}-build-cicd"
                     sh """
                         env
-                        task packer-${params.DISTRIBUTION}-build-cicd
+                        task packer-${params.DISTRO}-build-cicd
                     """
                 }
             }
