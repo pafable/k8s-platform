@@ -32,7 +32,6 @@ autoinstall:
   drivers:
     install: false
   identity:
-    hostname: ubuntu-builder
     password: $6$ZIBCtTofTzCA7ZvP$kUOekNB3DeYzfb7vNr2sDbbe9t5pmuNjc6nGwSWE.OthxMHbxFRW5bN625O5ag46QsDAYq/RQHeicnbuxZ2ar/
     realname: provisioner
     username: provisioner
