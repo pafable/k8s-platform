@@ -32,7 +32,7 @@ source "proxmox-iso" "linux_golden_image" {
   boot_wait                = "3s"
   cores                    = var.cores
   cpu_type                 = "host"
-  http_directory           = var.http_directory
+  http_directory           = var.is_local ? var.http_directory : null
   insecure_skip_tls_verify = true
   memory                   = var.memory
   node                     = var.proxmox_node
