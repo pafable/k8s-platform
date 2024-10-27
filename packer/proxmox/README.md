@@ -18,7 +18,7 @@ Current list of images being created.
 - Upload contents of `auto-ks` to a http server.
 
 ## Create a Vars File
-Create a `roc-vars.pkr.hcl` for Rocky Linux and `orc-vars.pkr.hcl` for Oracle Linux in the rh (Red Hat based distros) folder. File and write in entries for proxmox user and password and ssh user and pass if required.
+Create a `ubu-vars.pkr.hcl` for Ubuntu, `roc-vars.pkr.hcl` for Rocky and `orc-vars.pkr.hcl` for Oracle in the linux folder. Write in entries for proxmox user and password and ssh user and pass if required.
 
 example vars.pkr.hcl
 ```
