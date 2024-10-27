@@ -18,6 +18,7 @@ variable "distro" {
 variable "http_directory" {
   description = "Directory for ks server"
   type        = string
+  default     = "../auto-ks"
 }
 
 variable "http_server" {
