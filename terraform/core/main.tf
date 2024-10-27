@@ -25,9 +25,12 @@ module "jenkins" {
   docker_hub_password         = sensitive(data.aws_ssm_parameter.docker_hub_password.value)
   docker_hub_username         = sensitive(data.aws_ssm_parameter.docker_hub_username.value)
   domain                      = var.domain
+  http_server                 = sensitive(data.aws_ssm_parameter.http_server.value)
   ingress_name                = var.ingress
   jenkins_github_token        = data.aws_ssm_parameter.jenkins_github_token.value
   k3s_config_file             = sensitive(data.aws_ssm_parameter.k3s_kubeconfig_file.value)
+  packer_ssh_password         = sensitive(data.aws_ssm_parameter.packer_ssh_password.value)
+  packer_ssh_username         = sensitive(data.aws_ssm_parameter.packer_ssh_username.value)
   proxmox_token_id            = sensitive(data.aws_ssm_parameter.proxmox_token_id.value)
   proxmox_token_secret        = sensitive(data.aws_ssm_parameter.proxmox_token_secret.value)
   storage_class_name          = "hive-ship-sc" # this is needed for k3s deployment

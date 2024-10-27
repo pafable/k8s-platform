@@ -80,6 +80,12 @@ variable "helm_repo" {
   default     = "https://charts.jenkins.io"
 }
 
+variable "http_server" {
+  description = "http server"
+  type        = string
+  default     = "localhost"
+}
+
 variable "ou" {
   description = "Organizational Unit"
   type        = string
@@ -90,6 +96,18 @@ variable "owner" {
   description = "Owner of resource"
   type        = string
   default     = "devops"
+}
+
+variable "packer_ssh_password" {
+  description = "Packer ssh password"
+  type        = string
+  sensitive   = true
+}
+
+variable "packer_ssh_username" {
+  description = "Packer ssh username"
+  type        = string
+  sensitive   = true
 }
 
 variable "proxmox_token_id" {

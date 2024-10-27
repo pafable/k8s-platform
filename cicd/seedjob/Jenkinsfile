@@ -1,18 +1,22 @@
 final String agent_label = 'jenkins-agent'
+final String jenkins_param_name = 'JENKINS_AGENT_TAG'
+final String platform_branch = 'refs/heads/master'
+final String platform_repo = 'https://github.com/pafable/k8s-platform.git'
+
+// job descriptions
 final String apps_desc = 'Apps deployer'
 final String dns_desc = "DNS updater"
 final String jenkins_desc = 'Jenkins agent builder'
 final String jenkins_param_desc = 'Tag for Jenkins agent'
-final String jenkins_param_name = 'JENKINS_AGENT_TAG'
 final String k3sInfraDesc = 'Builds k3s infra'
-final String platform_branch = 'refs/heads/master'
-final String platform_repo = 'https://github.com/pafable/k8s-platform.git'
+final String packyDesc = 'Builds images'
 
 final def jobsToScripts = [
     'agent-builder': 'cicd/agent-builder/Jenkinsfile',
     'apps-deployer': 'cicd/apps/Jenkinsfile',
     'dns-updater': 'cicd/dns/Jenkinsfile',
-    'k3s-infra-factory': 'cicd/k3s/Jenkinsfile'
+    'k3s-infra-factory': 'cicd/k3s/Jenkinsfile',
+    'packy': 'cicd/packy/Jenkinsfile'
 ]
 
 pipeline {
@@ -34,8 +38,40 @@ pipeline {
                 script {
                     jobsToScripts.each {
                         final job, final path ->
-                            if (job != 'agent-builder' && job != 'dns-updater' && job != 'k3s-infra-factory')
-                            {
+                            if (job == 'agent-builder') {
+                                jobDsl scriptText: """
+                                    pipelineJob("${job}") {
+                                        description("${jenkins_desc}")
+                                        parameters {
+                                            stringParam {
+                                                description("${jenkins_param_desc}")
+                                                name("${jenkins_param_name}")
+                                                trim(true)
+                                            }
+                                        }
+                                        definition {
+                                            cpsScm {
+                                                scm {
+                                                    git {
+                                                        remote {
+                                                            url("${platform_repo}")
+                                                        }
+                                                        branch("${platform_branch}")
+                                                    }
+                                                }
+                                                scriptPath("${path}")
+                                                lightweight()
+                                            }
+                                        }
+                                        properties {
+                                            disableConcurrentBuilds()
+                                            disableResume()
+                                        }
+                                    }
+                                """
+                            }
+
+                            if (job == 'apps-deployer') {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
                                         description("${apps_desc}")
@@ -69,7 +105,9 @@ pipeline {
                                         }
                                     }
                                 """
-                            } else if (job == 'dns-updater') {
+                            }
+
+                            if (job == 'dns-updater') {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
                                         description("${dns_desc}")
@@ -103,7 +141,9 @@ pipeline {
                                         }
                                     }
                                 """
-                            } else if (job == 'k3s-infra-factory') {
+                            }
+
+                            if (job == 'k3s-infra-factory') {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
                                         description("${k3sInfraDesc}")
@@ -137,16 +177,50 @@ pipeline {
                                         }
                                     }
                                 """
-                            } else {
+                            }
+
+                            if (job == 'packy') {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
-                                        description("${jenkins_desc}")
+                                        description("${packyDesc}")
                                         parameters {
-                                            stringParam {
-                                                description("${jenkins_param_desc}")
-                                                name("${jenkins_param_name}")
-                                                trim(true)
-                                            }
+                                            choiceParam(
+                                                'DISTRO',
+                                                [
+                                                    'debian',
+                                                    'oracle',
+                                                    'rocky',
+                                                    'ubuntu'
+                                                ],
+                                                'linux distribution'
+                                            )
+
+                                            choiceParam(
+                                                'ISO_NAME',
+                                                [
+                                                    'OracleLinux-R9-U4-x86_64-boot.iso',
+                                                    'Rocky-9.4-x86_64-boot.iso',
+                                                    'debian-12.7.0-amd64-netinst.iso',
+                                                    'ubuntu-24.04.1-live-server-amd64.iso'
+                                                ],
+                                                'iso names'
+                                            )
+
+                                            choiceParam(
+                                                'PROXMOX_NODE',
+                                                [
+                                                    'behemoth',
+                                                    'kraken',
+                                                    'leviathan'
+                                                ],
+                                                'proxmox nodes'
+                                            )
+
+                                            stringParam(
+                                                'TEMPLATE_NAME',
+                                                null,
+                                                'template name'
+                                            )
                                         }
                                         definition {
                                             cpsScm {
@@ -155,7 +229,7 @@ pipeline {
                                                         remote {
                                                             url("${platform_repo}")
                                                         }
-                                                        branch("${platform_branch}")
+                                                        branch("refs/heads/packy")
                                                     }
                                                 }
                                                 scriptPath("${path}")

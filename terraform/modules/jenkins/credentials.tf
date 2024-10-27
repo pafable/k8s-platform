@@ -21,6 +21,15 @@ locals {
           }
         },
         {
+          usernamePassword = {
+            description = "Test ssh creds for packer"
+            id          = "packer-test-ssh-creds"
+            password    = sensitive(var.packer_ssh_password)
+            scope       = "GLOBAL"
+            username    = sensitive(var.packer_ssh_username)
+          }
+        },
+        {
           aws = {
             accessKey   = sensitive(var.aws_dev_deployer_access_key)
             description = "AWS credentials for dev account"
@@ -44,6 +53,14 @@ locals {
             id          = "github-token"
             scope       = "GLOBAL"
             secret      = var.jenkins_github_token
+          }
+        },
+        {
+          string = {
+            description = "http server for packer"
+            id          = "http-server"
+            scope       = "GLOBAL"
+            secret      = var.http_server
           }
         }
       ]

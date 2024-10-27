@@ -18,6 +18,11 @@ data "aws_ssm_parameter" "aws_dev_secret_key" {
   name     = "/account/dev/aws/deployer/secret/access/key"
 }
 
+data "aws_ssm_parameter" "http_server" {
+  provider = aws.parameters
+  name     = "/proxmox/dns/server/ip"
+}
+
 data "aws_ssm_parameter" "jenkins_github_token" {
   provider = aws.parameters
   name     = "/jenkins/github/token"
@@ -41,6 +46,16 @@ data "aws_ssm_parameter" "k3s_agent1_ipv4" {
 data "aws_ssm_parameter" "k3s_agent2_ipv4" {
   provider = aws.parameters
   name     = "/proxmox/k3s/agent2/ipv4"
+}
+
+data "aws_ssm_parameter" "packer_ssh_password" {
+  provider = aws.parameters
+  name     = "/packer/ssh/password"
+}
+
+data "aws_ssm_parameter" "packer_ssh_username" {
+  provider = aws.parameters
+  name     = "/packer/ssh/username"
 }
 
 data "aws_ssm_parameter" "proxmox_token_id" {

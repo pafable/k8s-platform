@@ -1,0 +1,115 @@
+final String agentLabel = 'jenkins-agent'
+final String awsCreds = 'aws-dev-deployer-creds'
+final String httpServer = 'http-server'
+final String packerSshCreds = 'packer-test-ssh-creds'
+final String proxmoxCreds = 'proxmox-api-creds'
+final String proxmoxIP = '192.168.109.2'
+final String tfVersion = 'tf-1-9-8'
+
+final def distros = [
+    'debian',
+    'oracle',
+    'rocky',
+    'ubuntu'
+]
+
+final def isoNames = [
+    'OracleLinux-R9-U4-x86_64-boot.iso',
+    'Rocky-9.4-x86_64-boot.iso',
+    'debian-12.7.0-amd64-netinst.iso',
+    'ubuntu-24.04.1-live-server-amd64.iso'
+]
+
+final def proxmoxNodes = [
+    'behemoth',
+    'kraken',
+    'leviathan'
+]
+
+pipeline {
+    agent {
+      label agentLabel
+    }
+
+    environment {
+        PKR_VAR_http_server = credentials("${httpServer}")
+        PROXMOX = credentials("${proxmoxCreds}")
+        PKR_VAR_proxmox_username = "${PROXMOX_USR}"
+        PKR_VAR_proxmox_token = "${PROXMOX_PSW}"
+        PKR_VAR_proxmox_url = "${proxmoxIP}"
+        SSH_CREDS = credentials("${packerSshCreds}")
+        PKR_VAR_ssh_password = "${SSH_CREDS_PSW}"
+        PKR_VAR_ssh_username = "${SSH_CREDS_USR}"
+    }
+
+    options {
+        ansiColor('xterm')
+        timeout(
+            time: 10,
+            unit: 'MINUTES'
+        )
+    }
+
+    parameters {
+        choice choices: distros,
+        description: 'linux distribution',
+        name: 'DISTRO'
+
+        choice choices: isoNames,
+        description: 'iso names',
+        name: 'ISO_NAME'
+
+        choice choices: proxmoxNodes,
+        description: 'proxmox nodes',
+        name: 'PROXMOX_NODE'
+
+        string description: 'template name',
+        trim: true,
+        name: 'TEMPLATE_NAME'
+    }
+
+    tools {
+        terraform tfVersion
+    }
+
+    stages {
+        stage('confirmation') {
+            input {
+                message """
+                building a Proxmox template from ${params.ISO_NAME}
+
+                 distribution: ${params.DISTRO}
+                     iso name: ${params.ISO_NAME}
+                 proxmox node: ${params.PROXMOX_NODE}
+                template name: ${params.TEMPLATE_NAME}
+
+                CONTINUE WITH BUILDING IMAGE TEMPLATE?
+                """
+                ok "GogogOGog1!1!"
+            }
+            steps {
+                println "packer doing packing things..."
+            }
+        }
+
+        stage('packing image') {
+            environment {
+                PKR_VAR_is_local = false
+                PKR_VAR_iso_name = "${params.ISO_NAME}"
+                PKR_VAR_distro = "${params.DISTRO}"
+                PKR_VAR_proxmox_node = "${params.PROXMOX_NODE}"
+                PKR_VAR_template_description = "Base template for ${params.ISO_NAME}. Creation date: %s"
+                PKR_VAR_template_name = "${params.TEMPLATE_NAME}"
+            }
+
+            steps {
+                script {
+                    println "task packer-${params.DISTRO}-build-cicd"
+                    sh """
+                        task packer-${params.DISTRO}-build-cicd
+                    """
+                }
+            }
+        }
+    }
+}

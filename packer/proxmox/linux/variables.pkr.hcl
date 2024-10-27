@@ -7,12 +7,29 @@ variable "cores" {
 variable "disk_size" {
   description = "Disk size on the packer builder vm"
   type        = string
-  default     = "32G"
+  default     = "50G"
+}
+
+variable "distro" {
+  description = "Linux distribution"
+  type        = string
 }
 
 variable "http_directory" {
   description = "Directory for ks server"
   type        = string
+  default     = "../auto-ks"
+}
+
+variable "http_server" {
+  description = "HTTP server"
+  type        = string
+}
+
+variable "is_local" {
+  description = "Is http server on your workstation?"
+  type        = bool
+  default     = true
 }
 
 variable "iso_name" {
