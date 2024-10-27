@@ -1,7 +1,7 @@
 variable "clone_template" {
   description = "Name of clone"
   type        = string
-  default     = "uwu"
+  default     = "uwutest"
 }
 
 variable "cloud_init_pve_node" {
