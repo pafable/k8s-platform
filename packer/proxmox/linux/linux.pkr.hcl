@@ -8,7 +8,7 @@ packer {
 }
 
 locals {
-  rh_cmd = ["<esc> linux ip=dhcp inst.ks=http://${local.http_ip}/ks.cfg<enter>"]
+  rh_cmd = ["<esc> linux ip=dhcp inst.ks=http://${local.http_ip}/${var.distro}/ks.cfg<enter>"]
 
   ubuntu_cmd = [
     "<esc><esc><esc><esc>e<wait>",
