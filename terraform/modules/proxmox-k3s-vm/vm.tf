@@ -16,7 +16,7 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
 
   user_data = <<-EOT
   #cloud-config
-  ssh_pwauth: true
+  hostname: ${var.name}
   package_update: true
   package_upgrade: true
   packages:
@@ -46,6 +46,7 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
     - firewall-cmd --permanent --zone=trusted --add-source=10.43.0.0/16 --permanent # services
     - firewall-cmd --permanent --zone=trusted --add-source=${var.home_network} --permanent # home network
     - firewall-cmd --reload
+  ssh_pwauth: true
   EOT
 }
 

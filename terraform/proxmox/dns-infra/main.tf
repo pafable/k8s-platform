@@ -16,7 +16,7 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
 
   user_data = <<-EOT
   #cloud-config
-  ssh_pwauth: true
+  hostname: ${var.name}
   package_update: true
   package_upgrade: true
   packages:
@@ -29,6 +29,7 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
         image_template: ${var.clone_template}
   runcmd:
     - ${var.runcmd}
+  ssh_pwauth: true
   EOT
 }
 

@@ -52,6 +52,7 @@ autoinstall:
     install: auto
   packages:
     - build-essential
+    - cloud-init
     - screenfetch
     - podman
     - podman-compose
