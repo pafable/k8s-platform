@@ -44,7 +44,7 @@ pipeline {
     options {
         ansiColor('xterm')
         timeout(
-            time: 8,
+            time: 10,
             unit: 'MINUTES'
         )
     }
@@ -93,7 +93,6 @@ pipeline {
 
         stage('packing image') {
             environment {
-                PKR_VAR_http_directory = "../auto-ks/ubuntu"
                 PKR_VAR_is_local = false
                 PKR_VAR_iso_name = "${params.ISO_NAME}"
                 PKR_VAR_distro = "${params.DISTRO}"
