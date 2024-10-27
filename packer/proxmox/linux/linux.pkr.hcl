@@ -17,7 +17,7 @@ locals {
     "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>",
     "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>",
     "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>",
-    "linux /casper/vmlinuz --- ip=dhcp autoinstall ds=\"nocloud-net;seedfrom=http://${local.http_ip}/ubuntu\"<enter><wait>",
+    "linux /casper/vmlinuz --- ip=dhcp autoinstall ds=\"nocloud-net;seedfrom=http://${local.http_ip}/ubuntu\"<enter><wait30s>",
     "initrd /casper/initrd<enter><wait>",
     "boot<enter>", "<enter><f10><wait>"
   ]
