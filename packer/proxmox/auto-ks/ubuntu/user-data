@@ -52,6 +52,7 @@ autoinstall:
     install: auto
   packages:
     - build-essential
+    - cloud-init
     - screenfetch
     - podman
     - podman-compose
@@ -66,5 +67,16 @@ autoinstall:
     allow-pw: true
     authorized-keys: []
     install-server: true
+  storage:
+    layout:
+      name: lvm
+  user-data:
+    users:
+      - name: provisioner
+        groups: [adm, sudo]
+        lock-passwd: false
+        sudo: ALL=(ALL) NOPASSWD:ALL
+        shell: /bin/bash
+  timezone: "America/New_York"
   updates: security
   version: 1

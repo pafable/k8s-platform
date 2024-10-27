@@ -19,33 +19,8 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
   hostname: ${var.name}
   package_update: true
   package_upgrade: true
-  packages:
-    - lynx
-  write_files:
-    - path: /home/${var.ssh_username}/k3s_storage_class.yaml
-      content: |
-        apiVersion: storage.k8s.io/v1
-        kind: StorageClass
-        metadata:
-          name: ${var.name}-sc
-        provisioner: rancher.io/local-path
-        reclaimPolicy: Delete
-        volumeBindingMode: Immediate
-    - path: /home/${var.ssh_username}/instance_creation_date
-      owner: nobody:nobody
-      content: |
-        Name: ${var.name}
-        Created: ${local.creation_date}
-        image_template: ${var.clone_template}
-  runcmd:
-    - ${var.runcmd}
-    - firewall-cmd --add-port=443/tcp --permanent
-    - firewall-cmd --add-port=6443/tcp --permanent
-    - firewall-cmd --add-port=10250/tcp --permanent
-    - firewall-cmd --permanent --zone=trusted --add-source=10.42.0.0/16 --permanent # pods
-    - firewall-cmd --permanent --zone=trusted --add-source=10.43.0.0/16 --permanent # services
-    - firewall-cmd --permanent --zone=trusted --add-source=${var.home_network} --permanent # home network
-    - firewall-cmd --reload
+  ${var.write_files}
+  ${var.runcmd}
   ssh_pwauth: true
   EOT
 }
