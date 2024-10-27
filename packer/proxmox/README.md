@@ -37,7 +37,7 @@ template_description = "<SOME DESCRIPTION>"
 template_name        = "<TEMPLATE_NAME>"
 ```
 
-## Create Images On Local Machine:
+## Create Images From Your Local Machine:
 Oracle 
 ```shell
 task packer-oracle-build
@@ -52,3 +52,6 @@ Ubuntu
 ```shell
 task packer-ubuntu-build
 ```
+
+## Create Images From Jenkins:
+Execute the following pipeline: [Jenkinsfile](../../cicd/packy/Jenkinsfile)
