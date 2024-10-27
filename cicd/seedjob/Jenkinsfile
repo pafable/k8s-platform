@@ -1,13 +1,13 @@
-final String agent_label = 'jenkins-agent'
-final String jenkins_param_name = 'JENKINS_AGENT_TAG'
-final String platform_branch = 'refs/heads/master'
-final String platform_repo = 'https://github.com/pafable/k8s-platform.git'
+final String agentLabel = 'jenkins-agent'
+final String jenkinsParamName = 'JENKINS_AGENT_TAG'
+final String platformBranch = 'refs/heads/master'
+final String platformRepo = 'https://github.com/pafable/k8s-platform.git'
 
 // job descriptions
-final String apps_desc = 'Apps deployer'
-final String dns_desc = "DNS updater"
-final String jenkins_desc = 'Jenkins agent builder'
-final String jenkins_param_desc = 'Tag for Jenkins agent'
+final String appsDesc = 'Apps deployer'
+final String dnsDesc = "DNS updater"
+final String jenkinsDesc = 'Jenkins agent builder'
+final String jenkinsParamDesc = 'Tag for Jenkins agent'
 final String k3sInfraDesc = 'Builds k3s infra'
 final String packyDesc = 'Builds images'
 
@@ -21,7 +21,7 @@ final def jobsToScripts = [
 
 pipeline {
     agent {
-      label "${agent_label}"
+      label "${agentLabel}"
     }
 
     options {
@@ -41,11 +41,11 @@ pipeline {
                             if (job == 'agent-builder') {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
-                                        description("${jenkins_desc}")
+                                        description("${jenkinsDesc}")
                                         parameters {
                                             stringParam {
-                                                description("${jenkins_param_desc}")
-                                                name("${jenkins_param_name}")
+                                                description("${jenkinsParamDesc}")
+                                                name("${jenkinsParamName}")
                                                 trim(true)
                                             }
                                         }
@@ -54,9 +54,9 @@ pipeline {
                                                 scm {
                                                     git {
                                                         remote {
-                                                            url("${platform_repo}")
+                                                            url("${platformRepo}")
                                                         }
-                                                        branch("${platform_branch}")
+                                                        branch("${platformBranch}")
                                                     }
                                                 }
                                                 scriptPath("${path}")
@@ -74,7 +74,7 @@ pipeline {
                             if (job == 'apps-deployer') {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
-                                        description("${apps_desc}")
+                                        description("${appsDesc}")
                                         parameters {
                                             choiceParam(
                                                 'ACTIONS',
@@ -90,9 +90,9 @@ pipeline {
                                                 scm {
                                                     git {
                                                         remote {
-                                                            url("${platform_repo}")
+                                                            url("${platformRepo}")
                                                         }
-                                                        branch("${platform_branch}")
+                                                        branch("${platformBranch}")
                                                     }
                                                 }
                                                 scriptPath("${path}")
@@ -110,7 +110,7 @@ pipeline {
                             if (job == 'dns-updater') {
                                 jobDsl scriptText: """
                                     pipelineJob("${job}") {
-                                        description("${dns_desc}")
+                                        description("${dnsDesc}")
                                         parameters {
                                             choiceParam(
                                                 'ACTIONS',
@@ -126,9 +126,9 @@ pipeline {
                                                 scm {
                                                     git {
                                                         remote {
-                                                            url("${platform_repo}")
+                                                            url("${platformRepo}")
                                                         }
-                                                        branch("${platform_branch}")
+                                                        branch("${platformBranch}")
                                                     }
                                                 }
                                                 scriptPath("${path}")
@@ -162,9 +162,9 @@ pipeline {
                                                 scm {
                                                     git {
                                                         remote {
-                                                            url("${platform_repo}")
+                                                            url("${platformRepo}")
                                                         }
-                                                        branch("${platform_branch}")
+                                                        branch("${platformBranch}")
                                                     }
                                                 }
                                                 scriptPath("${path}")
@@ -227,9 +227,9 @@ pipeline {
                                                 scm {
                                                     git {
                                                         remote {
-                                                            url("${platform_repo}")
+                                                            url("${platformRepo}")
                                                         }
-                                                        branch("refs/heads/packy")
+                                                        branch("${platformBranch}")
                                                     }
                                                 }
                                                 scriptPath("${path}")
