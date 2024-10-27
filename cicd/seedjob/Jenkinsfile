@@ -187,6 +187,7 @@ pipeline {
                                             choiceParam(
                                                 'DISTRO',
                                                 [
+                                                    'debian',
                                                     'oracle',
                                                     'rocky',
                                                     'ubuntu'
