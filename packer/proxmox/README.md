@@ -15,6 +15,7 @@ Current list of images being created.
 ## Prerequistes:
 - Install [Packer](https://developer.hashicorp.com/packer/install?ajs_aid=3da421b7-6e02-4a1e-a381-e2ee45cf2437&product_intent=packer)
 - Add ISOs into your Proxmox server.
+- Upload contents of `auto-ks` to a http server.
 
 ## Create a Vars File
 Create a `roc-vars.pkr.hcl` for Rocky Linux and `orc-vars.pkr.hcl` for Oracle Linux in the rh (Red Hat based distros) folder. File and write in entries for proxmox user and password and ssh user and pass if required.
@@ -36,12 +37,18 @@ template_description = "<SOME DESCRIPTION>"
 template_name        = "<TEMPLATE_NAME>"
 ```
 
-## Create Oracle Linux Image:
+## Create Images On Local Machine:
+Oracle 
 ```shell
-task packer-ol-build
+task packer-oracle-build
 ```
 
-## Create Rocky Linux Image:
+Rocky
 ```shell
-task packer-rl-build
+task packer-rocky-build
+```
+
+Ubuntu
+```shell
+task packer-ubuntu-build
 ```
