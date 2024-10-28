@@ -26,16 +26,9 @@ variable "desc" {
   default     = "Created and managed by terraform"
 }
 
-variable "home_network" {
-  description = "Home network"
-  type        = string
-  default     = "192.168.1.0/24"
-}
-
 variable "host_node" {
   description = "Node to host vm"
   type        = string
-  default     = "horde"
 }
 
 variable "is_SSD" {
@@ -79,11 +72,6 @@ variable "scsihw" {
   default     = "virtio-scsi-single"
 }
 
-variable "ssh_username" {
-  description = "ssh_username"
-  type        = string
-}
-
 variable "storage_location" {
   description = "Storage location"
   type        = string
@@ -98,6 +86,6 @@ variable "tags" {
 
 variable "write_files" {
   description = "Write files in yaml"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
