@@ -36,9 +36,7 @@ locals {
 # fleet domains
 resource "dns_a_record_set" "fleet_domains" {
   for_each = {
-    for v in local.fleet_domains : v.name => {
-      ipv4 = v.ipv4
-    }
+    for v in local.fleet_domains : v.name => { ipv4 = v.ipv4 }
   }
 
   addresses = each.value.ipv4

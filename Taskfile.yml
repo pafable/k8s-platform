@@ -37,7 +37,8 @@ env:
   AWS_REGION: us-east-1
 
   PROXMOX_DNS_DIR: terraform/proxmox/dns
-  PROXMOX_K3S_INFRA_DIR: terraform/proxmox/k3s-infra
+  PROXMOX_K3S_INFRA_CONTROLLERS_DIR: terraform/proxmox/k3s-infra/controllers
+  PROXMOX_K3S_INFRA_AGENTS_DIR: terraform/proxmox/k3s-infra/agents
 
   TF_WORKSPACE: dev # sets the terraform workspace
 
@@ -500,24 +501,24 @@ tasks:
     cmds:
       - docker push {{ .CONTAINER_REGISTRY }}/{{ .JENKINS_IMAGE }}:{{ .JENKINS_AGENT_TAG }}
 
-  k3s-infra-init:
-    dir: '{{ .PROXMOX_K3S_INFRA_DIR }}'
+  k3s-infra-agents-init:
+    dir: '{{ .PROXMOX_K3S_INFRA_AGENTS_DIR }}'
     deps:
       - task: fmt
     desc: Initialize Proxmox infra
     cmds:
       - echo "+++++ Initializing Proxmox K3S Infra +++++"
-      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${PROXMOX_K3S_INFRA_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure
+      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${PROXMOX_K3S_INFRA_AGENTS_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure
       - task: tf-validate
-        vars: { DIR: '{{ .PROXMOX_K3S_INFRA_DIR }}' }
+        vars: { DIR: '{{ .PROXMOX_K3S_INFRA_AGENTS_DIR }}' }
       - task: tf-ws-list
-        vars: { DIR: '{{ .PROXMOX_K3S_INFRA_DIR }}' }
+        vars: { DIR: '{{ .PROXMOX_K3S_INFRA_AGENTS_DIR }}' }
 
-  k3s-infra-create:
+  k3s-infra-agents-create:
     desc: Create Proxmox infrastructure
-    dir: '{{ .PROXMOX_K3S_INFRA_DIR }}'
+    dir: '{{ .PROXMOX_K3S_INFRA_AGENTS_DIR }}'
     deps:
-      - task: k3s-infra-init
+      - task: k3s-infra-agents-init
     cmds:
       - defer: |
           echo "Cleaning up..."
@@ -525,17 +526,66 @@ tasks:
       - terraform plan -out=tfplan
       - terraform apply tfplan
 
-  k3s-infra-destroy:
+  k3s-infra-agents-destroy:
     desc: Destroy Proxmox infrastructure
-    dir: '{{ .PROXMOX_K3S_INFRA_DIR }}'
+    dir: '{{ .PROXMOX_K3S_INFRA_AGENTS_DIR }}'
     deps:
-      - task: k3s-infra-init
+      - task: k3s-infra-agents-init
     cmds:
       - defer: |
           echo "Cleaning up..."
           rm -f tfplan-destroy
       - terraform plan -out=tfplan-destroy -destroy
       - terraform apply tfplan-destroy
+
+  k3s-infra-controllers-init:
+    dir: '{{ .PROXMOX_K3S_INFRA_CONTROLLERS_DIR }}'
+    deps:
+      - task: fmt
+    desc: Initialize Proxmox infra
+    cmds:
+      - echo "+++++ Initializing Proxmox K3S Infra +++++"
+      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${PROXMOX_K3S_INFRA_CONTROLLERS_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure
+      - task: tf-validate
+        vars: { DIR: '{{ .PROXMOX_K3S_INFRA_CONTROLLERS_DIR }}' }
+      - task: tf-ws-list
+        vars: { DIR: '{{ .PROXMOX_K3S_INFRA_CONTROLLERS_DIR }}' }
+
+  k3s-infra-controllers-create:
+    desc: Create Proxmox infrastructure
+    dir: '{{ .PROXMOX_K3S_INFRA_CONTROLLERS_DIR }}'
+    deps:
+      - task: k3s-infra-controllers-init
+    cmds:
+      - defer: |
+          echo "Cleaning up..."
+          rm -f tfplan
+      - terraform plan -out=tfplan
+      - terraform apply tfplan
+
+  k3s-infra-controllers-destroy:
+    desc: Destroy Proxmox infrastructure
+    dir: '{{ .PROXMOX_K3S_INFRA_CONTROLLERS_DIR }}'
+    deps:
+      - task: k3s-infra-controllers-init
+    cmds:
+      - defer: |
+          echo "Cleaning up..."
+          rm -f tfplan-destroy
+      - terraform plan -out=tfplan-destroy -destroy
+      - terraform apply tfplan-destroy
+
+  k3s-infra-create:
+    desc: Create K3S Infrastructure
+    cmds:
+      - task: k3s-infra-controllers-create
+      - task: k3s-infra-agents-create
+
+  k3s-infra-destroy:
+    desc: Destroy K3S Infrastructure
+    cmds:
+      - task: k3s-infra-agents-destroy
+      - task: k3s-infra-controllers-destroy
 
   packer-oracle-build:
     desc: Build Oracle linux image

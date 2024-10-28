@@ -1,5 +1,5 @@
 module "aws" {
-  source = "../../modules/versions/aws"
+  source = "../../../modules/versions/aws"
 }
 
 terraform {
@@ -14,7 +14,7 @@ terraform {
 }
 
 module "terraform_version" {
-  source = "../../modules/versions/terraform"
+  source = "../../../modules/versions/terraform"
 }
 
 provider "proxmox" {
