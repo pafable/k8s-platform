@@ -28,6 +28,7 @@ module "dns_vm" {
   clone_template      = var.clone_template
   cloud_init_pve_node = local.pm_node
   host_node           = local.pm_node
+  memory              = 8192
   name                = var.name
   runcmd              = yamlencode(local.cmd)
   tags                = local.default_tag
