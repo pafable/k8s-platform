@@ -9,3 +9,15 @@ variable "owner" {
   type        = string
   default     = "devops"
 }
+
+variable "ca_cert" {
+  description = "CA cert in base64"
+  type        = string
+  sensitive   = true
+}
+
+variable "ca_key" {
+  description = "CA private key in base64"
+  type        = string
+  sensitive   = true
+}

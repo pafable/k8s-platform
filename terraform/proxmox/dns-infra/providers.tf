@@ -5,6 +5,12 @@ terraform {
       version = "3.0.1-rc4"
     }
   }
+
+  backend "s3" {}
+}
+
+module "terraform_version" {
+  source = "../../modules/versions/terraform"
 }
 
 provider "proxmox" {
