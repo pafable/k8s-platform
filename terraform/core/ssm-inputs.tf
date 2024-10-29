@@ -1,3 +1,13 @@
+data "aws_ssm_parameter" "ca_cert" {
+  provider = aws.parameters
+  name     = "/ca/cert"
+}
+
+data "aws_ssm_parameter" "ca_private_key" {
+  provider = aws.parameters
+  name     = "/ca/private/key"
+}
+
 data "aws_ssm_parameter" "docker_hub_username" {
   provider = aws.parameters
   name     = "/docker/hub/username"

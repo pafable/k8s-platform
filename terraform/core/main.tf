@@ -7,7 +7,9 @@ locals {
 }
 
 module "cert_manager" {
-  source = "../modules/cert-manager"
+  source  = "../modules/cert-manager"
+  ca_cert = sensitive(data.aws_ssm_parameter.ca_cert.value)
+  ca_key  = sensitive(data.aws_ssm_parameter.ca_private_key.value)
 }
 
 module "ingress_nginx" {

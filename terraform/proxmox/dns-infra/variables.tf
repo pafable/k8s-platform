@@ -4,10 +4,10 @@ variable "clone_template" {
   default     = "uwutest"
 }
 
-variable "name" {
+variable "host_name" {
   description = "VM name"
   type        = string
-  default     = "phil-ubu-vm"
+  default     = "dns-01"
 }
 
 variable "ssh_username" {
