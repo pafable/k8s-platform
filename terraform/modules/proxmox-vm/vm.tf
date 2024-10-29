@@ -6,7 +6,7 @@ locals {
 
 resource "proxmox_cloud_init_disk" "cloudinit" {
   name     = "${var.name}-cloudinit"
-  pve_node = var.cloud_init_pve_node
+  pve_node = var.host_node
   storage  = local.local_storage_pool
 
   meta_data = yamlencode({
@@ -14,15 +14,7 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
     local-hostname = var.name
   })
 
-  user_data = <<-EOT
-  #cloud-config
-  hostname: ${var.name}
-  package_update: true
-  package_upgrade: true
-  ${var.write_files}
-  ${var.runcmd}
-  ssh_pwauth: true
-  EOT
+  user_data = var.user_data
 }
 
 resource "proxmox_vm_qemu" "vm" {

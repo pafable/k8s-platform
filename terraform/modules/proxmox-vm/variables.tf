@@ -3,15 +3,10 @@ variable "clone_template" {
   type        = string
 }
 
-variable "cloud_init_pve_node" {
-  description = "PVE node to deploy to"
-  type        = string
-}
-
 variable "cores" {
   description = "Number of cores"
   type        = number
-  default     = 2
+  default     = 4
 }
 
 variable "cpu_type" {
@@ -60,12 +55,6 @@ variable "os_type" {
   default     = "Linux 6.x - 2.6 Kernel"
 }
 
-variable "runcmd" {
-  description = "Command to run on initial instance initialization"
-  type        = string
-  default     = ""
-}
-
 variable "scsihw" {
   description = "SCSI HW type"
   type        = string
@@ -84,8 +73,8 @@ variable "tags" {
   default     = ""
 }
 
-variable "write_files" {
-  description = "Write files in yaml"
+variable "user_data" {
+  description = "User data for cloud-init"
   type        = string
   default     = ""
 }
