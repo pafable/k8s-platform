@@ -1,6 +1,6 @@
 locals {
-  #edt_tz                = timeadd(timestamp(), "-4h") # EDT is -4h from UTC
-  edt_tz                = "2024-10-16T16:20:00Z"
+  #edt_tz                = timeadd(timestamp(), "-4h") # EDT is -4h from UTC # this will keep updating jenkins
+  edt_tz                = "2024-10-31T07:10:00Z"
   seed_branch           = "refs/heads/master"
   seed_git_url          = "https://github.com/pafable/k8s-platform.git"
   seed_script_path      = "cicd/seedjob/Jenkinsfile"
@@ -62,7 +62,7 @@ locals {
 
         appearance = {
           prism = {
-            theme = "TWILIGHT"
+            theme = "TOMORROW_NIGHT"
           }
 
           themeManager = {

@@ -77,3 +77,13 @@ data "aws_ssm_parameter" "proxmox_token_secret" {
   provider = aws.parameters
   name     = "/proxmox/api/token/secret"
 }
+
+data "aws_ssm_parameter" "cert" {
+  provider = aws.parameters
+  name     = "/jenkins/cert"
+}
+
+data "aws_ssm_parameter" "cert_private_key" {
+  provider = aws.parameters
+  name     = "/jenkins/cert/private/key"
+}

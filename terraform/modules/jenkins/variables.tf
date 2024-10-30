@@ -71,7 +71,7 @@ variable "k3s_config_file" {
 variable "helm_chart_version" {
   description = "helm chart version"
   type        = string
-  default     = "5.7.7"
+  default     = "5.7.11"
 }
 
 variable "helm_repo" {
@@ -145,4 +145,16 @@ variable "timezone" {
   description = "Timezone"
   type        = string
   default     = "Etc/UTC"
+}
+
+variable "cert" {
+  description = "Certificate"
+  type        = string
+  sensitive   = true
+}
+
+variable "cert_private_key" {
+  description = "Certificate private key"
+  type        = string
+  sensitive   = true
 }
