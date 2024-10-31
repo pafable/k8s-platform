@@ -14,18 +14,28 @@ resource "kubernetes_manifest" "jenkins_cert" {
     }
 
     spec = {
-      commonName = local.domain
+      # commonName = local.domain
 
       dnsNames = [
         local.domain
       ]
 
-      isCA = true
+      isCA = false
 
       issuerRef = {
         name = local.issuer
         kind = "ClusterIssuer"
       }
+
+      # keystores = {
+      #   pkcs12 = {
+      #     create = true
+      #     passwordSecretRef = {
+      #       key  = "password"
+      #       name = kubernetes_secret_v1.jenkins_admin_secret.metadata[0].name
+      #     }
+      #   }
+      # }
 
       privateKey = {
         algorithm = "ECDSA"
@@ -39,12 +49,11 @@ resource "kubernetes_manifest" "jenkins_cert" {
         organizations = [
           var.owner
         ]
+
         organizationalUnits = [
           var.ou
         ]
       }
     }
   }
-
-  depends_on = [helm_release.jenkins]
 }

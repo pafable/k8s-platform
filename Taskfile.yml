@@ -580,6 +580,7 @@ tasks:
     desc: Create K3S Infrastructure
     cmds:
       - task: k3s-infra-controllers-create
+      - sleep 30
       - task: k3s-infra-agents-create
 
   k3s-infra-destroy:
@@ -761,4 +762,3 @@ tasks:
       - terraform plan -out=tfplan.destroy -destroy -no-color
       - terraform apply tfplan.destroy -no-color
       - task: delete-crds
-    ignore_error: true

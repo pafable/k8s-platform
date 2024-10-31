@@ -38,20 +38,12 @@ locals {
               cpu    = ""
               memory = "1024Mi"
             }
+
             requests = {
               cpu    = "1024m"
               memory = "1024Mi"
             }
           }
-
-          # volumes = [
-          #   {
-          #     # needed by docker because docker.sock is in this dir on the host node
-          #     type      = "hostPathVolume"
-          #     hostPath  = "/var/run"
-          #     mountPath = "/var/run"
-          #   }
-          # ]
         }
 
         controller = {
@@ -64,7 +56,7 @@ locals {
           projectNamingStrategy         = "roleBased"
 
           admin = {
-            existingSecret = kubernetes_secret_v1.jenkins_secret.metadata[0].name
+            existingSecret = kubernetes_secret_v1.jenkins_admin_secret.metadata[0].name
           }
 
           containerEnv = [
@@ -73,6 +65,41 @@ locals {
               value = var.timezone
             }
           ]
+
+          ingress = {
+            enabled    = true
+            apiVersion = "networking.k8s.io/v1"
+
+            annotations = {
+              "kubernetes.io/ingress.class" = var.ingress_name
+              "kubernetes.io/ssl-redirect"  = "true"
+            }
+
+            hostName = local.domain
+
+            paths = [
+              {
+                path     = "/"
+                pathType = "Prefix"
+
+                backend = {
+                  service = {
+                    name = local.service_name
+                    port = {
+                      number = local.port
+                    }
+                  }
+                }
+              }
+            ]
+
+            tls = [
+              {
+                hosts      = [local.domain]
+                secretName = kubernetes_manifest.jenkins_cert.manifest.spec.secretName
+              }
+            ]
+          }
 
           JCasC = {
             configScripts = local.jcasc_scripts_map
@@ -109,10 +136,32 @@ locals {
               )
             )
           }
+
+          # overrideArgs = [
+          #   "--httpsCertificate=/var/jenkins-certs/${local.domain}.crt",
+          #   "--httpsPrivateKey=/var/jenkins-certs/${local.domain}-key.pem"
+          # ]
         }
 
         persistence = {
           existingClaim = kubernetes_persistent_volume_claim_v1.jenkins_pvc.metadata[0].name
+
+          mounts = [
+            {
+              mountPath = "/var/jenkins-certs"
+              name      = "jenkins-certs"
+              readOnly  = true
+            }
+          ]
+
+          volumes = [
+            {
+              name = "jenkins-certs"
+              secret = {
+                secretName = "jenkins-certs"
+              }
+            }
+          ]
         }
 
         rbac = {
@@ -134,9 +183,9 @@ resource "random_password" "password" {
   length = 25
 }
 
-resource "kubernetes_secret_v1" "jenkins_secret" {
+resource "kubernetes_secret_v1" "jenkins_admin_secret" {
   metadata {
-    name      = "${local.app_name}-secrets"
+    name      = "${local.app_name}-admin-secret"
     namespace = kubernetes_namespace_v1.jenkins_ns.metadata[0].name
     labels    = local.labels
   }
@@ -159,6 +208,7 @@ resource "kubernetes_persistent_volume_claim_v1" "jenkins_pvc" {
   spec {
     storage_class_name = var.storage_class_name
     access_modes       = ["ReadWriteOnce"]
+
     resources {
       requests = {
         storage = "10Gi"
@@ -172,18 +222,33 @@ resource "kubernetes_persistent_volume_v1" "jenkins_pv" {
     name   = "${local.app_name}-pv"
     labels = local.labels
   }
+
   spec {
     capacity = {
       storage = "10Gi"
     }
+
     access_modes                     = ["ReadWriteOnce"]
     persistent_volume_reclaim_policy = "Retain"
     storage_class_name               = var.storage_class_name
+
     persistent_volume_source {
       host_path {
         path = "/tmp"
       }
     }
+  }
+}
+
+resource "kubernetes_secret_v1" "jenkins_tls_certs" {
+  metadata {
+    name      = "${local.app_name}-certs"
+    namespace = kubernetes_namespace_v1.jenkins_ns.metadata[0].name
+  }
+
+  data = {
+    "${local.domain}-key.pem" = var.cert_private_key
+    "${local.domain}.crt"     = var.cert
   }
 }
 

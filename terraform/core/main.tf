@@ -24,19 +24,24 @@ module "jenkins" {
   agent_container_tag         = "0.0.4"
   aws_dev_deployer_access_key = sensitive(data.aws_ssm_parameter.aws_dev_access_key.value)
   aws_dev_deployer_secret_key = sensitive(data.aws_ssm_parameter.aws_dev_secret_key.value)
+  cert                        = sensitive(data.aws_ssm_parameter.cert.value)
+  cert_private_key            = sensitive(data.aws_ssm_parameter.cert_private_key.value)
   docker_hub_password         = sensitive(data.aws_ssm_parameter.docker_hub_password.value)
   docker_hub_username         = sensitive(data.aws_ssm_parameter.docker_hub_username.value)
   domain                      = var.domain
   http_server                 = sensitive(data.aws_ssm_parameter.http_server.value)
   ingress_name                = var.ingress
-  jenkins_github_token        = data.aws_ssm_parameter.jenkins_github_token.value
+  jenkins_github_token        = sensitive(data.aws_ssm_parameter.jenkins_github_token.value)
   k3s_config_file             = sensitive(data.aws_ssm_parameter.k3s_kubeconfig_file.value)
   packer_ssh_password         = sensitive(data.aws_ssm_parameter.packer_ssh_password.value)
   packer_ssh_username         = sensitive(data.aws_ssm_parameter.packer_ssh_username.value)
   proxmox_token_id            = sensitive(data.aws_ssm_parameter.proxmox_token_id.value)
   proxmox_token_secret        = sensitive(data.aws_ssm_parameter.proxmox_token_secret.value)
   storage_class_name          = "hive-ship-sc" # this is needed for k3s deployment
-  depends_on                  = [module.cert_manager]
+
+  depends_on = [
+    module.cert_manager
+  ]
 }
 
 ## k3s already has this baked in
@@ -46,8 +51,8 @@ module "jenkins" {
 #     is_cloud = false
 # }
 
-module "vault" {
-  source       = "../modules/vault"
-  ingress_name = var.ingress
-  depends_on   = [module.cert_manager]
-}
+# module "vault" {
+#   source       = "../modules/vault"
+#   ingress_name = var.ingress
+#   depends_on   = [module.cert_manager]
+# }
