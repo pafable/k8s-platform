@@ -49,6 +49,7 @@ locals {
         controller = {
           disableRememberMe             = true
           executorMode                  = "EXCLUSIVE"
+          hostName                      = local.domain
           installPlugins                = local.plugins
           installLatestSpecifiedPlugins = true
           jenkinsUrl                    = local.jenkins_url
@@ -75,8 +76,6 @@ locals {
               "kubernetes.io/ssl-redirect"  = "true"
             }
 
-            hostName = local.domain
-
             paths = [
               {
                 path     = "/"
@@ -102,7 +101,8 @@ locals {
           }
 
           JCasC = {
-            configScripts = local.jcasc_scripts_map
+            configScripts          = local.jcasc_scripts_map
+            overwriteConfiguration = true
 
             authorizationStrategy = tostring(
               yamlencode(
