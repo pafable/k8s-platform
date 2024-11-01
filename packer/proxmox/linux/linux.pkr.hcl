@@ -78,8 +78,8 @@ build {
 
   provisioner "shell" {
     inline = [
-      "sudo truncate -s 0 /etc/machine-id",
-      "sudo cloud-init clean",
+      "truncate -s 0 /etc/machine-id",
+      "cloud-init clean",
       "date > /home/${var.ssh_username}/image_creation_date"
     ]
   }
