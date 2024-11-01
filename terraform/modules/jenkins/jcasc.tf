@@ -15,6 +15,9 @@ locals {
       script = {
         credentials = {
           system = {
+            # Do NOT set this in prod.
+            # use AWS Secret manager credential manager as the source for creds
+            # https://plugins.jenkins.io/aws-secrets-manager-credentials-provider/
             domainCredentials = sensitive(local.domain_credentials)
           }
         }
