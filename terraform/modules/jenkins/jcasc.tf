@@ -16,7 +16,7 @@ locals {
         credentials = {
           system = {
             # Do NOT set this in prod.
-            # use AWS Secret manager credential manager as the source for creds
+            # use AWS Secret manager credential manager as the source for creds in prod
             # https://plugins.jenkins.io/aws-secrets-manager-credentials-provider/
             domainCredentials = sensitive(local.domain_credentials)
           }
@@ -101,6 +101,10 @@ locals {
                 name          = "github"
               }
             ]
+          }
+
+          globalDefaultFlowDurabilityLevel = {
+            durabilityHint = "PERFORMANCE_OPTIMIZED"
           }
 
           globalLibraries = {

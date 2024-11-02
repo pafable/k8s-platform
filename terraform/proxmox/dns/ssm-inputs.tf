@@ -1,3 +1,9 @@
+# RPM repository
+data "aws_ssm_parameter" "rpm_server_ip" {
+  provider = aws.parameters
+  name     = "/proxmox/rpm/server/ipv4"
+}
+
 # DNS server
 data "aws_ssm_parameter" "dns_server_ip" {
   provider = aws.parameters

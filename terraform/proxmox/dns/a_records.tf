@@ -47,6 +47,7 @@ resource "dns_a_record_set" "fleet_domains" {
 
 resource "dns_a_record_set" "hive" {
   name = "hive"
+  ttl  = 300
   zone = local.fleet_domain
 
   addresses = [
@@ -54,14 +55,13 @@ resource "dns_a_record_set" "hive" {
     data.aws_ssm_parameter.kraken_ip.value,
     data.aws_ssm_parameter.leviathan_ip.value
   ]
-
-  ttl = 300
 }
 
 # home domains
 resource "dns_a_record_set" "k3s_apps_host_records" {
   for_each = local.home_k3s_apps
   name     = each.value
+  ttl      = 300
   zone     = local.home_domain
 
   addresses = [
@@ -69,6 +69,15 @@ resource "dns_a_record_set" "k3s_apps_host_records" {
     data.aws_ssm_parameter.k3s_agent1_ip.value,
     data.aws_ssm_parameter.k3s_agent2_ip.value
   ]
+}
 
-  ttl = 300
+# rpm server
+resource "dns_a_record_set" "dnf_srv_record" {
+  name = "rpm-srv"
+  ttl  = 300
+  zone = local.home_domain
+
+  addresses = [
+    data.aws_ssm_parameter.rpm_server_ip.value
+  ]
 }

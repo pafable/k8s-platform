@@ -1,6 +1,9 @@
 locals {
   domain_credentials = [
     {
+      # Do NOT set this in prod.
+      # use AWS Secret manager credential manager as the source for creds in prod
+      # https://plugins.jenkins.io/aws-secrets-manager-credentials-provider/
       credentials = [
         {
           usernamePassword = {

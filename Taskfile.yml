@@ -40,6 +40,7 @@ env:
   PROXMOX_DNS_INFRA_DIR: terraform/proxmox/dns-infra
   PROXMOX_K3S_INFRA_CONTROLLERS_DIR: terraform/proxmox/k3s-infra/controllers
   PROXMOX_K3S_INFRA_AGENTS_DIR: terraform/proxmox/k3s-infra/agents
+  PROXMOX_RPM_SRV_DIR: terraform/proxmox/rpm-server
 
   TF_WORKSPACE: dev # sets the terraform workspace
 
@@ -649,11 +650,11 @@ tasks:
       - packer validate .
       - packer build .
 
-  proxmox-dns-init:
+  dns-entries-init:
     dir: '{{ .PROXMOX_DNS_DIR }}'
     deps:
       - task: fmt
-    desc: Initialize DNS on Proxmox
+    desc: Initialize DNS entries on Proxmox
     cmds:
       - echo "+++++ Initializing Proxmox DNS +++++"
       - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${PROXMOX_DNS_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure
@@ -662,11 +663,11 @@ tasks:
       - task: tf-ws-list
         vars: { DIR: '{{ .PROXMOX_DNS_DIR }}' }
 
-  proxmox-dns-create:
+  dns-entries-create:
     desc: Create DNS entries
     dir: '{{ .PROXMOX_DNS_DIR }}'
     deps:
-      - task: proxmox-dns-init
+      - task: dns-entries-init
     cmds:
       - defer: |
           echo "Cleaning up..."
@@ -674,11 +675,11 @@ tasks:
       - terraform plan -out=tfplan
       - terraform apply tfplan
 
-  proxmox-dns-destroy:
+  dns-entries-destroy:
     desc: Destroy DNS entries
     dir: '{{ .PROXMOX_DNS_DIR }}'
     deps:
-      - task: proxmox-dns-init
+      - task: dns-entries-init
     cmds:
       - defer: |
           echo "Cleaning up..."
@@ -762,3 +763,40 @@ tasks:
       - terraform plan -out=tfplan.destroy -destroy -no-color
       - terraform apply tfplan.destroy -no-color
       - task: delete-crds
+
+  rpm-server-init:
+    dir: '{{ .PROXMOX_RPM_SRV_DIR }}'
+    deps:
+      - task: fmt
+    desc: Initialize RPM server on Proxmox
+    cmds:
+      - echo "+++++ Initializing RPM server +++++"
+      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${PROXMOX_RPM_SRV_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure
+      - task: tf-validate
+        vars: { DIR: '{{ .PROXMOX_RPM_SRV_DIR }}' }
+      - task: tf-ws-list
+        vars: { DIR: '{{ .PROXMOX_RPM_SRV_DIR }}' }
+
+  rpm-server-create:
+    desc: Create RPM server
+    dir: '{{ .PROXMOX_RPM_SRV_DIR }}'
+    deps:
+      - task: rpm-server-init
+    cmds:
+      - defer: |
+          echo "Cleaning up..."
+          rm -f tfplan
+      - terraform plan -out=tfplan
+      - terraform apply tfplan
+
+  rpm-server-destroy:
+    desc: Destroy RPM server
+    dir: '{{ .PROXMOX_RPM_SRV_DIR }}'
+    deps:
+      - task: rpm-server-init
+    cmds:
+      - defer: |
+          echo "Cleaning up..."
+          rm -f tfplan-destroy
+      - terraform plan -out=tfplan-destroy -destroy
+      - terraform apply tfplan-destroy

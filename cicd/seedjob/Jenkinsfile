@@ -10,13 +10,15 @@ final String jenkinsDesc = 'Jenkins agent builder'
 final String jenkinsParamDesc = 'Tag for Jenkins agent'
 final String k3sInfraDesc = 'Builds k3s infra'
 final String packyDesc = 'Builds images'
+final String rpmDesc = 'Builds rpm server infra'
 
 final def jobsToScripts = [
     'agent-builder': 'cicd/agent-builder/Jenkinsfile',
     'apps-deployer': 'cicd/apps/Jenkinsfile',
     'dns-updater': 'cicd/dns/Jenkinsfile',
     'k3s-infra-factory': 'cicd/k3s/Jenkinsfile',
-    'packy': 'cicd/packy/Jenkinsfile'
+    'packy': 'cicd/packy/Jenkinsfile',
+    'rpm-server': 'cicd/rpm-srv/Jenkinsfile'
 ]
 
 pipeline {
@@ -236,6 +238,44 @@ pipeline {
                                                 lightweight()
                                             }
                                         }
+                                        properties {
+                                            disableConcurrentBuilds()
+                                            disableResume()
+                                        }
+                                    }
+                                """
+                            }
+
+                            if (job == 'rpm-server') {
+                                jobDsl scriptText: """
+                                    pipelineJob("${job}") {
+                                        description("${rpmDesc}")
+                                        parameters {
+                                            choiceParam(
+                                                'ACTIONS',
+                                                [
+                                                    'create',
+                                                    'destroy'
+                                                ],
+                                                'Create or destroy'
+                                            )
+                                        }
+
+                                        definition {
+                                            cpsScm {
+                                                scm {
+                                                    git {
+                                                        remote {
+                                                            url("${platformRepo}")
+                                                        }
+                                                        branch("${platformBranch}")
+                                                    }
+                                                }
+                                                scriptPath("${path}")
+                                                lightweight()
+                                            }
+                                        }
+
                                         properties {
                                             disableConcurrentBuilds()
                                             disableResume()
