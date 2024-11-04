@@ -1,3 +1,6 @@
+@Library('shared-library')
+_
+
 final String agentLabel = 'jenkins-agent'
 final String awsDevCreds = 'aws-dev-deployer-creds'
 final String proxmoxCreds = 'proxmox-api-creds'
@@ -72,7 +75,7 @@ pipeline {
 
     post {
         success {
-            build(job: 'dns-updater', parameters: [string(name: 'ACTIONS', value: 'create')])
+            updateDns()
         }
     }
 }
