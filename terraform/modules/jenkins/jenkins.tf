@@ -12,6 +12,8 @@ locals {
   values = [
     yamlencode(
       {
+        # clusterZone = var.domain
+
         agent = {
           alwaysPullImage = true
           # # this is necessary because labels on the pod template will be set to "jenkins-${podName}"

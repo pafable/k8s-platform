@@ -11,10 +11,10 @@ See [docs](https://bind9.readthedocs.io/en/v9.18.2/advanced.html#tsig) for more 
 
 ## Create records
 ```shell
-task proxmox-dns-create
+task dns-entries-create
 ```
 
 ## Destroy records
 ```shell
-task proxmox-dns-destroy
+task dns-entries-destroy
 ```

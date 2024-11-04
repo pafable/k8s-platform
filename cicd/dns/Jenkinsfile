@@ -35,28 +35,16 @@ pipeline {
     }
 
     stages {
-        stage('confirmation') {
-            input {
-                message "Continue with deployment?"
-                ok "Gogogog1!1!"
-            }
-            steps {
-                sh """
-                    echo this will ${params.ACTIONS} the environment
-                """
-            }
-        }
-
         stage('updating dns') {
             steps {
                 script {
                     if (params.ACTIONS == 'create') {
                         sh """
-                            task proxmox-dns-${params.ACTIONS}
+                            task dns-entries-${params.ACTIONS}
                         """
                     } else {
                         sh """
-                            task proxmox-dns-${params.ACTIONS}
+                            task dns-entries-${params.ACTIONS}
                         """
                     }
                 }
