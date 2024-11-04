@@ -5,7 +5,7 @@ locals {
   seed_git_url          = "https://github.com/pafable/k8s-platform.git"
   seed_script_path      = "cicd/seedjob/Jenkinsfile"
   shared_library_branch = "master"
-  shared_library_name   = "shared-library"
+  shared_library_name   = "devops-libs"
   shared_library_repo   = "https://github.com/pafable/devops-libs.git"
   shared_library_traits = ["gitBranchDiscovery"]
 
