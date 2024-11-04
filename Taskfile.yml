@@ -777,6 +777,17 @@ tasks:
       - task: tf-ws-list
         vars: { DIR: '{{ .PROXMOX_RPM_SRV_DIR }}' }
 
+  rpm-server-plan:
+    desc: Create RPM server
+    dir: '{{ .PROXMOX_RPM_SRV_DIR }}'
+    deps:
+      - task: rpm-server-init
+    cmds:
+      - defer: |
+          echo "Cleaning up..."
+          rm -f tfplan
+      - terraform plan -out=tfplan
+
   rpm-server-create:
     desc: Create RPM server
     dir: '{{ .PROXMOX_RPM_SRV_DIR }}'
@@ -788,6 +799,17 @@ tasks:
           rm -f tfplan
       - terraform plan -out=tfplan
       - terraform apply tfplan
+
+  rpm-server-plan-destroy:
+    desc: Destroy RPM server
+    dir: '{{ .PROXMOX_RPM_SRV_DIR }}'
+    deps:
+      - task: rpm-server-init
+    cmds:
+      - defer: |
+          echo "Cleaning up..."
+          rm -f tfplan-destroy
+      - terraform plan -out=tfplan-destroy -destroy
 
   rpm-server-destroy:
     desc: Destroy RPM server
