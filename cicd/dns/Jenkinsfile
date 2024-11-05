@@ -2,10 +2,7 @@ final String agent_label = 'jenkins-agent'
 final String aws_creds = 'aws-dev-deployer-creds'
 final String tf_version = 'tf-1-9-8'
 
-final def task_names = [
-    'create',
-    'destroy'
-]
+import com.pafable.PipelineArgs
 
 pipeline {
     agent {
@@ -25,9 +22,9 @@ pipeline {
     }
 
     parameters {
-        choice choices: task_names,
-        description: 'Create or destroy actions',
-        name: 'ACTIONS'
+        choice choices: PipelineArgs.taskActions,
+        description: PipelineArgs.taskDesc,
+        name: PipelineArgs.taskName
     }
 
     tools {

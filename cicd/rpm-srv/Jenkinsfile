@@ -1,15 +1,12 @@
 @Library('devops-libs')
 _
 
+import com.pafable.PipelineArgs
+
 final String agentLabel = 'jenkins-agent'
 final String awsDevCreds = 'aws-dev-deployer-creds'
 final String proxmoxCreds = 'proxmox-api-creds'
 final String tfVersion = 'tf-1-9-8'
-
-final def taskNames = [
-    'create',
-    'destroy'
-]
 
 pipeline {
     agent {
@@ -32,9 +29,9 @@ pipeline {
     }
 
     parameters {
-        choice choices: taskNames,
-        description: 'Create or destroy actions',
-        name: 'ACTIONS'
+        choice choices: PipelineArgs.taskActions,
+        description: PipelineArgs.taskDesc,
+        name: PipelineArgs.taskName
     }
 
     tools {
