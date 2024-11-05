@@ -2,10 +2,13 @@ final String agentLabel = 'jenkins-agent'
 final String jenkinsParamName = 'JENKINS_AGENT_TAG'
 final String platformBranch = 'refs/heads/master'
 final String platformRepo = 'https://github.com/pafable/k8s-platform.git'
+final String discordBotRepo = 'https://github.com/pafable/discord-bot-3'
+final String discordBotBranch = 'refs/heads/main' // change this once PR is merged for discord-bot-3
 
 // job descriptions
 final String appsDesc = 'Apps deployer'
-final String dnsDesc = "DNS updater"
+final String dnsDesc = 'DNS updater'
+final String discordBotDesc = 'Discord bot builder'
 final String jenkinsDesc = 'Jenkins agent builder'
 final String jenkinsParamDesc = 'Tag for Jenkins agent'
 final String k3sInfraDesc = 'Builds k3s infra'
@@ -15,6 +18,7 @@ final String rpmDesc = 'Builds rpm server infra'
 final def jobsToScripts = [
     'agent-builder': 'cicd/agent-builder/Jenkinsfile',
     'apps-deployer': 'cicd/apps/Jenkinsfile',
+    'discord-bot-builder': 'cicd/builder/Jenkinsfile',
     'dns-updater': 'cicd/dns/Jenkinsfile',
     'k3s-infra-factory': 'cicd/k3s/Jenkinsfile',
     'packy': 'cicd/packy/Jenkinsfile',
@@ -40,8 +44,40 @@ pipeline {
                 script {
                     jobsToScripts.each {
                         final job, final path ->
+                            if (job == 'discord-bot-builder') {
+                                jobDsl removedConfigFilesAction: 'DELETE',
+                                removedJobAction: 'DELETE',
+                                removedViewAction: 'DELETE',
+                                scriptText: """
+                                    pipelineJob("${job}") {
+                                        description("${discordBotDesc}")
+                                        definition {
+                                            cpsScm {
+                                                scm {
+                                                    git {
+                                                        remote {
+                                                            url("${discordBotRepo}")
+                                                        }
+                                                        branch("${discordBotBranch}")
+                                                    }
+                                                }
+                                                scriptPath("${path}")
+                                                lightweight()
+                                            }
+                                        }
+                                        properties {
+                                            disableConcurrentBuilds()
+                                            disableResume()
+                                        }
+                                    }
+                                """
+                            }
+
                             if (job == 'agent-builder') {
-                                jobDsl scriptText: """
+                                jobDsl removedConfigFilesAction: 'DELETE',
+                                removedJobAction: 'DELETE',
+                                removedViewAction: 'DELETE',
+                                scriptText: """
                                     pipelineJob("${job}") {
                                         description("${jenkinsDesc}")
                                         parameters {
@@ -74,7 +110,10 @@ pipeline {
                             }
 
                             if (job == 'apps-deployer') {
-                                jobDsl scriptText: """
+                                jobDsl removedConfigFilesAction: 'DELETE',
+                                removedJobAction: 'DELETE',
+                                removedViewAction: 'DELETE',
+                                scriptText: """
                                     pipelineJob("${job}") {
                                         description("${appsDesc}")
                                         parameters {
@@ -110,7 +149,10 @@ pipeline {
                             }
 
                             if (job == 'dns-updater') {
-                                jobDsl scriptText: """
+                                jobDsl removedConfigFilesAction: 'DELETE',
+                                removedJobAction: 'DELETE',
+                                removedViewAction: 'DELETE',
+                                scriptText: """
                                     pipelineJob("${job}") {
                                         description("${dnsDesc}")
                                         parameters {
@@ -146,7 +188,10 @@ pipeline {
                             }
 
                             if (job == 'k3s-infra-factory') {
-                                jobDsl scriptText: """
+                                jobDsl removedConfigFilesAction: 'DELETE',
+                                removedJobAction: 'DELETE',
+                                removedViewAction: 'DELETE',
+                                scriptText: """
                                     pipelineJob("${job}") {
                                         description("${k3sInfraDesc}")
                                         parameters {
@@ -182,7 +227,10 @@ pipeline {
                             }
 
                             if (job == 'packy') {
-                                jobDsl scriptText: """
+                                jobDsl removedConfigFilesAction: 'DELETE',
+                                removedJobAction: 'DELETE',
+                                removedViewAction: 'DELETE',
+                                scriptText: """
                                     pipelineJob("${job}") {
                                         description("${packyDesc}")
                                         parameters {
@@ -247,7 +295,10 @@ pipeline {
                             }
 
                             if (job == 'rpm-server') {
-                                jobDsl scriptText: """
+                                jobDsl removedConfigFilesAction: 'DELETE',
+                                removedJobAction: 'DELETE',
+                                removedViewAction: 'DELETE',
+                                scriptText: """
                                     pipelineJob("${job}") {
                                         description("${rpmDesc}")
                                         parameters {
