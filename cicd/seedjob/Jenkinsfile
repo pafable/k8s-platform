@@ -41,7 +41,7 @@ pipeline {
                     jobsToScripts.each {
                         final job, final path ->
                             if (job == 'agent-builder') {
-                                jobDsl scriptText: """
+                                jobDsl removedConfigFilesAction: 'DELETE', removedJobAction: 'DELETE', removedViewAction: 'DELETE', scriptText: """
                                     pipelineJob("${job}") {
                                         description("${jenkinsDesc}")
                                         parameters {
@@ -74,7 +74,7 @@ pipeline {
                             }
 
                             if (job == 'apps-deployer') {
-                                jobDsl scriptText: """
+                                jobDsl removedConfigFilesAction: 'DELETE', removedJobAction: 'DELETE', removedViewAction: 'DELETE', scriptText: """
                                     pipelineJob("${job}") {
                                         description("${appsDesc}")
                                         parameters {
@@ -110,7 +110,7 @@ pipeline {
                             }
 
                             if (job == 'dns-updater') {
-                                jobDsl scriptText: """
+                                jobDsl removedConfigFilesAction: 'DELETE', removedJobAction: 'DELETE', removedViewAction: 'DELETE', scriptText: """
                                     pipelineJob("${job}") {
                                         description("${dnsDesc}")
                                         parameters {
@@ -146,7 +146,7 @@ pipeline {
                             }
 
                             if (job == 'k3s-infra-factory') {
-                                jobDsl scriptText: """
+                                jobDsl removedConfigFilesAction: 'DELETE', removedJobAction: 'DELETE', removedViewAction: 'DELETE', scriptText: """
                                     pipelineJob("${job}") {
                                         description("${k3sInfraDesc}")
                                         parameters {
@@ -182,7 +182,7 @@ pipeline {
                             }
 
                             if (job == 'packy') {
-                                jobDsl scriptText: """
+                                jobDsl removedConfigFilesAction: 'DELETE', removedJobAction: 'DELETE', removedViewAction: 'DELETE', scriptText: """
                                     pipelineJob("${job}") {
                                         description("${packyDesc}")
                                         parameters {
@@ -247,7 +247,7 @@ pipeline {
                             }
 
                             if (job == 'rpm-server') {
-                                jobDsl scriptText: """
+                                jobDsl removedConfigFilesAction: 'DELETE', removedJobAction: 'DELETE', removedViewAction: 'DELETE', scriptText: """
                                     pipelineJob("${job}") {
                                         description("${rpmDesc}")
                                         parameters {
