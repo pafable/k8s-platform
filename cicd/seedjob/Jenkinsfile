@@ -74,7 +74,7 @@ pipeline {
                             }
 
                             if (job == 'apps-deployer') {
-                                jobDsl removedConfigFilesAction: 'DELETE', removedViewAction: 'DELETE', scriptText: """
+                                jobDsl removedConfigFilesAction: 'DELETE', removedJobAction: 'DELETE', removedViewAction: 'DELETE', scriptText: """
                                     pipelineJob("${job}") {
                                         description("${appsDesc}")
                                         parameters {
@@ -110,7 +110,7 @@ pipeline {
                             }
 
                             if (job == 'dns-updater') {
-                                jobDsl removedConfigFilesAction: 'DELETE', removedViewAction: 'DELETE', scriptText: """
+                                jobDsl removedConfigFilesAction: 'DELETE', removedJobAction: 'DELETE', removedViewAction: 'DELETE', scriptText: """
                                     pipelineJob("${job}") {
                                         description("${dnsDesc}")
                                         parameters {
@@ -146,7 +146,7 @@ pipeline {
                             }
 
                             if (job == 'k3s-infra-factory') {
-                                jobDsl removedConfigFilesAction: 'DELETE', removedViewAction: 'DELETE', scriptText: """
+                                jobDsl removedConfigFilesAction: 'DELETE', removedJobAction: 'DELETE', removedViewAction: 'DELETE', scriptText: """
                                     pipelineJob("${job}") {
                                         description("${k3sInfraDesc}")
                                         parameters {
@@ -181,108 +181,108 @@ pipeline {
                                 """
                             }
 
-//                             if (job == 'packy') {
-//                                 jobDsl removedConfigFilesAction: 'DELETE', removedViewAction: 'DELETE', scriptText: """
-//                                     pipelineJob("${job}") {
-//                                         description("${packyDesc}")
-//                                         parameters {
-//                                             choiceParam(
-//                                                 'DISTRO',
-//                                                 [
-//                                                     'debian',
-//                                                     'oracle',
-//                                                     'rocky',
-//                                                     'ubuntu'
-//                                                 ],
-//                                                 'linux distribution'
-//                                             )
-//
-//                                             choiceParam(
-//                                                 'ISO_NAME',
-//                                                 [
-//                                                     'OracleLinux-R9-U4-x86_64-boot.iso',
-//                                                     'Rocky-9.4-x86_64-boot.iso',
-//                                                     'debian-12.7.0-amd64-netinst.iso',
-//                                                     'ubuntu-24.04.1-live-server-amd64.iso'
-//                                                 ],
-//                                                 'iso names'
-//                                             )
-//
-//                                             choiceParam(
-//                                                 'PROXMOX_NODE',
-//                                                 [
-//                                                     'behemoth',
-//                                                     'kraken',
-//                                                     'leviathan'
-//                                                 ],
-//                                                 'proxmox nodes'
-//                                             )
-//
-//                                             stringParam(
-//                                                 'TEMPLATE_NAME',
-//                                                 null,
-//                                                 'template name'
-//                                             )
-//                                         }
-//                                         definition {
-//                                             cpsScm {
-//                                                 scm {
-//                                                     git {
-//                                                         remote {
-//                                                             url("${platformRepo}")
-//                                                         }
-//                                                         branch("${platformBranch}")
-//                                                     }
-//                                                 }
-//                                                 scriptPath("${path}")
-//                                                 lightweight()
-//                                             }
-//                                         }
-//                                         properties {
-//                                             disableConcurrentBuilds()
-//                                             disableResume()
-//                                         }
-//                                     }
-//                                 """
-//                             }
-//
-//                             if (job == 'rpm-server') {
-//                                 jobDsl removedConfigFilesAction: 'DELETE', removedViewAction: 'DELETE', scriptText: """
-//                                     pipelineJob("${job}") {
-//                                         description("${rpmDesc}")
-//                                         parameters {
-//                                             choiceParam(
-//                                                 'ACTIONS',
-//                                                 [
-//                                                     'create',
-//                                                     'destroy'
-//                                                 ],
-//                                                 'Create or destroy'
-//                                             )
-//                                         }
-//
-//                                         definition {
-//                                             cpsScm {
-//                                                 scm {
-//                                                     git {
-//                                                         remote {
-//                                                             url("${platformRepo}")
-//                                                         }
-//                                                         branch("${platformBranch}")
-//                                                     }
-//                                                 }
-//                                                 scriptPath("${path}")
-//                                                 lightweight()
-//                                             }
-//                                         }
-//
-//                                         properties {
-//                                             disableConcurrentBuilds()
-//                                             disableResume()
-//                                         }
-//                                     }
-//                                 """
-//                             }
+                            if (job == 'packy') {
+                                jobDsl removedConfigFilesAction: 'DELETE', removedJobAction: 'DELETE', removedViewAction: 'DELETE', scriptText: """
+                                    pipelineJob("${job}") {
+                                        description("${packyDesc}")
+                                        parameters {
+                                            choiceParam(
+                                                'DISTRO',
+                                                [
+                                                    'debian',
+                                                    'oracle',
+                                                    'rocky',
+                                                    'ubuntu'
+                                                ],
+                                                'linux distribution'
+                                            )
+
+                                            choiceParam(
+                                                'ISO_NAME',
+                                                [
+                                                    'OracleLinux-R9-U4-x86_64-boot.iso',
+                                                    'Rocky-9.4-x86_64-boot.iso',
+                                                    'debian-12.7.0-amd64-netinst.iso',
+                                                    'ubuntu-24.04.1-live-server-amd64.iso'
+                                                ],
+                                                'iso names'
+                                            )
+
+                                            choiceParam(
+                                                'PROXMOX_NODE',
+                                                [
+                                                    'behemoth',
+                                                    'kraken',
+                                                    'leviathan'
+                                                ],
+                                                'proxmox nodes'
+                                            )
+
+                                            stringParam(
+                                                'TEMPLATE_NAME',
+                                                null,
+                                                'template name'
+                                            )
+                                        }
+                                        definition {
+                                            cpsScm {
+                                                scm {
+                                                    git {
+                                                        remote {
+                                                            url("${platformRepo}")
+                                                        }
+                                                        branch("${platformBranch}")
+                                                    }
+                                                }
+                                                scriptPath("${path}")
+                                                lightweight()
+                                            }
+                                        }
+                                        properties {
+                                            disableConcurrentBuilds()
+                                            disableResume()
+                                        }
+                                    }
+                                """
+                            }
+
+                            if (job == 'rpm-server') {
+                                jobDsl removedConfigFilesAction: 'DELETE', removedJobAction: 'DELETE', removedViewAction: 'DELETE', scriptText: """
+                                    pipelineJob("${job}") {
+                                        description("${rpmDesc}")
+                                        parameters {
+                                            choiceParam(
+                                                'ACTIONS',
+                                                [
+                                                    'create',
+                                                    'destroy'
+                                                ],
+                                                'Create or destroy'
+                                            )
+                                        }
+
+                                        definition {
+                                            cpsScm {
+                                                scm {
+                                                    git {
+                                                        remote {
+                                                            url("${platformRepo}")
+                                                        }
+                                                        branch("${platformBranch}")
+                                                    }
+                                                }
+                                                scriptPath("${path}")
+                                                lightweight()
+                                            }
+                                        }
+
+                                        properties {
+                                            disableConcurrentBuilds()
+                                            disableResume()
+                                        }
+                                    }
+                                """
+                            }
                     }
                 }
             }
