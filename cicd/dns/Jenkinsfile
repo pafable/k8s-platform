@@ -1,3 +1,6 @@
+@Library("devops-lib")
+_
+
 final String agent_label = 'jenkins-agent'
 final String aws_creds = 'aws-dev-deployer-creds'
 final String tf_version = 'tf-1-9-8'
