@@ -8,7 +8,7 @@ locals {
     jobLabel                       = var.app_name
   }
 
-  app_image  = "discord-bot-3:0.0.1"
+  app_image  = "boomb0x/discord-bot-3:0.0.1"
   app_labels = merge(local.labels, var.app_version)
 }
 
