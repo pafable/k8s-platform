@@ -12,6 +12,7 @@ pipeline {
     }
 
     environment {
+        DOCKER_CRED = credentials('docker-hub-creds')
         UNUSED = credentials('aws-dev-deployer-creds')
     }
 
@@ -43,6 +44,17 @@ pipeline {
                 sh """
                     echo this will ${params.ACTIONS} the environment
                 """
+            }
+        }
+
+        stage('logging into docker hub') {
+            steps {
+                script {
+                    sh """
+                        docker version
+                        echo $DOCKER_CRED_PSW | docker login --username $DOCKER_CRED_USR --password-stdin
+                    """
+                }
             }
         }
 
