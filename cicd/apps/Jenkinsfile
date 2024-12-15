@@ -1,4 +1,4 @@
-@Library("devops-lib")
+@Library("devops-libs")
 _
 
 final String agent_label = 'jenkins-agent'
