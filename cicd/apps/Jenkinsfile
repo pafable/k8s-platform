@@ -47,17 +47,6 @@ pipeline {
             }
         }
 
-        stage('logging into docker hub') {
-            steps {
-                script {
-                    sh """
-                        docker version
-                        echo $DOCKER_CRED_PSW | docker login --username $DOCKER_CRED_USR --password-stdin
-                    """
-                }
-            }
-        }
-
         stage('platforming') {
             steps {
                 script {
