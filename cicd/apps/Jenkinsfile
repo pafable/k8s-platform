@@ -51,21 +51,19 @@ pipeline {
                 script {
                     withKubeConfig([credentialsId: 'hive-fleet-k3s-config']) {
                         sh """
-                            pwd
-                            ls -ahl
                             mkdir ~/.kube
                             ln -s $KUBECONFIG ~/.kube/k3s-config
                         """
 
-                        if (params.ACTIONS == 'create') {
-                            sh """
-                                task apps-${params.ACTIONS}
-                            """
-                        } else {
-                            sh """
-                                task apps-${params.ACTIONS}
-                            """
-                        }
+//                         if (params.ACTIONS == 'create') {
+//                             sh """
+//                                 task apps-${params.ACTIONS}
+//                             """
+//                         } else {
+//                             sh """
+//                                 task apps-${params.ACTIONS}
+//                             """
+//                         }
                     }
                 }
             }
