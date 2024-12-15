@@ -15,6 +15,14 @@
 #   depends_on     = [module.kube_prom_stack]
 # }
 
+module "discord_bot" {
+  source                = "../modules/discord-bot-3"
+  aws_access_key_id     = sensitive(data.aws_ssm_parameter.aws_dev_access_key_id.value)
+  aws_secret_access_key = sensitive(data.aws_ssm_parameter.aws_dev_secret_key.value)
+  discord_id            = sensitive(data.aws_ssm_parameter.discord_id.value)
+  discord_token         = sensitive(data.aws_ssm_parameter.discord_token.value)
+}
+
 module "kube_prom_stack" {
   source       = "../modules/kube-prom-stack"
   ingress_name = var.ingress
