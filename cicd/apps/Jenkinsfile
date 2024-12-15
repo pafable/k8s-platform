@@ -47,6 +47,7 @@ pipeline {
         }
 
         stage('platforming') {
+            steps {
                 withKubeConfig(credentialsId: 'hive-fleet-k3s-config') {
                     sh """
                         kubectl get nodes
@@ -66,6 +67,7 @@ pipeline {
 //                             """
 //                         }
 //                     }
+                }
             }
         }
     }
