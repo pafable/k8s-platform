@@ -1,29 +1,12 @@
+@Library('devops-libs')
+_
+
+import com.pafable.PipelineArgs
+import com.pafable.seedjobArgs
+
 final String agentLabel = 'jenkins-agent'
-final String jenkinsParamName = 'JENKINS_AGENT_TAG'
-final String platformBranch = 'refs/heads/master'
-final String platformRepo = 'https://github.com/pafable/k8s-platform.git'
-final String discordBotRepo = 'https://github.com/pafable/discord-bot-3'
-final String discordBotBranch = 'refs/heads/main' // change this once PR is merged for discord-bot-3
-
-// job descriptions
-final String appsDesc = 'Apps deployer'
-final String dnsDesc = 'DNS updater'
-final String discordBotDesc = 'Discord bot builder'
-final String jenkinsDesc = 'Jenkins agent builder'
 final String jenkinsParamDesc = 'Tag for Jenkins agent'
-final String k3sInfraDesc = 'Builds k3s infra'
-final String packyDesc = 'Builds images'
-final String rpmDesc = 'Builds rpm server infra'
-
-final def jobsToScripts = [
-    'agent-builder': 'cicd/agent-builder/Jenkinsfile',
-    'apps-deployer': 'cicd/apps/Jenkinsfile',
-    'discord-bot-builder': 'cicd/builder/Jenkinsfile',
-    'dns-updater': 'cicd/dns/Jenkinsfile',
-    'k3s-infra-factory': 'cicd/k3s/Jenkinsfile',
-    'packy': 'cicd/packy/Jenkinsfile',
-    'rpm-server': 'cicd/rpm-srv/Jenkinsfile'
-]
+final String jenkinsParamName = 'JENKINS_AGENT_TAG'
 
 pipeline {
     agent {
@@ -42,299 +25,255 @@ pipeline {
         stage('seeding') {
             steps {
                 script {
-                    jobsToScripts.each {
-                        final job, final path ->
-                            if (job == 'discord-bot-builder') {
-                                jobDsl removedConfigFilesAction: 'DELETE',
-                                removedJobAction: 'DELETE',
-                                removedViewAction: 'DELETE',
-                                scriptText: """
-                                    pipelineJob("${job}") {
-                                        description("${discordBotDesc}")
-                                        definition {
-                                            cpsScm {
-                                                scm {
-                                                    git {
-                                                        remote {
-                                                            url("${discordBotRepo}")
-                                                        }
-                                                        branch("${discordBotBranch}")
-                                                    }
-                                                }
-                                                scriptPath("${path}")
-                                                lightweight()
+                    jobDsl removedConfigFilesAction: 'DELETE',
+                    removedJobAction: 'DELETE',
+                    removedViewAction: 'DELETE',
+                    scriptText: """
+                // apps-deployer
+                        pipelineJob("${seedjobArgs.APPS_DEPLOYER.name}") {
+                            description("${seedjobArgs.APPS_DEPLOYER.desc}")
+                            parameters {
+                                choiceParam(
+                                    "${PipelineArgs.taskName}",
+                                    [
+                                        'create',
+                                        'destroy'
+                                    ],
+                                    "${PipelineArgs.taskDesc}"
+                                )
+                            }
+                            definition {
+                                cpsScm {
+                                    scm {
+                                        git {
+                                            remote {
+                                                url("${seedjobArgs.APPS_DEPLOYER.repo}")
                                             }
-                                        }
-                                        properties {
-                                            disableConcurrentBuilds()
-                                            disableResume()
+                                            branch("${seedjobArgs.APPS_DEPLOYER.branch}")
                                         }
                                     }
-                                """
+                                    scriptPath("${seedjobArgs.APPS_DEPLOYER.path}")
+                                    lightweight()
+                                }
                             }
+                            properties {
+                                disableConcurrentBuilds()
+                                disableResume()
+                            }
+                        }
 
-                            if (job == 'agent-builder') {
-                                jobDsl removedConfigFilesAction: 'DELETE',
-                                removedJobAction: 'DELETE',
-                                removedViewAction: 'DELETE',
-                                scriptText: """
-                                    pipelineJob("${job}") {
-                                        description("${jenkinsDesc}")
-                                        parameters {
-                                            stringParam {
-                                                description("${jenkinsParamDesc}")
-                                                name("${jenkinsParamName}")
-                                                trim(true)
+                // discord-bot-builder
+                        pipelineJob("${seedjobArgs.DISCORD_BOT_BUILDER.name}") {
+                            description("${seedjobArgs.DISCORD_BOT_BUILDER.desc}")
+                            definition {
+                                cpsScm {
+                                    scm {
+                                        git {
+                                            remote {
+                                                url("${seedjobArgs.DISCORD_BOT_BUILDER.repo}")
                                             }
-                                        }
-                                        definition {
-                                            cpsScm {
-                                                scm {
-                                                    git {
-                                                        remote {
-                                                            url("${platformRepo}")
-                                                        }
-                                                        branch("${platformBranch}")
-                                                    }
-                                                }
-                                                scriptPath("${path}")
-                                                lightweight()
-                                            }
-                                        }
-                                        properties {
-                                            disableConcurrentBuilds()
-                                            disableResume()
+                                            branch("${seedjobArgs.DISCORD_BOT_BUILDER.branch}")
                                         }
                                     }
-                                """
+                                    scriptPath("${seedjobArgs.DISCORD_BOT_BUILDER.path}")
+                                    lightweight()
+                                }
                             }
+                            properties {
+                                disableConcurrentBuilds()
+                                disableResume()
+                            }
+                        }
 
-                            if (job == 'apps-deployer') {
-                                jobDsl removedConfigFilesAction: 'DELETE',
-                                removedJobAction: 'DELETE',
-                                removedViewAction: 'DELETE',
-                                scriptText: """
-                                    pipelineJob("${job}") {
-                                        description("${appsDesc}")
-                                        parameters {
-                                            choiceParam(
-                                                'ACTIONS',
-                                                [
-                                                    'create',
-                                                    'destroy'
-                                                ],
-                                                'Create or destroy'
-                                            )
-                                        }
-                                        definition {
-                                            cpsScm {
-                                                scm {
-                                                    git {
-                                                        remote {
-                                                            url("${platformRepo}")
-                                                        }
-                                                        branch("${platformBranch}")
-                                                    }
-                                                }
-                                                scriptPath("${path}")
-                                                lightweight()
+                // dns-updater
+                        pipelineJob("${seedjobArgs.DNS_UPDATER.name}") {
+                            description("${seedjobArgs.DNS_UPDATER.desc}")
+                            parameters {
+                                choiceParam(
+                                    "${PipelineArgs.taskName}",
+                                    [
+                                        'create',
+                                        'destroy'
+                                    ],
+                                    "${PipelineArgs.taskDesc}"
+                                )
+                            }
+                            definition {
+                                cpsScm {
+                                    scm {
+                                        git {
+                                            remote {
+                                                url("${seedjobArgs.DNS_UPDATER.repo}")
                                             }
-                                        }
-                                        properties {
-                                            disableConcurrentBuilds()
-                                            disableResume()
+                                            branch("${seedjobArgs.DNS_UPDATER.branch}")
                                         }
                                     }
-                                """
+                                    scriptPath("${seedjobArgs.DNS_UPDATER.path}")
+                                    lightweight()
+                                }
                             }
+                            properties {
+                                disableConcurrentBuilds()
+                                disableResume()
+                            }
+                        }
 
-                            if (job == 'dns-updater') {
-                                jobDsl removedConfigFilesAction: 'DELETE',
-                                removedJobAction: 'DELETE',
-                                removedViewAction: 'DELETE',
-                                scriptText: """
-                                    pipelineJob("${job}") {
-                                        description("${dnsDesc}")
-                                        parameters {
-                                            choiceParam(
-                                                'ACTIONS',
-                                                [
-                                                    'create',
-                                                    'destroy'
-                                                ],
-                                                'Create or destroy'
-                                            )
-                                        }
-                                        definition {
-                                            cpsScm {
-                                                scm {
-                                                    git {
-                                                        remote {
-                                                            url("${platformRepo}")
-                                                        }
-                                                        branch("${platformBranch}")
-                                                    }
-                                                }
-                                                scriptPath("${path}")
-                                                lightweight()
+                // jenkins-agent-builder
+                        pipelineJob("${seedjobArgs.JENKINS_AGENT_BUILDER.name}") {
+                            description("${seedjobArgs.JENKINS_AGENT_BUILDER.desc}")
+                            parameters {
+                                stringParam {
+                                    description("${jenkinsParamDesc}")
+                                    name("${jenkinsParamName}")
+                                    trim(true)
+                                }
+                            }
+                            definition {
+                                cpsScm {
+                                    scm {
+                                        git {
+                                            remote {
+                                                url("${seedjobArgs.JENKINS_AGENT_BUILDER.repo}")
                                             }
-                                        }
-                                        properties {
-                                            disableConcurrentBuilds()
-                                            disableResume()
+                                            branch("${seedjobArgs.JENKINS_AGENT_BUILDER.branch}")
                                         }
                                     }
-                                """
+                                    scriptPath("${seedjobArgs.JENKINS_AGENT_BUILDER.path}")
+                                    lightweight()
+                                }
                             }
+                            properties {
+                                disableConcurrentBuilds()
+                                disableResume()
+                            }
+                        }
 
-                            if (job == 'k3s-infra-factory') {
-                                jobDsl removedConfigFilesAction: 'DELETE',
-                                removedJobAction: 'DELETE',
-                                removedViewAction: 'DELETE',
-                                scriptText: """
-                                    pipelineJob("${job}") {
-                                        description("${k3sInfraDesc}")
-                                        parameters {
-                                            choiceParam(
-                                                'ACTIONS',
-                                                [
-                                                    'create',
-                                                    'destroy'
-                                                ],
-                                                'Create or destroy'
-                                            )
-                                        }
-                                        definition {
-                                            cpsScm {
-                                                scm {
-                                                    git {
-                                                        remote {
-                                                            url("${platformRepo}")
-                                                        }
-                                                        branch("${platformBranch}")
-                                                    }
-                                                }
-                                                scriptPath("${path}")
-                                                lightweight()
+
+                // k3s-infra-factory
+                        pipelineJob("${seedjobArgs.K3S_INFRA_FACTORY.name}") {
+                            description("${seedjobArgs.K3S_INFRA_FACTORY.desc}")
+                            parameters {
+                                choiceParam(
+                                    "${PipelineArgs.taskName}",
+                                    [
+                                        'create',
+                                        'destroy'
+                                    ],
+                                    "${PipelineArgs.taskDesc}"
+                                )
+                            }
+                            definition {
+                                cpsScm {
+                                    scm {
+                                        git {
+                                            remote {
+                                                url("${seedjobArgs.K3S_INFRA_FACTORY.repo}")
                                             }
-                                        }
-                                        properties {
-                                            disableConcurrentBuilds()
-                                            disableResume()
+                                            branch("${seedjobArgs.K3S_INFRA_FACTORY.branch}")
                                         }
                                     }
-                                """
+                                    scriptPath("${seedjobArgs.K3S_INFRA_FACTORY.path}")
+                                    lightweight()
+                                }
                             }
+                            properties {
+                                disableConcurrentBuilds()
+                                disableResume()
+                            }
+                        }
 
-                            if (job == 'packy') {
-                                jobDsl removedConfigFilesAction: 'DELETE',
-                                removedJobAction: 'DELETE',
-                                removedViewAction: 'DELETE',
-                                scriptText: """
-                                    pipelineJob("${job}") {
-                                        description("${packyDesc}")
-                                        parameters {
-                                            choiceParam(
-                                                'DISTRO',
-                                                [
-                                                    'debian',
-                                                    'oracle',
-                                                    'rocky',
-                                                    'ubuntu'
-                                                ],
-                                                'linux distribution'
-                                            )
-
-                                            choiceParam(
-                                                'ISO_NAME',
-                                                [
-                                                    'OracleLinux-R9-U4-x86_64-boot.iso',
-                                                    'Rocky-9.4-x86_64-boot.iso',
-                                                    'debian-12.7.0-amd64-netinst.iso',
-                                                    'ubuntu-24.04.1-live-server-amd64.iso'
-                                                ],
-                                                'iso names'
-                                            )
-
-                                            choiceParam(
-                                                'PROXMOX_NODE',
-                                                [
-                                                    'behemoth',
-                                                    'kraken',
-                                                    'leviathan'
-                                                ],
-                                                'proxmox nodes'
-                                            )
-
-                                            stringParam(
-                                                'TEMPLATE_NAME',
-                                                null,
-                                                'template name'
-                                            )
-                                        }
-                                        definition {
-                                            cpsScm {
-                                                scm {
-                                                    git {
-                                                        remote {
-                                                            url("${platformRepo}")
-                                                        }
-                                                        branch("${platformBranch}")
-                                                    }
-                                                }
-                                                scriptPath("${path}")
-                                                lightweight()
+                // packy
+                        pipelineJob("${seedjobArgs.PACKY.name}") {
+                            description("${seedjobArgs.PACKY.desc}")
+                            parameters {
+                                choiceParam(
+                                    'DISTRO',
+                                    [
+                                        'debian',
+                                        'oracle',
+                                        'rocky',
+                                        'ubuntu'
+                                    ],
+                                    'linux distribution'
+                                )
+                                choiceParam(
+                                    'ISO_NAME',
+                                    [
+                                        'OracleLinux-R9-U4-x86_64-boot.iso',
+                                        'Rocky-9.4-x86_64-boot.iso',
+                                        'debian-12.7.0-amd64-netinst.iso',
+                                        'ubuntu-24.04.1-live-server-amd64.iso'
+                                    ],
+                                    'iso names'
+                                )
+                                choiceParam(
+                                    'PROXMOX_NODE',
+                                    [
+                                        'behemoth',
+                                        'kraken',
+                                        'leviathan'
+                                    ],
+                                    'proxmox nodes'
+                                )
+                                stringParam(
+                                    'TEMPLATE_NAME',
+                                    null,
+                                    'template name'
+                                )
+                            }
+                            definition {
+                                cpsScm {
+                                    scm {
+                                        git {
+                                            remote {
+                                                url("${seedjobArgs.PACKY.repo}")
                                             }
-                                        }
-                                        properties {
-                                            disableConcurrentBuilds()
-                                            disableResume()
+                                            branch("${seedjobArgs.PACKY.branch}")
                                         }
                                     }
-                                """
+                                    scriptPath("${seedjobArgs.PACKY.path}")
+                                    lightweight()
+                                }
                             }
+                            properties {
+                                disableConcurrentBuilds()
+                                disableResume()
+                            }
+                        }
 
-                            if (job == 'rpm-server') {
-                                jobDsl removedConfigFilesAction: 'DELETE',
-                                removedJobAction: 'DELETE',
-                                removedViewAction: 'DELETE',
-                                scriptText: """
-                                    pipelineJob("${job}") {
-                                        description("${rpmDesc}")
-                                        parameters {
-                                            choiceParam(
-                                                'ACTIONS',
-                                                [
-                                                    'create',
-                                                    'destroy'
-                                                ],
-                                                'Create or destroy'
-                                            )
-                                        }
-
-                                        definition {
-                                            cpsScm {
-                                                scm {
-                                                    git {
-                                                        remote {
-                                                            url("${platformRepo}")
-                                                        }
-                                                        branch("${platformBranch}")
-                                                    }
-                                                }
-                                                scriptPath("${path}")
-                                                lightweight()
+                // rpm-server
+                        pipelineJob("${seedjobArgs.RPM_SERVER.name}") {
+                            description("${seedjobArgs.RPM_SERVER.desc}")
+                            parameters {
+                                choiceParam(
+                                    "${PipelineArgs.taskName}",
+                                    [
+                                        'create',
+                                        'destroy'
+                                    ],
+                                    "${PipelineArgs.taskDesc}"
+                                )
+                            }
+                            definition {
+                                cpsScm {
+                                    scm {
+                                        git {
+                                            remote {
+                                                url("${seedjobArgs.RPM_SERVER.repo}")
                                             }
-                                        }
-
-                                        properties {
-                                            disableConcurrentBuilds()
-                                            disableResume()
+                                            branch("${seedjobArgs.RPM_SERVER.branch}")
                                         }
                                     }
-                                """
+                                    scriptPath("${seedjobArgs.RPM_SERVER.path}")
+                                    lightweight()
+                                }
                             }
-                    }
+                            properties {
+                                disableConcurrentBuilds()
+                                disableResume()
+                            }
+                        }
+                    """
                 }
             }
         }
