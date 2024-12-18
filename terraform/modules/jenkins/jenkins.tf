@@ -26,6 +26,7 @@ locals {
 
             nodeUsageMode     = "EXCLUSIVE"
             podName           = "kaniko-agent"
+            privileged        = true
             sideContainerName = "kaniko"
           }
         }
