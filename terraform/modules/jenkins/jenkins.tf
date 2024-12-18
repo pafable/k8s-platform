@@ -14,6 +14,22 @@ locals {
       {
         # clusterZone = var.domain
 
+        additionalAgents = {
+          kaniko = {
+            alwaysPullImage = true
+            componentName   = "kaniko-agent"
+
+            image = {
+              repository = "gcr.io/kaniko-project/executor"
+              tag        = "debug"
+            }
+
+            nodeUsageMode     = "EXCLUSIVE"
+            podName           = "kaniko-agent"
+            sideContainerName = "kaniko"
+          }
+        }
+
         agent = {
           alwaysPullImage = true
           # # this is necessary because labels on the pod template will be set to "jenkins-${podName}"
