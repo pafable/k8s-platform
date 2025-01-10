@@ -1,0 +1,9 @@
+@Library("devops-libs")
+_
+
+containerImageBuilder {
+    appName = 'myagent'
+    appVersion = '0.0.4'
+    cron = 'TZ=America/New_York\nH 0 * * 0'
+    dockerFilePath = 'dockerfiles/jenkins-agents/Dockerfile'
+}

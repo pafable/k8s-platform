@@ -8,7 +8,10 @@ packer {
 }
 
 locals {
-  rh_cmd = ["<esc> linux ip=dhcp inst.ks=http://${local.http_ip}/${var.distro}/ks.cfg<enter>"]
+  rh_cmd = [
+    "<esc><wait>",
+    "linux ip=dhcp inst.ks=http://${local.http_ip}/${var.distro}/ks.cfg<enter>"
+  ]
 
   ubuntu_cmd = [
     "<esc><esc><esc><esc>e<wait>",
@@ -31,7 +34,7 @@ source "proxmox-iso" "linux_golden_image" {
   boot_command             = local.boot_cmd
   boot_wait                = "3s"
   cores                    = var.cores
-  cpu_type                 = "host"
+  cpu_type                 = "x86-64-v2-AES" # cpu_type is currently broken. Fix is still being worked on https://github.com/hashicorp/packer-plugin-proxmox/issues/307
   http_directory           = var.is_local ? var.http_directory : null
   insecure_skip_tls_verify = true
   memory                   = var.memory

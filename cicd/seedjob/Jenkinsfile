@@ -5,8 +5,6 @@ import com.pafable.PipelineArgs
 import com.pafable.seedjobArgs
 
 final String agentLabel = 'jenkins-agent'
-final String jenkinsParamDesc = 'Tag for Jenkins agent'
-final String jenkinsParamName = 'JENKINS_AGENT_TAG'
 
 pipeline {
     agent {
@@ -121,13 +119,6 @@ pipeline {
                 // jenkins-agent-builder
                         pipelineJob("${seedjobArgs.JENKINS_AGENT_BUILDER.name}") {
                             description("${seedjobArgs.JENKINS_AGENT_BUILDER.desc}")
-                            parameters {
-                                stringParam {
-                                    description("${jenkinsParamDesc}")
-                                    name("${jenkinsParamName}")
-                                    trim(true)
-                                }
-                            }
                             definition {
                                 cpsScm {
                                     scm {
@@ -147,7 +138,6 @@ pipeline {
                                 disableResume()
                             }
                         }
-
 
                 // k3s-infra-factory
                         pipelineJob("${seedjobArgs.K3S_INFRA_FACTORY.name}") {
