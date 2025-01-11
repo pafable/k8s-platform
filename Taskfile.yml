@@ -492,14 +492,16 @@ tasks:
       - trivy config . --severity HIGH,CRITICAL
 
   jagent-image-create:
-    desc: Build jenkins agent image
+    desc: Build jenkins agent image. Local run only. NOT FOR CICD.
+    # cmd example: task jagent-image-create JENKINS_AGENT_TAG=${params.JENKINS_AGENT_TAG}
     dir: '{{ .JENKINS_AGENT_IMAGE_DIR }}'
     cmds:
       - docker build -t {{ .CONTAINER_REGISTRY }}/{{ .JENKINS_IMAGE }}:{{ .JENKINS_AGENT_TAG }} --platform linux/amd64 .
       - docker images | grep {{ .CONTAINER_REGISTRY }}/{{ .JENKINS_IMAGE }}
 
   jagent-image-push:
-    desc: Push jenkins docker image to a container registry
+    desc: Push jenkins docker image to a container registry. Local run only. NOT FOR CICD.
+    # cmd example: task jagent-image-push JENKINS_AGENT_TAG=${params.JENKINS_AGENT_TAG}
     cmds:
       - docker push {{ .CONTAINER_REGISTRY }}/{{ .JENKINS_IMAGE }}:{{ .JENKINS_AGENT_TAG }}
 

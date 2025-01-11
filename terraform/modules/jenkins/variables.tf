@@ -71,7 +71,7 @@ variable "k3s_config_file" {
 variable "helm_chart_version" {
   description = "helm chart version"
   type        = string
-  default     = "5.7.22"
+  default     = "5.8.3"
 }
 
 variable "helm_repo" {

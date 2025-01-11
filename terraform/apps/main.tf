@@ -29,6 +29,10 @@ module "kube_prom_stack" {
   is_cloud     = false
 }
 
+module "loki" {
+  source = "../modules/loki"
+}
+
 module "postgresql_db_01" {
   source       = "../modules/postgresql"
   domain       = var.domain
