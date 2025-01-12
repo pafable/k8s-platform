@@ -1,3 +1,9 @@
+@Library('devops-libs@libs-update')
+_
+
+import com.pafable.IsoImagesArgs
+import com.pafable.PipelineArgs
+
 final String agentLabel = 'jenkins-agent'
 final String awsCreds = 'aws-dev-deployer-creds'
 final String httpServer = 'http-server'
@@ -5,20 +11,6 @@ final String packerSshCreds = 'packer-test-ssh-creds'
 final String proxmoxCreds = 'proxmox-api-creds'
 final String proxmoxIP = '192.168.109.2'
 final String tfVersion = 'tf-1-9-8'
-
-final def distros = [
-    'debian',
-    'oracle',
-    'rocky',
-    'ubuntu'
-]
-
-final def isoNames = [
-    'OracleLinux-R9-U4-x86_64-boot.iso',
-    'Rocky-9.4-x86_64-boot.iso',
-    'debian-12.7.0-amd64-netinst.iso',
-    'ubuntu-24.04.1-live-server-amd64.iso'
-]
 
 final def proxmoxNodes = [
     'behemoth',
@@ -51,11 +43,11 @@ pipeline {
     }
 
     parameters {
-        choice choices: distros,
+        choice choices: "${IsoImagesArgs.getDistros() as List}",
         description: 'linux distribution',
         name: 'DISTRO'
 
-        choice choices: isoNames,
+        choice choices: "${IsoImagesArgs.getIsos() as List}",
         description: 'iso names',
         name: 'ISO_NAME'
 

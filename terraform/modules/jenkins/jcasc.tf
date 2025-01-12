@@ -165,6 +165,22 @@ locals {
                     }
                   }
                 ]
+              },
+              {
+                name = "tf-1-10-4"
+                properties = [
+                  {
+                    installSource = {
+                      installers = [
+                        {
+                          terraformInstaller = {
+                            id = "1.10.4-linux-amd64"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
               }
             ]
           }
