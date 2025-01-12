@@ -69,6 +69,13 @@ locals {
           jsonData = {
             tlsSkipVerify = true
           }
+        },
+        {
+          name      = "loki"
+          type      = "loki"
+          url       = "http://${local.loki_app_name}.${kubernetes_namespace_v1.kube_prom_ns.metadata.0.name}:${local.loki_port}/"
+          access    = "proxy"
+          isdefault = false
         }
       ]
 

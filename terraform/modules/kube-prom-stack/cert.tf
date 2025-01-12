@@ -14,6 +14,7 @@ resource "kubernetes_manifest" "cert" {
 
       dnsNames = [
         "grafana.home.pafable.com",
+        "loki.home.pafable.com",
         "prom.home.pafable.com",
         "prometheus.home.pafable.com"
       ]

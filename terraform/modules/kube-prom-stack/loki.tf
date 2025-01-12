@@ -1,14 +1,10 @@
 locals {
-  app_name   = "loki-stack"
-  chart_name = local.app_name
+  loki_app_name = "loki"
+  chart_name    = "${local.loki_app_name}-stack"
+  loki_domain   = "${local.loki_app_name}.${var.domain}"
+  loki_port     = 3100
 
-  labels = {
-    "app.kubernetes.io/name"       = local.app_name
-    "app.kubernetes.io/managed-by" = "terraform"
-    "app.kubernetes.io/owner"      = var.owner
-  }
-
-  values = [
+  loki_values = [
     yamlencode(
       # {
       #   loki = {
@@ -56,6 +52,10 @@ locals {
       # }
       {
         loki = {
+          image = {
+            tag = "2.9.3"
+          }
+
           isDefault = false
         }
       }
@@ -63,22 +63,14 @@ locals {
   ]
 }
 
-resource "kubernetes_namespace_v1" "loki_ns" {
-  metadata {
-    name   = local.app_name
-    labels = local.labels
-  }
-}
-
 resource "helm_release" "loki" {
   chart             = local.chart_name
   create_namespace  = false
   dependency_update = true
   force_update      = true
-  name              = local.app_name
-  namespace         = kubernetes_namespace_v1.loki_ns.metadata.0.name
-  repository        = var.helm_repo
-  values            = local.values
-  timeout           = var.timeout
-  version           = var.helm_chart_version
+  name              = local.loki_app_name
+  namespace         = kubernetes_namespace_v1.kube_prom_ns.metadata.0.name
+  repository        = var.loki_helm_repo
+  values            = local.loki_values
+  version           = var.loki_helm_chart_version
 }

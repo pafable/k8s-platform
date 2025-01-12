@@ -27,6 +27,7 @@ locals {
     "argocd",
     "grafana",
     "jenkins",
+    "loki",
     "pgadmin",
     "prometheus",
     "vault"
