@@ -46,6 +46,18 @@ variable "is_docker_desktop" {
   default     = false
 }
 
+variable "loki_helm_chart_version" {
+  description = "helm chart version"
+  type        = string
+  default     = "2.10.2"
+}
+
+variable "loki_helm_repo" {
+  description = "Helm repo url"
+  type        = string
+  default     = "https://grafana.github.io/helm-charts"
+}
+
 variable "ou" {
   description = "The organizational unit"
   type        = string

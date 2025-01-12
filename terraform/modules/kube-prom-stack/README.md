@@ -1,4 +1,7 @@
-# Deploy Grafana Loki
+## Kube Prometheus Stack
+Docs: https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
+
+## Deploy Grafana Loki
 
 Docs: https://grafana.com/docs/loki/latest/setup/install/
 
