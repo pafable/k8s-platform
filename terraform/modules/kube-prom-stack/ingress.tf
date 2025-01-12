@@ -84,7 +84,7 @@ resource "kubernetes_ingress_v1" "grafana_ingress" {
 
 resource "kubernetes_ingress_v1" "loki_ingress" {
   metadata {
-    name      = "loki-ingress"
+    name      = "${local.loki_app_name}-ingress"
     namespace = kubernetes_namespace_v1.kube_prom_ns.metadata.0.name
     labels    = local.labels
   }
@@ -121,5 +121,5 @@ resource "kubernetes_ingress_v1" "loki_ingress" {
     }
   }
 
-  depends_on = [helm_release.kube_prom_stack]
+  depends_on = [helm_release.loki]
 }
