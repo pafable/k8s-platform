@@ -391,7 +391,7 @@ tasks:
       - defer: |
           echo "Cleaning up..."
           rm -f tfplan
-      - terraform plan -var -out=tfplan -no-color
+      - terraform plan -out=tfplan -no-color
       - terraform apply tfplan -no-color
 
   destroy-vpc:
@@ -403,7 +403,7 @@ tasks:
       - defer: |
           echo "Cleaning up..."
           rm -f tfplan.destroy
-      - terraform plan -var -out=tfplan.destroy -destroy -no-color
+      - terraform plan -out=tfplan.destroy -destroy -no-color
       - terraform apply tfplan.destroy -no-color
 
   # Create VPN
