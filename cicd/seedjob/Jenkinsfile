@@ -13,10 +13,6 @@ pipeline {
 
     options {
         ansiColor('xterm')
-        timeout(
-            time: 5,
-            unit: 'MINUTES'
-        )
     }
 
     stages {
@@ -288,6 +284,39 @@ pipeline {
                                         }
                                     }
                                     scriptPath("${seedjobArgs.EKS_TERRAFORMER.path}")
+                                    lightweight()
+                                }
+                            }
+                            properties {
+                                disableConcurrentBuilds()
+                                disableResume()
+                            }
+                        }
+
+                // vpc-terraformer
+                        pipelineJob("${seedjobArgs.VPC_TERRAFORMER.name}") {
+                            description("${seedjobArgs.VPC_TERRAFORMER.desc}")
+                            parameters {
+                                choiceParam(
+                                    "${PipelineArgs.taskName}",
+                                    [
+                                        'create',
+                                        'destroy'
+                                    ],
+                                    "${PipelineArgs.taskDesc}"
+                                )
+                            }
+                            definition {
+                                cpsScm {
+                                    scm {
+                                        git {
+                                            remote {
+                                                url("${seedjobArgs.VPC_TERRAFORMER.repo}")
+                                            }
+                                            branch("${seedjobArgs.VPC_TERRAFORMER.branch}")
+                                        }
+                                    }
+                                    scriptPath("${seedjobArgs.VPC_TERRAFORMER.path}")
                                     lightweight()
                                 }
                             }

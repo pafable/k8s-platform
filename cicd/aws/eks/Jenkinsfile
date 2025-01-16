@@ -1,0 +1,53 @@
+@Library("devops-libs")
+_
+
+import com.pafable.PipelineArgs
+
+final String agent_label = 'jenkins-agent'
+final String aws_creds = 'aws-dev-deployer-creds'
+final String tf_version = 'tf-1-10-4'
+
+pipeline {
+    agent {
+      label agent_label
+    }
+
+    environment {
+        UNUSED = credentials("${aws_creds}")
+    }
+
+    options {
+        ansiColor('xterm')
+        timeout(
+            time: 30,
+            unit: 'MINUTES'
+        )
+    }
+
+    parameters {
+        choice choices: PipelineArgs.taskActions,
+        description: PipelineArgs.taskDesc,
+        name: PipelineArgs.taskName
+    }
+    tools {
+        terraform "${tf_version}"
+    }
+
+    stages {
+        stage('Terraforming EKS') {
+            steps {
+                script {
+                    if (params.ACTIONS == 'create') {
+                        sh """
+                            task ${params.ACTIONS}-eks
+                        """
+                    } else {
+                        sh """
+                            task ${params.ACTIONS}-eks
+                        """
+                    }
+                }
+            }
+        }
+    }
+}
