@@ -16,7 +16,7 @@ variable "code" {
 variable "helm_chart_version" {
   description = "helm chart version"
   type        = string
-  default     = "0.37.0"
+  default     = "1.1.1"
 }
 
 variable "oidc_provider_arn" {

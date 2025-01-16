@@ -2,7 +2,6 @@ locals {
   # default tags
   default_tags = {
     app_name      = "k8s-platform"
-    branch        = var.branch
     code_location = "k8s-platform/terraform/apps/vpc"
     managed_by    = "terraform"
     owner         = var.owner
@@ -18,6 +17,7 @@ locals {
 module "k8s_vpc" {
   source                      = "../../modules/vpc"
   enable_karpenter_subnet_tag = local.enable_karpenter
+  enable_nat_gateway          = false
   intra_subnets               = local.intra_subnets
   name                        = local.default_tags.app_name
   private_subnets             = local.private_subnets

@@ -7,7 +7,7 @@ variable "app_name" {
 variable "chart_version" {
   description = "The version of the Helm chart to install"
   type        = string
-  default     = "61.8.0"
+  default     = "68.1.1"
 }
 
 variable "domain" {
