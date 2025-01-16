@@ -1,7 +1,7 @@
 variable "chart_version" {
   description = "The version of the Helm chart to install"
   type        = string
-  default     = "4.11.3"
+  default     = "4.12.0"
 }
 
 variable "external_ips" {
