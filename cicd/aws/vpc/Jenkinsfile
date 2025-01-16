@@ -19,7 +19,7 @@ pipeline {
     options {
         ansiColor('xterm')
         timeout(
-            time: 5,
+            time: 30,
             unit: 'MINUTES'
         )
     }
@@ -34,16 +34,16 @@ pipeline {
     }
 
     stages {
-        stage('Terraforming EKS') {
+        stage('Terraforming VPC') {
             steps {
                 script {
                     if (params.ACTIONS == 'create') {
                         sh """
-                            task ${params.ACTIONS}-eks
+                            task ${params.ACTIONS}-vpc
                         """
                     } else {
                         sh """
-                            task ${params.ACTIONS}-eks
+                            task ${params.ACTIONS}-vpc
                         """
                     }
                 }
