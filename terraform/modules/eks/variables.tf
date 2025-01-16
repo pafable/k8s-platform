@@ -14,6 +14,12 @@ variable "cluster_name" {
   type        = string
 }
 
+variable "enable_public_access" {
+  description = "enable public access of api server/control plane"
+  type        = bool
+  default     = false
+}
+
 variable "instance_types" {
   description = "EC2 instance types for EKS worker nodes"
   type        = list(string)

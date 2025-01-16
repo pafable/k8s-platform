@@ -5,7 +5,7 @@ module "new_eks" {
   cluster_enabled_log_types                = local.log_types
   cluster_name                             = local.cluster_name
   cluster_version                          = var.k8s_version
-  cluster_endpoint_public_access           = local.enable_public_access
+  cluster_endpoint_public_access           = var.enable_public_access
   enable_cluster_creator_admin_permissions = local.enable_cluster_creator
   subnet_ids                               = var.private_subnet_ids
   vpc_id                                   = var.vpc_id

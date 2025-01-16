@@ -7,7 +7,6 @@ locals {
   eks_cluster_admin_policy_arn = "arn:${data.aws_partition.current.partition}:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
   enable_cluster_creator       = true
   enable_nat_gateway           = true
-  enable_public_access         = false
   log_types                    = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
   min_healthy_percentage       = 33
   most_recent_addon            = true
