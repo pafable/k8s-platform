@@ -263,6 +263,39 @@ pipeline {
                                 disableResume()
                             }
                         }
+
+                // eks-terraformer
+                        pipelineJob("${seedjobArgs.EKS_TERRAFORMER.name}") {
+                            description("${seedjobArgs.EKS_TERRAFORMER.desc}")
+                            parameters {
+                                choiceParam(
+                                    "${PipelineArgs.taskName}",
+                                    [
+                                        'create',
+                                        'destroy'
+                                    ],
+                                    "${PipelineArgs.taskDesc}"
+                                )
+                            }
+                            definition {
+                                cpsScm {
+                                    scm {
+                                        git {
+                                            remote {
+                                                url("${seedjobArgs.EKS_TERRAFORMER.repo}")
+                                            }
+                                            branch("${seedjobArgs.EKS_TERRAFORMER.branch}")
+                                        }
+                                    }
+                                    scriptPath("${seedjobArgs.EKS_TERRAFORMER.path}")
+                                    lightweight()
+                                }
+                            }
+                            properties {
+                                disableConcurrentBuilds()
+                                disableResume()
+                            }
+                        }
                     """
                 }
             }
