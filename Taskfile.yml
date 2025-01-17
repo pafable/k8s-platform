@@ -277,7 +277,7 @@ tasks:
       - defer: |
           echo "Cleaning up..."
           rm -f tfplan
-      - terraform plan -var "branch=${BRANCH}" -out=tfplan -no-color
+      - terraform plan -out=tfplan -no-color
       - terraform apply tfplan -no-color
 
   destroy-eks:
@@ -289,7 +289,7 @@ tasks:
       - defer: |
           echo "Cleaning up..."
           rm -f tfplan.destroy
-      - terraform plan -var "branch=${BRANCH}" -out=tfplan.destroy -destroy -no-color
+      - terraform plan -out=tfplan.destroy -destroy -no-color
       - terraform apply tfplan.destroy -no-color
 
 # Kube Support Resources
