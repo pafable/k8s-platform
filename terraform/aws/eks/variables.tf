@@ -3,11 +3,6 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
-variable "branch" {
-  description = "Git branch to deploy"
-  type        = string
-}
-
 variable "code" {
   description = "location of code"
   type        = string
