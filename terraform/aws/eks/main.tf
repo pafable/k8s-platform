@@ -19,6 +19,7 @@ module "k8s_eks" {
   cluster_name         = local.cluster_name
   enable_public_access = true
   intra_subnet_ids     = jsondecode(data.aws_ssm_parameter.intra_subnet_ids.value)
+  k8s_version          = "1.30"
   node_desired_size    = 3
   private_subnet_ids   = jsondecode(data.aws_ssm_parameter.private_subnet_ids.value)
   sso_role_arn         = data.aws_ssm_parameter.aws_sso_role_arn.value
