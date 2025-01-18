@@ -2,7 +2,6 @@ locals {
   # EKS cluster params
   ami_type                     = "AL2_x86_64"
   capacity_type                = "SPOT"
-  cluster_name                 = var.cluster_name
   disk_size                    = 30
   eks_cluster_admin_policy_arn = "arn:${data.aws_partition.current.partition}:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
   enable_cluster_creator       = true
@@ -95,7 +94,7 @@ locals {
     vpc_security_group_ids = [aws_security_group.allow_all_ingress_sg.id]
 
     launch_template_tags = {
-      Name = "${local.cluster_name}-node"
+      Name = "${var.cluster_name}-node"
     }
 
     update_config = {
@@ -104,6 +103,6 @@ locals {
   }
 
   private_subnet_tags = {
-    "karpenter.sh/discovery" = local.cluster_name # Karpenter discovery tag for private subnets only
+    "karpenter.sh/discovery" = var.cluster_name # Karpenter discovery tag for private subnets only
   }
 }

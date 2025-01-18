@@ -13,5 +13,5 @@ resource "aws_security_group" "allow_all_ingress_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = { Name = "${local.cluster_name}-allow-all-ingress-sg" }
+  tags = { Name = "${var.cluster_name}-allow-all-ingress-sg" }
 }

@@ -3,7 +3,7 @@ module "new_eks" {
   version                                  = ">= 20.8.5"
   control_plane_subnet_ids                 = var.intra_subnet_ids # control plane will be deployed in this subnet
   cluster_enabled_log_types                = local.log_types
-  cluster_name                             = local.cluster_name
+  cluster_name                             = var.cluster_name
   cluster_version                          = var.k8s_version
   cluster_endpoint_public_access           = var.enable_public_access
   enable_cluster_creator_admin_permissions = local.enable_cluster_creator
