@@ -18,10 +18,10 @@ module "k8s_eks" {
   #   client_vpn_security_group_id = data.aws_ssm_parameter.client_vpn_security_group_id.value
   cluster_name         = local.cluster_name
   enable_public_access = false
-  intra_subnet_ids     = jsondecode(data.aws_ssm_parameter.intra_subnet_ids.value)
+  intra_subnet_ids     = jsondecode(data.aws_ssm_parameter.intra_subnet_ids.value) # control plane will be deployed in this subnet
   k8s_version          = "1.30"
   node_desired_size    = 1
-  private_subnet_ids   = jsondecode(data.aws_ssm_parameter.private_subnet_ids.value)
+  private_subnet_ids   = jsondecode(data.aws_ssm_parameter.private_subnet_ids.value) # worker nodes will be deployed in this subnet
   sso_role_arn         = data.aws_ssm_parameter.aws_sso_role_arn.value
   vpc_id               = data.aws_ssm_parameter.vpc_id.value
 

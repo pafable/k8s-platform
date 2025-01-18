@@ -1,13 +1,13 @@
 module "new_eks" {
   source                                   = "terraform-aws-modules/eks/aws"
   version                                  = ">= 20.8.5"
-  control_plane_subnet_ids                 = var.intra_subnet_ids
+  control_plane_subnet_ids                 = var.intra_subnet_ids # control plane will be deployed in this subnet
   cluster_enabled_log_types                = local.log_types
   cluster_name                             = local.cluster_name
   cluster_version                          = var.k8s_version
   cluster_endpoint_public_access           = var.enable_public_access
   enable_cluster_creator_admin_permissions = local.enable_cluster_creator
-  subnet_ids                               = var.private_subnet_ids
+  subnet_ids                               = var.private_subnet_ids # worker nodes will be deployed in this subnet
   vpc_id                                   = var.vpc_id
 
   access_entries = {
