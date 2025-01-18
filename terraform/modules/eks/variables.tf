@@ -1,8 +1,3 @@
-variable "aws_region" {
-  description = "aws region"
-  default     = "us-east-1"
-}
-
 variable "client_vpn_security_group_id" {
   description = "Client VPN security group id"
   type        = string

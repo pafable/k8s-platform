@@ -6,22 +6,42 @@ locals {
   disk_size                    = 30
   eks_cluster_admin_policy_arn = "arn:${data.aws_partition.current.partition}:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
   enable_cluster_creator       = true
-  enable_nat_gateway           = true
   log_types                    = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
-  min_healthy_percentage       = 33
   most_recent_addon            = true
   resolve_conflict             = "OVERWRITE"
-  single_nat_gateway           = true
   sso_role_admin_arn           = var.sso_role_arn
 
+  additional_worker_policy_keys = [
+    "amazon_cloudwatch_agent_server",
+    "amazon_ebs_csi_driver",
+    "amazon_ec2_container_registry_ro",
+    "amazon_eks_cni",
+    "amazon_eks_worker_node",
+    "amazon_ssm_managed_instance_core"
+  ]
+
+  additional_worker_policy_values = [
+    "CloudWatchAgentServerPolicy",
+    "service-role/AmazonEBSCSIDriverPolicy",
+    "AmazonEC2ContainerRegistryReadOnly",
+    "AmazonEKS_CNI_Policy",
+    "AmazonEKSWorkerNodePolicy",
+    "AmazonSSMManagedInstanceCore"
+  ]
+
   additional_worker_policies = {
-    amazon_cloudwatch_agent_server   = "arn:${data.aws_partition.current.partition}:iam::aws:policy/CloudWatchAgentServerPolicy"
-    amazon_ebs_csi_driver            = "arn:${data.aws_partition.current.partition}:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
-    amazon_ec2_container_registry_ro = "arn:${data.aws_partition.current.partition}:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-    amazon_eks_cni                   = "arn:${data.aws_partition.current.partition}:iam::aws:policy/AmazonEKS_CNI_Policy"
-    amazon_eks_worker_node           = "arn:${data.aws_partition.current.partition}:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-    amazon_ssm_managed_instance_core = "arn:${data.aws_partition.current.partition}:iam::aws:policy/AmazonSSMManagedInstanceCore"
+    for i in range(length(local.additional_worker_policy_keys))
+    : local.additional_worker_policy_keys[i] => "arn:${data.aws_partition.current.partition}:iam::aws:policy/${local.additional_worker_policy_values[i]}"
   }
+  ## creates this
+  # {
+  #   amazon_cloudwatch_agent_server   = "arn:${data.aws_partition.current.partition}:iam::aws:policy/CloudWatchAgentServerPolicy"
+  #   amazon_ebs_csi_driver            = "arn:${data.aws_partition.current.partition}:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+  #   amazon_ec2_container_registry_ro = "arn:${data.aws_partition.current.partition}:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+  #   amazon_eks_cni                   = "arn:${data.aws_partition.current.partition}:iam::aws:policy/AmazonEKS_CNI_Policy"
+  #   amazon_eks_worker_node           = "arn:${data.aws_partition.current.partition}:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+  #   amazon_ssm_managed_instance_core = "arn:${data.aws_partition.current.partition}:iam::aws:policy/AmazonSSMManagedInstanceCore"
+  # }
 
   cluster_addons = {
     amazon-cloudwatch-observability = {
@@ -76,6 +96,10 @@ locals {
 
     launch_template_tags = {
       Name = "${local.cluster_name}-node"
+    }
+
+    update_config = {
+      max_unavailable_percentage = 25
     }
   }
 
