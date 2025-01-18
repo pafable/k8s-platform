@@ -42,7 +42,7 @@ module "new_eks" {
   eks_managed_node_group_defaults = local.eks_managed_node_group_defaults
 
   node_security_group_tags = {
-    "karpenter.sh/discovery" = local.cluster_name
+    "karpenter.sh/discovery" = var.cluster_name
   }
 
   ## this is a test

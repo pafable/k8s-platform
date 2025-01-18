@@ -98,7 +98,7 @@ locals {
     }
 
     update_config = {
-      max_unavailable_percentage = 25
+      max_unavailable_percentage = var.max_unavailable
     }
   }
 

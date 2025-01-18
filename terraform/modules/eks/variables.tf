@@ -32,6 +32,12 @@ variable "k8s_version" {
   default     = 1.29
 }
 
+variable "max_unavailable" {
+  description = "Max unavailable worker nodes"
+  type        = number
+  default     = 25
+}
+
 variable "node_desired_size" {
   description = "Desired number of worker nodes"
   type        = number
