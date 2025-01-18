@@ -17,7 +17,7 @@ module "k8s_eks" {
   ## uncomment client_vpn_security_group_id to enable client vpn access
   #   client_vpn_security_group_id = data.aws_ssm_parameter.client_vpn_security_group_id.value
   cluster_name         = local.cluster_name
-  enable_public_access = false
+  enable_public_access = true
   intra_subnet_ids     = jsondecode(data.aws_ssm_parameter.intra_subnet_ids.value) # control plane will be deployed in this subnet
   k8s_version          = "1.30"
   node_desired_size    = 1
