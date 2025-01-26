@@ -1,0 +1,13 @@
+[Unit]
+Description=Kickstart server service
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+User=root
+WorkingDirectory=/home/pafable/auto-ks
+ExecStart=/usr/bin/python3 -m http.server 8080
+
+[Install]
+WantedBy=multi-user.target

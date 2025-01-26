@@ -17,6 +17,9 @@ Current list of images being created.
 - Add ISOs into your Proxmox server.
 - Upload contents of `auto-ks` to a http server.
 
+## Setup HTTP Server
+Move `ks-srv.service` file to a server and start the service for a HTTP server. The web server can be accessed at `<ip address>:8080` on your browser.
+
 ## Create a Vars File
 Create a `ubu-vars.pkr.hcl` for Ubuntu, `roc-vars.pkr.hcl` for Rocky and `orc-vars.pkr.hcl` for Oracle in the linux folder. Write in entries for proxmox user and password and ssh user and pass if required.
 
