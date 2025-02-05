@@ -55,7 +55,7 @@ env:
 
   # if this is set to k3s-config
   # it will be deployed to k3s cluster
-#  KUBECONFIG: $HOME/.kube/k3s-config
+  KUBECONFIG: $HOME/.kube/k3s-config
 
 tasks:
   install-prereqs:
@@ -125,8 +125,8 @@ tasks:
   install-crds:
     desc: Install CRDs
     cmds:
-      # Cert-Manager CRD, v1.15.3
-      - kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.15.3/cert-manager.crds.yaml # this is needed because cert-manager crd is needed to create issuer
+      # Cert-Manager CRD, v1.17.0
+      - kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.17.0/cert-manager.crds.yaml # this is needed because cert-manager crd is needed to create issuer
       # Gateway-API CRD, v1.0.0
       - kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml # this is needed because gateway crd is needed to create kong-ingress and kong-mesh
       # Kong Ingress CRDs

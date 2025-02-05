@@ -23,7 +23,7 @@ provider "dns" {
   update {
     server        = data.aws_ssm_parameter.dns_server_ip.value
     key_name      = "tsig-key."
-    key_algorithm = "hmac-sha256"
+    key_algorithm = "hmac-sha512"
     key_secret    = sensitive(data.aws_ssm_parameter.tsig_key.value)
   }
 }
