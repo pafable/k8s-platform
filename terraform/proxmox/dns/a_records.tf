@@ -53,7 +53,7 @@ resource "dns_a_record_set" "hive" {
 
   addresses = [
     data.aws_ssm_parameter.behemoth_ip.value,
-    data.aws_ssm_parameter.leviathan_ip.value
+    # data.aws_ssm_parameter.leviathan_ip.value
   ]
 }
 
