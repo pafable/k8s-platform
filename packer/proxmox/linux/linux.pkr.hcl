@@ -1,7 +1,7 @@
 packer {
   required_plugins {
     proxmox = {
-      version = ">= 1.2.2"
+      version = "1.2.1" # 1.2.2 CPU type option is broken do not upgrade until it is fixed
       source  = "github.com/hashicorp/proxmox"
     }
   }
@@ -34,7 +34,7 @@ source "proxmox-iso" "linux_golden_image" {
   boot_command             = local.boot_cmd
   boot_wait                = "3s"
   cores                    = var.cores
-  cpu_type                 = "host" # cpu_type is currently broken. Fix is still being worked on https://github.com/hashicorp/packer-plugin-proxmox/issues/307
+  cpu_type                 = "x86-64-v2-AES" # cpu_type is currently broken. Fix is still being worked on https://github.com/hashicorp/packer-plugin-proxmox/issues/307
   http_directory           = var.is_local ? var.http_directory : null
   insecure_skip_tls_verify = true
   memory                   = var.memory
