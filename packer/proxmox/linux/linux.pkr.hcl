@@ -1,7 +1,7 @@
 packer {
   required_plugins {
     proxmox = {
-      version = ">= 1.2"
+      version = ">= 1.2.2"
       source  = "github.com/hashicorp/proxmox"
     }
   }
@@ -53,9 +53,13 @@ source "proxmox-iso" "linux_golden_image" {
   vm_name                  = "packer-${var.distro}-image-builder"
 
   boot_iso {
-    iso_file = "local:iso/${var.iso_name}"
-    unmount  = true
-    type     = "scsi"
+    # iso_file = "local:iso/${var.iso_name}"
+    iso_checksum     = "628c069c9685477360640a6b58dc919692a11c44b49a50a024b5627ce3c27d5f"
+    iso_download_pve = true
+    iso_storage_pool = "local"
+    iso_url          = "https://download.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9.5-x86_64-boot.iso"
+    unmount          = true
+    type             = "scsi"
   }
 
   disks {
