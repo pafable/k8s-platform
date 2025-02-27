@@ -34,7 +34,7 @@ source "proxmox-iso" "linux_golden_image" {
   boot_command             = local.boot_cmd
   boot_wait                = "3s"
   cores                    = var.cores
-  cpu_type                 = "x86-64-v2-AES" # cpu_type is currently broken. Fix is still being worked on https://github.com/hashicorp/packer-plugin-proxmox/issues/307
+  cpu_type                 = "host" # cpu_type is currently broken. Fix is still being worked on https://github.com/hashicorp/packer-plugin-proxmox/issues/307
   http_directory           = var.is_local ? var.http_directory : null
   insecure_skip_tls_verify = true
   memory                   = var.memory
@@ -45,7 +45,7 @@ source "proxmox-iso" "linux_golden_image" {
   ssh_password             = var.ssh_password
   ssh_timeout              = "30m"
   ssh_username             = var.ssh_username
-  tags                     = var.template_name
+  tags                     = replace(var.template_name, ".", "_")
   template_description     = format(var.template_description, convert(timestamp(), string))
   template_name            = var.template_name
   token                    = var.proxmox_token
