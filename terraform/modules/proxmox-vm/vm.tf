@@ -21,7 +21,7 @@ resource "proxmox_vm_qemu" "vm" {
   agent       = 1
   clone       = var.clone_template
   cores       = var.cores
-  cpu         = var.cpu_type
+  cpu_type    = var.cpu_type
   desc        = local.description
   ipconfig0   = "ip=dhcp"
   memory      = var.memory
@@ -29,6 +29,7 @@ resource "proxmox_vm_qemu" "vm" {
   onboot      = true
   os_type     = var.os_type
   scsihw      = var.scsihw
+  skip_ipv6   = true
   sockets     = 1
   tags        = var.tags
   target_node = var.host_node
@@ -55,8 +56,9 @@ resource "proxmox_vm_qemu" "vm" {
   }
 
   network {
-    model  = "virtio"
     bridge = "vmbr0"
+    id     = 0
+    model  = "virtio"
   }
 
   depends_on = [proxmox_cloud_init_disk.cloudinit]

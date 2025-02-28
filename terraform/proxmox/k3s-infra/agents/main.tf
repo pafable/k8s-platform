@@ -4,19 +4,19 @@ locals {
   current_time = timestamp()
 
   # home network
-  home_network = "192.168.109.0/24"
+  home_network = "10.0.4.0/24"
 
   k3s_nodes = {
     agent_1 = {
       name     = "${local.host_name}-agent-01"
-      node     = "kraken"
-      template = "orc-tmpl-1"
+      node     = "behemoth"
+      template = "roc.tmpl.000"
     }
 
     agent_2 = {
       name     = "${local.host_name}-agent-02"
-      node     = "leviathan"
-      template = "orc-tmpl-1"
+      node     = "behemoth"
+      template = "roc.tmpl.000"
     }
   }
 

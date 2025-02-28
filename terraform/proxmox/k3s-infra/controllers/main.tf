@@ -4,13 +4,13 @@ locals {
   current_time = timestamp()
 
   # home network
-  home_network = "192.168.109.0/24"
+  home_network = "10.0.4.0/24"
 
   k3s_nodes = {
     controller_1 = {
       name     = "${local.host_name}-controller-01"
       node     = "behemoth"
-      template = "orc-tmpl-1"
+      template = "roc.tmpl.000"
     }
   }
 
