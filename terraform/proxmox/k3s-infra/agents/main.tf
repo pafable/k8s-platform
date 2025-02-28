@@ -1,44 +1,45 @@
 locals {
-  default_tags = "k3s"
-  host_name    = "hive-ship"
-  current_time = timestamp()
+  default_tags       = "k3s"
+  k3s_agent_1_name   = "${local.host_name}-agent-01"
+  k3s_agent_2_name   = "${local.host_name}-agent-02"
+  k3s_agent_template = "roc.tmpl.000" # DO NOT use "-" or "_"
+  host_name          = "hive-ship"
+  current_time       = timestamp()
 
   # home network
   home_network = "10.0.4.0/24"
 
   k3s_nodes = {
     agent_1 = {
-      name     = "${local.host_name}-agent-01"
+      name     = local.k3s_agent_1_name
       node     = "behemoth"
-      template = "roc.tmpl.000"
+      template = local.k3s_agent_template
+
+      creation_files = {
+        path    = "/home/${var.ssh_username}/instance_creation_date"
+        owner   = "nobody:nobody"
+        content = <<-EOT
+        name: ${local.k3s_agent_1_name}
+        created: ${local.current_time}
+        clone_template: ${local.k3s_agent_template}
+      EOT
+      }
     }
 
     agent_2 = {
-      name     = "${local.host_name}-agent-02"
+      name     = local.k3s_agent_2_name
       node     = "behemoth"
-      template = "roc.tmpl.000"
-    }
-  }
+      template = local.k3s_agent_template
 
-  creation_files = {
-    agent_1 = {
-      path    = "/home/${var.ssh_username}/instance_creation_date"
-      owner   = "nobody:nobody"
-      content = <<-EOT
-        name: ${local.k3s_nodes.agent_1.name}
+      creation_files = {
+        path    = "/home/${var.ssh_username}/instance_creation_date"
+        owner   = "nobody:nobody"
+        content = <<-EOT
+        name: ${local.k3s_agent_2_name}
         created: ${local.current_time}
-        clone_template: ${local.k3s_nodes.agent_1.template}
+        clone_template: ${local.k3s_agent_template}
       EOT
-    }
-
-    agent_2 = {
-      path    = "/home/${var.ssh_username}/instance_creation_date"
-      owner   = "nobody:nobody"
-      content = <<-EOT
-        name: ${local.k3s_nodes.agent_2.name}
-        created: ${local.current_time}
-        clone_template: ${local.k3s_nodes.agent_2.template}
-      EOT
+      }
     }
   }
 
@@ -77,18 +78,19 @@ locals {
     EOT
   }
 
+  # files to write to instance
   wr_files = {
     agent_1 = {
       write_files = [
         local.base_file,
-        local.creation_files.agent_1
+        local.k3s_nodes.agent_1.creation_files
       ]
     }
 
     agent_2 = {
       write_files = [
         local.base_file,
-        local.creation_files.agent_2
+        local.k3s_nodes.agent_2.creation_files
       ]
     }
   }
