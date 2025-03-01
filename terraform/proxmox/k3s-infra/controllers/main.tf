@@ -1,28 +1,28 @@
 locals {
-  default_tags = "k3s"
-  host_name    = "hive-ship"
-  current_time = timestamp()
+  default_tags            = "k3s"
+  host_name               = "hive-ship"
+  current_time            = timestamp()
+  k3s_controller_name     = "${local.host_name}-controller-01"
+  k3s_controller_template = "roc.tmpl.000"
 
   # home network
   home_network = "10.0.4.0/24"
 
   k3s_nodes = {
     controller_1 = {
-      name     = "${local.host_name}-controller-01"
+      name     = local.k3s_controller_name
       node     = "behemoth"
-      template = "roc.tmpl.000"
-    }
-  }
+      template = local.k3s_controller_template
 
-  creation_files = {
-    controller_1 = {
-      path    = "/home/${var.ssh_username}/instance_creation_date"
-      owner   = "nobody:nobody"
-      content = <<-EOT
-        name: ${local.k3s_nodes.controller_1.name}
-        created: ${local.current_time}
-        clone_template: ${local.k3s_nodes.controller_1.template}
-      EOT
+      creation_file = {
+        path    = "/home/${var.ssh_username}/instance_creation_date"
+        owner   = "nobody:nobody"
+        content = <<-EOT
+          name: ${local.k3s_controller_name}
+          created: ${local.current_time}
+          clone_template: ${local.k3s_controller_template}
+        EOT
+      }
     }
   }
 
@@ -65,7 +65,7 @@ locals {
     controller_1 = {
       write_files = [
         local.base_file,
-        local.creation_files.controller_1
+        local.k3s_nodes.controller_1.creation_file
       ]
     }
   }
