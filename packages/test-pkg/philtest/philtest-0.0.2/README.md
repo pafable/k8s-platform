@@ -15,6 +15,21 @@ make specfile
 ```
 
 4. Put your package files in SOURCES dir
+It should follow this structure
+```shell
+├── BUILD
+├── BUILDROOT
+├── Makefile
+├── RPMS
+├── SOURCES
+│   └── philtest-0.0.2
+│       ├── etc
+│       │   └── rsyslog.conf
+│       └── hello.txt
+├── SPECS
+│   └── philtest.spec
+└── SRPMS
+```
 
 5. Create a tar file
 ```shell
