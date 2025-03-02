@@ -5,7 +5,7 @@ VERSION ?= 0.0.1
 PKG_NAME ?= $(NAME)-$(VERSION)
 SPEC_PATH ?= $(BUILD_HOME)/SPECS/$(SPEC_FILE)
 
-build:
+build: ci
 	rpmbuild -v -bb $(SPEC_PATH)
 
 ci:
@@ -20,7 +20,7 @@ install:
 setup:
 	rpmdev-setuptree
 
-specfile: setup ci
+specfile: setup
 	rpmdev-newspec -o $(SPEC_PATH)
 
 tar:
