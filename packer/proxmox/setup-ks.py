@@ -80,7 +80,7 @@ def main():
     parser.add_argument("install", help="Install kick start server", action="store_true")
     parser.add_argument("uninstall", help="Uninstall kick start server", action="store_true")
     args = parser.parse_args()
-
+    print(args)
     if args.install:
         install()
     else:
