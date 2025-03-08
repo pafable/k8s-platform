@@ -77,8 +77,8 @@ def show_status(service: str) -> None:
 
 def main():
     parser = argparse.ArgumentParser(description="Configures kick start http server")
-    parser.add_argument("install", help="Install kick start server")
-    parser.add_argument("uninstall", help="Uninstall kick start server")
+    parser.add_argument("--install", help="Install kick start server")
+    parser.add_argument("--uninstall", help="Uninstall kick start server")
     args = parser.parse_args()
     print(args)
     if args.install:
