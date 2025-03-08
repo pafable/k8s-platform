@@ -49,9 +49,15 @@ def uninstall() -> None:
     reload_daemon()
 
 
+def show_status(service: str) -> None:
+    subprocess.run(["systemctl", "status", f"{service}"])
+    subprocess.run(["firewall-cmd", "--list-all"])
+
+
 def main():
     install()
     # uninstall()
+    show_status(KS_FILE)
 
 
 if __name__ == "__main__":
