@@ -5,7 +5,8 @@ import subprocess
 
 
 KS_FILE = "ks-srv.service"
-DEST = "/usr/lib/systemd/system/"
+# DEST = "/usr/lib/systemd/system/"
+DEST = "/etc/systemd/system/"
 PORT = 8080
 
 
