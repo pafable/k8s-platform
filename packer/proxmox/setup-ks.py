@@ -56,7 +56,7 @@ def uninstall() -> None:
     remove_srv(SRV_FILE_DEST, KS_FILE)
     close_port(PORT)
     reload_daemon()
-    start_srv(KS_FILE)
+    stop_srv(KS_FILE)
 
 
 def show_status(service: str) -> None:
