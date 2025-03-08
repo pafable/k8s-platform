@@ -7,7 +7,7 @@ DEST = "/usr/lib/systemd/system/"
 
 
 def copy_srv(src: str, dst: str) -> None:
-    print(shutil.copy2(KS_FILE, DEST))
+    print(f"copied {KS_FILE} to {shutil.copy2(KS_FILE, DEST)}")
 
 
 def main():
