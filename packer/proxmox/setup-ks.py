@@ -18,6 +18,7 @@ def reload_daemon() -> None:
 
 def main():
     copy_srv(KS_FILE, DEST)
+    reload_daemon()
 
 
 if __name__ == "__main__":
