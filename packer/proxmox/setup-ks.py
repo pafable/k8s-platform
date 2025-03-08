@@ -6,7 +6,7 @@ import subprocess
 
 
 KS_FILE = "ks-srv.service"
-DEST = "/usr/lib/systemd/system"
+SRV_FILE_DEST = "/usr/lib/systemd/system"
 PORT = 8080
 
 
@@ -28,6 +28,14 @@ def close_port(port: int) -> None:
     print(subprocess.run(["firewall-cmd", "--reload"]))
 
 
+def start_srv(srv: str) -> None:
+    subprocess.run(["systemctl", "start", srv])
+
+
+def stop_srv(srv: str) -> None:
+    subprocess.run(["systemctl", "stop", srv])
+
+
 def remove_srv(src_dir: str, file: str) -> None:
     file_to_remove = f"{src_dir}/{file}"
 
@@ -38,15 +46,17 @@ def remove_srv(src_dir: str, file: str) -> None:
 
 
 def install() -> None:
-    copy_srv(KS_FILE, DEST)
+    copy_srv(KS_FILE, SRV_FILE_DEST)
     open_port(PORT)
     reload_daemon()
+    start_srv(KS_FILE)
 
 
 def uninstall() -> None:
-    remove_srv(DEST, KS_FILE)
+    remove_srv(SRV_FILE_DEST, KS_FILE)
     close_port(PORT)
     reload_daemon()
+    start_srv(KS_FILE)
 
 
 def show_status(service: str) -> None:
