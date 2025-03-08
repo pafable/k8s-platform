@@ -1,39 +1,49 @@
 #!/usr/bin/env python3
 
+import logging
 import os
 import shutil
 import subprocess
 
+from typing import Final
 
-KS_FILE = "ks-srv.service"
-SRV_FILE_DEST = "/usr/lib/systemd/system"
-PORT = 8080
 
+DATE_FORMAT: Final[str] = "%Y-%m-%d %H:%M:%S"
+KS_FILE: Final[str] = "ks-srv.service"
+LOG_FORMAT: Final[str] = "%(asctime)s - %(levelname)s - %(message)s"
+PORT: Final[int] = 8080
+SRV_FILE_DEST: Final[str]  = "/usr/lib/systemd/system"
+
+logging.basicConfig(
+    datefmt=DATE_FORMAT,
+    format=LOG_FORMAT,
+    level=logging.INFO,
+)
 
 def copy_srv(src: str, dst: str) -> None:
-    print(f"copied {KS_FILE} to {shutil.copy2(src, dst)}")
+    logging.info("copied %s to %s",src, shutil.copy2(src, dst))
 
 
 def reload_daemon() -> None:
-    print(subprocess.run(["systemctl", "daemon-reload"]))
+    logging.info("%s", subprocess.run(["systemctl", "daemon-reload"]))
 
 
 def open_port(port: int) -> None:
-    print(subprocess.run(["firewall-cmd", f"--add-port={port}/tcp", "--permanent"]))
-    print(subprocess.run(["firewall-cmd", "--reload"]))
+    logging.info("%s", subprocess.run(["firewall-cmd", f"--add-port={port}/tcp", "--permanent"]))
+    logging.info("%s", subprocess.run(["firewall-cmd", "--reload"]))
 
 
 def close_port(port: int) -> None:
-    print(subprocess.run(["firewall-cmd", f"--remove-port={port}/tcp", "--permanent"]))
-    print(subprocess.run(["firewall-cmd", "--reload"]))
+    logging.info("%s", subprocess.run(["firewall-cmd", f"--remove-port={port}/tcp", "--permanent"]))
+    logging.info("%s", subprocess.run(["firewall-cmd", "--reload"]))
 
 
 def start_srv(srv: str) -> None:
-    subprocess.run(["systemctl", "start", srv])
+    logging.info("%s", subprocess.run(["systemctl", "start", srv]))
 
 
 def stop_srv(srv: str) -> None:
-    subprocess.run(["systemctl", "stop", srv])
+    logging.info("%s", subprocess.run(["systemctl", "restart", srv]))
 
 
 def remove_srv(src_dir: str, file: str) -> None:
@@ -42,7 +52,7 @@ def remove_srv(src_dir: str, file: str) -> None:
     try:
         os.remove(file_to_remove)
     except FileNotFoundError:
-        print(f"could not find {file_to_remove}")
+        logging.error("could not find %s", file_to_remove)
 
 
 def install() -> None:
