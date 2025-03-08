@@ -6,6 +6,7 @@ import subprocess
 
 KS_FILE = "ks-srv.service"
 DEST = "/usr/lib/systemd/system/"
+PORT = 8080
 
 
 def copy_srv(src: str, dst: str) -> None:
@@ -14,6 +15,11 @@ def copy_srv(src: str, dst: str) -> None:
 
 def reload_daemon() -> None:
     print(subprocess.run(["systemctl", "daemon-reload"]))
+
+
+def open_firewall() -> None:
+    print(subprocess.run(["firewall-cmd", f"--add-port={PORT}/tcp", "--permanent"]))
+    print(subprocess.run(["firewall-cmd", "--reload"]))
 
 
 def main():
