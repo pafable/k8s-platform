@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import argparse
 import logging
 import os
 import shutil
@@ -21,7 +22,7 @@ logging.basicConfig(
 )
 
 def copy_srv(src: str, dst: str) -> None:
-    logging.info("copied %s to %s",src, shutil.copy2(src, dst))
+    logging.info("copied %s to %s",src, shutil.copy(src, dst))
 
 
 def reload_daemon() -> None:
@@ -75,8 +76,16 @@ def show_status(service: str) -> None:
 
 
 def main():
-    install()
-    # uninstall()
+    parser = argparse.ArgumentParser(description="Configures kick start http server")
+    parser.add_argument("--install", help="Install kick start", action="store_true")
+    parser.add_argument("--uninstall", help="Uninstall kick start", action="store_true")
+    args = parser.parse_args()
+
+    if args.install:
+        install()
+    else:
+        uninstall()
+
     show_status(KS_FILE)
 
 
