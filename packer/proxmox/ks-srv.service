@@ -6,7 +6,7 @@ After=network.target
 Type=simple
 Restart=always
 User=root
-WorkingDirectory=/home/pafable/auto-ks
+WorkingDirectory=/usr/lib/systemd/system/auto-ks
 ExecStart=/usr/bin/python3 -m http.server 8080
 
 [Install]
