@@ -30,8 +30,11 @@ def close_port(port: int) -> None:
 
 def remove_srv(src_dir: str, file: str) -> None:
     file_to_remove = f"{src_dir}/{file}"
-    os.remove(file_to_remove)
-    print(f"removed {file_to_remove}")
+
+    try:
+        os.remove(file_to_remove)
+    except FileNotFoundError:
+        print(f"could not find {file_to_remove}")
 
 
 def install() -> None:
