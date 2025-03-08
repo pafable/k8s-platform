@@ -53,10 +53,10 @@ def install() -> None:
 
 
 def uninstall() -> None:
+    stop_srv(KS_FILE)
     remove_srv(SRV_FILE_DEST, KS_FILE)
     close_port(PORT)
     reload_daemon()
-    stop_srv(KS_FILE)
 
 
 def show_status(service: str) -> None:
