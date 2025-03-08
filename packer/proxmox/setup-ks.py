@@ -43,7 +43,7 @@ def start_srv(srv: str) -> None:
 
 
 def stop_srv(srv: str) -> None:
-    logging.info("%s", subprocess.run(["systemctl", "restart", srv]))
+    logging.info("%s", subprocess.run(["systemctl", "stop", srv]))
 
 
 def remove_srv(src_dir: str, file: str) -> None:
