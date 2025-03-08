@@ -24,6 +24,7 @@ def open_firewall() -> None:
 
 def main():
     copy_srv(KS_FILE, DEST)
+    open_firewall()
     reload_daemon()
 
 
