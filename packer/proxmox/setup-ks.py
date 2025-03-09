@@ -15,7 +15,6 @@ KS_SRV_FILE: Final[str] = "ks-srv.service"
 AUTO_KS_SRC_DIR: Final[str] = "auto-ks"
 AUTO_KS_DEST_DIR: Final[str] = "/srv"
 LOG_FORMAT: Final[str] = "%(asctime)s - %(levelname)s - %(message)s"
-PORT: Final[int] = 8080
 SRV_FILE_DEST: Final[str]  = "/usr/lib/systemd/system"
 
 logging.basicConfig(
@@ -71,24 +70,6 @@ def reload_daemon() -> None:
     logging.info("%s", subprocess.run(["systemctl", "daemon-reload"]))
 
 
-def open_port(port: int) -> None:
-    """
-    :param port:
-    :return:
-    """
-    logging.info("%s", subprocess.run(["firewall-cmd", f"--add-port={port}/tcp", "--permanent"]))
-    logging.info("%s", subprocess.run(["firewall-cmd", "--reload"]))
-
-
-def close_port(port: int) -> None:
-    """
-    :param port:
-    :return:
-    """
-    logging.info("%s", subprocess.run(["firewall-cmd", f"--remove-port={port}/tcp", "--permanent"]))
-    logging.info("%s", subprocess.run(["firewall-cmd", "--reload"]))
-
-
 def start_srv(srv: str) -> None:
     """
     :param srv:
@@ -122,17 +103,15 @@ def remove_files(src_dir: str, file: str) -> None:
 def install() -> None:
     copy_files(KS_SRV_FILE, SRV_FILE_DEST)
     copy_dir(AUTO_KS_SRC_DIR, AUTO_KS_DEST_DIR)
-    open_port(PORT)
     reload_daemon()
     start_srv(KS_SRV_FILE)
 
 
 def uninstall() -> None:
     stop_srv(KS_SRV_FILE)
+    reload_daemon()
     remove_files(SRV_FILE_DEST, KS_SRV_FILE)
     remove_dir(f"{AUTO_KS_DEST_DIR}/{AUTO_KS_SRC_DIR}")
-    close_port(PORT)
-    reload_daemon()
 
 
 def show_status(service: str) -> None:
