@@ -13,14 +13,12 @@ DATE_FORMAT: Final[str] = "%Y-%m-%d %H:%M:%S"
 AUTO_KS_SRC_DIR: Final[str] = "auto-ks"
 AUTO_KS_DEST_DIR: Final[str] = "/srv"
 LOG_FORMAT: Final[str] = "%(asctime)s - %(levelname)s - %(message)s"
-SRV_FILE_DEST: Final[str]  = "/usr/lib/systemd/system"
 
 logging.basicConfig(
     datefmt=DATE_FORMAT,
     format=LOG_FORMAT,
     level=logging.INFO,
 )
-
 
 
 def copy_dir(src: str, dst: str) -> None:
