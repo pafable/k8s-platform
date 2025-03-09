@@ -12,7 +12,7 @@ from typing import Final
 DATE_FORMAT: Final[str] = "%Y-%m-%d %H:%M:%S"
 KS_SRV_FILE: Final[str] = "ks-srv.service"
 AUTO_KS_SRC_DIR: Final[str] = "auto-ks"
-AUTO_KS_DEST_DIR: Final[str] = "/srv/"
+AUTO_KS_DEST_DIR: Final[str] = "/srv"
 LOG_FORMAT: Final[str] = "%(asctime)s - %(levelname)s - %(message)s"
 PORT: Final[int] = 8080
 SRV_FILE_DEST: Final[str]  = "/usr/lib/systemd/system"
