@@ -33,6 +33,23 @@ def copy_files(src: str, dst: str) -> None:
     logging.info("copied %s to %s", src, shutil.copy(src, dst))
 
 
+def copy_dir(src: str, dst: str) -> None:
+    """
+    :param src:
+    :param dst:
+    :return:
+    """
+    logging.info("copied %s to %s", src, shutil.copytree(src, dst))
+
+
+def remove_dir(src: str) -> None:
+    """
+    :param src:
+    :return:
+    """
+    shutil.rmtree(src)
+
+
 def reload_daemon() -> None:
     logging.info("%s", subprocess.run(["systemctl", "daemon-reload"]))
 
@@ -87,7 +104,7 @@ def remove_files(src_dir: str, file: str) -> None:
 
 def install() -> None:
     copy_files(KS_SRV_FILE, SRV_FILE_DEST)
-    copy_files(AUTO_KS_SRC_DIR, AUTO_KS_DEST_DIR)
+    copy_dir(AUTO_KS_SRC_DIR, AUTO_KS_DEST_DIR)
     open_port(PORT)
     reload_daemon()
     start_srv(KS_SRV_FILE)
@@ -96,7 +113,7 @@ def install() -> None:
 def uninstall() -> None:
     stop_srv(KS_SRV_FILE)
     remove_files(SRV_FILE_DEST, KS_SRV_FILE)
-    remove_files(AUTO_KS_DEST_DIR, AUTO_KS_SRC_DIR)
+    remove_dir(f"{AUTO_KS_DEST_DIR}/{AUTO_KS_SRC_DIR}")
     close_port(PORT)
     reload_daemon()
 
