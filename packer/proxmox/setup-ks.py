@@ -20,6 +20,7 @@ logging.basicConfig(
     level=logging.INFO,
 )
 
+
 class Installer:
     def __init__(self, ks_src: str, ks_dest: str):
         self.src: str = ks_src
