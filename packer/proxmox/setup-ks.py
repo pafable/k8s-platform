@@ -30,7 +30,11 @@ def copy_files(src: str, dst: str) -> None:
     :param dst:
     :return:
     """
-    logging.info("copied %s to %s", src, shutil.copy(src, dst))
+    logging.info(
+        "copied %s to %s",
+        src,
+        shutil.copy(src, dst)
+    )
 
 
 def copy_dir(src: str, dst: str) -> None:
@@ -39,7 +43,15 @@ def copy_dir(src: str, dst: str) -> None:
     :param dst:
     :return:
     """
-    logging.info("copied %s to %s", src, shutil.copytree(src, dst))
+    logging.info(
+        "copied %s to %s",
+        src,
+        shutil.copytree(
+            src,
+            dst,
+            dirs_exist_ok=True
+        )
+    )
 
 
 def remove_dir(src: str) -> None:
