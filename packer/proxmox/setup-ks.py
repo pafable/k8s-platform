@@ -52,8 +52,8 @@ class Installer:
 
 def main():
     parser = argparse.ArgumentParser(description="Configures kick start http server")
-    parser.add_argument("--install", "-i", help="Install kick start server", action="store_true")
-    parser.add_argument("--uninstall", "-u", help="Uninstall kick start server", action="store_true")
+    parser.add_argument("-i", "--install", help="Install kick start server", action="store_true")
+    parser.add_argument("-u", "--uninstall", help="Uninstall kick start server", action="store_true")
     args = parser.parse_args()
 
     if len(sys.argv) <= 1:
