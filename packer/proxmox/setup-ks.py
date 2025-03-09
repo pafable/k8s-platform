@@ -45,7 +45,7 @@ def copy_dir(src: str, dst: str) -> None:
     """
     os.makedirs(f"{dst}/{src}", exist_ok=True)
     logging.info(
-        "copied %s to %s",
+        "copied contents of %s to %s",
         src,
         shutil.copytree(
             src,
