@@ -43,6 +43,7 @@ def copy_dir(src: str, dst: str) -> None:
     :param dst:
     :return:
     """
+    os.makedirs(f"{dst}/{src}", exist_ok=True)
     logging.info(
         "copied %s to %s",
         src,
