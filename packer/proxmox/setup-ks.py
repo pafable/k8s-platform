@@ -5,6 +5,7 @@ import logging
 import os
 import shutil
 import subprocess
+import sys
 
 from typing import Final
 
@@ -148,6 +149,12 @@ def main():
     parser.add_argument("--install", "-i", help="Install kick start server", action="store_true")
     parser.add_argument("--uninstall", "-u", help="Uninstall kick start server", action="store_true")
     args = parser.parse_args()
+
+    print(sys.argv)
+
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit(1)
 
     if args.install:
         install()
