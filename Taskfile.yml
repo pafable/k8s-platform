@@ -595,6 +595,16 @@ tasks:
       - task: k3s-infra-agents-destroy
       - task: k3s-infra-controllers-destroy
 
+  packer-alma-build:
+    desc: Build Alma linux image
+    dir: '{{ .PROXMOX_PACKER_LINUX_DIR }}'
+    deps:
+      - task: fmt
+    cmds:
+      - packer init .
+      - packer validate -var-file=alm-vars.pkrvars.hcl .
+      - packer build -var-file=alm-vars.pkrvars.hcl .
+
   packer-oracle-build:
     desc: Build Oracle linux image
     dir: '{{ .PROXMOX_PACKER_LINUX_DIR }}'
