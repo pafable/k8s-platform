@@ -10,7 +10,7 @@ packer {
 locals {
   rh_cmd = [
     "<esc><wait>",
-    "linux ip=dhcp inst.ks=http://${local.http_ip}/${var.distro}/ks.cfg<enter>"
+    "linux ip=dhcp inst.ks=http://${local.http_ip}/kickstart/${var.distro}/ks.cfg<enter>"
   ]
 
   ubuntu_cmd = [
@@ -26,7 +26,7 @@ locals {
   ]
 
   boot_cmd = var.distro == "debian" || var.distro == "ubuntu" ? local.ubuntu_cmd : local.rh_cmd
-  http_ip  = var.is_local ? "{{ .HTTPIP }}:{{ .HTTPPort }}" : "${var.http_server}:8080"
+  http_ip  = var.is_local ? "{{ .HTTPIP }}:{{ .HTTPPort }}" : "${var.http_server}:9001"
 }
 
 source "proxmox-iso" "linux_golden_image" {

@@ -10,7 +10,7 @@ from typing import Final
 
 
 DATE_FORMAT: Final[str] = "%Y-%m-%d %H:%M:%S"
-AUTO_KS_SRC_DIR: Final[str] = "auto-ks"
+AUTO_KS_SRC_DIR: Final[str] = "kickstart"
 AUTO_KS_DEST_DIR: Final[str] = "/srv"
 LOG_FORMAT: Final[str] = "%(asctime)s - %(levelname)s - %(message)s"
 
