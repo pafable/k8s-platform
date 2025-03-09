@@ -25,7 +25,7 @@ logging.basicConfig(
 
 
 def copy_files(src: str, dst: str) -> None:
-    logging.info("copied %s to %s",src, shutil.copy(src, dst))
+    logging.info("copied %s to %s", src, shutil.copy(src, dst))
 
 
 def reload_daemon() -> None:
