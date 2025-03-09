@@ -151,7 +151,8 @@ def main():
 
     if args.install:
         install()
-    else:
+
+    if args.uninstall:
         uninstall()
 
     show_status(KS_SRV_FILE)
