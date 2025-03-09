@@ -25,6 +25,11 @@ logging.basicConfig(
 
 
 def copy_files(src: str, dst: str) -> None:
+    """
+    :param src:
+    :param dst:
+    :return:
+    """
     logging.info("copied %s to %s", src, shutil.copy(src, dst))
 
 
@@ -33,24 +38,45 @@ def reload_daemon() -> None:
 
 
 def open_port(port: int) -> None:
+    """
+    :param port:
+    :return:
+    """
     logging.info("%s", subprocess.run(["firewall-cmd", f"--add-port={port}/tcp", "--permanent"]))
     logging.info("%s", subprocess.run(["firewall-cmd", "--reload"]))
 
 
 def close_port(port: int) -> None:
+    """
+    :param port:
+    :return:
+    """
     logging.info("%s", subprocess.run(["firewall-cmd", f"--remove-port={port}/tcp", "--permanent"]))
     logging.info("%s", subprocess.run(["firewall-cmd", "--reload"]))
 
 
 def start_srv(srv: str) -> None:
+    """
+    :param srv:
+    :return:
+    """
     logging.info("%s", subprocess.run(["systemctl", "start", srv]))
 
 
 def stop_srv(srv: str) -> None:
+    """
+    :param srv:
+    :return:
+    """
     logging.info("%s", subprocess.run(["systemctl", "stop", srv]))
 
 
 def remove_files(src_dir: str, file: str) -> None:
+    """
+    :param src_dir:
+    :param file:
+    :return:
+    """
     file_to_remove = f"{src_dir}/{file}"
 
     try:
@@ -76,6 +102,10 @@ def uninstall() -> None:
 
 
 def show_status(service: str) -> None:
+    """
+    :param service:
+    :return:
+    """
     subprocess.run(["systemctl", "status", f"{service}"])
     subprocess.run(["firewall-cmd", "--list-all"])
 
