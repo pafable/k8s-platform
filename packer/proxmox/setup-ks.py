@@ -59,7 +59,10 @@ def remove_dir(src: str) -> None:
     :param src:
     :return:
     """
-    shutil.rmtree(src)
+    try:
+        shutil.rmtree(src)
+    except FileNotFoundError:
+        logging.error("could not find %s", src)
 
 
 def reload_daemon() -> None:
