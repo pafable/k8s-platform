@@ -150,8 +150,6 @@ def main():
     parser.add_argument("--uninstall", "-u", help="Uninstall kick start server", action="store_true")
     args = parser.parse_args()
 
-    print(sys.argv)
-
     if len(sys.argv) <= 1:
         parser.print_help()
         sys.exit(1)
