@@ -49,7 +49,7 @@ def copy_dir(src: str, dst: str) -> None:
         src,
         shutil.copytree(
             src,
-            dst,
+            f"{dst}/{src}",
             dirs_exist_ok=True
         )
     )
