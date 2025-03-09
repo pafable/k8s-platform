@@ -20,42 +20,34 @@ logging.basicConfig(
     level=logging.INFO,
 )
 
+class Installer:
+    def __init__(self, ks_src: str, ks_dest: str):
+        self.src: str = ks_src
+        self.dest: str = ks_dest
 
-def copy_dir(src: str, dst: str) -> None:
-    """
-    :param src:
-    :param dst:
-    :return:
-    """
-    os.makedirs(f"{dst}/{src}", exist_ok=True)
-    logging.info(
-        "copied contents of %s to %s",
-        src,
-        shutil.copytree(
-            src,
-            f"{dst}/{src}",
-            dirs_exist_ok=True
+    def _copy_dir(self) -> None:
+        os.makedirs(f"{self.dest}/{self.src}", exist_ok=True)
+        logging.info(
+            "copied contents of %s to %s",
+            self.src,
+            shutil.copytree(
+                self.src,
+                f"{self.dest}/{self.src}",
+                dirs_exist_ok=True
+            )
         )
-    )
 
+    def _remove_dir(self) -> None:
+        try:
+            shutil.rmtree(f"{self.dest}/{self.src}")
+        except FileNotFoundError:
+            logging.error("could not find %s", self.src)
 
-def remove_dir(src: str) -> None:
-    """
-    :param src:
-    :return:
-    """
-    try:
-        shutil.rmtree(src)
-    except FileNotFoundError:
-        logging.error("could not find %s", src)
+    def install(self) -> None:
+        self._copy_dir()
 
-
-def install() -> None:
-    copy_dir(AUTO_KS_SRC_DIR, AUTO_KS_DEST_DIR)
-
-
-def uninstall() -> None:
-    remove_dir(f"{AUTO_KS_DEST_DIR}/{AUTO_KS_SRC_DIR}")
+    def uninstall(self) -> None:
+        self._remove_dir()
 
 
 def main():
@@ -68,11 +60,13 @@ def main():
         parser.print_help()
         sys.exit(1)
 
+    init = Installer(AUTO_KS_SRC_DIR, AUTO_KS_DEST_DIR)
+
     if args.install:
-        install()
+        init.install()
 
     if args.uninstall:
-        uninstall()
+        init.uninstall()
 
 
 if __name__ == "__main__":
