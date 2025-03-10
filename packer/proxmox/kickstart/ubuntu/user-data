@@ -53,7 +53,8 @@ autoinstall:
   packages:
     - build-essential
     - cloud-init
-    - screenfetch
+    - fail2ban
+    - fastfetch
     - podman
     - podman-compose
     - qemu-guest-agent
