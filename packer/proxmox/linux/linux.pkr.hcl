@@ -1,7 +1,7 @@
 packer {
   required_plugins {
     proxmox = {
-      version = "1.2.1" # 1.2.2 CPU type option is broken do not upgrade until it is fixed
+      version = "1.2.1" # 1.2.2 CPU type option is broken do not upgrade until it is fixed. see line 37 "cpu_type"
       source  = "github.com/hashicorp/proxmox"
     }
   }
@@ -43,7 +43,7 @@ source "proxmox-iso" "linux_golden_image" {
   proxmox_url              = "https://${var.proxmox_url}:8006/api2/json"
   scsi_controller          = "virtio-scsi-single"
   ssh_password             = var.ssh_password
-  ssh_timeout              = "30m"
+  ssh_timeout              = "15m"
   ssh_username             = var.ssh_username
   tags                     = replace(var.template_name, ".", "_")
   template_description     = format(var.template_description, convert(timestamp(), string))
@@ -80,11 +80,19 @@ build {
     "proxmox-iso.linux_golden_image"
   ]
 
+  provisioner "file" {
+    source      = "../repos/${var.distro}/"
+    destination = "/tmp" # packer does not have the permissions to move files to correct dir so /tmp will have to do
+  }
+
+  provisioner "file" {
+    source      = "../customizations/"
+    destination = "/tmp"
+  }
+
   provisioner "shell" {
-    inline = [
-      "sudo truncate -s 0 /etc/machine-id",
-      "sudo cloud-init clean",
-      "date > /home/${var.ssh_username}/image_creation_date"
-    ]
+    scripts         = ["../packer-scripts/00-customization.sh"]
+    execute_command = "sudo -E sh '{{.Path}}'"
+    timeout         = "5m"
   }
 }

@@ -46,9 +46,11 @@ class Installer:
 
     def install(self) -> None:
         self._copy_dir()
+        sys.exit(0)
 
     def uninstall(self) -> None:
         self._remove_dir()
+        sys.exit(0)
 
 
 def main():

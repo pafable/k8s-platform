@@ -53,6 +53,7 @@ autoinstall:
   packages:
     - build-essential
     - cloud-init
+    - cloud-utils-growpart
     - fail2ban
     - fastfetch
     - podman
