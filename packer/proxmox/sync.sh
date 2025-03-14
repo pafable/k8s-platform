@@ -20,7 +20,6 @@ if [ -d "${repo_dir}" ]; then
   mkdir -p "${repo_dir}"
 fi
 
-for repo_id in "${repo_ids[@]}"
-do
+for repo_id in "${repo_ids[@]}"; do
   reposync -n --download-metadata --repoid="${repo_id}" -p "${repo_dir}"
 done
