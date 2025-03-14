@@ -6,7 +6,15 @@ set -euxo pipefail
 # run this script before executing task to build images!
 
 repo_dir="/srv/repos/almalinux9"
-repo_ids=("appstream" "baseos" "crb" "epel" "epel-cisco-openh264" "extras" "hashicorp")
+repo_ids=(
+  "appstream"
+  "baseos"
+  "crb"
+  "epel"
+  "epel-cisco-openh264"
+  "extras"
+  "hashicorp"
+)
 
 if [ -d "${repo_dir}" ]; then
   mkdir -p "${repo_dir}"
