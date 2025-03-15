@@ -88,6 +88,7 @@ locals {
 module "k3s_controller_1" {
   source         = "../../../modules/proxmox-vm"
   clone_template = local.k3s_nodes.controller_1.template
+  desc           = "k3s-controller"
   host_node      = local.k3s_nodes.controller_1.node
   memory         = 16384
   name           = local.k3s_nodes.controller_1.name
