@@ -7,6 +7,7 @@ Current list of images being created.
 
 |      OS      | Version |
 |:------------:|:-------:|
+|   Almalinux  |   9.5   |
 | Oracle Linux |   9.4   |
 | Rocky Linux  |   9.4   |
 |    Ubuntu    | 24.04.1 | 
@@ -41,6 +42,11 @@ template_name        = "<TEMPLATE_NAME>"
 ```
 
 ## Create Images From Your Local Machine:
+Almalinux
+```shell
+task packer-alma-build
+```
+
 Oracle 
 ```shell
 task packer-oracle-build
