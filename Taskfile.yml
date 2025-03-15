@@ -586,13 +586,13 @@ tasks:
     desc: Create K3S Infrastructure
     cmds:
       - task: k3s-infra-controllers-create
-      - sleep 30
-      - task: k3s-infra-agents-create
+#      - sleep 30
+#      - task: k3s-infra-agents-create
 
   k3s-infra-destroy:
     desc: Destroy K3S Infrastructure
     cmds:
-      - task: k3s-infra-agents-destroy
+#      - task: k3s-infra-agents-destroy
       - task: k3s-infra-controllers-destroy
 
   packer-alma-build:

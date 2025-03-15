@@ -3,7 +3,7 @@ locals {
   host_name               = "hive-ship"
   current_time            = timestamp()
   k3s_controller_name     = "${local.host_name}-controller-01"
-  k3s_controller_template = "roc.tmpl.000"
+  k3s_controller_template = "alm.tmpl.000"
 
   # home network
   home_network = "10.0.4.0/24"
@@ -15,13 +15,13 @@ locals {
       template = local.k3s_controller_template
 
       creation_file = {
-        path    = "/home/${var.ssh_username}/instance_creation_date"
-        owner   = "nobody:nobody"
-        content = <<-EOT
-          name: ${local.k3s_controller_name}
-          created: ${local.current_time}
-          clone_template: ${local.k3s_controller_template}
-        EOT
+        # path    = "/home/${var.ssh_username}/instance_creation_date"
+        # owner   = "nobody:nobody"
+        # content = <<-EOT
+        #   name: ${local.k3s_controller_name}
+        #   created: ${local.current_time}
+        #   clone_template: ${local.k3s_controller_template}
+        # EOT
       }
     }
   }
