@@ -49,16 +49,16 @@ locals {
   }
 
   base_file = {
-    path    = "/home/${var.ssh_username}/k3s_storage_class.yaml"
-    content = <<-EOT
-      apiVersion: storage.k8s.io/v1
-      kind: StorageClass
-      metadata:
-        name: ${local.host_name}-sc
-      provisioner: rancher.io/local-path
-      reclaimPolicy: Delete
-      volumeBindingMode: Immediate
-    EOT
+    # path    = "/home/${var.ssh_username}/k3s_storage_class.yaml"
+    # content = <<-EOT
+    #   apiVersion: storage.k8s.io/v1
+    #   kind: StorageClass
+    #   metadata:
+    #     name: ${local.host_name}-sc
+    #   provisioner: rancher.io/local-path
+    #   reclaimPolicy: Delete
+    #   volumeBindingMode: Immediate
+    # EOT
   }
 
   wr_files = {
