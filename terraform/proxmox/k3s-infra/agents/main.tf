@@ -2,7 +2,7 @@ locals {
   default_tags       = "k3s"
   k3s_agent_1_name   = "${local.host_name}-agent-01"
   k3s_agent_2_name   = "${local.host_name}-agent-02"
-  k3s_agent_template = "roc.tmpl.000" # DO NOT use "-" or "_"
+  k3s_agent_template = "alm.tmpl.000" # DO NOT use "-" or "_"
   host_name          = "hive-ship"
   current_time       = timestamp()
 
@@ -66,16 +66,16 @@ locals {
   }
 
   base_file = {
-    path    = "/home/${var.ssh_username}/k3s_storage_class.yaml"
-    content = <<-EOT
-      apiVersion: storage.k8s.io/v1
-      kind: StorageClass
-      metadata:
-      name: ${local.host_name}-sc
-      provisioner: rancher.io/local-path
-      reclaimPolicy: Delete
-      volumeBindingMode: Immediate
-    EOT
+    # path    = "/home/${var.ssh_username}/k3s_storage_class.yaml"
+    # content = <<-EOT
+    #   apiVersion: storage.k8s.io/v1
+    #   kind: StorageClass
+    #   metadata:
+    #   name: ${local.host_name}-sc
+    #   provisioner: rancher.io/local-path
+    #   reclaimPolicy: Delete
+    #   volumeBindingMode: Immediate
+    # EOT
   }
 
   # files to write to instance
