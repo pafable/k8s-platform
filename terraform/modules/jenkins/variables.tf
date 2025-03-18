@@ -86,6 +86,11 @@ variable "http_server" {
   default     = "localhost"
 }
 
+variable "nfs_ipv4" {
+  description = "IP address of NFS server for storage backend"
+  type        = string
+}
+
 variable "ou" {
   description = "Organizational Unit"
   type        = string
@@ -138,7 +143,7 @@ variable "storage_class_name" {
 variable "timeout" {
   description = "Timeout for the resource"
   type        = number
-  default     = 300
+  default     = 600
 }
 
 variable "timezone" {

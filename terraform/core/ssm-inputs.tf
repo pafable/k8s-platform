@@ -33,6 +33,11 @@ data "aws_ssm_parameter" "http_server" {
   name     = "/proxmox/dns/server/ip"
 }
 
+data "aws_ssm_parameter" "nfs_server_ip" {
+  provider = aws.parameters
+  name     = "/nfs/ipv4"
+}
+
 data "aws_ssm_parameter" "jenkins_github_token" {
   provider = aws.parameters
   name     = "/jenkins/github/token"

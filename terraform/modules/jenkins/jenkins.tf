@@ -169,7 +169,7 @@ locals {
             {
               mountPath = "/var/jenkins-certs"
               name      = "jenkins-certs"
-              readOnly  = true
+              readOnly  = false
             }
           ]
 
@@ -226,7 +226,7 @@ resource "kubernetes_persistent_volume_claim_v1" "jenkins_pvc" {
 
   spec {
     storage_class_name = var.storage_class_name
-    access_modes       = ["ReadWriteOnce"]
+    access_modes       = ["ReadWriteMany"]
 
     resources {
       requests = {
@@ -247,13 +247,14 @@ resource "kubernetes_persistent_volume_v1" "jenkins_pv" {
       storage = "10Gi"
     }
 
-    access_modes                     = ["ReadWriteOnce"]
+    access_modes                     = ["ReadWriteMany"]
     persistent_volume_reclaim_policy = "Retain"
     storage_class_name               = var.storage_class_name
 
     persistent_volume_source {
-      host_path {
-        path = "/tmp/jenkins-data"
+      nfs {
+        path   = "/volume2/fs"
+        server = var.nfs_ipv4
       }
     }
   }

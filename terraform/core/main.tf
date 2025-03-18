@@ -33,11 +33,12 @@ module "jenkins" {
   ingress_name                = var.ingress
   jenkins_github_token        = sensitive(data.aws_ssm_parameter.jenkins_github_token.value)
   k3s_config_file             = sensitive(data.aws_ssm_parameter.k3s_kubeconfig_file.value)
+  nfs_ipv4                    = data.aws_ssm_parameter.nfs_server_ip.value
   packer_ssh_password         = sensitive(data.aws_ssm_parameter.packer_ssh_password.value)
   packer_ssh_username         = sensitive(data.aws_ssm_parameter.packer_ssh_username.value)
   proxmox_token_id            = sensitive(data.aws_ssm_parameter.proxmox_token_id.value)
   proxmox_token_secret        = sensitive(data.aws_ssm_parameter.proxmox_token_secret.value)
-  # storage_class_name          = "hive-ship-sc" # this is needed for k3s deployment
+  storage_class_name          = "bar"
 
   depends_on = [
     module.cert_manager

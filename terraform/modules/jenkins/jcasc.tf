@@ -1,6 +1,6 @@
 locals {
-  #edt_tz                = timeadd(timestamp(), "-4h") # EDT is -4h from UTC # this will keep updating jenkins
-  edt_tz                = "2024-12-15T09:43:00Z"
+  #et_tz                = timeadd(timestamp(), "-4h") # EDT is -4h from UTC # this will keep updating jenkins
+  et_tz                 = "2025-03-18T16:57:00-04:00"
   seed_branch           = "refs/heads/master"
   seed_git_url          = "https://github.com/pafable/k8s-platform.git"
   seed_script_path      = "cicd/seedjob/Jenkinsfile"
@@ -25,8 +25,7 @@ locals {
         jenkins = {
           systemMessage = format(
             "${title(var.owner)}'s Jenkins Server. Created on %s EDT. \nDO NOT MANUALLY EDIT!",
-            formatdate("DD MMM YYYY hh:mm", local.edt_tz)
-            # formatdate("DD MMM YYYY hh:mm", local.edt_tz)
+            formatdate("DD MMM YYYY hh:mm", local.et_tz)
           )
         }
 
