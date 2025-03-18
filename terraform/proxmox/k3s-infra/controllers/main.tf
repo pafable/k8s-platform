@@ -42,7 +42,8 @@ locals {
         # order matters because ports need to be open before running script
         local.base_runcmd,
         [
-          "curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='server --cluster-init --etcd-expose-metrics --disable=traefik --token ${data.aws_ssm_parameter.k3s_join_token.value}' sh - && kubectl apply -f /home/${var.ssh_username}/k3s_storage_class.yaml"
+          "curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='server --cluster-init --etcd-expose-metrics --disable=traefik --token ${data.aws_ssm_parameter.k3s_join_token.value}' sh -"
+          # "curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='server --cluster-init --etcd-expose-metrics --disable=traefik --token ${data.aws_ssm_parameter.k3s_join_token.value}' sh - && kubectl apply -f /home/${var.ssh_username}/k3s_storage_class.yaml"
         ]
       )
     }
