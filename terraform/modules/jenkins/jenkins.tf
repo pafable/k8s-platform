@@ -253,7 +253,7 @@ resource "kubernetes_persistent_volume_v1" "jenkins_pv" {
 
     persistent_volume_source {
       nfs {
-        path   = "/volume2/fs"
+        path   = "/volume2/fs/jenkins"
         server = var.nfs_ipv4
       }
     }
