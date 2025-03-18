@@ -37,7 +37,7 @@ module "jenkins" {
   packer_ssh_username         = sensitive(data.aws_ssm_parameter.packer_ssh_username.value)
   proxmox_token_id            = sensitive(data.aws_ssm_parameter.proxmox_token_id.value)
   proxmox_token_secret        = sensitive(data.aws_ssm_parameter.proxmox_token_secret.value)
-  storage_class_name          = "hive-ship-sc" # this is needed for k3s deployment
+  # storage_class_name          = "hive-ship-sc" # this is needed for k3s deployment
 
   depends_on = [
     module.cert_manager

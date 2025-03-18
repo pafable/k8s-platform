@@ -34,6 +34,7 @@ vars:
 
 env:
   AWS_REGION: us-east-1
+  KUBECONFIG: $HOME/.kube/k3s-config
 
   PROXMOX_DNS_DIR: terraform/proxmox/dns
   PROXMOX_DNS_INFRA_DIR: terraform/proxmox/dns-infra
@@ -53,9 +54,9 @@ env:
   TF_EKS_DIR: terraform/aws/eks
   TF_VPC_AWS_DIR: terraform/aws/vpc
 
-  # if this is set to k3s-config
-  # it will be deployed to k3s cluster
-  KUBECONFIG: $HOME/.kube/k3s-config
+#  # if this is set to k3s-config
+#  # it will be deployed to k3s cluster
+#  KUBECONFIG: $HOME/.kube/k3s-config
 
 tasks:
   install-prereqs:

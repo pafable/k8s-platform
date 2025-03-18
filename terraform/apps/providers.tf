@@ -4,7 +4,7 @@ terraform {
 
 locals {
   config_path    = "~/.kube/k3s-config"
-  config_context = "hive-fleets"
+  config_context = "hive-fleet"
 }
 
 module "aws" {
