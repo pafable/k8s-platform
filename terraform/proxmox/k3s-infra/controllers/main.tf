@@ -43,12 +43,16 @@ locals {
         local.base_runcmd,
         [
           "curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='server --cluster-init --etcd-expose-metrics --disable=traefik --token ${data.aws_ssm_parameter.k3s_join_token.value}' sh -"
+
+          ## keeping this here as an example on how to create a custom storage class during node initialization
           # "curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='server --cluster-init --etcd-expose-metrics --disable=traefik --token ${data.aws_ssm_parameter.k3s_join_token.value}' sh - && kubectl apply -f /home/${var.ssh_username}/k3s_storage_class.yaml"
         ]
       )
     }
   }
 
+  # we don't need another local-path type storage class. use the default sc for local-path use or something else
+  # keeping this here as an example how to use base_file
   base_file = {
     # path    = "/home/${var.ssh_username}/k3s_storage_class.yaml"
     # content = <<-EOT
