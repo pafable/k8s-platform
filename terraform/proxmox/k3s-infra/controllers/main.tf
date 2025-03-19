@@ -80,6 +80,8 @@ locals {
       user_data = <<-EOT
         #cloud-config
         hostname: ${local.k3s_nodes.controller_1.name}
+        packages:
+          - nfs-utils
         package_update: true
         package_upgrade: true
         ${yamlencode(local.wr_files.controller_1)} # files need to exist on instance before running commands
