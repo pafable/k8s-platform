@@ -125,6 +125,7 @@ locals {
 module "k3s_agent1" {
   source         = "../../../modules/proxmox-vm"
   clone_template = local.k3s_nodes.agent_1.template
+  desc           = local.k3s_agent_1_name
   host_node      = local.k3s_nodes.agent_1.node
   memory         = 16384
   name           = local.k3s_nodes.agent_1.name
@@ -135,6 +136,7 @@ module "k3s_agent1" {
 module "k3s_agent_2" {
   source         = "../../../modules/proxmox-vm"
   clone_template = local.k3s_nodes.agent_2.template
+  desc           = local.k3s_agent_2_name
   host_node      = local.k3s_nodes.agent_2.node
   memory         = 16384
   name           = local.k3s_nodes.agent_2.name
