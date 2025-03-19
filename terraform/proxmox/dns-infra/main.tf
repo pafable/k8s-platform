@@ -2,11 +2,17 @@ locals {
   default_tag   = "dns"
   pm_node       = "behemoth"
   creation_date = timestamp()
+  dns_port      = 53
 
   cmds = {
     dns_server = {
       runcmd = [
-        "echo hi > /tmp/hi.txt"
+        "echo hi > /tmp/hi.txt",
+        "sysctl net.ipv4.ip_unprivileged_port_start=${local.dns_port}",
+        "su ${var.ssh_username} bash -c 'podman pull docker.io/ubuntu/bind9:latest'",
+        "firewall-cmd --add-port=${local.dns_port}/tcp --permanent",
+        "firewall-cmd --add-port=${local.dns_port}/udp --permanent",
+        "firewall-cmd --reload"
       ]
     }
   }
