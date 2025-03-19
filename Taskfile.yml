@@ -616,16 +616,6 @@ tasks:
       - packer validate -var-file=orc-vars.pkrvars.hcl .
       - packer build -var-file=orc-vars.pkrvars.hcl .
 
-  packer-oracle-build-cicd:
-    desc: Build Oracle linux image
-    dir: '{{ .PROXMOX_PACKER_LINUX_DIR }}'
-    deps:
-      - task: fmt
-    cmds:
-      - packer init .
-      - packer validate .
-      - packer build .
-
   packer-rocky-build:
     desc: Build Rocky linux image
     dir: '{{ .PROXMOX_PACKER_LINUX_DIR }}'
@@ -636,15 +626,6 @@ tasks:
       - packer validate -var-file=roc-vars.pkrvars.hcl .
       - packer build -var-file=roc-vars.pkrvars.hcl .
 
-  packer-rocky-build-cicd:
-    desc: Build Rocky linux image
-    dir: '{{ .PROXMOX_PACKER_LINUX_DIR }}'
-    deps:
-      - task: fmt
-    cmds:
-      - packer init .
-      - packer validate .
-      - packer build .
 
   packer-ubuntu-build:
     desc: Build Ubuntu image
