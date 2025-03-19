@@ -1,6 +1,6 @@
 locals {
   default_tag   = "dns"
-  pm_node       = "leviathan"
+  pm_node       = "behemoth"
   creation_date = timestamp()
 
   cmds = {

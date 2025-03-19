@@ -656,16 +656,6 @@ tasks:
       - packer validate -var-file=ubu-vars.pkrvars.hcl .
       - packer build -var-file=ubu-vars.pkrvars.hcl .
 
-  packer-ubuntu-build-cicd:
-    desc: Build Ubuntu image
-    dir: '{{ .PROXMOX_PACKER_LINUX_DIR }}'
-    deps:
-      - task: fmt
-    cmds:
-      - packer init .
-      - packer validate .
-      - packer build .
-
   dns-entries-init:
     dir: '{{ .PROXMOX_DNS_DIR }}'
     deps:
