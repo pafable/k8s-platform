@@ -10,7 +10,7 @@ packer {
 locals {
   rh_cmd = [
     "<esc><wait>",
-    "linux ip=dhcp inst.ks=http://${local.http_ip}/kickstart/${var.distro}/ks.cfg<enter>"
+    "linux ip=dhcp inst.ks=https://raw.githubusercontent.com/pafable/k8s-platform/refs/heads/master/packer/proxmox/kickstart/${var.distro}/ks.cfg<enter>"
   ]
 
   ubuntu_cmd = [
