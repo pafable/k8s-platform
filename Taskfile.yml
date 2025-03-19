@@ -131,7 +131,7 @@ tasks:
       # Gateway-API CRD, v1.0.0
       - kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml # this is needed because gateway crd is needed to create kong-ingress and kong-mesh
       # Kong Ingress CRDs
-      - kubectl apply -f https://raw.githubusercontent.com/Kong/charts/main/charts/kong/crds/custom-resource-definitions.yaml
+      # - kubectl apply -f https://raw.githubusercontent.com/Kong/charts/main/charts/kong/crds/custom-resource-definitions.yaml
       # Argocd CRDs
       - kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/application-crd.yaml
       - kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/applicationset-crd.yaml
@@ -198,10 +198,10 @@ tasks:
       - kubectl delete -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/applicationset-crd.yaml --ignore-not-found
       - kubectl delete -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/appproject-crd.yaml --ignore-not-found
       # Kong Ingress CRDs
-      - kubectl delete -f https://raw.githubusercontent.com/Kong/charts/main/charts/kong/crds/custom-resource-definitions.yaml --ignore-not-found
+      # - kubectl delete -f https://raw.githubusercontent.com/Kong/charts/main/charts/kong/crds/custom-resource-definitions.yaml --ignore-not-found
       # Kong CRD, v1.0.0 is needed for kong
-      - kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml  --ignore-not-found # kong-ingress supports only v1.0.0
-      - kubectl delete -f https://github.com/cert-manager/cert-manager/releases/download/v1.15.1/cert-manager.crds.yaml --ignore-not-found
+      # - kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml  --ignore-not-found # kong-ingress supports only v1.0.0
+      # - kubectl delete -f https://github.com/cert-manager/cert-manager/releases/download/v1.15.1/cert-manager.crds.yaml --ignore-not-found
 
       # Remove Abandoned Namespaces
       - kubectl delete namespace argo-example-app --ignore-not-found
