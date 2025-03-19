@@ -2,7 +2,7 @@ locals {
   default_tags       = "k3s"
   k3s_agent_1_name   = "${local.host_name}-agent-01"
   k3s_agent_2_name   = "${local.host_name}-agent-02"
-  k3s_agent_template = "alm.tmpl.000" # DO NOT use "-" or "_"
+  k3s_agent_template = "alm.tmpl.001" # DO NOT use "-" or "_"
   host_name          = "hive-ship"
   current_time       = timestamp()
 
@@ -100,6 +100,8 @@ locals {
       user_data = <<-EOT
         #cloud-config
         hostname: ${local.k3s_nodes.agent_1.name}
+        packages:
+          - nfs-utils
         package_update: true
         package_upgrade: true
         ${yamlencode(local.wr_files.agent_1)} # files need to exist on instance before running commands

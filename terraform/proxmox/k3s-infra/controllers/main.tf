@@ -3,7 +3,7 @@ locals {
   host_name               = "hive-ship"
   current_time            = timestamp()
   k3s_controller_name     = "${local.host_name}-controller-01"
-  k3s_controller_template = "alm.tmpl.000"
+  k3s_controller_template = "alm.tmpl.001"
 
   # home network
   home_network = "10.0.4.0/24"
@@ -80,6 +80,8 @@ locals {
       user_data = <<-EOT
         #cloud-config
         hostname: ${local.k3s_nodes.controller_1.name}
+        packages:
+          - nfs-utils
         package_update: true
         package_upgrade: true
         ${yamlencode(local.wr_files.controller_1)} # files need to exist on instance before running commands
