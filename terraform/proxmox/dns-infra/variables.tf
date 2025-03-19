@@ -13,5 +13,5 @@ variable "host_name" {
 variable "ssh_username" {
   description = "ssh_username"
   type        = string
-  default     = "provisioner"
+  default     = "deployer"
 }
