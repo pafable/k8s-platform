@@ -41,7 +41,8 @@ module "jenkins" {
   storage_class_name          = "bar"
 
   depends_on = [
-    module.cert_manager
+    module.cert_manager,
+    module.ingress_nginx
   ]
 }
 
