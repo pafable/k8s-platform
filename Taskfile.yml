@@ -146,29 +146,29 @@ tasks:
     desc: Delete CRDs
     cmds:
       # Chaos Mesh CRDs
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_awschaos.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_azurechaos.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_blockchaos.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_dnschaos.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_gcpchaos.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_httpchaos.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_iochaos.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_jvmchaos.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_kernelchaos.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_networkchaos.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_physicalmachinechaos.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_physicalmachines.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_podchaos.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_podhttpchaos.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_podiochaos.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_podnetworkchaos.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_remoteclusters.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_schedules.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_statuschecks.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_stresschaos.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_timechaos.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_workflownodes.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_workflows.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_awschaos.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_azurechaos.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_blockchaos.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_dnschaos.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_gcpchaos.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_httpchaos.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_iochaos.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_jvmchaos.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_kernelchaos.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_networkchaos.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_physicalmachinechaos.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_physicalmachines.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_podchaos.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_podhttpchaos.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_podiochaos.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_podnetworkchaos.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_remoteclusters.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_schedules.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_statuschecks.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_stresschaos.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_timechaos.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_workflownodes.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_workflows.yaml --ignore-not-found
       # Kube Kube-Prometheus-Stack CRDs
       - kubectl delete -f https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/charts/crds/crds/crd-alertmanagerconfigs.yaml --ignore-not-found
       - kubectl delete -f https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/charts/crds/crds/crd-alertmanagers.yaml --ignore-not-found
