@@ -587,7 +587,7 @@ tasks:
     desc: Create K3S Infrastructure
     cmds:
       - task: k3s-infra-controllers-create
-      - sleep 15
+      - sleep 10
       - task: k3s-infra-agents-create
 
   k3s-infra-destroy:
