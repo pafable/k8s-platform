@@ -42,7 +42,7 @@ locals {
       user_data = <<-EOT
         #cloud-config
         hostname: ${var.host_name}
-        package:
+        packages:
           - podman-compose
         package_update: true
         package_upgrade: true
