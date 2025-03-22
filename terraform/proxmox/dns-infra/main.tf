@@ -2,17 +2,14 @@ locals {
   default_tag   = "dns"
   pm_node       = "behemoth"
   creation_date = timestamp()
-  dns_port      = 53
 
   cmds = {
     dns_server = {
       runcmd = [
         "echo hi > /tmp/hi.txt",
-        "sysctl net.ipv4.ip_unprivileged_port_start=${local.dns_port}",
         "su ${var.ssh_username} bash -c 'podman pull docker.io/ubuntu/bind9:latest'",
-        "firewall-cmd --add-port=${local.dns_port}/tcp --permanent",
-        "firewall-cmd --add-port=${local.dns_port}/udp --permanent",
-        "firewall-cmd --reload"
+        "systemctl start lab-dns",
+        "systemctl enable lab-dns"
       ]
     }
   }
@@ -58,7 +55,7 @@ module "dns_vm" {
   source         = "../../modules/proxmox-vm"
   clone_template = var.clone_template
   host_node      = local.pm_node
-  memory         = 8192
+  memory         = 4096
   name           = var.host_name
   tags           = local.default_tag
   user_data      = local.user_datas.dns_server.user_data

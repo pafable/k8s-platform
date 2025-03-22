@@ -1,7 +1,7 @@
 variable "clone_template" {
   description = "Name of clone"
   type        = string
-  default     = "alm.tmpl.001"
+  default     = "dns.tmpl.001"
 }
 
 variable "host_name" {
