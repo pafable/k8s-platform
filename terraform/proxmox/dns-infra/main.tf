@@ -8,8 +8,8 @@ locals {
       runcmd = [
         "echo hi > /tmp/hi.txt",
         "su ${var.ssh_username} bash -c 'podman pull docker.io/ubuntu/bind9:latest'",
-        "systemctl start lab-dns",
-        "systemctl enable lab-dns"
+        "systemctl start dns",
+        "systemctl enable dns"
       ]
     }
   }
