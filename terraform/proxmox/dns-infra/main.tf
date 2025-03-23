@@ -7,7 +7,6 @@ locals {
     dns_server = {
       runcmd = [
         "echo hi > /tmp/hi.txt",
-        "su ${var.ssh_username} bash -c 'podman pull docker.io/ubuntu/bind9:latest'",
         "systemctl start dns",
         "systemctl enable dns"
       ]
