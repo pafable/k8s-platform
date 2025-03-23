@@ -8,7 +8,9 @@ locals {
       runcmd = [
         "echo hi > /tmp/hi.txt",
         "systemctl start dns",
-        "systemctl enable dns"
+        "systemctl enable dns",
+        "growpart /dev/sda 2",
+        "lvextend --resizefs -l +100%FREE /dev/almalinux/root"
       ]
     }
   }
