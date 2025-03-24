@@ -5,10 +5,10 @@ locals {
   timezone = "America/New_York"
 
   labels = {
-    "app.kubernetes.io/app"        = local.app_name
+    "app.kubernetes.io/app"        = var.namespace
     "app.kubernetes.io/managed-by" = "terraform"
     "app.kubernetes.io/owner"      = var.owner
-    app                            = local.app_name
+    app                            = var.namespace
   }
 
   values = [
@@ -66,9 +66,10 @@ resource "helm_release" "postgresql_db" {
   chart             = local.app_name
   create_namespace  = false
   dependency_update = true
-  name              = local.app_name
+  name              = var.namespace
   namespace         = kubernetes_namespace_v1.postgresql_ns.metadata[0].name
   repository        = local.repo
   values            = local.values
   version           = var.chart_version
+  verify            = false
 }

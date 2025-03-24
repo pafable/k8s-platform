@@ -23,11 +23,11 @@ module "discord_bot" {
   discord_token         = sensitive(data.aws_ssm_parameter.discord_token.value)
 }
 
-module "kube_prom_stack" {
-  source       = "../modules/kube-prom-stack"
-  ingress_name = var.ingress
-  is_cloud     = false
-}
+# module "kube_prom_stack" {
+#   source       = "../modules/kube-prom-stack"
+#   ingress_name = var.ingress
+#   is_cloud     = false
+# }
 
 module "postgresql_db_01" {
   source       = "../modules/postgresql"
