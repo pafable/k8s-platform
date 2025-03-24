@@ -68,8 +68,6 @@ resource "helm_release" "postgresql_db" {
   dependency_update = true
   name              = var.namespace
   namespace         = kubernetes_namespace_v1.postgresql_ns.metadata[0].name
-  # repository        = local.repo
-  values = local.values
-  # version           = var.chart_version
-  verify = false
+  values            = local.values
+  verify            = false
 }
