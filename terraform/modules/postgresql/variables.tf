@@ -1,7 +1,7 @@
 variable "chart_version" {
   description = "The version of the Helm chart to install"
   type        = string
-  default     = "16.4.3"
+  default     = "16.5.5"
 }
 
 variable "domain" {
@@ -43,7 +43,7 @@ variable "pgadmin_email" {
 variable "pgadmin_image" {
   description = "The image to use for pgAdmin"
   type        = string
-  default     = "dpage/pgadmin4:8.10"
+  default     = "dpage/pgadmin4:9.1"
 }
 
 variable "pgadmin_password" {
