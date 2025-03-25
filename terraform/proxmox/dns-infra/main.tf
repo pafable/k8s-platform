@@ -11,7 +11,6 @@ locals {
         "systemctl enable dns",
         "growpart /dev/sda 2",
         "lvextend --resizefs -l +100%FREE /dev/almalinux/root",
-        "export SERVER_IP=$(hostname -I | awk '{print $1}')",
         "/bin/bash /opt/lab-dns/01-init.sh"
       ]
     }
