@@ -742,7 +742,7 @@ tasks:
     dir: '{{ .TF_CORE_DIR }}'
     desc: Destroy Core terraform
     deps:
-      - task: apps-init
+      - task: core-init
     cmds:
       - defer: |
           echo "Cleaning up terraform plans..."
