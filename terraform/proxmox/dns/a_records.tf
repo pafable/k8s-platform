@@ -73,7 +73,7 @@ resource "dns_a_record_set" "k3s_apps_host_records" {
 
 # rpm server
 resource "dns_a_record_set" "dnf_srv_record" {
-  name = "rpm-srv"
+  name = "lunchbox"
   ttl  = 300
   zone = local.home_domain
 
