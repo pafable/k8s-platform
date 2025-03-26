@@ -1,13 +1,13 @@
 variable "clone_template" {
   description = "Name of clone"
   type        = string
-  default     = "dns.tmpl.004"
+  default     = "dns.tmpl.005"
 }
 
 variable "host_name" {
   description = "VM name"
   type        = string
-  default     = "dns"
+  default     = "ns1"
 }
 
 variable "ssh_username" {
