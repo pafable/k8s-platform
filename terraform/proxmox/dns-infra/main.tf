@@ -6,11 +6,6 @@ locals {
   cmds = {
     dns_server = {
       runcmd = [
-        "echo $(whoami)> /tmp/hi.txt",
-        "systemctl start dns",
-        "systemctl enable dns",
-        "growpart /dev/sda 2",
-        "lvextend --resizefs -l +100%FREE /dev/almalinux/root",
         "/bin/bash /opt/lab-dns/01-init.sh"
       ]
     }
