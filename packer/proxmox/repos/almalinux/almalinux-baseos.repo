@@ -2,7 +2,7 @@
 name=AlmaLinux $releasever - BaseOS
 mirrorlist=https://mirrors.almalinux.org/mirrorlist/$releasever/baseos
 # baseurl=https://repo.almalinux.org/almalinux/$releasever/BaseOS/$basearch/os/
-baseurl=http://10.0.4.41:9001/repos/almalinux9/baseos/
+baseurl=http://lunchbox.home.pafable.com:9001/repos/almalinux9/baseos/
 enabled=1
 gpgcheck=1
 countme=1

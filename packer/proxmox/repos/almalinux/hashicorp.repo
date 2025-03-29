@@ -1,6 +1,6 @@
 [hashicorp]
 name=Hashicorp Stable - $basearch
-baseurl=http://10.0.4.41:9001/repos/almalinux9/hashicorp
+baseurl=http://lunchbox.home.pafable.com:9001/repos/almalinux9/hashicorp
 enabled=1
 gpgcheck=1
 gpgkey=https://rpm.releases.hashicorp.com/gpg
