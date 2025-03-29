@@ -30,7 +30,7 @@ data "aws_ssm_parameter" "aws_dev_secret_key" {
 
 data "aws_ssm_parameter" "http_server" {
   provider = aws.parameters
-  name     = "/proxmox/dns/server/ip"
+  name     = "/proxmox/http/server/ip"
 }
 
 data "aws_ssm_parameter" "nfs_server_ip" {
