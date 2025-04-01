@@ -31,5 +31,5 @@ variable "owner" {
 variable "vault_version" {
   description = "Vault helm chart version"
   type        = string
-  default     = "0.28.1"
+  default     = "0.30.0"
 }

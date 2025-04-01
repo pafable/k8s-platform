@@ -20,3 +20,9 @@ vault operator raft join http://<LEADER_NODE_IP>:8200
 # run unseal command 3 times use a different key each time
 vault operator unseal <UNSEAL_KEY>
 ```
+
+
+```shell
+UNSEAL_KEY=$(kubectl -n vault exec -it vault-0 -- vault operator init -n 1 -t 1 | grep Unseal | sed 's/^[^:]*: //')
+kubectl -n vault exec -it vault-0 -- vault operator unseal "$UNSEAL_KEY"
+```

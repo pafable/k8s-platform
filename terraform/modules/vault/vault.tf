@@ -17,13 +17,13 @@ locals {
           enabled = var.is_dev
         }
 
-        ha = {
-          enabled = true
-
-          raft = {
-            enabled = true
-          }
-        }
+        # ha = {
+        #   enabled = false
+        #
+        #   raft = {
+        #     enabled = true
+        #   }
+        # }
       }
 
       ui = {
