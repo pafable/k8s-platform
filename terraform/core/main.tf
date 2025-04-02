@@ -52,8 +52,8 @@ module "jenkins" {
 #     is_cloud = false
 # }
 
-# module "vault" {
-#   source       = "../modules/vault"
-#   ingress_name = var.ingress
-#   depends_on   = [module.cert_manager]
-# }
+module "vault" {
+  source       = "../modules/vault"
+  ingress_name = var.ingress
+  depends_on   = [module.cert_manager]
+}
