@@ -17,3 +17,8 @@ data "aws_ssm_parameter" "discord_token" {
   provider = aws.parameters
   name     = "/discord/server/token"
 }
+
+data "aws_ssm_parameter" "nfs_server_ip" {
+  provider = aws.parameters
+  name     = "/nfs/ipv4"
+}

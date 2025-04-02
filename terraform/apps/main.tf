@@ -29,6 +29,11 @@ module "kube_prom_stack" {
   is_cloud     = false
 }
 
+module "nexus" {
+  source   = "../modules/nexus"
+  nfs_ipv4 = data.aws_ssm_parameter.nfs_server_ip.value
+}
+
 module "postgresql_db_01" {
   source       = "../modules/postgresql"
   domain       = var.domain
