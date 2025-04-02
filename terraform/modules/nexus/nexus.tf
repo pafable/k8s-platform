@@ -11,6 +11,13 @@ locals {
 
   values = [
     yamlencode({
+      namespaces = {
+        nexusNs = {
+          enabled = false
+          name    = kubernetes_namespace_v1.nexus_ns.metadata.0.name
+        }
+      }
+
       pvc = {
         existingClaim = kubernetes_persistent_volume_claim_v1.nexus_pvc.metadata[0].name
       }

@@ -42,5 +42,5 @@ variable "nfs_ipv4" {
 variable "storage_class_name" {
   description = "Storage class name"
   type        = string
-  default     = "local-path"
+  default     = "bar"
 }
