@@ -23,6 +23,11 @@ vault operator unseal <UNSEAL_KEY>
 
 
 ```shell
-UNSEAL_KEY=$(kubectl -n vault exec -it vault-0 -- vault operator init -n 1 -t 1 | grep Unseal | sed 's/^[^:]*: //')
+UNSEAL_KEY=$(kubectl -n vault exec -it vault-0 -- vault operator init)
 kubectl -n vault exec -it vault-0 -- vault operator unseal "$UNSEAL_KEY"
+```
+
+```shell
+export VAULT_ADDR='https://<DOMAIN>'
+export VAULT_SKIP_VERIFY=true
 ```
