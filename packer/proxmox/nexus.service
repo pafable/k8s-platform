@@ -1,0 +1,15 @@
+[Unit]
+Description=Nexus service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/bin/podman run --name nexus --publish 8081:8081/tcp --publish 8085:8085/udp --volume /mnt/fs/nexus:/nexus-data:Z --rm --replace docker.io/sonatype/nexus3:3.79.0
+ExecStop=/usr/bin/podman stop nexus
+ExecStopPost=/usr/bin/podman rm -f nexus
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
