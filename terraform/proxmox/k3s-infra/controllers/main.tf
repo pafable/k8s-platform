@@ -3,7 +3,7 @@ locals {
   host_name               = "hive-ship"
   current_time            = timestamp()
   k3s_controller_name     = "${local.host_name}-controller-01"
-  k3s_controller_template = "alm.tmpl.002"
+  k3s_controller_template = "alm.tmpl.003"
 
   # home network
   home_network = "10.0.4.0/24"
