@@ -24,12 +24,13 @@ variable "http_directory" {
 variable "http_server" {
   description = "HTTP server"
   type        = string
+  default     = ""
 }
 
 variable "is_local" {
   description = "Is http server on your workstation?"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "iso_name" {
