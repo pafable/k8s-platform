@@ -1,8 +1,8 @@
 [appstream]
 name=AlmaLinux $releasever - AppStream
-# mirrorlist=https://mirrors.almalinux.org/mirrorlist/$releasever/appstream
-# baseurl=https://repo.almalinux.org/almalinux/$releasever/AppStream/$basearch/os/
-baseurl=http://lunchbox.home.pafable.com:9001/repos/almalinux9/appstream/
+; mirrorlist=https://mirrors.almalinux.org/mirrorlist/$releasever/appstream
+; baseurl=https://repo.almalinux.org/almalinux/$releasever/AppStream/$basearch/os/
+baseurl=http://lunchbox.home.pafable.com:8081/repository/rpm-repo/$releasever/AppStream/$basearch/os/
 enabled=1
 gpgcheck=1
 countme=1

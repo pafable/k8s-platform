@@ -1,7 +1,7 @@
 [epel-cisco-openh264]
 name=Extra Packages for Enterprise Linux 9 openh264 (From Cisco) - $basearch
 #metalink=https://mirrors.fedoraproject.org/metalink?repo=epel-cisco-openh264-9&arch=$basearch
-baseurl=http://lunchbox.home.pafable.com:9001/repos/almalinux9/epel-cisco-openh264/
+baseurl=http://lunchbox.home.pafable.com:8081/repository/rpm-repo/
 type=rpm
 enabled=1
 metadata_expire=14d
