@@ -72,8 +72,7 @@ locals {
       "htop",
       "nfs-utils",
       "nginx",
-      "podman",
-      "reposync"
+      "podman"
     ]
   }
 
