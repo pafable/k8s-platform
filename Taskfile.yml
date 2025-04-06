@@ -34,7 +34,7 @@ vars:
 
 env:
   AWS_REGION: us-east-1
-  KUBECONFIG: $HOME/.kube/k3s-config
+  KUBECONFIG: "{{ .HOME }}/.kube/k3s-config"
 
   PROXMOX_DNS_DIR: terraform/proxmox/dns
   PROXMOX_DNS_INFRA_DIR: terraform/proxmox/dns-infra
@@ -59,6 +59,10 @@ env:
 #  KUBECONFIG: $HOME/.kube/k3s-config
 
 tasks:
+  check:
+    cmds:
+      - env
+
   install-prereqs:
     desc: Install prerequisites (ONLY RUN ON MACOS)
     cmds:
