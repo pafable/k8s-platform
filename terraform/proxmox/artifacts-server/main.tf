@@ -3,8 +3,6 @@ locals {
   pm_node       = "leviathan"
   creation_date = timestamp()
   # rpm_dir       = "/srv/pafable/repo"
-  nexus_image   = "docker.io/sonatype/nexus3:3.79.0"
-  nexus_nfs_mount = "/mnt/fs/nexus:/nexus-data"
 
   resize_disk_cmd = [
     "parted -s /dev/sda resizepart 2 ${var.disk_size}B",
@@ -18,21 +16,25 @@ locals {
     "firewall-cmd --reload"
   ]
 
-  podman_cmd = [
-    "podman run --name nexus --hostname nexus --detach --publish 8081:8081 --publish 8085:8085 --volume ${local.nexus_nfs_mount}:Z --replace ${local.nexus_image}"
+  nexus_cmd = [
+    "mkdir -p /mnt/fs/nexus",
+    "mount -t nfs kraken.fleet.pafable.com:/volume2/fs/nexus /mnt/fs",
+    "systemctl enable nexus --now"
   ]
 
-  nginx_cmd = [
-    "setsebool httpd_can_network_connect 1 -P", # to fix the 503 error on nginx
-    "curl -o"
-  ]
+  # nginx_cmd = [
+  #   "setsebool httpd_can_network_connect 1 -P", # to fix the 503 error on nginx
+  #   "curl -o https://raw.githubusercontent.com/pafable/k8s-platform/refs/heads/artifact-repo/terraform/proxmox/rpm-server/nexus.conf /etc/nginx/conf.d/nexus.conf",
+  #   "systemctl enable nginx --now"
+  # ]
 
   cmds = {
     rpm_srv = {
       runcmd = concat(
         local.resize_disk_cmd,
         local.firewall_cmd,
-        local.podman_cmd,
+        local.nexus_cmd,
+        # local.nginx_cmd,
         [
           "echo hi > /tmp/hi.txt",
           ## keeping these here as an example on how to use reposync
