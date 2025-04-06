@@ -40,7 +40,7 @@ env:
   PROXMOX_DNS_INFRA_DIR: terraform/proxmox/dns-infra
   PROXMOX_K3S_INFRA_CONTROLLERS_DIR: terraform/proxmox/k3s-infra/controllers
   PROXMOX_K3S_INFRA_AGENTS_DIR: terraform/proxmox/k3s-infra/agents
-  PROXMOX_ART_SRV_DIR: terraform/proxmox/artifacts-server
+  PROXMOX_ART_SRV_DIR: terraform/proxmox/artifact-server
 
   TF_WORKSPACE: dev # sets the terraform workspace
 

@@ -1,8 +1,9 @@
 locals {
-  default_tag        = "rpm-srv"
+  default_tag        = "nexus"
   pm_node            = "leviathan"
   creation_date      = timestamp()
   nexus_service_path = "/usr/lib/systemd/system/nexus.service"
+  nexus_dir          = "/mnt/fs/${local.default_tag}"
   nfs_server         = "kraken.fleet.pafable.com"
   # rpm_dir       = "/srv/pafable/repo"
 
@@ -19,10 +20,10 @@ locals {
   ]
 
   nexus_cmd = [
-    "mkdir -p /mnt/fs/nexus",
+    "mkdir -p ${local.nexus_dir}",
     "curl -o https://raw.githubusercontent.com/pafable/k8s-platform/refs/heads/artifact-repo/terraform/proxmox/artifacts-server/nexus.service ${local.nexus_service_path}",
-    "mount -t nfs ${local.nfs_server}:/volume2/fs/nexus /mnt/fs",
-    "systemctl enable nexus --now"
+    "mount -t nfs ${local.nfs_server}:/volume2/fs/${local.default_tag} ${local.nexus_dir}",
+    "systemctl enable ${local.default_tag} --now"
   ]
 
   # nginx_cmd = [
@@ -32,7 +33,7 @@ locals {
   # ]
 
   cmds = {
-    rpm_srv = {
+    artifact_srv = {
       runcmd = concat(
         local.resize_disk_cmd,
         local.firewall_cmd,
@@ -51,7 +52,7 @@ locals {
   }
 
   creation_files = {
-    rpm_srv = {
+    artifact_srv = {
       path    = "/home/${var.ssh_username}/instance_creation_date"
       owner   = "nobody:nobody"
       content = <<-EOT
@@ -72,24 +73,24 @@ locals {
   }
 
   wr_files = {
-    rpm_srv = {
+    artifact_srv = {
       write_files = [
-        local.creation_files.rpm_srv
+        local.creation_files.artifact_srv
       ]
     }
   }
 
   user_datas = {
-    rpm_srv = {
+    artifact_srv = {
       user_data = <<-EOT
         #cloud-config
         hostname: ${var.host_name}
         package_update: true
         ${yamlencode(local.install_packages)}
         package_upgrade: true
-        ${yamlencode(local.wr_files.rpm_srv)} # files need to exist on instance before running commands
+        ${yamlencode(local.wr_files.artifact_srv)} # files need to exist on instance before running commands
         ssh_pwauth: true
-        ${yamlencode(local.cmds.rpm_srv)}
+        ${yamlencode(local.cmds.artifact_srv)}
       EOT
     }
   }
@@ -103,5 +104,5 @@ module "rpm_srv" {
   name           = var.host_name
   main_disk_size = var.disk_size
   tags           = local.default_tag
-  user_data      = local.user_datas.rpm_srv.user_data
+  user_data      = local.user_datas.artifact_srv.user_data
 }
