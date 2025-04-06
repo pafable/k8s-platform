@@ -1,7 +1,7 @@
 variable "clone_template" {
   description = "Name of clone"
   type        = string
-  default     = "base-alma"
+  default     = "base-alma-9-5"
 }
 
 variable "disk_size" {
