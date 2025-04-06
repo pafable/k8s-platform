@@ -5,12 +5,14 @@ locals {
   nexus_service_path = "/usr/lib/systemd/system/nexus.service"
   nexus_dir          = "/mnt/fs/${local.default_tag}"
   nfs_server         = "kraken.fleet.pafable.com"
+  logical_volume     = "/dev/mapper/almalinux-root"
+  partition          = "/dev/sda"
   # rpm_dir       = "/srv/pafable/repo"
 
   resize_disk_cmd = [
-    "parted -s /dev/sda resizepart 2 ${var.disk_size}B",
-    "pvresize /dev/sda2",
-    "lvextend --resizefs -l +100%FREE /dev/rl/root"
+    "parted -s ${local.partition} resizepart 2 100%",
+    "pvresize ${local.partition}2",
+    "lvextend --resizefs -l +100%FREE ${local.logical_volume}"
   ]
 
   firewall_cmd = [
