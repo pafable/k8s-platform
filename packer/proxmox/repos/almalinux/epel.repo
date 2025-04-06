@@ -4,7 +4,7 @@ name=Extra Packages for Enterprise Linux 9 - $basearch
 # place its address here.
 #baseurl=https://download.example/pub/epel/9/Everything/$basearch/
 #metalink=https://mirrors.fedoraproject.org/metalink?repo=epel-9&arch=$basearch&infra=$infra&content=$contentdir
-baseurl=http://lunchbox.home.pafable.com:8081/repository/rpm-repo/$releasever/Everything/$basearch/
+baseurl=http://lunchbox.home.pafable.com/repository/rpm-repo/$releasever/Everything/$basearch/
 enabled=1
 gpgcheck=1
 countme=1

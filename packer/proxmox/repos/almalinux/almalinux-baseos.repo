@@ -2,7 +2,7 @@
 name=AlmaLinux $releasever - BaseOS
 ; mirrorlist=https://mirrors.almalinux.org/mirrorlist/$releasever/baseos
 ; baseurl=https://repo.almalinux.org/almalinux/$releasever/BaseOS/$basearch/os/
-baseurl=http://lunchbox.home.pafable.com:8081/repository/rpm-repo/$releasever/BaseOS/$basearch/os/
+baseurl=http://lunchbox.home.pafable.com/repository/rpm-repo/$releasever/BaseOS/$basearch/os/
 enabled=1
 gpgcheck=1
 countme=1
