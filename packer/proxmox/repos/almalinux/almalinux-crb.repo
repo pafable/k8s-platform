@@ -2,7 +2,7 @@
 name=AlmaLinux $releasever - CRB
 ; mirrorlist=https://mirrors.almalinux.org/mirrorlist/$releasever/crb
 ; baseurl=https://repo.almalinux.org/almalinux/$releasever/CRB/$basearch/os/
-baseurl=http://lunchbox.home.pafable.com:8081/repository/rpm-repo/$releasever/CRB/$basearch/os/
+baseurl=http://lunchbox.home.pafable.com/repository/rpm-repo/$releasever/CRB/$basearch/os/
 enabled=0
 gpgcheck=1
 countme=1

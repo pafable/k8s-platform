@@ -40,7 +40,7 @@ env:
   PROXMOX_DNS_INFRA_DIR: terraform/proxmox/dns-infra
   PROXMOX_K3S_INFRA_CONTROLLERS_DIR: terraform/proxmox/k3s-infra/controllers
   PROXMOX_K3S_INFRA_AGENTS_DIR: terraform/proxmox/k3s-infra/agents
-  PROXMOX_RPM_SRV_DIR: terraform/proxmox/rpm-server
+  PROXMOX_ART_SRV_DIR: terraform/proxmox/artifact-server
 
   TF_WORKSPACE: dev # sets the terraform workspace
 
@@ -751,35 +751,35 @@ tasks:
       - terraform apply tfplan.destroy -no-color
       - task: delete-crds
 
-  rpm-server-init:
-    dir: '{{ .PROXMOX_RPM_SRV_DIR }}'
+  art-server-init:
+    dir: '{{ .PROXMOX_ART_SRV_DIR }}'
     deps:
       - task: fmt
-    desc: Initialize RPM server on Proxmox
+    desc: Initialize artifacts server on Proxmox
     cmds:
-      - echo "+++++ Initializing RPM server +++++"
-      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${PROXMOX_RPM_SRV_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure
+      - echo "+++++ Initializing artifact server +++++"
+      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${PROXMOX_ART_SRV_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure
       - task: tf-validate
-        vars: { DIR: '{{ .PROXMOX_RPM_SRV_DIR }}' }
+        vars: { DIR: '{{ .PROXMOX_ART_SRV_DIR }}' }
       - task: tf-ws-list
-        vars: { DIR: '{{ .PROXMOX_RPM_SRV_DIR }}' }
+        vars: { DIR: '{{ .PROXMOX_ART_SRV_DIR }}' }
 
-  rpm-server-plan:
-    desc: Create RPM server
-    dir: '{{ .PROXMOX_RPM_SRV_DIR }}'
+  art-server-plan:
+    desc: Create artifacts server
+    dir: '{{ .PROXMOX_ART_SRV_DIR }}'
     deps:
-      - task: rpm-server-init
+      - task: art-server-init
     cmds:
       - defer: |
           echo "Cleaning up..."
           rm -f tfplan
       - terraform plan -out=tfplan
 
-  rpm-server-create:
-    desc: Create RPM server
-    dir: '{{ .PROXMOX_RPM_SRV_DIR }}'
+  art-server-create:
+    desc: Create artifacts server
+    dir: '{{ .PROXMOX_ART_SRV_DIR }}'
     deps:
-      - task: rpm-server-init
+      - task: art-server-init
     cmds:
       - defer: |
           echo "Cleaning up..."
@@ -787,22 +787,22 @@ tasks:
       - terraform plan -out=tfplan
       - terraform apply tfplan
 
-  rpm-server-plan-destroy:
-    desc: Destroy RPM server
-    dir: '{{ .PROXMOX_RPM_SRV_DIR }}'
+  art-server-plan-destroy:
+    desc: Destroy artifacts server
+    dir: '{{ .PROXMOX_ART_SRV_DIR }}'
     deps:
-      - task: rpm-server-init
+      - task: art-server-init
     cmds:
       - defer: |
           echo "Cleaning up..."
           rm -f tfplan-destroy
       - terraform plan -out=tfplan-destroy -destroy
 
-  rpm-server-destroy:
-    desc: Destroy RPM server
-    dir: '{{ .PROXMOX_RPM_SRV_DIR }}'
+  art-server-destroy:
+    desc: Destroy artifacts server
+    dir: '{{ .PROXMOX_ART_SRV_DIR }}'
     deps:
-      - task: rpm-server-init
+      - task: art-server-init
     cmds:
       - defer: |
           echo "Cleaning up..."
