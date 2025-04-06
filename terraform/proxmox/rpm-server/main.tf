@@ -2,7 +2,9 @@ locals {
   default_tag   = "rpm-srv"
   pm_node       = "leviathan"
   creation_date = timestamp()
-  rpm_dir       = "/srv/pafable/repo"
+  # rpm_dir       = "/srv/pafable/repo"
+  nexus_image   = "docker.io/sonatype/nexus3:3.79.0"
+  nexus_nfs_mount = "/mnt/fs/nexus:/nexus-data"
 
   resize_disk_cmd = [
     "parted -s /dev/sda resizepart 2 ${var.disk_size}B",
@@ -16,17 +18,28 @@ locals {
     "firewall-cmd --reload"
   ]
 
+  podman_cmd = [
+    "podman run --name nexus --hostname nexus --detach --publish 8081:8081 --publish 8085:8085 --volume ${local.nexus_nfs_mount}:Z --replace ${local.nexus_image}"
+  ]
+
+  nginx_cmd = [
+    "setsebool httpd_can_network_connect 1 -P", # to fix the 503 error on nginx
+    "curl -o"
+  ]
+
   cmds = {
     rpm_srv = {
       runcmd = concat(
         local.resize_disk_cmd,
         local.firewall_cmd,
+        local.podman_cmd,
         [
           "echo hi > /tmp/hi.txt",
-          "mkdir -p ${local.rpm_dir}",
-          "dnf reposync -p ${local.rpm_dir} --newest-only",
-          "createrepo ${local.rpm_dir}",
-          "python -m http.server 80 --directory ${local.rpm_dir} > /dev/null 2>&1 &"
+          ## keeping these here as an example on how to use reposync
+          # "mkdir -p ${local.rpm_dir}",
+          # "dnf reposync -p ${local.rpm_dir} --newest-only",
+          # "createrepo ${local.rpm_dir}",
+          # "python -m http.server 80 --directory ${local.rpm_dir} > /dev/null 2>&1 &",
         ]
       )
     }
@@ -47,7 +60,9 @@ locals {
   install_packages = {
     packages = [
       "createrepo",
-      "htop"
+      "htop",
+      "nginx",
+      "podman"
     ]
   }
 
