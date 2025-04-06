@@ -68,10 +68,12 @@ locals {
   install_packages = {
     packages = [
       "createrepo",
+      "dnf-utils",
       "htop",
       "nfs-utils",
       "nginx",
-      "podman"
+      "podman",
+      "reposync"
     ]
   }
 
