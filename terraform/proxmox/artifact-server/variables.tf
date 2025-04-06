@@ -7,7 +7,7 @@ variable "clone_template" {
 variable "disk_size" {
   description = "Disk size"
   type        = string
-  default     = "200G"
+  default     = "100G"
 }
 
 variable "host_name" {
@@ -19,5 +19,5 @@ variable "host_name" {
 variable "ssh_username" {
   description = "ssh_username"
   type        = string
-  default     = "provisioner"
+  default     = "deployer"
 }
