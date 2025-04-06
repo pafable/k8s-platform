@@ -1,7 +1,7 @@
 variable "clone_template" {
   description = "Name of clone"
   type        = string
-  default     = "roc1"
+  default     = "alm.tmpl.003"
 }
 
 variable "disk_size" {
@@ -13,7 +13,7 @@ variable "disk_size" {
 variable "host_name" {
   description = "VM name"
   type        = string
-  default     = "rpm-srv"
+  default     = "lunchbox"
 }
 
 variable "ssh_username" {

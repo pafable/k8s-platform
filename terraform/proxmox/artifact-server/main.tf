@@ -1,6 +1,6 @@
 locals {
   default_tag        = "nexus"
-  pm_node            = "leviathan"
+  pm_node            = "behemoth"
   creation_date      = timestamp()
   nexus_service_path = "/usr/lib/systemd/system/nexus.service"
   nexus_dir          = "/mnt/fs/${local.default_tag}"
