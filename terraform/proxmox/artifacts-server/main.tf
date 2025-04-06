@@ -1,7 +1,9 @@
 locals {
-  default_tag   = "rpm-srv"
-  pm_node       = "leviathan"
-  creation_date = timestamp()
+  default_tag        = "rpm-srv"
+  pm_node            = "leviathan"
+  creation_date      = timestamp()
+  nexus_service_path = "/usr/lib/systemd/system/nexus.service"
+  nfs_server         = "kraken.fleet.pafable.com"
   # rpm_dir       = "/srv/pafable/repo"
 
   resize_disk_cmd = [
@@ -18,7 +20,8 @@ locals {
 
   nexus_cmd = [
     "mkdir -p /mnt/fs/nexus",
-    "mount -t nfs kraken.fleet.pafable.com:/volume2/fs/nexus /mnt/fs",
+    "curl -o https://raw.githubusercontent.com/pafable/k8s-platform/refs/heads/artifact-repo/terraform/proxmox/artifacts-server/nexus.service ${local.nexus_service_path}",
+    "mount -t nfs ${local.nfs_server}:/volume2/fs/nexus /mnt/fs",
     "systemctl enable nexus --now"
   ]
 
