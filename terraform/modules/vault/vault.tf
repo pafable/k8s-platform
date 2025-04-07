@@ -12,18 +12,14 @@ locals {
   values = [
     yamlencode({
       server = {
-
         dev = {
           enabled = var.is_dev
         }
+      }
 
-        # ha = {
-        #   enabled = false
-        #
-        #   raft = {
-        #     enabled = true
-        #   }
-        # }
+      dataStorage = {
+        mountPath    = "/vault/data"
+        storageClass = var.storage_class_name
       }
 
       ui = {

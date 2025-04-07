@@ -28,6 +28,11 @@ variable "owner" {
   default     = "devops"
 }
 
+variable "storage_class_name" {
+  description = "Storage class name"
+  type        = string
+}
+
 variable "vault_version" {
   description = "Vault helm chart version"
   type        = string
