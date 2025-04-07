@@ -15,11 +15,11 @@ locals {
         dev = {
           enabled = var.is_dev
         }
-      }
 
-      dataStorage = {
-        mountPath    = "/vault/data"
-        storageClass = var.storage_class_name
+        dataStorage = {
+          mountPath    = "/vault/data"
+          storageClass = var.storage_class_name
+        }
       }
 
       ui = {
