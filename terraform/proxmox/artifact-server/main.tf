@@ -22,11 +22,7 @@ locals {
   ]
 
   nexus_cmd = [
-    "mkdir -p ${local.nexus_dir}",
     "curl https://raw.githubusercontent.com/pafable/k8s-platform/refs/heads/artifact-repo/terraform/proxmox/artifact-server/nexus.service -o ${local.nexus_service_path}",
-    "echo kraken.${var.fleet_domain}:/volume2/fs/nexus /mnt/fs/nexus  nfs  defaults   0   0 >> /etc/fstab",
-    "systemctl daemon-reload",
-    "mount -a",
     "systemctl enable ${local.default_tag} --now"
   ]
 
@@ -41,7 +37,6 @@ locals {
       runcmd = concat(
         local.resize_disk_cmd,
         local.firewall_cmd,
-        local.nexus_cmd,
         # local.nginx_cmd,
         [
           "echo hi > /tmp/hi.txt",
@@ -50,7 +45,12 @@ locals {
           # "dnf reposync -p ${local.rpm_dir} --newest-only",
           # "createrepo ${local.rpm_dir}",
           # "python -m http.server 80 --directory ${local.rpm_dir} > /dev/null 2>&1 &",
-        ]
+          "mkdir -p ${local.nexus_dir}",
+          "echo kraken.${var.fleet_domain}:/volume2/fs/nexus /mnt/fs/nexus  nfs  defaults   0   0 >> /etc/fstab",
+          "systemctl daemon-reload",
+          "mount -a",
+        ],
+        local.nexus_cmd
       )
     }
   }
