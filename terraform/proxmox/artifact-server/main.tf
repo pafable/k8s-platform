@@ -27,6 +27,7 @@ locals {
     # "mount -t nfs ${local.nfs_server}:/volume2/fs/${local.default_tag} ${local.nexus_dir}",
     "echo kraken.${var.fleet_domain}:/volume2/fs/nexus /mnt/fs/nexus  nfs  defaults   0   0 >> /etc/fstab",
     "systemctl daemon-reload",
+    "mount -a",
     "systemctl enable ${local.default_tag} --now"
   ]
 
