@@ -24,7 +24,9 @@ locals {
   nexus_cmd = [
     "mkdir -p ${local.nexus_dir}",
     "curl https://raw.githubusercontent.com/pafable/k8s-platform/refs/heads/artifact-repo/terraform/proxmox/artifact-server/nexus.service -o ${local.nexus_service_path}",
-    "mount -t nfs ${local.nfs_server}:/volume2/fs/${local.default_tag} ${local.nexus_dir}",
+    # "mount -t nfs ${local.nfs_server}:/volume2/fs/${local.default_tag} ${local.nexus_dir}",
+    "echo kraken.${var.fleet_domain}:/volume2/fs/nexus /mnt/fs/nexus  nfs  defaults   0   0 >> /etc/fstab",
+    "systemctl daemon-reload",
     "systemctl enable ${local.default_tag} --now"
   ]
 
