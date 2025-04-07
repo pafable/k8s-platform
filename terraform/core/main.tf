@@ -52,6 +52,10 @@ module "jenkins" {
 #     is_cloud = false
 # }
 
+module "nfs_csi" {
+  source = "../modules/nfs-csi"
+}
+
 module "vault" {
   source             = "../modules/vault"
   ingress_name       = var.ingress
