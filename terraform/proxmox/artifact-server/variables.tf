@@ -10,6 +10,12 @@ variable "disk_size" {
   default     = "100G"
 }
 
+variable "fleet_domain" {
+  description = "Domain"
+  type        = string
+  default     = "fleet.pafable.com"
+}
+
 variable "host_name" {
   description = "VM name"
   type        = string

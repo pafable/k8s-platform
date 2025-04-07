@@ -52,8 +52,17 @@ module "jenkins" {
 #     is_cloud = false
 # }
 
+module "nfs_csi" {
+  source = "../modules/nfs-csi"
+}
+
 module "vault" {
-  source       = "../modules/vault"
-  ingress_name = var.ingress
-  depends_on   = [module.cert_manager]
+  source             = "../modules/vault"
+  ingress_name       = var.ingress
+  storage_class_name = kubernetes_storage_class_v1.kraken_nfs_sc.metadata[0].name
+
+  depends_on = [
+    module.cert_manager,
+    kubernetes_storage_class_v1.kraken_nfs_sc
+  ]
 }
