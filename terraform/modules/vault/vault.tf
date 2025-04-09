@@ -20,6 +20,10 @@ locals {
           mountPath    = "/vault/data"
           storageClass = var.storage_class_name
         }
+
+        ha = {
+          enabled = true
+        }
       }
 
       ui = {
