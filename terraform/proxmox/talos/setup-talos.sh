@@ -36,15 +36,13 @@ talosctl apply-config \
 
 
 # apply worker config
-talosctl apply-config \
+worker_ips=("${WORKER_NODE1}" "${WORKER_NODE2}")
+for worker in "${worker_ips[@]}"; do
+  talosctl apply-config \
     --insecure \
-    --nodes "${WORKER_NODE1}" \
+    --nodes "${worker}" \
     --file "${CONFIG_DIR}/worker.yaml"
-
-talosctl apply-config \
-    --insecure \
-    --nodes "${WORKER_NODE2}" \
-    --file "${CONFIG_DIR}/worker.yaml"
+done
 
 
 # export talos config
