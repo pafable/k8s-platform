@@ -18,27 +18,29 @@ resource "proxmox_cloud_init_disk" "cloudinit" {
 }
 
 resource "proxmox_vm_qemu" "vm" {
-  agent       = 1
-  clone       = var.clone_template
-  cores       = var.cores
-  cpu_type    = var.cpu_type
-  desc        = local.description
-  ipconfig0   = "ip=dhcp"
-  memory      = var.memory
-  name        = var.name
-  onboot      = true
-  os_type     = var.os_type
-  scsihw      = var.scsihw
-  skip_ipv6   = true
-  sockets     = 1
-  tags        = var.tags
-  target_node = var.host_node
+  agent              = 1
+  clone              = var.clone_template
+  description        = local.description
+  ipconfig0          = "ip=dhcp"
+  memory             = var.memory
+  name               = var.name
+  start_at_node_boot = true
+  os_type            = var.os_type
+  scsihw             = var.scsihw
+  skip_ipv6          = true
+  tags               = var.tags
+  target_node        = var.host_node
+
+  cpu {
+    cores = var.cores
+    type  = var.cpu_type
+  }
 
   disks {
     ide {
       ide0 {
         cdrom {
-          iso = proxmox_cloud_init_disk.cloudinit.id
+          iso = var.iso
         }
       }
     }

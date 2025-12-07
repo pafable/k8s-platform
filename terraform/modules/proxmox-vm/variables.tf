@@ -1,6 +1,7 @@
 variable "clone_template" {
   description = "Name of clone"
   type        = string
+  default     = ""
 }
 
 variable "cores" {
@@ -30,6 +31,12 @@ variable "is_SSD" {
   description = "Is drive SSD?"
   type        = string
   default     = true
+}
+
+variable "iso" {
+  description = "ISO to use"
+  type        = string
+  default     = ""
 }
 
 variable "main_disk_size" {
