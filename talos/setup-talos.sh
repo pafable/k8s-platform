@@ -4,8 +4,7 @@ set -euxo pipefail
 
 
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
-BASE_DIR="$(cd "$SCRIPT_DIR/../../.." && pwd)"
-CONFIG_DIR="${BASE_DIR}/talos/config"
+CONFIG_DIR="${SCRIPT_DIR}/config"
 CLUSTER_NAME="talos-cluster"
 IMAGE="factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.11.5"
 
@@ -66,3 +65,6 @@ talosctl bootstrap --nodes "${CONTROL_PLANE1}"
 talosctl kubeconfig \
   --nodes "${CONTROL_PLANE1}" \
   "${CONFIG_DIR}"
+
+
+echo "Kubernetes cluster is up and running!"
