@@ -1,6 +1,5 @@
 locals {
   default_tags = "talos"
-  cluster_name = "${local.default_tags}-cluster"
   host_name    = "hive-ship"
 
   talos_nodes = {
@@ -40,7 +39,6 @@ module "talos_worker_1" {
   memory    = 2048
   name      = local.talos_nodes.worker_1.name
   tags      = local.default_tags
-  # depends_on = [module.talos_controller_1]
 }
 
 module "talos_worker_2" {
@@ -52,5 +50,4 @@ module "talos_worker_2" {
   memory    = 2048
   name      = local.talos_nodes.worker_2.name
   tags      = local.default_tags
-  # depends_on = [module.talos_worker_1]
 }
