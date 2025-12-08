@@ -18,7 +18,7 @@ module "terraform_version" {
 }
 
 provider "proxmox" {
-  pm_api_url      = "https://behemoth.fleet.pafable.com:8006/api2/json"
+  pm_api_url      = "https://leviathan.fleet.pafable.com:8006/api2/json"
   pm_tls_insecure = true
 }
 
@@ -28,7 +28,7 @@ provider "aws" {
 
   default_tags {
     tags = {
-      code_location = "k8s-platform/terraform/proxmox/talos/controllers"
+      code_location = "k8s-platform/terraform/proxmox/talos-infra"
       managed_by    = "terraform"
       owner         = "pafable"
     }
