@@ -2,14 +2,17 @@
 
 This will deploy a kubernetes cluster using Talos Linux.
 
-Deploys a 3 node cluster with 1 master and 2 worker nodes. You will need to have `talosctl` and `kubectl` installed on your workstation.
+Deploys a 5 node cluster with 2 master and 3 worker nodes. You will need to have `talosctl` and `kubectl` installed on your workstation.
 You will also need `sops` and `age` to encrypt talos configuration files.b
 
+## Manual Process
 ### Create environment variables
 ```commandline
 export CONTROL_PLANE1=<IP_ADDRESS>
+export CONTROL_PLANE2=<IP_ADDRESS>
 export WORKER_NODE1=<IP_ADDRESS>
 export WORKER_NODE2=<IP_ADDRESS>
+export WORKER_NODE3=<IP_ADDRESS>
 ```
 
 ### Generate Secrets
@@ -61,6 +64,13 @@ talosctl apply-config \
     --file config/controlplane.yaml
 ```
 
+```commandline
+talosctl apply-config \
+    --insecure \
+    --nodes $CONTROL_PLANE2 \
+    --file config/controlplane.yaml
+```
+
 Worker nodes:
 ```commandline
 talosctl apply-config \
@@ -73,6 +83,13 @@ talosctl apply-config \
 talosctl apply-config \
     --insecure \
     --nodes $WORKER_NODE2 \
+    --file config/worker.yaml
+```
+
+```commandline
+talosctl apply-config \
+    --insecure \
+    --nodes $WORKER_NODE3 \
     --file config/worker.yaml
 ```
 
@@ -134,4 +151,14 @@ for file in $(ls config/); \
     do sops --decrypt --age <PRIVATE_KEY> \
     --in-place config/$file; \
     done
+```
+
+## Automated
+```commandline
+./setup-talos.sh \
+    CONTROL_PLANE1_IP \
+    CONTROL_PLANE2_IP \
+    WORKER_NODE1_IP \
+    WORKER_NODE2_IP \
+    WORKER_NODE3_IP
 ```
