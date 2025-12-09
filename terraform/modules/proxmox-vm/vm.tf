@@ -1,7 +1,7 @@
 locals {
   local_storage_pool = "local"
-  creation_date      = timestamp() # timestamps are in Zulu aka UTC time
-  description        = "${var.desc}. Instance launched on ${local.creation_date}"
+  creation_date      = "${formatdate("YYYY-MM-DD hh:mm:ss", timeadd(plantimestamp(), "-5h"))} EST" # sets EST but doesn't account for DST
+  description        = "${var.desc} \n\nInstance launched on ${local.creation_date}"
 }
 
 resource "proxmox_cloud_init_disk" "cloudinit" {

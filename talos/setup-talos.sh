@@ -10,8 +10,10 @@ IMAGE="factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f2
 
 # Node IPs
 CONTROL_PLANE1=$1
-WORKER_NODE1=$2
-WORKER_NODE2=$3
+CONTROL_PLANE2=$2
+WORKER_NODE1=$3
+WORKER_NODE2=$4
+WORKER_NODE3=$5
 
 
 # create talos secrets
@@ -28,14 +30,17 @@ talosctl gen config "${CLUSTER_NAME}" \
 
 
 # apply control plane config
-talosctl apply-config \
+controlplanes=("${CONTROL_PLANE1}" "${CONTROL_PLANE2}")
+for contolplane in "${controlplanes[@]}"; do
+  talosctl apply-config \
     --insecure \
-    --nodes "${CONTROL_PLANE1}" \
+    --nodes "${contolplane}" \
     --file "${CONFIG_DIR}/controlplane.yaml"
+done
 
 
 # apply worker config
-worker_ips=("${WORKER_NODE1}" "${WORKER_NODE2}")
+worker_ips=("${WORKER_NODE1}" "${WORKER_NODE2}" "${WORKER_NODE3}")
 for worker in "${worker_ips[@]}"; do
   talosctl apply-config \
     --insecure \

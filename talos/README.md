@@ -124,7 +124,7 @@ Copy the age public key from `age-key.txt` and use it in the `sops` command.
 ```commandline
 for file in $(ls config/); \
     do sops --encrypt --age <PUBLIC_KEY> \
-    --in-place config/$file; \
+    config/$file > config/$file.enc; \
     done
 ```
 
