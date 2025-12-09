@@ -160,3 +160,17 @@ for file in $(ls config/); \
     WORKER_NODE2_IP \
     WORKER_NODE3_IP
 ```
+
+
+
+
+
+
+Notes
+
+
+
+Use this if node is already initialized and running
+```commandline
+ talosctl patch mc --nodes <CONTROL_PLANE1> --patch @worker-1-hostname.yaml 
+```
