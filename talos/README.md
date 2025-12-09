@@ -140,16 +140,14 @@ age-keygen -o age-key.txt
 Copy the age public key from `age-key.txt` and use it in the `sops` command.
 ```commandline
 for file in $(ls config/); \
-    do sops --encrypt --age <PUBLIC_KEY> \
-    config/$file > config/$file.enc; \
+    do sops --encrypt config/$file > "${file%.yaml}.enc.yaml"; \
     done
 ```
 
 To decrypt run the following.
 ```commandline
 for file in $(ls config/); \
-    do sops --decrypt --age <PRIVATE_KEY> \
-    --in-place config/$file; \
+    do sops --decrypt  config/$file > "${file%.enc.yaml}.yaml"; \
     done
 ```
 
