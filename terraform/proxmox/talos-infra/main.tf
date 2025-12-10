@@ -56,7 +56,6 @@ module "talos_worker_1" {
   desc      = "Talos k8s worker 1"
   host_node = local.talos_nodes.worker_1.node
   iso       = var.iso
-  memory    = 2048
   name      = local.talos_nodes.worker_1.name
   tags      = local.default_tags
 }
@@ -67,7 +66,6 @@ module "talos_worker_2" {
   desc      = "Talos k8s worker 2"
   host_node = local.talos_nodes.worker_2.node
   iso       = var.iso
-  memory    = 2048
   name      = local.talos_nodes.worker_2.name
   tags      = local.default_tags
 }
@@ -78,7 +76,6 @@ module "talos_worker_3" {
   desc      = "Talos k8s worker 3"
   host_node = local.talos_nodes.worker_3.node
   iso       = var.iso
-  memory    = 2048
   name      = local.talos_nodes.worker_3.name
   tags      = local.default_tags
 }
