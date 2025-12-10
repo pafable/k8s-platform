@@ -1,0 +1,4 @@
+---
+machine:
+  network:
+    hostname: controller-01

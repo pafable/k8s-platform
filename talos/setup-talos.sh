@@ -58,7 +58,7 @@ talosctl config endpoint "${CONTROL_PLANE1}"
 
 
 # get talos members
-sleep 45 # need to wait for controlplane to be ready
+sleep 30 # need to wait for controlplane to be ready
 talosctl get members --nodes "${CONTROL_PLANE1}"
 
 
