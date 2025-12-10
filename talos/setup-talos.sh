@@ -5,6 +5,7 @@ set -euxo pipefail
 
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 CONFIG_DIR="${SCRIPT_DIR}/config"
+PATCH_DIR="${SCRIPT_DIR}/patches"
 CLUSTER_NAME="talos-cluster"
 IMAGE="factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.11.5"
 
@@ -24,6 +25,7 @@ talosctl gen secrets -o "${CONFIG_DIR}/secrets.yaml" --force
 talosctl gen config "${CLUSTER_NAME}" \
     https://"${CONTROL_PLANE1}":6443 \
     --output-dir "${CONFIG_DIR}" \
+    --config-patch @"${PATCH_DIR}"/cni.yaml \
     --install-image "${IMAGE}" \
     --with-secrets "${CONFIG_DIR}/secrets.yaml" \
     --force
@@ -72,4 +74,4 @@ talosctl kubeconfig \
   "${CONFIG_DIR}"
 
 
-echo "Kubernetes cluster is up and running!"
+echo -e "\nKubernetes cluster is up and running!"
