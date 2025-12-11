@@ -82,7 +82,7 @@ module "talos_worker_3" {
 
 resource "null_resource" "script_command" {
   provisioner "local-exec" {
-    command = "echo -e 'Please run k8s-platform/talos/setup-talos.sh to install and initialize Talos \nEXECUTE THE SETUP TALOS SCRIPT: \n\n./setup-talos.sh ${module.talos_controller_1.ipv4_address} ${module.talos_controller_2.ipv4_address} ${module.talos_worker_1.ipv4_address} ${module.talos_worker_2.ipv4_address} ${module.talos_worker_3.ipv4_address}\n'"
+    command = "echo 'Please run k8s-platform/talos/setup-talos.sh to install and initialize Talos \nEXECUTE THE SETUP TALOS SCRIPT: \n\n./setup-talos.sh ${module.talos_controller_1.ipv4_address} ${module.talos_controller_2.ipv4_address} ${module.talos_worker_1.ipv4_address} ${module.talos_worker_2.ipv4_address} ${module.talos_worker_3.ipv4_address}\n'"
   }
 
   depends_on = [

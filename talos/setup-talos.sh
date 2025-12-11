@@ -17,11 +17,11 @@ WORKER_NODE2=$4
 WORKER_NODE3=$5
 
 
-# create talos secrets
+## create talos secrets
 talosctl gen secrets -o "${CONFIG_DIR}/secrets.yaml" --force
 
 
-# create talos configs
+# create talos machine configs
 talosctl gen config "${CLUSTER_NAME}" \
     https://"${CONTROL_PLANE1}":6443 \
     --output-dir "${CONFIG_DIR}" \
@@ -32,8 +32,8 @@ talosctl gen config "${CLUSTER_NAME}" \
 
 
 # apply control plane config
-controlplanes=("${CONTROL_PLANE1}" "${CONTROL_PLANE2}")
-for contolplane in "${controlplanes[@]}"; do
+controlplane_ips=("${CONTROL_PLANE1}" "${CONTROL_PLANE2}")
+for contolplane in "${controlplane_ips[@]}"; do
   talosctl apply-config \
     --insecure \
     --nodes "${contolplane}" \
@@ -51,12 +51,38 @@ for worker in "${worker_ips[@]}"; do
 done
 
 
-# export talos config
-export TALOSCONFIG="${CONFIG_DIR}/talosconfig"
-
-
 # configure talos endpoint
 talosctl config endpoint "${CONTROL_PLANE1}"
+
+
+# apply patches on controlpane nodes
+for contolplane in "${controlplane_ips[@]}"; do
+  for ((i=1; i<3; i++)); do
+    talosctl patch mc \
+      --talosconfig "${CONFIG_DIR}"/talosconfig \
+      --nodes "${contolplane}" \
+      --patch @"${PATCH_DIR}"/controller-"${i}"-hostname.yaml
+
+    talosctl reboot \
+      --talosconfig "${CONFIG_DIR}"/talosconfig \
+      --nodes "${contolplane}"
+  done
+done
+
+
+# apply patches on worker nodes
+for worker in "${worker_ips[@]}"; do
+  for ((i=1; i<4; i++)); do
+    talosctl patch mc \
+      --talosconfig "${CONFIG_DIR}"/talosconfig \
+      --nodes "${worker}" \
+      --patch @"${PATCH_DIR}"/worker-"${i}"-hostname.yaml
+
+    talosctl reboot \
+      --talosconfig "${CONFIG_DIR}"/talosconfig \
+      --nodes "${worker}"
+  done
+done
 
 
 # get talos members
