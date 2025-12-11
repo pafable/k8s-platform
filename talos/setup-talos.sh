@@ -17,7 +17,7 @@ WORKER_NODE2=$4
 WORKER_NODE3=$5
 
 
-## create talos secrets
+# create talos secrets
 talosctl gen secrets -o "${CONFIG_DIR}/secrets.yaml" --force
 
 
@@ -52,7 +52,8 @@ done
 
 
 # configure talos endpoint
-talosctl config endpoint "${CONTROL_PLANE1}"
+talosctl config endpoint "${CONTROL_PLANE1}" \
+  --talosconfig "${CONFIG_DIR}"/talosconfig
 
 
 ## apply patches on controlpane nodes
@@ -86,18 +87,21 @@ talosctl config endpoint "${CONTROL_PLANE1}"
 
 
 # get talos members
-sleep 30 # need to wait for controlplane to be ready
-talosctl get members --nodes "${CONTROL_PLANE1}"
+sleep 10 # need to wait for controlplane to be ready
+talosctl get members --nodes "${CONTROL_PLANE1}" \
+  --talosconfig "${CONFIG_DIR}"/talosconfig
 
 
 # bootstrap cluster
-talosctl bootstrap --nodes "${CONTROL_PLANE1}"
+talosctl bootstrap --nodes "${CONTROL_PLANE1}" \
+  --talosconfig "${CONFIG_DIR}"/talosconfig
 
 
 # get kubeconfig
 talosctl kubeconfig \
   --nodes "${CONTROL_PLANE1}" \
-  "${CONFIG_DIR}"
+  "${CONFIG_DIR}" \
+  --talosconfig "${CONFIG_DIR}"/talosconfig
 
 
 echo -e "\nKubernetes cluster is up and running!"
