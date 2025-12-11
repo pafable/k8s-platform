@@ -55,34 +55,34 @@ done
 talosctl config endpoint "${CONTROL_PLANE1}"
 
 
-# apply patches on controlpane nodes
-for contolplane in "${controlplane_ips[@]}"; do
-  for ((i=1; i<3; i++)); do
-    talosctl patch mc \
-      --talosconfig "${CONFIG_DIR}"/talosconfig \
-      --nodes "${contolplane}" \
-      --patch @"${PATCH_DIR}"/controller-"${i}"-hostname.yaml
-
-    talosctl reboot \
-      --talosconfig "${CONFIG_DIR}"/talosconfig \
-      --nodes "${contolplane}"
-  done
-done
-
-
-# apply patches on worker nodes
-for worker in "${worker_ips[@]}"; do
-  for ((i=1; i<4; i++)); do
-    talosctl patch mc \
-      --talosconfig "${CONFIG_DIR}"/talosconfig \
-      --nodes "${worker}" \
-      --patch @"${PATCH_DIR}"/worker-"${i}"-hostname.yaml
-
-    talosctl reboot \
-      --talosconfig "${CONFIG_DIR}"/talosconfig \
-      --nodes "${worker}"
-  done
-done
+## apply patches on controlpane nodes
+#for contolplane in "${controlplane_ips[@]}"; do
+#  for ((i=1; i<3; i++)); do
+#    talosctl patch mc \
+#      --talosconfig "${CONFIG_DIR}"/talosconfig \
+#      --nodes "${contolplane}" \
+#      --patch @"${PATCH_DIR}"/controller-"${i}"-hostname.yaml
+#
+#    talosctl reboot \
+#      --talosconfig "${CONFIG_DIR}"/talosconfig \
+#      --nodes "${contolplane}"
+#  done
+#done
+#
+#
+## apply patches on worker nodes
+#for worker in "${worker_ips[@]}"; do
+#  for ((i=1; i<4; i++)); do
+#    talosctl patch mc \
+#      --talosconfig "${CONFIG_DIR}"/talosconfig \
+#      --nodes "${worker}" \
+#      --patch @"${PATCH_DIR}"/worker-"${i}"-hostname.yaml
+#
+#    talosctl reboot \
+#      --talosconfig "${CONFIG_DIR}"/talosconfig \
+#      --nodes "${worker}"
+#  done
+#done
 
 
 # get talos members
