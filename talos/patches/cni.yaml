@@ -2,6 +2,7 @@
 cluster:
   network:
     cni:
-      name: custom
-      urls:
-        - https://docs.projectcalico.org/archive/v3.20/manifests/canal.yaml
+      name: none
+#      name: custom
+#      urls:
+#        - https://docs.projectcalico.org/archive/v3.20/manifests/canal.yaml # example for calico

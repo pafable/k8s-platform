@@ -140,16 +140,14 @@ age-keygen -o age-key.txt
 Copy the age public key from `age-key.txt` and use it in the `sops` command.
 ```commandline
 for file in $(ls config/); \
-    do sops --encrypt --age <PUBLIC_KEY> \
-    config/$file > config/$file.enc; \
+    do sops --encrypt config/$file > "${file%.yaml}.enc.yaml"; \
     done
 ```
 
 To decrypt run the following.
 ```commandline
 for file in $(ls config/); \
-    do sops --decrypt --age <PRIVATE_KEY> \
-    --in-place config/$file; \
+    do sops --decrypt  config/$file > "${file%.enc.yaml}.yaml"; \
     done
 ```
 
@@ -161,4 +159,18 @@ for file in $(ls config/); \
     WORKER_NODE1_IP \
     WORKER_NODE2_IP \
     WORKER_NODE3_IP
+```
+
+
+
+
+
+
+Notes
+
+
+
+Use this if node is already initialized and running
+```commandline
+ talosctl patch mc --nodes <CONTROL_PLANE1> --patch @worker-1-hostname.yaml 
 ```

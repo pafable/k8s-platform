@@ -10,3 +10,4 @@ kubeconfig
 secrets.yaml
 talosconfig
 worker.yaml
+test

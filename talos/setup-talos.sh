@@ -5,6 +5,7 @@ set -euxo pipefail
 
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 CONFIG_DIR="${SCRIPT_DIR}/config"
+PATCH_DIR="${SCRIPT_DIR}/patches"
 CLUSTER_NAME="talos-cluster"
 IMAGE="factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.11.5"
 
@@ -20,18 +21,19 @@ WORKER_NODE3=$5
 talosctl gen secrets -o "${CONFIG_DIR}/secrets.yaml" --force
 
 
-# create talos configs
+# create talos machine configs
 talosctl gen config "${CLUSTER_NAME}" \
     https://"${CONTROL_PLANE1}":6443 \
     --output-dir "${CONFIG_DIR}" \
+    --config-patch @"${PATCH_DIR}"/cni.yaml \
     --install-image "${IMAGE}" \
     --with-secrets "${CONFIG_DIR}/secrets.yaml" \
     --force
 
 
 # apply control plane config
-controlplanes=("${CONTROL_PLANE1}" "${CONTROL_PLANE2}")
-for contolplane in "${controlplanes[@]}"; do
+controlplane_ips=("${CONTROL_PLANE1}" "${CONTROL_PLANE2}")
+for contolplane in "${controlplane_ips[@]}"; do
   talosctl apply-config \
     --insecure \
     --nodes "${contolplane}" \
@@ -49,27 +51,57 @@ for worker in "${worker_ips[@]}"; do
 done
 
 
-# export talos config
-export TALOSCONFIG="${CONFIG_DIR}/talosconfig"
-
-
 # configure talos endpoint
-talosctl config endpoint "${CONTROL_PLANE1}"
+talosctl config endpoint "${CONTROL_PLANE1}" \
+  --talosconfig "${CONFIG_DIR}"/talosconfig
+
+
+## apply patches on controlpane nodes
+#for contolplane in "${controlplane_ips[@]}"; do
+#  for ((i=1; i<3; i++)); do
+#    talosctl patch mc \
+#      --talosconfig "${CONFIG_DIR}"/talosconfig \
+#      --nodes "${contolplane}" \
+#      --patch @"${PATCH_DIR}"/controller-"${i}"-hostname.yaml
+#
+#    talosctl reboot \
+#      --talosconfig "${CONFIG_DIR}"/talosconfig \
+#      --nodes "${contolplane}"
+#  done
+#done
+#
+#
+## apply patches on worker nodes
+#for worker in "${worker_ips[@]}"; do
+#  for ((i=1; i<4; i++)); do
+#    talosctl patch mc \
+#      --talosconfig "${CONFIG_DIR}"/talosconfig \
+#      --nodes "${worker}" \
+#      --patch @"${PATCH_DIR}"/worker-"${i}"-hostname.yaml
+#
+#    talosctl reboot \
+#      --talosconfig "${CONFIG_DIR}"/talosconfig \
+#      --nodes "${worker}"
+#  done
+#done
 
 
 # get talos members
-sleep 45 # need to wait for controlplane to be ready
-talosctl get members --nodes "${CONTROL_PLANE1}"
+sleep 10 # need to wait for controlplane to be ready
+talosctl get members --nodes "${CONTROL_PLANE1}" \
+  --talosconfig "${CONFIG_DIR}"/talosconfig
 
 
 # bootstrap cluster
-talosctl bootstrap --nodes "${CONTROL_PLANE1}"
+talosctl bootstrap --nodes "${CONTROL_PLANE1}" \
+  --talosconfig "${CONFIG_DIR}"/talosconfig
 
 
 # get kubeconfig
 talosctl kubeconfig \
   --nodes "${CONTROL_PLANE1}" \
-  "${CONFIG_DIR}"
+  "${CONFIG_DIR}" \
+  --talosconfig "${CONFIG_DIR}"/talosconfig
 
 
-echo "Kubernetes cluster is up and running!"
+echo -e "\nKubernetes cluster is up and running!"

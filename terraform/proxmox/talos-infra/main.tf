@@ -56,7 +56,6 @@ module "talos_worker_1" {
   desc      = "Talos k8s worker 1"
   host_node = local.talos_nodes.worker_1.node
   iso       = var.iso
-  memory    = 2048
   name      = local.talos_nodes.worker_1.name
   tags      = local.default_tags
 }
@@ -67,7 +66,6 @@ module "talos_worker_2" {
   desc      = "Talos k8s worker 2"
   host_node = local.talos_nodes.worker_2.node
   iso       = var.iso
-  memory    = 2048
   name      = local.talos_nodes.worker_2.name
   tags      = local.default_tags
 }
@@ -78,7 +76,20 @@ module "talos_worker_3" {
   desc      = "Talos k8s worker 3"
   host_node = local.talos_nodes.worker_3.node
   iso       = var.iso
-  memory    = 2048
   name      = local.talos_nodes.worker_3.name
   tags      = local.default_tags
+}
+
+resource "null_resource" "script_command" {
+  provisioner "local-exec" {
+    command = "echo 'Please run k8s-platform/talos/setup-talos.sh to install and initialize Talos \nEXECUTE THE SETUP TALOS SCRIPT: \n\n./setup-talos.sh ${module.talos_controller_1.ipv4_address} ${module.talos_controller_2.ipv4_address} ${module.talos_worker_1.ipv4_address} ${module.talos_worker_2.ipv4_address} ${module.talos_worker_3.ipv4_address}\n'"
+  }
+
+  depends_on = [
+    module.talos_controller_1,
+    module.talos_controller_2,
+    module.talos_worker_1,
+    module.talos_worker_2,
+    module.talos_worker_3
+  ]
 }
