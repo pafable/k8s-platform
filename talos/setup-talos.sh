@@ -57,8 +57,8 @@ talosctl config endpoint "${CONTROL_PLANE1}" \
 
 
 # apply patches on controlpane nodes
-echo "waiting 30 sec for nodes to be ready..."
-sleep 30 # need to wait for controlplane to be ready
+echo "waiting 45 sec for nodes to be ready..."
+sleep 45 # need to wait for controlplane to be ready
 
 talosctl patch mc \
   --talosconfig "${CONFIG_DIR}"/talosconfig \
