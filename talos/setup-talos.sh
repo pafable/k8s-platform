@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euxo pipefail
+set -euo pipefail
 
 
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
@@ -56,38 +56,47 @@ talosctl config endpoint "${CONTROL_PLANE1}" \
   --talosconfig "${CONFIG_DIR}"/talosconfig
 
 
-## apply patches on controlpane nodes
-#for contolplane in "${controlplane_ips[@]}"; do
-#  for ((i=1; i<3; i++)); do
-#    talosctl patch mc \
-#      --talosconfig "${CONFIG_DIR}"/talosconfig \
-#      --nodes "${contolplane}" \
-#      --patch @"${PATCH_DIR}"/controller-"${i}"-hostname.yaml
-#
-#    talosctl reboot \
-#      --talosconfig "${CONFIG_DIR}"/talosconfig \
-#      --nodes "${contolplane}"
-#  done
-#done
-#
-#
-## apply patches on worker nodes
-#for worker in "${worker_ips[@]}"; do
-#  for ((i=1; i<4; i++)); do
-#    talosctl patch mc \
-#      --talosconfig "${CONFIG_DIR}"/talosconfig \
-#      --nodes "${worker}" \
-#      --patch @"${PATCH_DIR}"/worker-"${i}"-hostname.yaml
-#
-#    talosctl reboot \
-#      --talosconfig "${CONFIG_DIR}"/talosconfig \
-#      --nodes "${worker}"
-#  done
-#done
+# apply patches on controlpane nodes
+echo "waiting 30 sec for nodes to be ready..."
+sleep 30 # need to wait for controlplane to be ready
+
+talosctl patch mc \
+  --talosconfig "${CONFIG_DIR}"/talosconfig \
+  --nodes "${CONTROL_PLANE1}" \
+  --mode reboot \
+  --patch @"${PATCH_DIR}"/controller-1-hostname.yaml
+
+talosctl patch mc \
+  --talosconfig "${CONFIG_DIR}"/talosconfig \
+  --nodes "${CONTROL_PLANE2}" \
+  --mode reboot \
+  --patch @"${PATCH_DIR}"/controller-2-hostname.yaml
+
+
+# apply patches on worker nodes
+talosctl patch mc \
+  --talosconfig "${CONFIG_DIR}"/talosconfig \
+  --mode reboot \
+  --nodes "${WORKER_NODE1}" \
+  --patch @"${PATCH_DIR}"/worker-1-hostname.yaml
+
+talosctl patch mc \
+  --talosconfig "${CONFIG_DIR}"/talosconfig \
+  --mode reboot \
+  --nodes "${WORKER_NODE2}" \
+  --patch @"${PATCH_DIR}"/worker-2-hostname.yaml
+
+talosctl patch mc \
+  --talosconfig "${CONFIG_DIR}"/talosconfig \
+  --mode reboot \
+  --nodes "${WORKER_NODE3}" \
+  --patch @"${PATCH_DIR}"/worker-3-hostname.yaml
+
+
+sleep 30 # need to wait for all nodes to be ready
 
 
 # get talos members
-sleep 10 # need to wait for controlplane to be ready
 talosctl get members --nodes "${CONTROL_PLANE1}" \
   --talosconfig "${CONFIG_DIR}"/talosconfig
 
