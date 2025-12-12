@@ -1,0 +1,8 @@
+---
+machine:
+  time:
+    disabled: false
+    servers:
+      - time.nist.gov
+      - us.pool.ntp.org
+    bootTimeout: 2m0s

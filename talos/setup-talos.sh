@@ -26,6 +26,7 @@ talosctl gen config "${CLUSTER_NAME}" \
     https://"${CONTROL_PLANE1}":6443 \
     --output-dir "${CONFIG_DIR}" \
     --config-patch @"${PATCH_DIR}"/cni.yaml \
+    --config-patch @"${PATCH_DIR}"/ntp.yaml \
     --install-image "${IMAGE}" \
     --with-secrets "${CONFIG_DIR}/secrets.yaml" \
     --force
