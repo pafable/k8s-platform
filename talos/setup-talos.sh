@@ -58,8 +58,8 @@ talosctl config endpoint "${CONTROL_PLANE1}" \
 
 
 # apply patches on controlpane nodes
-echo "waiting 45 sec for nodes to be ready..."
-sleep 45 # need to wait for controlplane to be ready
+echo "Waiting 30 sec for nodes to be ready..."
+sleep 30 # need to wait for controlplane to be ready
 
 talosctl patch mc \
   --talosconfig "${CONFIG_DIR}"/talosconfig \
@@ -94,6 +94,7 @@ talosctl patch mc \
   --patch @"${PATCH_DIR}"/worker-3-hostname.yaml
 
 
+echo "Waiting 30 sec for nodes to reboot..."
 sleep 30 # need to wait for all nodes to be ready
 
 
@@ -112,6 +113,17 @@ talosctl kubeconfig \
   --nodes "${CONTROL_PLANE1}" \
   "${CONFIG_DIR}" \
   --talosconfig "${CONFIG_DIR}"/talosconfig
+
+
+echo "Waiting 60 sec for kubernetes resources to be ready..."
+sleep 60 # need to wait for all nodes to be ready
+
+
+# get all kubernetes resources
+kubectl get all \
+  --kubeconfig="${CONFIG_DIR}"/kubeconfig \
+  -o wide \
+  -A
 
 
 echo -e "\nKubernetes cluster is up and running!"
