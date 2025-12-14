@@ -1,6 +1,6 @@
 # Talos Infrastructure
 
-Creates a Talos infrastructure with 1 controlplane and 2 worker nodes.
+Creates a Talos infrastructure with 2 controlplane and 3 worker nodes.
 
 ### Intialize terraform
 ```commandline
