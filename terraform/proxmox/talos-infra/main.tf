@@ -93,3 +93,22 @@ resource "null_resource" "script_command" {
     module.talos_worker_3
   ]
 }
+
+resource "null_resource" "talos_script" {
+  provisioner "local-exec" {
+    command = <<-EOT
+      ${path.root}/../../../talos/setup-talos.sh \
+        ${module.talos_controller_1.ipv4_address} \
+        ${module.talos_controller_2.ipv4_address} \
+        ${module.talos_worker_1.ipv4_address} \
+        ${module.talos_worker_2.ipv4_address} \
+        ${module.talos_worker_3.ipv4_address}
+    EOT
+
+    interpreter = ["/bin/bash", "-c"]
+  }
+
+  depends_on = [
+    null_resource.script_command
+  ]
+}
