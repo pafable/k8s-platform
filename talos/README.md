@@ -2,7 +2,7 @@
 
 This will deploy a kubernetes cluster using Talos Linux.
 
-Deploys a 5 node cluster with 2 master and 3 worker nodes. You will need to have `talosctl` and `kubectl` installed on your workstation.
+Deploys a 5 node cluster with 2 controlplane and 3 worker nodes. You will need to have `talosctl` and `kubectl` installed on your workstation.
 You will also need `sops` and `age` to encrypt talos configuration files.b
 
 ## Manual Process
