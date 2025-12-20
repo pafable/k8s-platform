@@ -5,27 +5,27 @@ locals {
   talos_nodes = {
     controller_1 = {
       name = "${local.host_name}-controller-01"
-      node = "leviathan"
+      node = var.leviathan_node
     }
 
     controller_2 = {
       name = "${local.host_name}-controller-02"
-      node = "leviathan"
+      node = var.leviathan_node
     }
 
     worker_1 = {
       name = "${local.host_name}-worker-01"
-      node = "leviathan"
+      node = var.leviathan_node
     }
 
     worker_2 = {
       name = "${local.host_name}-worker-02"
-      node = "leviathan"
+      node = var.leviathan_node
     }
 
     worker_3 = {
       name = "${local.host_name}-worker-03"
-      node = "leviathan"
+      node = var.leviathan_node
     }
   }
 }
