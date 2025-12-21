@@ -25,12 +25,12 @@ talosctl gen secrets -o "${CONFIG_DIR}/secrets.yaml" --force
 talosctl gen config "${CLUSTER_NAME}" \
     https://"${CONTROL_PLANE1}":6443 \
     --output-dir "${CONFIG_DIR}" \
-    --config-patch @"${PATCH_DIR}"/cni.yaml \
     --config-patch @"${PATCH_DIR}"/ntp.yaml \
     --install-image "${IMAGE}" \
     --with-secrets "${CONFIG_DIR}/secrets.yaml" \
     --force
 
+#    --config-patch @"${PATCH_DIR}"/cni.yaml \
 
 # apply control plane config
 controlplane_ips=("${CONTROL_PLANE1}" "${CONTROL_PLANE2}")
@@ -125,5 +125,8 @@ kubectl get all \
   -o wide \
   -A
 
+# get nodes
+kubectl get nodes \
+  --kubeconfig="${CONFIG_DIR}"/kubeconfig
 
 echo -e "\nKubernetes cluster is up and running!"
