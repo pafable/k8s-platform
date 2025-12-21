@@ -127,6 +127,7 @@ kubectl get all \
 
 echo "Waiting 60 sec for nodes to reboot and kubernetes resources to be ready"
 sleep 60
+
 # get nodes
 kubectl get nodes \
   --kubeconfig="${CONFIG_DIR}"/kubeconfig
