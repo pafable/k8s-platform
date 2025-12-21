@@ -134,4 +134,5 @@ sleep 60
 kubectl get nodes \
   --kubeconfig="${CONFIG_DIR}"/kubeconfig
 
+
 echo -e "\nKubernetes cluster is up and running!"
