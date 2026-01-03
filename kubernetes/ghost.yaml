@@ -1,0 +1,39 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: testing
+  labels:
+    env: test
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ghost
+  namespace: testing
+  labels:
+     jobLabel: ghost
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      jobLabel: ghost
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        jobLabel: ghost
+    spec:
+      containers:
+        - name: ghost
+          image: ghost:6.10.3
+          env:
+            - name: NODE_ENV
+              value: development
+          ports:
+            - containerPort: 2368
