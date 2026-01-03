@@ -14,6 +14,7 @@ metadata:
   namespace: testing
   labels:
      jobLabel: ghost
+     app.kubernetes.io/managed-by: terraform
 spec:
   replicas: 1
   selector:
@@ -28,6 +29,7 @@ spec:
     metadata:
       labels:
         jobLabel: ghost
+        app.kubernetes.io/managed-by: terraform
     spec:
       containers:
         - name: ghost
