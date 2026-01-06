@@ -1,16 +1,16 @@
-locals {
-  ext_ips = toset([
-    data.aws_ssm_parameter.k3s_agent1_ipv4.value,
-    data.aws_ssm_parameter.k3s_agent2_ipv4.value,
-    data.aws_ssm_parameter.k3s_controller_ipv4.value
-  ])
-}
+# locals {
+#   ext_ips = toset([
+#     data.aws_ssm_parameter.k3s_agent1_ipv4.value,
+#     data.aws_ssm_parameter.k3s_agent2_ipv4.value,
+#     data.aws_ssm_parameter.k3s_controller_ipv4.value
+#   ])
+# }
 
-module "cert_manager" {
-  source  = "../modules/cert-manager"
-  ca_cert = sensitive(data.aws_ssm_parameter.ca_cert.value)
-  ca_key  = sensitive(data.aws_ssm_parameter.ca_private_key.value)
-}
+# module "cert_manager" {
+#   source  = "../modules/cert-manager"
+#   ca_cert = sensitive(data.aws_ssm_parameter.ca_cert.value)
+#   ca_key  = sensitive(data.aws_ssm_parameter.ca_private_key.value)
+# }
 
 # module "ingress_nginx" {
 #   source = "../modules/ingress-nginx"
@@ -66,3 +66,7 @@ module "cert_manager" {
 #     kubernetes_storage_class_v1.kraken_nfs_sc
 #   ]
 # }
+
+module "envoy_gateway" {
+  source = "../modules/envoy-gateway"
+}

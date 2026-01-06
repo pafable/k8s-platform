@@ -3,8 +3,8 @@ terraform {
 }
 
 locals {
-  config_path    = "~/.kube/k3s-config"
-  config_context = "hive-fleet"
+  config_path    = "/home/phil/PycharmProjects/k8s-platform/talos/config/kubeconfig"
+  config_context = "admin@talos-cluster"
 }
 
 module "aws" {
@@ -26,7 +26,7 @@ provider "aws" {
 }
 
 provider "helm" {
-  kubernetes {
+  kubernetes = {
     config_path    = local.config_path
     config_context = local.config_context
   }

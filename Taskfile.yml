@@ -131,15 +131,15 @@ tasks:
     desc: Install CRDs
     cmds:
       # Cert-Manager CRD, v1.17.0
-      - kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.17.0/cert-manager.crds.yaml # this is needed because cert-manager crd is needed to create issuer
+#      - kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.17.0/cert-manager.crds.yaml # this is needed because cert-manager crd is needed to create issuer
       # Gateway-API CRD, v1.0.0
-      - kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml # this is needed because gateway crd is needed to create kong-ingress and kong-mesh
+#      - kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml # this is needed because gateway crd is needed to create kong-ingress and kong-mesh
       # Kong Ingress CRDs
       # - kubectl apply -f https://raw.githubusercontent.com/Kong/charts/main/charts/kong/crds/custom-resource-definitions.yaml
       # Argocd CRDs
-      - kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/application-crd.yaml
-      - kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/applicationset-crd.yaml
-      - kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/appproject-crd.yaml
+#      - kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/application-crd.yaml
+#      - kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/applicationset-crd.yaml
+#      - kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/appproject-crd.yaml
       # Karpenter CRDs
 #      - kubectl apply -f https://raw.githubusercontent.com/aws/karpenter/main/pkg/apis/crds/karpenter.sh_nodepools.yaml
 #      - kubectl apply -f https://raw.githubusercontent.com/aws/karpenter/main/pkg/apis/crds/karpenter.sh_nodeclaims.yaml
