@@ -48,8 +48,8 @@ module "cert_manager" {
 # k3s already has this baked in
 # do not deploy on k3s
 module "metrics_server" {
-  source = "../modules/metrics-server"
-    is_cloud = false
+  source   = "../modules/metrics-server"
+  is_cloud = false
 }
 
 # module "nfs_csi" {
