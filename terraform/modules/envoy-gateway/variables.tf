@@ -10,7 +10,7 @@ variable "app_repo" {
   default     = "oci://docker.io/envoyproxy"
 }
 
-variable "chart_name" {
+variable "gateway_chart_name" {
   description = "Chart name"
   type        = string
   default     = "gateway-helm"
