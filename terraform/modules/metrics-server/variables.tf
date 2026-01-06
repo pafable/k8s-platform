@@ -1,7 +1,7 @@
 variable "chart_version" {
   description = "The version of the Helm chart to install"
   type        = string
-  default     = "3.12.2"
+  default     = "3.13.0"
 }
 
 variable "is_cloud" {

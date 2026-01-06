@@ -36,5 +36,5 @@ variable "storage_class_name" {
 variable "vault_version" {
   description = "Vault helm chart version"
   type        = string
-  default     = "0.30.0"
+  default     = "0.31.0"
 }

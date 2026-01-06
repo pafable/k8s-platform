@@ -6,11 +6,11 @@
 #   ])
 # }
 
-# module "cert_manager" {
-#   source  = "../modules/cert-manager"
-#   ca_cert = sensitive(data.aws_ssm_parameter.ca_cert.value)
-#   ca_key  = sensitive(data.aws_ssm_parameter.ca_private_key.value)
-# }
+module "cert_manager" {
+  source  = "../modules/cert-manager"
+  ca_cert = sensitive(data.aws_ssm_parameter.ca_cert.value)
+  ca_key  = sensitive(data.aws_ssm_parameter.ca_private_key.value)
+}
 
 # module "ingress_nginx" {
 #   source = "../modules/ingress-nginx"
@@ -45,12 +45,12 @@
 #   ]
 # }
 
-## k3s already has this baked in
-## do not deploy on k3s
-# module "metrics_server" {
-#   source = "../../modules/metrics-server"
-#     is_cloud = false
-# }
+# k3s already has this baked in
+# do not deploy on k3s
+module "metrics_server" {
+  source = "../modules/metrics-server"
+    is_cloud = false
+}
 
 # module "nfs_csi" {
 #   source = "../modules/nfs-csi"
