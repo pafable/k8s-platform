@@ -67,6 +67,10 @@ spec:
   selector:
     app.kubernetes.io/name: ghost
     version: blue
+  type: LoadBalancer
+  externalIPs:
+    - 10.0.50.23
+    - 10.0.50.103
   ports:
     - name: ghost
       port: 80
