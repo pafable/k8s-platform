@@ -1,22 +1,8 @@
-# locals {
-#   ext_ips = toset([
-#     data.aws_ssm_parameter.k3s_agent1_ipv4.value,
-#     data.aws_ssm_parameter.k3s_agent2_ipv4.value,
-#     data.aws_ssm_parameter.k3s_controller_ipv4.value
-#   ])
-# }
-
 module "cert_manager" {
   source  = "../modules/cert-manager"
   ca_cert = sensitive(data.aws_ssm_parameter.ca_cert.value)
   ca_key  = sensitive(data.aws_ssm_parameter.ca_private_key.value)
 }
-
-# module "ingress_nginx" {
-#   source = "../modules/ingress-nginx"
-#   # this is necessary on k3s only
-#   external_ips = local.ext_ips
-# }
 
 # module "jenkins" {
 #   source                      = "../modules/jenkins"
