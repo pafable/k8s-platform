@@ -114,13 +114,13 @@ spec:
   parentRefs:
     - name: eg
   hostnames:
-    - "ghost.pafable.com"
+    - ghost.pafable.com
   rules:
     - backendRefs:
         - group: ""
           kind: Service
-          name: ghost-backend
-          port: 2368
+          name: ghost-svc
+          port: 80
           weight: 1
       matches:
         - path:
