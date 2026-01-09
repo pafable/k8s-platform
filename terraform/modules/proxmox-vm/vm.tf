@@ -1,7 +1,8 @@
 locals {
   local_storage_pool = "local"
   creation_date      = "${formatdate("YYYY-MM-DD hh:mm:ss", timeadd(plantimestamp(), "-5h"))} EST" # sets EST but doesn't account for DST
-  description        = "${var.desc} \n\nInstance created or updated on ${local.creation_date}"
+  description        = "${var.desc} \n\nInstance created or updated by Terraform"
+  # description        = "${var.desc} \n\nInstance created or updated on ${local.creation_date}"
 }
 
 resource "proxmox_cloud_init_disk" "cloudinit" {
@@ -61,6 +62,12 @@ resource "proxmox_vm_qemu" "vm" {
     bridge = "vmbr0"
     id     = 0
     model  = "virtio"
+  }
+
+  startup_shutdown {
+    order            = -1
+    shutdown_timeout = -1
+    startup_delay    = -1
   }
 
   depends_on = [proxmox_cloud_init_disk.cloudinit]
