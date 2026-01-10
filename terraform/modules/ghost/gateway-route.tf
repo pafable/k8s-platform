@@ -6,6 +6,7 @@ resource "kubernetes_manifest" "ghost_gateway" {
     metadata = {
       name      = "${local.ghost_app}-gateway"
       namespace = kubernetes_namespace_v1.ghost_namespace.metadata.0.name
+
       labels = {
         app   = var.app_name
         owner = local.owner
@@ -29,10 +30,12 @@ resource "kubernetes_manifest" "ghost_http_route" {
   manifest = {
     apiVersion = "gateway.networking.k8s.io/v1"
     kind       = "HTTPRoute"
+
     metadata = {
       name      = "ghost-backend"
       namespace = kubernetes_namespace_v1.ghost_namespace.metadata.0.name
     }
+
     spec = {
       parentRefs = [
         {
