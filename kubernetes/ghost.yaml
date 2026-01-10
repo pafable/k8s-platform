@@ -52,6 +52,43 @@ spec:
             - containerPort: 2368
 
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  namespace: testing
+  labels:
+    jobLabel: nginx
+    app.kubernetes.io/name: nginx
+    app.kubernetes.io/managed-by: terraform
+    app.kubernetes.io/owner: devops
+    version: blue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      jobLabel: nginx
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        jobLabel: nginx
+        app.kubernetes.io/name: nginx
+        app.kubernetes.io/managed-by: terraform
+        app.kubernetes.io/owner: devops
+        version: blue
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:trixie
+          ports:
+            - containerPort: 80
+
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -75,6 +112,31 @@ spec:
     - name: ghost
       port: 80
       targetPort: 2368
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-svc
+  namespace: testing
+  labels:
+    app.kubernetes.io/name: nginx
+    app.kubernetes.io/managed-by: terraform
+    app.kubernetes.io/owner: devops
+    jobLabel: nginx
+    version: blue
+spec:
+  selector:
+    app.kubernetes.io/name: nginx
+    version: blue
+  type: LoadBalancer
+  externalIPs:
+    - 10.0.50.23
+    - 10.0.50.103
+  ports:
+    - name: nginx
+      port: 8080
+      targetPort: 80
 
 ---
 apiVersion: gateway.networking.k8s.io/v1
@@ -125,7 +187,17 @@ spec:
           kind: Service
           name: ghost-svc
           port: 80
-          weight: 1
+          weight: 75
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
+    - backendRefs:
+        - group: ""
+          kind: Service
+          name: nginx-svc
+          port: 8080
+          weight: 15
       matches:
         - path:
             type: PathPrefix
