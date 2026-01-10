@@ -135,7 +135,7 @@ spec:
     - 10.0.50.103
   ports:
     - name: nginx
-      port: 8080
+      port: 80
       targetPort: 80
 
 ---
@@ -187,17 +187,12 @@ spec:
           kind: Service
           name: ghost-svc
           port: 80
-          weight: 75
-      matches:
-        - path:
-            type: PathPrefix
-            value: /
-    - backendRefs:
+          weight: 50
         - group: ""
           kind: Service
           name: nginx-svc
-          port: 8080
-          weight: 15
+          port: 80
+          weight: 50
       matches:
         - path:
             type: PathPrefix
