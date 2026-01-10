@@ -104,8 +104,9 @@ resource "kubernetes_service_v1" "ghost_service" {
     type = "LoadBalancer"
 
     external_ips = [
-      "10.0.50.23",
-      "10.0.50.103"
+      "10.0.50.237",
+      "10.0.50.52",
+      "10.0.50.222"
     ]
 
     port {
