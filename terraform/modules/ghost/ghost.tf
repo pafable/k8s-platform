@@ -1,12 +1,12 @@
 locals {
-  domain_name         = "ghost.local"
+  domain_name         = "ghost.pafable.com"
   exposed_port        = 80
   owner               = "devops"
   self_signed_ca_name = "self-signed-cluster-ca-issuer"
 
   # Ghost params
   ghost_app   = "ghost"
-  ghost_image = "ghost:5.82.2"
+  ghost_image = "ghost:6.10.3"
   ghost_port  = 2368
 
   labels = {

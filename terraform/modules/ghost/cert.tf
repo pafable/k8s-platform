@@ -16,7 +16,7 @@ resource "kubernetes_manifest" "cert" {
       commonName = local.domain_name
 
       dnsNames = [
-        "ghost.local"
+        local.domain_name
       ]
 
       isCA = true
