@@ -88,3 +88,13 @@ data "aws_ssm_parameter" "cert_private_key" {
   provider = aws.parameters
   name     = "/jenkins/cert/private/key"
 }
+
+data "aws_ssm_parameter" "talos_controller1_ipv4" {
+  provider = aws.parameters
+  name     = "/proxmox/talos/controller1/ipv4"
+}
+
+data "aws_ssm_parameter" "talos_controller2_ipv4" {
+  provider = aws.parameters
+  name     = "/proxmox/talos/controller2/ipv4"
+}

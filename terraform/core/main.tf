@@ -1,8 +1,8 @@
-module "cert_manager" {
-  source  = "../modules/cert-manager"
-  ca_cert = sensitive(data.aws_ssm_parameter.ca_cert.value)
-  ca_key  = sensitive(data.aws_ssm_parameter.ca_private_key.value)
-}
+# module "cert_manager" {
+#   source  = "../modules/cert-manager"
+#   ca_cert = sensitive(data.aws_ssm_parameter.ca_cert.value)
+#   ca_key  = sensitive(data.aws_ssm_parameter.ca_private_key.value)
+# }
 
 # module "jenkins" {
 #   source                      = "../modules/jenkins"
@@ -58,8 +58,18 @@ module "envoy_gateway" {
 }
 
 module "ghost_1" {
-  source    = "../modules/ghost"
-  app_name  = "ghost-1"
+  source   = "../modules/ghost"
+  app_name = "ghost-1"
+
+  controller_ips = [
+    data.aws_ssm_parameter.talos_controller1_ipv4.value,
+    data.aws_ssm_parameter.talos_controller2_ipv4.value
+  ]
+
   namespace = "ghost-1"
   replicas  = 2
+}
+
+output "c1_ip" {
+  value = nonsensitive(data.aws_ssm_parameter.talos_controller1_ipv4.value)
 }

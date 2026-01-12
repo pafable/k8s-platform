@@ -90,9 +90,9 @@ resource "kubernetes_service_v1" "ghost_service" {
     namespace = kubernetes_namespace_v1.ghost_namespace.metadata.0.name
     labels    = local.app_labels
 
-    annotations = {
-      "ingress.kubernetes.io/service-upstream" = true
-    }
+    # annotations = {
+    #   "ingress.kubernetes.io/service-upstream" = true
+    # }
   }
 
   spec {
@@ -101,12 +101,8 @@ resource "kubernetes_service_v1" "ghost_service" {
       var.app_version
     )
 
-    type = "LoadBalancer"
-
-    external_ips = [
-      "10.0.50.23",
-      "10.0.50.103"
-    ]
+    type         = "LoadBalancer"
+    external_ips = ["10.0.50.22"]
 
     port {
       name        = local.ghost_app

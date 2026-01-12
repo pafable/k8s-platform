@@ -174,33 +174,33 @@ tasks:
 #      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_workflownodes.yaml --ignore-not-found
 #      - kubectl delete -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/helm/chaos-mesh/crds/chaos-mesh.org_workflows.yaml --ignore-not-found
       # Kube Kube-Prometheus-Stack CRDs
-      - kubectl delete -f https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/charts/crds/crds/crd-alertmanagerconfigs.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/charts/crds/crds/crd-alertmanagers.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/charts/crds/crds/crd-podmonitors.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/charts/crds/crds/crd-probes.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/charts/crds/crds/crd-prometheusagents.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/charts/crds/crds/crd-prometheuses.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/charts/crds/crds/crd-prometheusrules.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/charts/crds/crds/crd-scrapeconfigs.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/charts/crds/crds/crd-servicemonitors.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/charts/crds/crds/crd-thanosrulers.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/charts/crds/crds/crd-alertmanagerconfigs.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/charts/crds/crds/crd-alertmanagers.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/charts/crds/crds/crd-podmonitors.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/charts/crds/crds/crd-probes.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/charts/crds/crds/crd-prometheusagents.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/charts/crds/crds/crd-prometheuses.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/charts/crds/crds/crd-prometheusrules.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/charts/crds/crds/crd-scrapeconfigs.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/charts/crds/crds/crd-servicemonitors.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/prometheus-community/helm-charts/main/charts/kube-prometheus-stack/charts/crds/crds/crd-thanosrulers.yaml --ignore-not-found
       # Aqua Security CRDS
-      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_clustercompliancereports.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_clusterconfigauditreports.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_clusterinfraassessmentreports.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_clusterrbacassessmentreports.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_clustersbomreports.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_clustervulnerabilityreports.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_configauditreports.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_exposedsecretreports.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_infraassessmentreports.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_rbacassessmentreports.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_sbomreports.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_vulnerabilityreports.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_clustercompliancereports.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_clusterconfigauditreports.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_clusterinfraassessmentreports.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_clusterrbacassessmentreports.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_clustersbomreports.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_clustervulnerabilityreports.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_configauditreports.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_exposedsecretreports.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_infraassessmentreports.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_rbacassessmentreports.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_sbomreports.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/aquasecurity/trivy-operator/main/deploy/helm/crds/aquasecurity.github.io_vulnerabilityreports.yaml --ignore-not-found
       # Argocd CRDs
-      - kubectl delete -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/application-crd.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/applicationset-crd.yaml --ignore-not-found
-      - kubectl delete -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/appproject-crd.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/application-crd.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/applicationset-crd.yaml --ignore-not-found
+#      - kubectl delete -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/crds/appproject-crd.yaml --ignore-not-found
       # Kong Ingress CRDs
       # - kubectl delete -f https://raw.githubusercontent.com/Kong/charts/main/charts/kong/crds/custom-resource-definitions.yaml --ignore-not-found
       # Kong CRD, v1.0.0 is needed for kong
@@ -208,9 +208,9 @@ tasks:
       # - kubectl delete -f https://github.com/cert-manager/cert-manager/releases/download/v1.15.1/cert-manager.crds.yaml --ignore-not-found
 
       # Remove Abandoned Namespaces
-      - kubectl delete namespace argo-example-app --ignore-not-found
-      - kubectl delete namespace cert-manager --ignore-not-found
-      - kubectl delete namespace my-app-dev --ignore-not-found
+#      - kubectl delete namespace argo-example-app --ignore-not-found
+#      - kubectl delete namespace cert-manager --ignore-not-found
+#      - kubectl delete namespace my-app-dev --ignore-not-found
     ignore_error: true
 
   delete-karpenter-crds:
