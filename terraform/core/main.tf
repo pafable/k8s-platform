@@ -33,10 +33,10 @@
 
 # k3s already has this baked in
 # do not deploy on k3s
-module "metrics_server" {
-  source   = "../modules/metrics-server"
-  is_cloud = false
-}
+# module "metrics_server" {
+#   source   = "../modules/metrics-server"
+#   is_cloud = false
+# }
 
 # module "nfs_csi" {
 #   source = "../modules/nfs-csi"
@@ -57,19 +57,23 @@ module "envoy_gateway" {
   source = "../modules/envoy-gateway"
 }
 
-module "ghost_1" {
-  source   = "../modules/ghost"
-  app_name = "ghost-1"
-
-  controller_ips = [
-    data.aws_ssm_parameter.talos_controller1_ipv4.value,
-    data.aws_ssm_parameter.talos_controller2_ipv4.value
-  ]
-
-  namespace = "ghost-1"
-  replicas  = 2
-}
+# module "ghost_1" {
+#   source   = "../modules/ghost"
+#   app_name = "ghost-1"
+#
+#   controller_ips = [
+#     data.aws_ssm_parameter.talos_controller1_ipv4.value,
+#     data.aws_ssm_parameter.talos_controller2_ipv4.value
+#   ]
+#
+#   namespace = "ghost-1"
+#   replicas  = 2
+# }
 
 output "c1_ip" {
   value = nonsensitive(data.aws_ssm_parameter.talos_controller1_ipv4.value)
+}
+
+output "c2_ip" {
+  value = nonsensitive(data.aws_ssm_parameter.talos_controller2_ipv4.value)
 }
