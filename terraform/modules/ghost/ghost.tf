@@ -114,7 +114,5 @@ resource "kubernetes_service_v1" "ghost_service" {
 
   timeouts {
     create = "3m"
-    update = "3m"
-    delete = "3m"
   }
 }
