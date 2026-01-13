@@ -106,8 +106,8 @@ spec:
     version: blue
   type: LoadBalancer
   externalIPs:
-    - 10.0.50.23
-    - 10.0.50.103
+    - 10.0.50.22
+    - 10.0.50.39
   ports:
     - name: ghost
       port: 80
@@ -131,8 +131,8 @@ spec:
     version: blue
   type: LoadBalancer
   externalIPs:
-    - 10.0.50.23
-    - 10.0.50.103
+    - 10.0.50.22
+    - 10.0.50.39
   ports:
     - name: nginx
       port: 80
@@ -187,12 +187,12 @@ spec:
           kind: Service
           name: ghost-svc
           port: 80
-          weight: 50
+          weight: 90
         - group: ""
           kind: Service
           name: nginx-svc
           port: 80
-          weight: 50
+          weight: 10
       matches:
         - path:
             type: PathPrefix
