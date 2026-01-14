@@ -51,9 +51,10 @@ resource "kubernetes_manifest" "ghost_http_route" {
         {
           backendRefs = [
             {
-              group  = ""
-              kind   = "Service"
-              name   = kubernetes_service_v1.ghost_service.metadata[0].name
+              group = ""
+              kind  = "Service"
+              # name   = kubernetes_service_v1.ghost_service.metadata[0].name
+              name   = "ghost-svc"
               port   = 80
               weight = 10
             }

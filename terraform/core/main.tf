@@ -1,8 +1,8 @@
-# module "cert_manager" {
-#   source  = "../modules/cert-manager"
-#   ca_cert = sensitive(data.aws_ssm_parameter.ca_cert.value)
-#   ca_key  = sensitive(data.aws_ssm_parameter.ca_private_key.value)
-# }
+module "cert_manager" {
+  source  = "../modules/cert-manager"
+  ca_cert = sensitive(data.aws_ssm_parameter.ca_cert.value)
+  ca_key  = sensitive(data.aws_ssm_parameter.ca_private_key.value)
+}
 
 # module "jenkins" {
 #   source                      = "../modules/jenkins"
@@ -67,7 +67,7 @@ module "envoy_gateway" {
 #   ]
 #
 #   namespace = "ghost-1"
-#   replicas  = 2
+#   replicas  = 1
 # }
 
 output "c1_ip" {
