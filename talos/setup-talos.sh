@@ -15,7 +15,7 @@ CONTROL_PLANE2=$2
 WORKER_NODE1=$3
 WORKER_NODE2=$4
 WORKER_NODE3=$5
-
+SEC=60
 
 # create talos secrets
 talosctl gen secrets -o "${CONFIG_DIR}/secrets.yaml" --force
@@ -58,8 +58,8 @@ talosctl config endpoint "${CONTROL_PLANE1}" \
 
 
 # apply patches on controlpane nodes
-echo "Waiting 30 sec for nodes to be ready..."
-sleep 30 # need to wait for controlplane to be ready
+echo "Waiting ${SEC} sec for nodes to be ready..."
+sleep ${SEC} # need to wait for controlplane to be ready
 
 talosctl patch mc \
   --talosconfig "${CONFIG_DIR}"/talosconfig \
@@ -94,8 +94,8 @@ talosctl patch mc \
   --patch @"${PATCH_DIR}"/worker-3-hostname.yaml
 
 
-echo "Waiting 30 sec for nodes to reboot..."
-sleep 30 # need to wait for all nodes to be ready
+echo "Waiting ${SEC} sec for nodes to reboot..."
+sleep ${SEC} # need to wait for all nodes to be ready
 
 
 # get talos members
@@ -115,8 +115,8 @@ talosctl kubeconfig \
   --talosconfig "${CONFIG_DIR}"/talosconfig
 
 
-echo "Waiting 60 sec for kubernetes resources to be ready..."
-sleep 60 # need to wait for all nodes to be ready
+echo "Waiting ${SEC} sec for kubernetes resources to be ready..."
+sleep ${SEC} # need to wait for all nodes to be ready
 
 
 # get all kubernetes resources
@@ -126,8 +126,8 @@ kubectl get all \
   -A
 
 
-echo "Waiting 60 sec for nodes to reboot and kubernetes resources to be ready"
-sleep 60
+echo "Waiting ${SEC} sec for nodes to reboot and kubernetes resources to be ready"
+sleep ${SEC}
 
 
 # get nodes
