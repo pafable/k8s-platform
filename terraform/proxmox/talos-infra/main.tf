@@ -52,30 +52,30 @@ module "talos_controller_2" {
 
 module "talos_worker_1" {
   source    = "../../modules/proxmox-vm"
-  cores     = 2
   desc      = "Talos k8s worker 1"
   host_node = local.talos_nodes.worker_1.node
   iso       = var.iso
+  memory    = 4096
   name      = local.talos_nodes.worker_1.name
   tags      = local.default_tags
 }
 
 module "talos_worker_2" {
   source    = "../../modules/proxmox-vm"
-  cores     = 2
   desc      = "Talos k8s worker 2"
   host_node = local.talos_nodes.worker_2.node
   iso       = var.iso
+  memory    = 4096
   name      = local.talos_nodes.worker_2.name
   tags      = local.default_tags
 }
 
 module "talos_worker_3" {
   source    = "../../modules/proxmox-vm"
-  cores     = 2
   desc      = "Talos k8s worker 3"
   host_node = local.talos_nodes.worker_3.node
   iso       = var.iso
+  memory    = 4096
   name      = local.talos_nodes.worker_3.name
   tags      = local.default_tags
 }

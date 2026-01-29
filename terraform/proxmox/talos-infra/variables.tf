@@ -7,5 +7,5 @@ variable "iso" {
 variable "node" {
   description = "Node name"
   type        = string
-  default     = "behemoth"
+  default     = "leviathan"
 }
