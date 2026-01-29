@@ -55,7 +55,7 @@ module "talos_worker_1" {
   desc      = "Talos k8s worker 1"
   host_node = local.talos_nodes.worker_1.node
   iso       = var.iso
-  memory    = 4096
+  memory    = 8192
   name      = local.talos_nodes.worker_1.name
   tags      = local.default_tags
 }
