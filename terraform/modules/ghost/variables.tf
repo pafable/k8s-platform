@@ -12,6 +12,12 @@ variable "app_version" {
   default = { version = "blue" }
 }
 
+variable "controller_ips" {
+  description = "IP addresses of controllers"
+  type        = list(string)
+  default     = []
+}
+
 variable "ingress_name" {
   description = "Ingress to use"
   type        = string

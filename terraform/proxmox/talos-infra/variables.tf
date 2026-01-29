@@ -4,8 +4,8 @@ variable "iso" {
   default     = "local:iso/talos-linux-qemu-metal-amd64.iso"
 }
 
-variable "leviathan_node" {
-  description = "Leviathan node name"
+variable "node" {
+  description = "Node name"
   type        = string
   default     = "leviathan"
 }

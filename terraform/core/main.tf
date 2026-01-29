@@ -1,22 +1,8 @@
-locals {
-  ext_ips = toset([
-    data.aws_ssm_parameter.k3s_agent1_ipv4.value,
-    data.aws_ssm_parameter.k3s_agent2_ipv4.value,
-    data.aws_ssm_parameter.k3s_controller_ipv4.value
-  ])
-}
-
 module "cert_manager" {
   source  = "../modules/cert-manager"
   ca_cert = sensitive(data.aws_ssm_parameter.ca_cert.value)
   ca_key  = sensitive(data.aws_ssm_parameter.ca_private_key.value)
 }
-
-# module "ingress_nginx" {
-#   source = "../modules/ingress-nginx"
-#   # this is necessary on k3s only
-#   external_ips = local.ext_ips
-# }
 
 # module "jenkins" {
 #   source                      = "../modules/jenkins"
@@ -45,12 +31,12 @@ module "cert_manager" {
 #   ]
 # }
 
-## k3s already has this baked in
-## do not deploy on k3s
-# module "metrics_server" {
-#   source = "../../modules/metrics-server"
-#     is_cloud = false
-# }
+# k3s already has this baked in
+# do not deploy on k3s
+module "metrics_server" {
+  source   = "../modules/metrics-server"
+  is_cloud = false
+}
 
 # module "nfs_csi" {
 #   source = "../modules/nfs-csi"
@@ -66,3 +52,28 @@ module "cert_manager" {
 #     kubernetes_storage_class_v1.kraken_nfs_sc
 #   ]
 # }
+
+module "envoy_gateway" {
+  source = "../modules/envoy-gateway"
+}
+
+# module "ghost_1" {
+#   source   = "../modules/ghost"
+#   app_name = "ghost-1"
+#
+#   controller_ips = [
+#     data.aws_ssm_parameter.talos_controller1_ipv4.value,
+#     data.aws_ssm_parameter.talos_controller2_ipv4.value
+#   ]
+#
+#   namespace = "ghost-1"
+#   replicas  = 1
+# }
+
+output "c1_ip" {
+  value = nonsensitive(data.aws_ssm_parameter.talos_controller1_ipv4.value)
+}
+
+output "c2_ip" {
+  value = nonsensitive(data.aws_ssm_parameter.talos_controller2_ipv4.value)
+}

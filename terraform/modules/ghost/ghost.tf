@@ -1,12 +1,12 @@
 locals {
-  domain_name         = "ghost.local"
+  domain_name         = "ghost.pafable.com"
   exposed_port        = 80
   owner               = "devops"
   self_signed_ca_name = "self-signed-cluster-ca-issuer"
 
   # Ghost params
   ghost_app   = "ghost"
-  ghost_image = "ghost:5.82.2"
+  ghost_image = "ghost:6.10.3"
   ghost_port  = 2368
 
   labels = {
@@ -90,9 +90,9 @@ resource "kubernetes_service_v1" "ghost_service" {
     namespace = kubernetes_namespace_v1.ghost_namespace.metadata.0.name
     labels    = local.app_labels
 
-    annotations = {
-      "ingress.kubernetes.io/service-upstream" = true
-    }
+    # annotations = {
+    #   "ingress.kubernetes.io/service-upstream" = true
+    # }
   }
 
   spec {
@@ -101,11 +101,18 @@ resource "kubernetes_service_v1" "ghost_service" {
       var.app_version
     )
 
+    type         = "LoadBalancer"
+    external_ips = var.controller_ips
+
     port {
       name        = local.ghost_app
       port        = local.exposed_port
       target_port = kubernetes_deployment_v1.ghost_deployment.spec[0].template[0].spec[0].container[0].port[0].container_port
       protocol    = "TCP"
     }
+  }
+
+  timeouts {
+    create = "3m"
   }
 }

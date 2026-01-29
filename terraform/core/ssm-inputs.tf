@@ -48,20 +48,16 @@ data "aws_ssm_parameter" "k3s_kubeconfig_file" {
   name     = "/proxmox/k3s/kubeconfig"
 }
 
-data "aws_ssm_parameter" "k3s_controller_ipv4" {
+data "aws_ssm_parameter" "k3s_controller1_ipv4" {
   provider = aws.parameters
-  name     = "/proxmox/k3s/controller/ipv4"
+  name     = "/proxmox/talos/controller1/ipv4"
 }
 
-data "aws_ssm_parameter" "k3s_agent1_ipv4" {
+data "aws_ssm_parameter" "k3s_controller2_ipv4" {
   provider = aws.parameters
-  name     = "/proxmox/k3s/agent1/ipv4"
+  name     = "/proxmox/talos/controller2/ipv4"
 }
 
-data "aws_ssm_parameter" "k3s_agent2_ipv4" {
-  provider = aws.parameters
-  name     = "/proxmox/k3s/agent2/ipv4"
-}
 
 data "aws_ssm_parameter" "packer_ssh_password" {
   provider = aws.parameters
@@ -91,4 +87,14 @@ data "aws_ssm_parameter" "cert" {
 data "aws_ssm_parameter" "cert_private_key" {
   provider = aws.parameters
   name     = "/jenkins/cert/private/key"
+}
+
+data "aws_ssm_parameter" "talos_controller1_ipv4" {
+  provider = aws.parameters
+  name     = "/proxmox/talos/controller1/ipv4"
+}
+
+data "aws_ssm_parameter" "talos_controller2_ipv4" {
+  provider = aws.parameters
+  name     = "/proxmox/talos/controller2/ipv4"
 }
