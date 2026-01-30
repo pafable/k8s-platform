@@ -48,7 +48,7 @@ resource "kubernetes_deployment_v1" "jellyfin_deployment" {
           }
 
           port {
-            container_port = 80
+            container_port = 8096
             name           = local.labels.app
             protocol       = "TCP"
           }
