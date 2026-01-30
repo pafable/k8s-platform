@@ -1,10 +1,13 @@
 locals {
-  labels = {
-    "app.kubernetes.io/app"        = var.namespace
-    "app.kubernetes.io/managed-by" = "terraform"
-    "app.kubernetes.io/owner"      = var.owner
-    app                            = var.namespace
-  }
+  labels = merge(
+    {
+      "app.kubernetes.io/app"        = var.namespace
+      "app.kubernetes.io/managed-by" = "terraform"
+      "app.kubernetes.io/owner"      = var.owner
+      app                            = var.namespace
+    },
+    var.app_version
+  )
 }
 
 resource "kubernetes_namespace_v1" "jellyfin_ns" {
@@ -16,7 +19,7 @@ resource "kubernetes_namespace_v1" "jellyfin_ns" {
 
 resource "kubernetes_deployment_v1" "jellyfin_deployment" {
   metadata {
-    name      = "${local.labels.app}-server"
+    name      = "${var.namespace}-server"
     namespace = kubernetes_namespace_v1.jellyfin_ns.metadata[0].name
     labels    = local.labels
   }
@@ -30,13 +33,13 @@ resource "kubernetes_deployment_v1" "jellyfin_deployment" {
 
     template {
       metadata {
-        name   = "${local.labels.app}-server"
+        name   = "${var.namespace}-server"
         labels = local.labels
       }
 
       spec {
         container {
-          name              = local.labels.app
+          name              = var.namespace
           image             = var.container_image
           image_pull_policy = "IfNotPresent"
 
@@ -49,7 +52,7 @@ resource "kubernetes_deployment_v1" "jellyfin_deployment" {
 
           port {
             container_port = 8096
-            name           = local.labels.app
+            name           = var.namespace
             protocol       = "TCP"
           }
         }
@@ -60,29 +63,28 @@ resource "kubernetes_deployment_v1" "jellyfin_deployment" {
 
 resource "kubernetes_service_v1" "jellyfin_service" {
   metadata {
-    name      = "${local.labels.app}-svc"
+    name      = "${var.namespace}-svc"
     namespace = kubernetes_namespace_v1.jellyfin_ns.metadata.0.name
-    labels    = local.labels
+    labels    = kubernetes_deployment_v1.jellyfin_deployment.spec[0].template[0].metadata[0].labels
   }
 
   spec {
-    selector = merge(
-      local.labels,
-      var.app_version
-    )
-
-    type         = "LoadBalancer"
-    external_ips = var.controller_ips
+    selector     = local.labels
+    type         = "ClusterIP"
+    # type         = "LoadBalancer"
+    # external_ips = var.controller_ips
 
     port {
-      name        = local.labels.app
-      port        = 80
+      name        = var.namespace
+      port        = 8096
       target_port = kubernetes_deployment_v1.jellyfin_deployment.spec[0].template[0].spec[0].container[0].port[0].container_port
       protocol    = "TCP"
     }
   }
 
   timeouts {
-    create = "3m"
+    create = "2m"
   }
+
+  depends_on = [kubernetes_deployment_v1.jellyfin_deployment]
 }
