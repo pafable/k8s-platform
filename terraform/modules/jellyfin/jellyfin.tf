@@ -67,7 +67,7 @@ resource "kubernetes_service_v1" "jellyfin_service" {
 
   spec {
     selector = merge(
-      { "app.kubernetes.io/name" = local.labels.app },
+      local.labels,
       var.app_version
     )
 
