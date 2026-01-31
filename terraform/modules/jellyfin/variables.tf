@@ -18,10 +18,28 @@ variable "controller_ips" {
   default     = []
 }
 
+variable "cpu_request" {
+  description = "CPU request"
+  type        = string
+  default     = "100m"
+}
+
+variable "memory_request" {
+  description = "Memory request"
+  type        = string
+  default     = "1.0Gi"
+}
+
 variable "namespace" {
   description = "Jellyfin namespace"
   type        = string
   default     = "jellyfin"
+}
+
+variable "node_name" {
+  description = "Kubernetes node to deploy on"
+  type        = string
+  default     = "worker-03"
 }
 
 variable "owner" {

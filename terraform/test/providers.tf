@@ -3,8 +3,8 @@ terraform {
 }
 
 locals {
-  config_path    = "/home/phil/PycharmProjects/k8s-platform/talos/config/kubeconfig"
-  config_context = "admin@talos-cluster"
+  config_path    = var.config_path
+  config_context = var.config_context
 }
 
 provider "aws" {

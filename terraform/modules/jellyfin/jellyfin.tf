@@ -45,8 +45,8 @@ resource "kubernetes_deployment_v1" "jellyfin_deployment" {
 
           resources {
             requests = {
-              cpu    = "100m"
-              memory = "0.3Gi"
+              cpu    = var.cpu_request
+              memory = var.memory_request
             }
           }
 
@@ -56,6 +56,7 @@ resource "kubernetes_deployment_v1" "jellyfin_deployment" {
             protocol       = "TCP"
           }
         }
+        node_name = var.node_name
       }
     }
   }
