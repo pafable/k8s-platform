@@ -69,11 +69,3 @@ module "envoy_gateway" {
 #   namespace = "ghost-1"
 #   replicas  = 1
 # }
-
-output "c1_ip" {
-  value = nonsensitive(data.aws_ssm_parameter.talos_controller1_ipv4.value)
-}
-
-output "c2_ip" {
-  value = nonsensitive(data.aws_ssm_parameter.talos_controller2_ipv4.value)
-}
