@@ -38,9 +38,9 @@ module "metrics_server" {
   is_cloud = false
 }
 
-# module "nfs_csi" {
-#   source = "../modules/nfs-csi"
-# }
+module "nfs_csi" {
+  source = "../modules/nfs-csi"
+}
 
 # module "vault" {
 #   source             = "../modules/vault"
