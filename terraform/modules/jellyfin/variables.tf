@@ -24,6 +24,18 @@ variable "cpu_request" {
   default     = "100m"
 }
 
+variable "domain" {
+  description = "Domain"
+  type        = string
+  default     = "jellyfin-test.home.pafable.com"
+}
+
+variable "gateway_class_name" {
+  description = "Gateway class name"
+  type        = string
+  default     = "door"
+}
+
 variable "memory_request" {
   description = "Memory request"
   type        = string

@@ -76,7 +76,7 @@ resource "kubernetes_service_v1" "jellyfin_service" {
 
     port {
       name        = var.namespace
-      port        = 8096
+      port        = 80
       target_port = kubernetes_deployment_v1.jellyfin_deployment.spec[0].template[0].spec[0].container[0].port[0].container_port
       protocol    = "TCP"
     }
