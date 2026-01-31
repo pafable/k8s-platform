@@ -25,7 +25,7 @@ resource "kubernetes_deployment_v1" "jellyfin_deployment" {
   }
 
   spec {
-    replicas = 1
+    replicas = var.replicas
 
     selector {
       match_labels = local.labels
@@ -73,7 +73,6 @@ resource "kubernetes_service_v1" "jellyfin_service" {
     selector     = local.labels
     type         = "ClusterIP"
     external_ips = var.controller_ips
-    # type         = "LoadBalancer"
 
     port {
       name        = var.namespace

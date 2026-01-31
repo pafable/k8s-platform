@@ -47,3 +47,9 @@ variable "owner" {
   type        = string
   default     = "devops"
 }
+
+variable "replicas" {
+  description = "Number of replicas"
+  type        = number
+  default     = 1
+}
