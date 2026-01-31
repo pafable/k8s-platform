@@ -48,6 +48,11 @@ variable "namespace" {
   default     = "jellyfin"
 }
 
+variable "nfs_ipv4" {
+  description = "IP address of NFS server for storage backend"
+  type        = string
+}
+
 variable "node_name" {
   description = "Kubernetes node to deploy on"
   type        = string
@@ -64,4 +69,10 @@ variable "replicas" {
   description = "Number of replicas"
   type        = number
   default     = 1
+}
+
+variable "storage_class_name" {
+  description = "Storage class name"
+  type        = string
+  default     = "local-path"
 }

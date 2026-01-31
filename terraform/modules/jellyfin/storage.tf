@@ -1,3 +1,17 @@
+resource "kubernetes_storage_class_v1" "jellyfin_movies_shows_sc" {
+  metadata {
+    name = "kraken-movies-shows"
+  }
+
+  reclaim_policy      = "Retain"
+  storage_provisioner = "nfs.csi.k8s.io"
+
+  parameters = {
+    server = "kraken.fleet.pafable.com"
+    share  = "/volume1/movies-shows"
+  }
+}
+
 resource "kubernetes_persistent_volume_claim_v1" "jellyfin_pvc" {
   metadata {
     name      = "${var.namespace}-pvc"
@@ -34,9 +48,13 @@ resource "kubernetes_persistent_volume_v1" "jellyfin_pv" {
 
     persistent_volume_source {
       nfs {
-        path   = "/volume2/fs/jenkins"
+        path   = "/volume2/fs/jellyfin"
         server = var.nfs_ipv4
       }
     }
+  }
+
+  timeouts {
+    create = "2m"
   }
 }
