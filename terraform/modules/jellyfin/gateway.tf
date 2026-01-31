@@ -43,7 +43,7 @@ resource "kubernetes_manifest" "kraken_http_route" {
     kind       = "HTTPRoute"
 
     metadata = {
-      name      = "ghost-backend"
+      name      = "jellyfin-backend"
       namespace = kubernetes_namespace_v1.jellyfin_ns.metadata.0.name
     }
 
@@ -66,7 +66,6 @@ resource "kubernetes_manifest" "kraken_http_route" {
               kind   = "Service"
               name   = kubernetes_service_v1.jellyfin_service.metadata[0].name
               port   = kubernetes_deployment_v1.jellyfin_deployment.spec[0].template[0].spec[0].container[0].port[0].container_port
-              weight = 10
             }
           ]
         },
