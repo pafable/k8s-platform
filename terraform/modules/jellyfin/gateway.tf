@@ -17,7 +17,7 @@ resource "kubernetes_manifest" "jellyfin_gateway" {
       gatewayClassName = var.gateway_class_name
       infrastructure = {
         labels = {
-          app = "jellyfin"
+          app = var.namespace
         }
       }
 
@@ -43,7 +43,7 @@ resource "kubernetes_manifest" "kraken_http_route" {
     kind       = "HTTPRoute"
 
     metadata = {
-      name      = "jellyfin-backend"
+      name      = "${var.namespace}-backend"
       namespace = kubernetes_namespace_v1.jellyfin_ns.metadata.0.name
     }
 
@@ -62,10 +62,10 @@ resource "kubernetes_manifest" "kraken_http_route" {
         {
           backendRefs = [
             {
-              group  = ""
-              kind   = "Service"
-              name   = kubernetes_service_v1.jellyfin_service.metadata[0].name
-              port   = kubernetes_deployment_v1.jellyfin_deployment.spec[0].template[0].spec[0].container[0].port[0].container_port
+              group = ""
+              kind  = "Service"
+              name  = kubernetes_service_v1.jellyfin_service.metadata[0].name
+              port  = kubernetes_deployment_v1.jellyfin_deployment.spec[0].template[0].spec[0].container[0].port[0].container_port
             }
           ]
         },

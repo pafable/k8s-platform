@@ -1,4 +1,4 @@
-resource "kubernetes_storage_class_v1" "jellyfin_nfs_sc" {
+resource "kubernetes_storage_class_v1" "jellyfin_movies_shows_sc" {
   metadata {
     name = "kraken-movies-shows"
   }
