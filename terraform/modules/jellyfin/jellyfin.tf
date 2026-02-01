@@ -8,6 +8,8 @@ locals {
     },
     var.app_version
   )
+  cache_vol        = "cache"
+  config_vol       = "config"
   movies_shows_vol = "movies-shows"
 }
 
@@ -58,27 +60,41 @@ resource "kubernetes_deployment_v1" "jellyfin_deployment" {
           }
 
           volume_mount {
+            mount_path = "/cache"
+            name       = local.cache_vol
+          }
+
+          volume_mount {
+            mount_path = "/config"
+            name       = local.config_vol
+          }
+
+          volume_mount {
             mount_path = "/media"
             name       = local.movies_shows_vol
           }
-
-          # volume_mount {
-          #   mount_path = "/cache"
-          #   name       = local.movies_shows_vol
-          # }
-          #
-          # volume_mount {
-          #   mount_path = "/config"
-          #   name       = local.movies_shows_vol
-          # }
         }
 
         node_name = var.node_name
 
         volume {
+          name = local.cache_vol
+          persistent_volume_claim {
+            claim_name = kubernetes_persistent_volume_claim_v1.jellyfin_cache_pvc.metadata[0].name
+          }
+        }
+
+        volume {
+          name = local.config_vol
+          persistent_volume_claim {
+            claim_name = kubernetes_persistent_volume_claim_v1.jellyfin_config_pvc.metadata[0].name
+          }
+        }
+
+        volume {
           name = local.movies_shows_vol
           persistent_volume_claim {
-            claim_name = kubernetes_persistent_volume_claim_v1.jellyfin_nfs_pvc.metadata[0].name
+            claim_name = kubernetes_persistent_volume_claim_v1.jellyfin_media_pvc.metadata[0].name
           }
         }
       }
