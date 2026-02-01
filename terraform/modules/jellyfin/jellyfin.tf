@@ -8,6 +8,7 @@ locals {
     },
     var.app_version
   )
+  movies_shows_vol = "movies-shows"
 }
 
 resource "kubernetes_namespace_v1" "jellyfin_ns" {
@@ -55,10 +56,37 @@ resource "kubernetes_deployment_v1" "jellyfin_deployment" {
             name           = var.namespace
             protocol       = "TCP"
           }
+
+          volume_mount {
+            mount_path = "/media"
+            name       = local.movies_shows_vol
+          }
+
+          # volume_mount {
+          #   mount_path = "/cache"
+          #   name       = local.movies_shows_vol
+          # }
+          #
+          # volume_mount {
+          #   mount_path = "/config"
+          #   name       = local.movies_shows_vol
+          # }
         }
+
         node_name = var.node_name
+
+        volume {
+          name = local.movies_shows_vol
+          persistent_volume_claim {
+            claim_name = kubernetes_persistent_volume_claim_v1.jellyfin_nfs_pvc.metadata[0].name
+          }
+        }
       }
     }
+  }
+
+  timeouts {
+    create = "2m"
   }
 }
 
