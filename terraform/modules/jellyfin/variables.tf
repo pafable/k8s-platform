@@ -76,3 +76,9 @@ variable "storage_class_name" {
   type        = string
   default     = "local-path"
 }
+
+variable "self_signed_ca_name" {
+  description = "Self signed CA"
+  type        = string
+  default     = "self-signed-cluster-ca-issuer"
+}
