@@ -8,9 +8,6 @@ locals {
     },
     var.app_version
   )
-  cache_vol        = "cache"
-  config_vol       = "config"
-  movies_shows_vol = "movies-shows"
 }
 
 resource "kubernetes_namespace_v1" "jellyfin_ns" {
@@ -61,40 +58,40 @@ resource "kubernetes_deployment_v1" "jellyfin_deployment" {
 
           volume_mount {
             mount_path = "/cache"
-            name       = local.cache_vol
+            name       = local.nfs_volumes[0]
           }
 
           volume_mount {
             mount_path = "/config"
-            name       = local.config_vol
+            name       = local.nfs_volumes[1]
           }
 
           volume_mount {
             mount_path = "/media"
-            name       = local.movies_shows_vol
+            name       = local.nfs_volumes[2]
           }
         }
 
         node_name = var.node_name
 
         volume {
-          name = local.cache_vol
+          name = local.nfs_volumes[0]
           persistent_volume_claim {
-            claim_name = kubernetes_persistent_volume_claim_v1.jellyfin_cache_pvc.metadata[0].name
+            claim_name = kubernetes_persistent_volume_claim_v1.jellyfin_pvc["cache"].metadata[0].name
           }
         }
 
         volume {
-          name = local.config_vol
+          name = local.nfs_volumes[1]
           persistent_volume_claim {
-            claim_name = kubernetes_persistent_volume_claim_v1.jellyfin_config_pvc.metadata[0].name
+            claim_name = kubernetes_persistent_volume_claim_v1.jellyfin_pvc["config"].metadata[0].name
           }
         }
 
         volume {
-          name = local.movies_shows_vol
+          name = local.nfs_volumes[2]
           persistent_volume_claim {
-            claim_name = kubernetes_persistent_volume_claim_v1.jellyfin_media_pvc.metadata[0].name
+            claim_name = kubernetes_persistent_volume_claim_v1.jellyfin_pvc["media"].metadata[0].name
           }
         }
       }
