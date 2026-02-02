@@ -57,17 +57,17 @@ resource "kubernetes_deployment_v1" "jellyfin_deployment" {
           }
 
           volume_mount {
-            mount_path = "/cache"
+            mount_path = "/${local.nfs_volumes[0]}"
             name       = local.nfs_volumes[0]
           }
 
           volume_mount {
-            mount_path = "/config"
+            mount_path = "/${local.nfs_volumes[1]}"
             name       = local.nfs_volumes[1]
           }
 
           volume_mount {
-            mount_path = "/media"
+            mount_path = "/${local.nfs_volumes[2]}"
             name       = local.nfs_volumes[2]
           }
         }
