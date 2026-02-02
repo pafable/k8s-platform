@@ -27,7 +27,6 @@ variable "cpu_request" {
 variable "domain" {
   description = "Domain"
   type        = string
-  default     = "jellyfin-test.home.pafable.com"
 }
 
 variable "gateway_class_name" {
