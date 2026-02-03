@@ -22,11 +22,11 @@ resource "kubernetes_manifest" "jellyfin_gateway" {
       }
 
       listeners = [
-        # {
-        #   name     = "http"
-        #   protocol = "HTTP"
-        #   port     = 80
-        # },
+        {
+          name     = "http"
+          protocol = "HTTP"
+          port     = 80
+        },
         {
           hostname = var.domain
           name     = "https"
@@ -36,8 +36,7 @@ resource "kubernetes_manifest" "jellyfin_gateway" {
             mode = "Terminate"
             certificateRefs = [
               {
-                kind = "Secret"
-                name = kubernetes_manifest.cert.manifest.spec.secretName
+                name = kubernetes_manifest.cert.manifest.metadata.name
               }
             ]
           }
@@ -60,7 +59,7 @@ resource "kubernetes_manifest" "jellyfin_http_route" {
     spec = {
       parentRefs = [
         {
-          name = var.gateway_class_name
+          name = kubernetes_manifest.jellyfin_gateway.manifest.metadata.name
           sectionName : "https"
         }
       ]
@@ -93,38 +92,38 @@ resource "kubernetes_manifest" "jellyfin_http_route" {
   }
 }
 
-# resource "kubernetes_manifest" "jellyfin_tls_route" {
-#   manifest = {
-#     apiVersion = "gateway.networking.k8s.io/v1alpha2"
-#     kind       = "TLSRoute"
-#
-#     metadata = {
-#       name      = "${var.namespace}-tls-route"
-#       namespace = kubernetes_namespace_v1.jellyfin_ns.metadata.0.name
-#     }
-#
-#     spec = {
-#       parentRefs = [
-#         {
-#           name      = var.gateway_class_name
-#           namespace = var.namespace
-#         }
-#       ]
-#
-#       hostnames = [
-#         var.domain
-#       ]
-#
-#       rules = [
-#         {
-#           backendRefs = [
-#             {
-#               name = kubernetes_service_v1.jellyfin_service.metadata[0].name
-#               port = 443
-#             }
-#           ]
-#         }
-#       ]
-#     }
-#   }
-# }
+resource "kubernetes_manifest" "jellyfin_tls_route" {
+  manifest = {
+    apiVersion = "gateway.networking.k8s.io/v1alpha2"
+    kind       = "TLSRoute"
+
+    metadata = {
+      name      = "${var.namespace}-tls-route"
+      namespace = kubernetes_namespace_v1.jellyfin_ns.metadata.0.name
+    }
+
+    spec = {
+      parentRefs = [
+        {
+          name      = var.gateway_class_name
+          namespace = var.namespace
+        }
+      ]
+
+      hostnames = [
+        var.domain
+      ]
+
+      rules = [
+        {
+          backendRefs = [
+            {
+              name = kubernetes_service_v1.jellyfin_service.metadata[0].name
+              port = 443
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
