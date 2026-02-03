@@ -3,7 +3,7 @@
 .terraform*
 *.tfstate*
 tfplan*
-*.tvars
+*.tfvars
 *.pkrvars.hcl
 controlplane.yaml
 kubeconfig

@@ -15,4 +15,5 @@ module "jellyfin" {
     nonsensitive(data.aws_ssm_parameter.talos_controller2_ipv4.insecure_value)
   ]
   nfs_ipv4 = nonsensitive(data.aws_ssm_parameter.nfs_server_ip.insecure_value)
+  domain   = "jellyfin-test.home.pafable.com"
 }

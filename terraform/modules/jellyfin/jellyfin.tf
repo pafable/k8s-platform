@@ -38,6 +38,8 @@ resource "kubernetes_deployment_v1" "jellyfin_deployment" {
       }
 
       spec {
+        hostname = var.container_hostname
+
         container {
           name              = var.namespace
           image             = var.container_image

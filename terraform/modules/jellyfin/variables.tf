@@ -6,6 +6,12 @@ variable "app_version" {
   default = { version = "blue" }
 }
 
+variable "container_hostname" {
+  description = "jellyfin container hostname"
+  type        = string
+  default     = "tentacool"
+}
+
 variable "container_image" {
   description = "jellyfin container image"
   type        = string
