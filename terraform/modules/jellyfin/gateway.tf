@@ -28,22 +28,32 @@ resource "kubernetes_manifest" "jellyfin_gateway" {
           port     = 80
         },
         {
+          hostname = var.domain
           name     = "https"
           protocol = "HTTPS"
           port     = 443
+          tls = {
+            mode = "Terminate"
+            certificateRefs = [
+              {
+                kind = "Secret"
+                name = kubernetes_manifest.cert.manifest.spec.secretName
+              }
+            ]
+          }
         }
       ]
     }
   }
 }
 
-resource "kubernetes_manifest" "kraken_http_route" {
+resource "kubernetes_manifest" "jellyfin_http_route" {
   manifest = {
     apiVersion = "gateway.networking.k8s.io/v1"
     kind       = "HTTPRoute"
 
     metadata = {
-      name      = "${var.namespace}-backend"
+      name      = "${var.namespace}-http-route"
       namespace = kubernetes_namespace_v1.jellyfin_ns.metadata.0.name
     }
 
@@ -76,6 +86,42 @@ resource "kubernetes_manifest" "kraken_http_route" {
                 type  = "PathPrefix"
                 value = "/"
               }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+
+resource "kubernetes_manifest" "jellyfin_tls_route" {
+  manifest = {
+    apiVersion = "gateway.networking.k8s.io/v1alpha2"
+    kind       = "TLSRoute"
+
+    metadata = {
+      name      = "${var.namespace}-tls-route"
+      namespace = kubernetes_namespace_v1.jellyfin_ns.metadata.0.name
+    }
+
+    spec = {
+      parentRefs = [
+        {
+          name      = var.gateway_class_name
+          namespace = var.namespace
+        }
+      ]
+
+      hostnames = [
+        var.domain
+      ]
+
+      rules = [
+        {
+          backendRefs = [
+            {
+              name = kubernetes_service_v1.jellyfin_service.metadata[0].name
+              port = 443
             }
           ]
         }

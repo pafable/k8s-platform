@@ -3,7 +3,7 @@
 ## Comment out this line on initial deployment to new kubernetes clusters
 ## Then uncomment it after the first deployment
 resource "kubernetes_manifest" "self_signed_cluster_issuer" {
-  count = 1
+  count = local.install_count
 
   manifest = {
     apiVersion = "cert-manager.io/v1"
