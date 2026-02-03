@@ -85,5 +85,5 @@ variable "storage_class_name" {
 variable "self_signed_ca_name" {
   description = "Self signed CA"
   type        = string
-  default     = "self-signed-cluster-ca-issuer"
+  default     = "self-signed-ca-cluster-issuer"
 }

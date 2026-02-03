@@ -245,7 +245,7 @@ tasks:
       - defer: |
           echo "Cleaning up terraform plans..."
           rm -f tfplan*
-      - terraform plan -out=tfplan -no-color
+      - terraform plan -var-file vars.tfvars -out=tfplan -no-color
       - terraform apply tfplan -no-color
 
   apps-destroy:
@@ -257,7 +257,7 @@ tasks:
       - defer: |
           echo "Cleaning up terraform plans..."
           rm -f tfplan*
-      - terraform plan -out=tfplan.destroy -destroy -no-color
+      - terraform plan -var-file vars.tfvars -out=tfplan.destroy -destroy -no-color
       - terraform apply tfplan.destroy -no-color
       - task: delete-crds
     ignore_error: true
