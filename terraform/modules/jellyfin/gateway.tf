@@ -26,17 +26,31 @@ resource "kubernetes_manifest" "jellyfin_gateway" {
           name     = "http"
           protocol = "HTTP"
           port     = 80
+
+          allowedRoutes = {
+            namespaces = {
+              from = "Same"
+            }
+          }
         },
         {
           hostname = var.domain
           name     = "https"
           protocol = "HTTPS"
           port     = 443
+
+          allowedRoutes = {
+            namespaces = {
+              from = "Same"
+            }
+          }
+
           tls = {
             mode = "Terminate"
             certificateRefs = [
               {
-                name = kubernetes_manifest.cert.manifest.metadata.name
+                name      = kubernetes_manifest.cert.manifest.spec.secretName
+                namespace = var.namespace
               }
             ]
           }
@@ -59,8 +73,14 @@ resource "kubernetes_manifest" "jellyfin_http_route" {
     spec = {
       parentRefs = [
         {
-          name = kubernetes_manifest.jellyfin_gateway.manifest.metadata.name
-          sectionName : "https"
+          kind        = "Gateway"
+          name        = kubernetes_manifest.jellyfin_gateway.manifest.metadata.name
+          sectionName = "http"
+        },
+        {
+          kind        = "Gateway"
+          name        = kubernetes_manifest.jellyfin_gateway.manifest.metadata.name
+          sectionName = "https"
         }
       ]
 
@@ -73,7 +93,7 @@ resource "kubernetes_manifest" "jellyfin_http_route" {
           backendRefs = [
             {
               name = kubernetes_service_v1.jellyfin_service.metadata[0].name
-              port = kubernetes_deployment_v1.jellyfin_deployment.spec[0].template[0].spec[0].container[0].port[0].container_port
+              port = 80
             }
           ]
         },
@@ -84,42 +104,6 @@ resource "kubernetes_manifest" "jellyfin_http_route" {
                 type  = "PathPrefix"
                 value = "/"
               }
-            }
-          ]
-        }
-      ]
-    }
-  }
-}
-
-resource "kubernetes_manifest" "jellyfin_tls_route" {
-  manifest = {
-    apiVersion = "gateway.networking.k8s.io/v1alpha2"
-    kind       = "TLSRoute"
-
-    metadata = {
-      name      = "${var.namespace}-tls-route"
-      namespace = kubernetes_namespace_v1.jellyfin_ns.metadata.0.name
-    }
-
-    spec = {
-      parentRefs = [
-        {
-          name      = var.gateway_class_name
-          namespace = var.namespace
-        }
-      ]
-
-      hostnames = [
-        var.domain
-      ]
-
-      rules = [
-        {
-          backendRefs = [
-            {
-              name = kubernetes_service_v1.jellyfin_service.metadata[0].name
-              port = 443
             }
           ]
         }
