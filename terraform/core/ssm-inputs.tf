@@ -43,17 +43,17 @@ data "aws_ssm_parameter" "jenkins_github_token" {
   name     = "/jenkins/github/token"
 }
 
-data "aws_ssm_parameter" "k3s_kubeconfig_file" {
+data "aws_ssm_parameter" "kubeconfig_file" {
   provider = aws.parameters
   name     = "/proxmox/k3s/kubeconfig"
 }
 
-data "aws_ssm_parameter" "k3s_controller1_ipv4" {
+data "aws_ssm_parameter" "controller1_ipv4" {
   provider = aws.parameters
   name     = "/proxmox/talos/controller1/ipv4"
 }
 
-data "aws_ssm_parameter" "k3s_controller2_ipv4" {
+data "aws_ssm_parameter" "controller2_ipv4" {
   provider = aws.parameters
   name     = "/proxmox/talos/controller2/ipv4"
 }

@@ -69,3 +69,7 @@ module "envoy_gateway" {
 #   namespace = "ghost-1"
 #   replicas  = 1
 # }
+
+module "metallb" {
+  source = "../modules/metallb"
+}
