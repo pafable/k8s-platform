@@ -1,7 +1,7 @@
 variable "metallb_version" {
   description = "Metallb version"
   type        = string
-  default     = "v0.15.3"
+  default     = "0.15.3"
 }
 
 variable "owner" {
