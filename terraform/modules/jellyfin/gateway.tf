@@ -106,6 +106,18 @@ resource "kubernetes_manifest" "jellyfin_http_route" {
               }
             }
           ]
+        },
+        {
+          filters = [
+            {
+              ## redirects http to https
+              type = "RequestRedirect"
+              requestRedirect = {
+                scheme     = "https"
+                statusCode = 301
+              }
+            }
+          ]
         }
       ]
     }
