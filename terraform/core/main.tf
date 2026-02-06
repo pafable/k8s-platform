@@ -53,9 +53,9 @@ module "nfs_csi" {
 #   ]
 # }
 
-module "envoy_gateway" {
-  source = "../modules/envoy-gateway"
-}
+# module "envoy_gateway" {
+#   source = "../modules/envoy-gateway"
+# }
 
 # module "ghost_1" {
 #   source   = "../modules/ghost"

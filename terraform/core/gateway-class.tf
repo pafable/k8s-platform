@@ -20,5 +20,5 @@ resource "kubernetes_manifest" "core_gateway_class" {
     }
   }
 
-  depends_on = [module.envoy_gateway]
+  # depends_on = [module.envoy_gateway]
 }
