@@ -6,6 +6,12 @@ variable "app_version" {
   default = { version = "blue" }
 }
 
+variable "cluster_ips" {
+  description = "cluster ips"
+  type        = list(string)
+  default     = []
+}
+
 variable "container_hostname" {
   description = "jellyfin container hostname"
   type        = string
@@ -16,12 +22,6 @@ variable "container_image" {
   description = "jellyfin container image"
   type        = string
   default     = "docker.io/jellyfin/jellyfin:10.11.6"
-}
-
-variable "controller_ips" {
-  description = "IP addresses of controllers"
-  type        = list(string)
-  default     = []
 }
 
 variable "cpu_request" {
@@ -79,7 +79,7 @@ variable "replicas" {
 variable "storage_class_name" {
   description = "Storage class name"
   type        = string
-  default     = "local-path"
+  default     = "kraken"
 }
 
 variable "self_signed_ca_name" {

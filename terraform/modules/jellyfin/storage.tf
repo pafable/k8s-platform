@@ -32,7 +32,8 @@ resource "kubernetes_persistent_volume_v1" "jellyfin_pv" {
 
     access_modes                     = ["ReadWriteMany"]
     persistent_volume_reclaim_policy = "Retain"
-    storage_class_name               = var.storage_class_name
+    # storage_class_name               = var.storage_class_name
+    storage_class_name = var.storage_class_name
 
     persistent_volume_source {
       nfs {
@@ -57,7 +58,8 @@ resource "kubernetes_persistent_volume_claim_v1" "jellyfin_pvc" {
   }
 
   spec {
-    storage_class_name = var.storage_class_name
+    # storage_class_name = var.storage_class_name
+    storage_class_name = "kraken-media"
     access_modes       = ["ReadWriteMany"]
 
     resources {
