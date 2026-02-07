@@ -79,7 +79,7 @@ variable "replicas" {
 variable "storage_class_name" {
   description = "Storage class name"
   type        = string
-  default     = "kraken"
+  default     = "nfs"
 }
 
 variable "self_signed_ca_name" {

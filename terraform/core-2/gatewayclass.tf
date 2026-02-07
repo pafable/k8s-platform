@@ -19,6 +19,4 @@ resource "kubernetes_manifest" "core_gateway_class" {
       description    = "babys first gatewayclass"
     }
   }
-
-  # depends_on = [module.envoy_gateway]
 }

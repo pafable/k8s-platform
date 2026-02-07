@@ -38,9 +38,9 @@ module "metrics_server" {
   is_cloud = false
 }
 
-module "nfs_csi" {
-  source = "../modules/nfs-csi"
-}
+# module "nfs_csi" {
+#   source = "../modules/nfs-csi"
+# }
 
 # module "vault" {
 #   source             = "../modules/vault"
@@ -53,9 +53,9 @@ module "nfs_csi" {
 #   ]
 # }
 
-# module "envoy_gateway" {
-#   source = "../modules/envoy-gateway"
-# }
+module "envoy_gateway" {
+  source = "../modules/envoy-gateway"
+}
 
 # module "ghost_1" {
 #   source   = "../modules/ghost"
