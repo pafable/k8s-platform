@@ -11,7 +11,6 @@ locals {
 
   values = [
     yamlencode({
-      #         installCRDs = true
       crds = {
         enabled = true
         keep    = false

@@ -2,11 +2,6 @@ terraform {
   backend "s3" {}
 }
 
-locals {
-  config_path    = "~/.kube/k3s-config"
-  config_context = "hive-fleet"
-}
-
 module "aws" {
   source = "../modules/versions/aws"
 }
@@ -27,8 +22,8 @@ provider "aws" {
 
 provider "helm" {
   kubernetes {
-    config_path    = local.config_path
-    config_context = local.config_context
+    config_path    = var.config_path
+    config_context = var.config_context
   }
 }
 
@@ -37,8 +32,8 @@ module "helm_version" {
 }
 
 provider "kubernetes" {
-  config_path    = local.config_path
-  config_context = local.config_context
+  config_path    = var.config_path
+  config_context = var.config_context
 }
 
 module "kubernetes_version" {

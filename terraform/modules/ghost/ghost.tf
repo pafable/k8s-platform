@@ -89,10 +89,6 @@ resource "kubernetes_service_v1" "ghost_service" {
     name      = "${var.app_name}-svc"
     namespace = kubernetes_namespace_v1.ghost_namespace.metadata.0.name
     labels    = local.app_labels
-
-    # annotations = {
-    #   "ingress.kubernetes.io/service-upstream" = true
-    # }
   }
 
   spec {
