@@ -114,7 +114,7 @@ resource "kubernetes_service_v1" "jellyfin_service" {
 
   spec {
     selector = local.labels
-    type     = "LoadBalancer"
+    type     = "ClusterIP"
 
     port {
       name        = var.namespace
