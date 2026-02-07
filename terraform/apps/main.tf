@@ -81,9 +81,4 @@ module "jellyfin" {
   source   = "../modules/jellyfin"
   nfs_ipv4 = nonsensitive(data.aws_ssm_parameter.nfs_server_ip.insecure_value)
   domain   = "jellyfin.${var.domain}"
-
-  cluster_ips = [
-    data.aws_ssm_parameter.talos_controller1_ipv4.insecure_value,
-    data.aws_ssm_parameter.talos_controller2_ipv4.insecure_value
-  ]
 }

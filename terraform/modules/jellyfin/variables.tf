@@ -6,12 +6,6 @@ variable "app_version" {
   default = { version = "blue" }
 }
 
-variable "cluster_ips" {
-  description = "cluster ips"
-  type        = list(string)
-  default     = []
-}
-
 variable "container_hostname" {
   description = "jellyfin container hostname"
   type        = string
