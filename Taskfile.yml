@@ -41,6 +41,7 @@ env:
   PROXMOX_K3S_INFRA_CONTROLLERS_DIR: terraform/proxmox/k3s-infra/controllers
   PROXMOX_K3S_INFRA_AGENTS_DIR: terraform/proxmox/k3s-infra/agents
   PROXMOX_ART_SRV_DIR: terraform/proxmox/artifact-server
+  TALOS_INFRA_DIR: terraform/proxmox/talos-infra
 
   TF_WORKSPACE: dev # sets the terraform workspace
 
@@ -600,6 +601,43 @@ tasks:
     cmds:
       - task: k3s-infra-agents-destroy
       - task: k3s-infra-controllers-destroy
+
+  talos-init:
+    dir: '{{ .TALOS_INFRA_DIR }}'
+    deps:
+      - task: fmt
+    desc: Initialize talos infra
+    cmds:
+      - echo "+++++ Initializing talos Infra +++++"
+      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${TALOS_INFRA_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure
+      - task: tf-validate
+        vars: { DIR: '{{ .TALOS_INFRA_DIR }}' }
+      - task: tf-ws-list
+        vars: { DIR: '{{ .TALOS_INFRA_DIR }}' }
+
+  talos-create:
+    desc: Create talos infrastructure
+    dir: '{{ .TALOS_INFRA_DIR }}'
+    deps:
+      - task: talos-init
+    cmds:
+      - defer: |
+          echo "Cleaning up..."
+          rm -f tfplan
+      - terraform plan -out=tfplan
+      - terraform apply tfplan
+
+  talos-destroy:
+    desc: Destroy talos infrastructure
+    dir: '{{ .TALOS_INFRA_DIR }}'
+    deps:
+      - task: talos-init
+    cmds:
+      - defer: |
+          echo "Cleaning up..."
+          rm -f tfplan-destroy
+      - terraform plan -out=tfplan-destroy -destroy
+      - terraform apply tfplan-destroy
 
   packer-alma-build:
     desc: Build Alma linux image
