@@ -75,7 +75,10 @@ tasks:
 #    deps:
 #      - install-prereqs
     cmds:
-      - terraform -chdir=terraform fmt --recursive
+      - |
+        terraform -chdir=terraform \
+          fmt \
+          --recursive
       - packer fmt -recursive packer
 
   connect-eks-cluster:
@@ -231,7 +234,15 @@ tasks:
     desc: Initialize Apps terraform
     cmds:
       - echo "+++++ Initializing Kube Apps +++++"
-      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${TF_APPS_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure -no-color
+      - | 
+        terraform init \
+          -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" \
+          -backend-config="encrypt=true" \
+          -backend-config="key=${TF_APPS_DIR}/terraform.tfstate" \
+          -backend-config="region=us-east-1" \
+          -upgrade \
+          -reconfigure \
+          -no-color
       - task: tf-validate
         vars: { DIR: '{{ .TF_APPS_DIR }}' }
       - task: tf-ws-list
@@ -247,7 +258,11 @@ tasks:
       - defer: |
           echo "Cleaning up terraform plans..."
           rm -f tfplan*
-      - terraform plan -var-file vars.tfvars -out=tfplan -no-color
+      - |
+        terraform plan \
+          -var-file vars.tfvars \
+          -out=tfplan \
+          -no-color
       - terraform apply tfplan -no-color
 
   apps-destroy:
@@ -259,7 +274,12 @@ tasks:
       - defer: |
           echo "Cleaning up terraform plans..."
           rm -f tfplan*
-      - terraform plan -var-file vars.tfvars -out=tfplan.destroy -destroy -no-color
+      - | 
+        terraform plan \
+          -var-file vars.tfvars \
+          -out=tfplan.destroy \
+          -destroy \
+          -no-color
       - terraform apply tfplan.destroy -no-color
       - task: delete-crds
     ignore_error: true
@@ -609,7 +629,15 @@ tasks:
     desc: Initialize talos infra
     cmds:
       - echo "+++++ Initializing talos Infra +++++"
-      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${TALOS_INFRA_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure
+      - |
+        terraform init \
+          -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" \
+          -backend-config="encrypt=true" \
+          -backend-config="key=${TALOS_INFRA_DIR}/terraform.tfstate" \
+          -backend-config="region=us-east-1" \
+          -upgrade \
+          -reconfigure \
+          -no-color
       - task: tf-validate
         vars: { DIR: '{{ .TALOS_INFRA_DIR }}' }
       - task: tf-ws-list
@@ -636,7 +664,10 @@ tasks:
       - defer: |
           echo "Cleaning up..."
           rm -f tfplan-destroy
-      - terraform plan -out=tfplan-destroy -destroy
+      - |
+        terraform plan \
+          -out=tfplan-destroy \
+          -destroy
       - terraform apply tfplan-destroy
 
   packer-alma-build:
@@ -668,7 +699,6 @@ tasks:
       - packer init .
       - packer validate -var-file=roc-vars.pkrvars.hcl .
       - packer build -var-file=roc-vars.pkrvars.hcl .
-
 
   packer-ubuntu-build:
     desc: Build Ubuntu image
@@ -762,7 +792,15 @@ tasks:
     desc: Initialize Core 1 terraform
     cmds:
       - echo "+++++ Initializing Core +++++"
-      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${TF_CORE1_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure -no-color
+      - |
+        terraform init \
+          -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" \
+          -backend-config="encrypt=true" \
+          -backend-config="key=${TF_CORE1_DIR}/terraform.tfstate" \
+          -backend-config="region=us-east-1" \
+          -upgrade \
+          -reconfigure \
+          -no-color
       - task: tf-validate
         vars: { DIR: '{{ .TF_CORE1_DIR }}' }
       - task: tf-ws-list
@@ -778,7 +816,11 @@ tasks:
       - defer: |
           echo "Cleaning up terraform plans..."
           rm -f tfplan*
-      - terraform plan -var-file=vars.tfvars -out=tfplan -no-color
+      - |
+        terraform plan \
+          -var-file=vars.tfvars \
+          -out=tfplan \
+          -no-color
       - terraform apply tfplan -no-color
 
   core-1-destroy:
@@ -790,7 +832,12 @@ tasks:
       - defer: |
           echo "Cleaning up terraform plans..."
           rm -f tfplan*
-      - terraform plan -var-file=vars.tfvars -out=tfplan.destroy -destroy -no-color
+      - |
+        terraform plan \
+          -var-file=vars.tfvars \
+          -out=tfplan.destroy \
+          -destroy \
+          -no-color
       - terraform apply tfplan.destroy -no-color
       - task: delete-crds
 
@@ -801,7 +848,15 @@ tasks:
     desc: Initialize Core 2 terraform
     cmds:
       - echo "+++++ Initializing Core +++++"
-      - terraform init -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" -backend-config="encrypt=true" -backend-config="key=${TF_CORE2_DIR}/terraform.tfstate" -backend-config="region=us-east-1" -upgrade -reconfigure -no-color
+      - |
+        terraform init \
+          -backend-config="bucket=${TF_BACKEND_BUCKET_DEV}" \
+          -backend-config="encrypt=true" \
+          -backend-config="key=${TF_CORE2_DIR}/terraform.tfstate" \
+          -backend-config="region=us-east-1" \
+          -upgrade \
+          -reconfigure \
+          -no-color
       - task: tf-validate
         vars: { DIR: '{{ .TF_CORE2_DIR }}' }
       - task: tf-ws-list
@@ -817,7 +872,11 @@ tasks:
       - defer: |
           echo "Cleaning up terraform plans..."
           rm -f tfplan*
-      - terraform plan -var-file=vars.tfvars -out=tfplan -no-color
+      - |
+        terraform plan \
+          -var-file=vars.tfvars \
+          -out=tfplan \
+          -no-color
       - terraform apply tfplan -no-color
 
   core-2-destroy:
@@ -829,7 +888,12 @@ tasks:
       - defer: |
           echo "Cleaning up terraform plans..."
           rm -f tfplan*
-      - terraform plan -var-file=vars.tfvars -out=tfplan.destroy -destroy -no-color
+      - |
+        terraform plan \
+          -var-file=vars.tfvars \
+          -out=tfplan.destroy \
+          -destroy \
+          -no-color
       - terraform apply tfplan.destroy -no-color
       - task: delete-crds
 
