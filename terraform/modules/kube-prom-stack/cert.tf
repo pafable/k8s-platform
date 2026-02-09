@@ -4,7 +4,7 @@ resource "kubernetes_manifest" "cert" {
     kind       = "Certificate"
 
     metadata = {
-      name      = "monitoring-cert"
+      name      = "${var.app_name}-cert"
       namespace = kubernetes_namespace_v1.kube_prom_ns.metadata.0.name # certs are bound to namespaces
       labels    = local.labels
     }

@@ -9,7 +9,7 @@ variable "config_context" {
 }
 
 module "jellyfin" {
-  source = "../modules/jellyfin"
+  source   = "../modules/jellyfin"
   nfs_ipv4 = nonsensitive(data.aws_ssm_parameter.nfs_server_ip.insecure_value)
   domain   = "jellyfin-test.home.pafable.com"
 }

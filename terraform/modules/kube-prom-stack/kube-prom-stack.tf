@@ -2,7 +2,6 @@ locals {
   domain              = var.is_docker_desktop ? "local" : var.domain
   kube_chart_name     = "kube-prometheus-stack"
   kube_chart_repo     = "https://prometheus-community.github.io/helm-charts"
-  kube_name           = "monitoring"
   enable_grafana_db   = false # this is needed for data persistence in grafana
   grafana_db_name     = local.enable_grafana_db ? "postgres" : null
   grafana_db_host     = local.enable_grafana_db ? "REPLACE_WITH_YOUR_DB_HOST" : null
@@ -18,19 +17,19 @@ locals {
   }
 
   labels = {
-    "app.kubernetes.io/app"        = local.kube_name
+    "app.kubernetes.io/app"        = var.app_name
     "app.kubernetes.io/managed-by" = "terraform"
     "app.kubernetes.io/owner"      = var.owner
   }
 
-  local_host_root = var.is_cloud ? null : {
-    # This needs to be set to false if deploying on docker-desktop cluster on windows
-    prometheus-node-exporter = {
-      hostRootFsMount = {
-        enabled = false
-      }
-    }
-  }
+  # local_host_root = var.is_cloud ? null : {
+  #   # This needs to be set to false if deploying on docker-desktop cluster on windows
+  #   prometheus-node-exporter = {
+  #     hostRootFsMount = {
+  #       enabled = false
+  #     }
+  #   }
+  # }
 
   global_configs = {
     commonLabels = {
@@ -69,14 +68,15 @@ locals {
           jsonData = {
             tlsSkipVerify = true
           }
-        },
-        {
-          name      = "loki"
-          type      = "loki"
-          url       = "http://${local.loki_app_name}.${kubernetes_namespace_v1.kube_prom_ns.metadata.0.name}:${local.loki_port}/"
-          access    = "proxy"
-          isdefault = false
         }
+        # ,
+        #   {
+        #     name      = "loki"
+        #     type      = "loki"
+        #     url       = "http://${local.loki_app_name}.${kubernetes_namespace_v1.kube_prom_ns.metadata.0.name}:${local.loki_port}/"
+        #     access    = "proxy"
+        #     isdefault = false
+        #   }
       ]
 
       "grafana.ini" = {
@@ -138,7 +138,7 @@ locals {
       merge(
         local.global_configs,
         local.grafana_configs,
-        local.local_host_root,
+        # local.local_host_root,
         local.prometheus_configs
       )
     )
@@ -159,7 +159,7 @@ resource "helm_release" "kube_prom_stack" {
 
 resource "kubernetes_namespace_v1" "kube_prom_ns" {
   metadata {
-    name   = local.kube_name
+    name   = var.app_name
     labels = local.labels
   }
 }

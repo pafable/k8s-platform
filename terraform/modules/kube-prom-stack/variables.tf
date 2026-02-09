@@ -7,7 +7,7 @@ variable "app_name" {
 variable "chart_version" {
   description = "The version of the Helm chart to install"
   type        = string
-  default     = "70.2.1"
+  default     = "81.5.2"
 }
 
 variable "domain" {
@@ -25,17 +25,17 @@ variable "grafana_image_repo" {
 variable "grafana_image_tag" {
   description = "Grafana image tag"
   type        = string
-  default     = "11.5.2"
+  default     = "12.4.0-21693836646"
 }
 
-variable "ingress_name" {
-  description = "Ingress to use"
-  type        = string
-  default     = "nginx"
-}
+# variable "ingress_name" {
+#   description = "Ingress to use"
+#   type        = string
+#   default     = "nginx"
+# }
 
 variable "is_cloud" {
-  description = "Whether the cluster is local"
+  description = "check if the cluster is hosted locally (ie. talos, k3s) or in the cloud"
   type        = bool
   default     = true
 }
@@ -49,7 +49,7 @@ variable "is_docker_desktop" {
 variable "loki_helm_chart_version" {
   description = "helm chart version"
   type        = string
-  default     = "2.10.2"
+  default     = "6.52.0"
 }
 
 variable "loki_helm_repo" {
