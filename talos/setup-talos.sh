@@ -17,6 +17,11 @@ WORKER_NODE2=$4
 WORKER_NODE3=$5
 SEC=60
 
+## Delete contents of CONFIG_DIR. Uncomment this when you're recreating the cluster
+#if [[ -d "${CONFIG_DIR}" ]]; then
+#  find "${CONFIG_DIR}" -mindepth 1 -delete
+#fi
+
 # create talos secrets
 talosctl gen secrets -o "${CONFIG_DIR}/secrets.yaml" --force
 
