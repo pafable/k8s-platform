@@ -24,10 +24,14 @@
 # }
 
 # module "kube_prom_stack" {
-#   source       = "../modules/kube-prom-stack"
-#   ingress_name = var.ingress
-#   is_cloud     = false
+#   source   = "../modules/kube-prom-stack"
+#   is_cloud = false
 # }
+
+module "kube_prom" {
+  source = "../modules/kube-prom"
+  domain = var.domain
+}
 
 # module "postgresql_db_01" {
 #   source       = "../modules/postgresql"

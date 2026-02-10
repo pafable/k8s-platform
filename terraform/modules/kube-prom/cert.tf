@@ -10,7 +10,7 @@ resource "kubernetes_manifest" "cert" {
     }
 
     spec = {
-      commonName = local.prom_domain
+      commonName = "prom.home.pafable.com"
 
       dnsNames = [
         "grafana.home.pafable.com",
@@ -21,7 +21,10 @@ resource "kubernetes_manifest" "cert" {
 
       isCA = true
 
-      issuerRef = local.issuer
+      issuerRef = {
+        name = var.cluster_issuer
+        kind = "ClusterIssuer"
+      }
 
       privateKey = {
         algorithm = "ECDSA"

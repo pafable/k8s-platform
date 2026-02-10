@@ -14,6 +14,10 @@ module "grafana_version" {
   source = "../modules/versions/grafana"
 }
 
+module "kubernetes_version" {
+  source = "../modules/versions/kubernetes"
+}
+
 provider "aws" {
   # this provider is used to upload and fetch ssm params in us-east-1
   alias  = "parameters"
@@ -21,7 +25,7 @@ provider "aws" {
 }
 
 provider "helm" {
-  kubernetes {
+  kubernetes = {
     config_path    = var.config_path
     config_context = var.config_context
   }
@@ -34,10 +38,6 @@ module "helm_version" {
 provider "kubernetes" {
   config_path    = var.config_path
   config_context = var.config_context
-}
-
-module "kubernetes_version" {
-  source = "../modules/versions/kubernetes"
 }
 
 module "random_version" {

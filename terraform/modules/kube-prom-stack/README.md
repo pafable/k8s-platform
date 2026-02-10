@@ -1,4 +1,7 @@
-## Kube Prometheus Stack
+## Kube Prometheus Stack - DO NOT USE THIS
+
+Please use `kube-prom`. This is being kept as an archive of previous work
+
 Docs: https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
 
 ## Deploy Grafana Loki
