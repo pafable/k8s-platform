@@ -70,12 +70,12 @@ resource "kubernetes_manifest" "prometheus_http_route" {
       parentRefs = [
         {
           kind        = "Gateway"
-          name        = kubernetes_manifest.grafana_gateway.manifest.metadata.name
+          name        = kubernetes_manifest.prometheus_gateway.manifest.metadata.name
           sectionName = "http"
         },
         {
           kind        = "Gateway"
-          name        = kubernetes_manifest.grafana_gateway.manifest.metadata.name
+          name        = kubernetes_manifest.prometheus_gateway.manifest.metadata.name
           sectionName = "https"
         }
       ]
@@ -88,8 +88,8 @@ resource "kubernetes_manifest" "prometheus_http_route" {
         {
           backendRefs = [
             {
-              name = "kube-prometheus-stack-prometheus"
-              port = 9090
+              name   = "kube-prometheus-stack-prometheus"
+              port   = 9090
               weight = 100
             }
           ]
