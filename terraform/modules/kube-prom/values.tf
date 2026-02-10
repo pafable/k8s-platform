@@ -1,7 +1,7 @@
 locals {
   node_exporter_config = {
     nodeExporter = {
-      enabled = local.enable_node_exporter
+      enabled = local.enable_node_exporter # this must be set to false for talos
     }
   }
 
@@ -12,7 +12,7 @@ locals {
         userKey        = "username"
         passwordKey    = "password"
       }
-      assertNoLeakedSecrets = false
+      assertNoLeakedSecrets = false # this is needed for custom creds
     }
   }
 
