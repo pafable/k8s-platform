@@ -64,6 +64,7 @@ resource "kubernetes_manifest" "prometheus_http_route" {
     metadata = {
       name      = "prometheus-http-route"
       namespace = kubernetes_namespace_v1.kube_prom_ns.metadata.0.name
+      labels    = local.labels
     }
 
     spec = {
