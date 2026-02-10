@@ -6,14 +6,6 @@ locals {
     "app.kubernetes.io/managed-by" = "terraform"
     "app.kubernetes.io/owner"      = var.owner
   }
-
-  values = [
-    yamlencode({
-      nodeExporter = {
-        enabled = local.enable_node_exporter
-      }
-    })
-  ]
 }
 
 resource "kubernetes_namespace_v1" "kube_prom_ns" {
@@ -34,4 +26,21 @@ resource "helm_release" "kube_prom_stack" {
   repository        = var.chart_repo
   values            = local.values
   version           = var.chart_version
+}
+
+resource "random_password" "grafana_admin_password" {
+  length = 30
+}
+
+resource "kubernetes_secret_v1" "grafana_admin_creds" {
+  metadata {
+    name      = "grafana-admin-creds"
+    namespace = kubernetes_namespace_v1.kube_prom_ns.metadata.0.name
+    labels    = local.labels
+  }
+
+  data = {
+    username = "${var.owner}-admin"
+    password = sensitive(random_password.grafana_admin_password.result)
+  }
 }

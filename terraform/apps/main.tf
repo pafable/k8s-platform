@@ -30,6 +30,7 @@
 
 module "kube_prom" {
   source = "../modules/kube-prom"
+  domain = var.domain
 }
 
 # module "postgresql_db_01" {

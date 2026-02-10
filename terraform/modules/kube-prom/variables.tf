@@ -22,6 +22,17 @@ variable "cluster_issuer" {
   default     = "self-signed-ca-cluster-issuer"
 }
 
+variable "domain" {
+  description = "Domain"
+  type        = string
+}
+
+variable "gateway_class_name" {
+  description = "Gateway class name"
+  type        = string
+  default     = "door"
+}
+
 variable "is_talos" {
   description = "Is the k8s cluster being deployed to talos"
   type        = bool
