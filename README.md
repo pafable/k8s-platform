@@ -20,7 +20,7 @@ This serves all the necessary apps to bootstrap a kubernetes cluster.
 ### Prerequisites
 You will need the following installed on your machine before deploying:
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- [K3S](https://k3s.io/)
+- [Talos](https://www.talos.dev/)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/)
 - [Kubernetes cluster](https://docs.docker.com/desktop/kubernetes/) created from Docker Desktop
 - [Packer](https://developer.hashicorp.com/packer/install?ajs_aid=e65b25ce-401d-4cf0-bb32-ebafbd96b908&product_intent=packer)
