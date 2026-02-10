@@ -1,4 +1,5 @@
 .env
+.htpasswd
 .idea
 .terraform*
 *.tfstate*
