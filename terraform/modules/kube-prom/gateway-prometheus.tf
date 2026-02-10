@@ -149,16 +149,3 @@ resource "kubernetes_manifest" "prometheus_basic_auth" {
     }
   }
 }
-
-resource "kubernetes_secret_v1" "prometheus_ui_secret" {
-  metadata {
-    name      = "prometheus-ui-auth"
-    namespace = kubernetes_namespace_v1.kube_prom_ns.metadata[0].name
-  }
-
-  data = {
-    ".htpasswd" = file("${path.module}/.htpasswd")
-  }
-
-  type = "Opaque"
-}
