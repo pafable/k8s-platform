@@ -1,0 +1,37 @@
+locals {
+  enable_node_exporter = var.is_talos ? false : true
+
+  labels = {
+    "app.kubernetes.io/app"        = var.app_name
+    "app.kubernetes.io/managed-by" = "terraform"
+    "app.kubernetes.io/owner"      = var.owner
+  }
+
+  values = [
+    yamlencode({
+      nodeExporter = {
+        enabled = local.enable_node_exporter
+      }
+    })
+  ]
+}
+
+resource "kubernetes_namespace_v1" "kube_prom_ns" {
+  metadata {
+    name   = "monitoring"
+    labels = local.labels
+  }
+}
+
+resource "helm_release" "kube_prom_stack" {
+  chart             = var.app_name
+  cleanup_on_fail   = true
+  create_namespace  = false
+  dependency_update = true
+  force_update      = true
+  name              = var.app_name
+  namespace         = kubernetes_namespace_v1.kube_prom_ns.metadata.0.name
+  repository        = var.chart_repo
+  values            = local.values
+  version           = var.chart_version
+}
