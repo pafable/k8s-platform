@@ -157,7 +157,7 @@ resource "kubernetes_secret_v1" "prometheus_ui_secret" {
   }
 
   data = {
-    auth = filebase64("${path.module}/.htpasswd")
+    ".htpasswd" = file("${path.module}/.htpasswd")
   }
 
   type = "Opaque"
