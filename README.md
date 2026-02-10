@@ -1,7 +1,7 @@
 # K8S Platform
 ___
 
-This serves all the necessary apps to bootstrap a kubernetes cluster. At the moment this will only deploy to a local k8s cluster running on Docker Desktop.
+This serves all the necessary apps to bootstrap a kubernetes cluster.
 
 ### Apps to be deployed onto a cluster
 1. [Argo CD](https://argo-cd.readthedocs.io/en/stable/)
@@ -15,7 +15,7 @@ This serves all the necessary apps to bootstrap a kubernetes cluster. At the mom
 9. [Trivy Operator](https://github.com/aquasecurity/trivy-operator)
 10. [Jenkins](https://github.com/jenkinsci/helm-charts)
 11. [Vault](https://developer.hashicorp.com/vault/docs/platform/k8s/helm)
-12. [Ingress Nginx](https://kubernetes.github.io/ingress-nginx/)
+12. [Envoy Gateway](https://gateway.envoyproxy.io/)
 
 ### Prerequisites
 You will need the following installed on your machine before deploying:
