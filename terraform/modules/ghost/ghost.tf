@@ -1,5 +1,5 @@
 locals {
-  domain_name         = "ghost.pafable.com"
+  domain_name         = "ghost.home.pafable.com"
   exposed_port        = 80
   owner               = "devops"
   self_signed_ca_name = "self-signed-cluster-ca-issuer"
@@ -97,8 +97,7 @@ resource "kubernetes_service_v1" "ghost_service" {
       var.app_version
     )
 
-    type         = "LoadBalancer"
-    external_ips = var.controller_ips
+    type = "ClusterIP"
 
     port {
       name        = local.ghost_app

@@ -43,13 +43,13 @@ module "kube_prom" {
 #   source = "../../modules/eck"
 # }
 
-# module "ghost_1" {
-#   source    = "../../modules/ghost"
-#   app_name  = "ghost-1"
-#   namespace = "ghost-1"
-#   replicas  = 5
-# }
-#
+module "ghost_1" {
+  source    = "../modules/ghost"
+  app_name  = "ghost-app-1"
+  namespace = "ghost-1"
+  replicas  = 5
+}
+
 # module "ghost_2" {
 #   source      = "../../modules/ghost"
 #   app_name    = "ghost-2"

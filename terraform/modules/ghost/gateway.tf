@@ -39,7 +39,9 @@ resource "kubernetes_manifest" "ghost_http_route" {
     spec = {
       parentRefs = [
         {
-          name = "door"
+          kind        = "Gateway"
+          name        = kubernetes_manifest.ghost_gateway.manifest.metadata.name
+          sectionName = "http"
         }
       ]
 
@@ -51,12 +53,9 @@ resource "kubernetes_manifest" "ghost_http_route" {
         {
           backendRefs = [
             {
-              group = ""
-              kind  = "Service"
-              # name   = kubernetes_service_v1.ghost_service.metadata[0].name
-              name   = "ghost-svc"
-              port   = 80
-              weight = 10
+
+              name = kubernetes_service_v1.ghost_service.metadata[0].name
+              port = 80
             }
           ]
         },
