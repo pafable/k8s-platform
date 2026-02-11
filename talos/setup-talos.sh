@@ -2,7 +2,8 @@
 
 set -euo pipefail
 
-
+CP=$(which cp)
+KUBE_DIR=${HOME}/.kube
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 CONFIG_DIR="${SCRIPT_DIR}/config"
 PATCH_DIR="${SCRIPT_DIR}/patches"
@@ -141,3 +142,8 @@ kubectl get nodes \
 
 
 echo -e "\nKubernetes cluster is up and running!"
+
+# add kubeconfig in .kube dir
+if [[ -d ${KUBE_DIR} ]]; then
+	${CP} "${CONFIG_DIR}"/kubeconfig "${KUBE_DIR}"/config
+fi
