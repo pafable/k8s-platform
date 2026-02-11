@@ -16,6 +16,7 @@ This serves all the necessary apps to bootstrap a kubernetes cluster.
 10. [Jenkins](https://github.com/jenkinsci/helm-charts)
 11. [Vault](https://developer.hashicorp.com/vault/docs/platform/k8s/helm)
 12. [Envoy Gateway](https://gateway.envoyproxy.io/)
+13. [MetalLB](https://metallb.io/)
 
 ### Prerequisites
 You will need the following installed on your machine before deploying:

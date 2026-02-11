@@ -29,5 +29,4 @@ resource "helm_release" "metal_lb" {
   namespace        = kubernetes_namespace_v1.metal_lb_ns.metadata[0].name
   repository       = local.repo
   version          = var.metallb_version
-  wait             = false
 }
