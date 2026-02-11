@@ -6,7 +6,7 @@ locals {
 
   # Ghost params
   ghost_app   = "ghost"
-  ghost_image = "ghost:6.10.3"
+  ghost_image = "ghost:6.17.2"
   ghost_port  = 2368
 
   labels = {
