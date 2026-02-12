@@ -15,6 +15,10 @@ locals {
         enabled = true
         keep    = false
       }
+
+      config = {
+        enabledGatewayAPI = true
+      }
     })
   ]
 }
