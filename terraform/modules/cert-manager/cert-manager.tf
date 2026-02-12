@@ -16,9 +16,9 @@ locals {
         keep    = false
       }
 
-      config = {
-        enabledGatewayAPI = true
-      }
+      # config = {
+      #   enabledGatewayAPI = true
+      # }
     })
   ]
 }
@@ -34,6 +34,7 @@ resource "helm_release" "cert_manager" {
   chart             = local.chart_name
   create_namespace  = false
   dependency_update = true
+  force_update      = true
   name              = local.app_name
   namespace         = kubernetes_namespace_v1.cert_manager_ns.metadata[0].name
   repository        = local.repo
