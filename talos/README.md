@@ -2,6 +2,8 @@
 
 This will deploy a kubernetes cluster using Talos Linux.
 
+Install [talosctl](https://docs.siderolabs.com/talos/v1.12/getting-started/talosctl) onto your machine.
+
 Deploys a 5 node cluster with 2 controlplane and 3 worker nodes. You will need to have `talosctl` and `kubectl` installed on your workstation.
 You will also need `sops` and `age` to encrypt talos configuration files.b
 

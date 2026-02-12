@@ -2,6 +2,7 @@
 
 set -euxo pipefail
 
+TC=$(which talosctl)
 CP=$(which cp)
 KUBE_DIR=${HOME}/.kube
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
@@ -24,11 +25,11 @@ if [[ -d "${CONFIG_DIR}" ]]; then
 fi
 
 # create talos secrets
-talosctl gen secrets -o "${CONFIG_DIR}/secrets.yaml" --force
+${TC} gen secrets -o "${CONFIG_DIR}/secrets.yaml" --force
 
 
 # create talos machine configs
-talosctl gen config "${CLUSTER_NAME}" \
+${TC} gen config "${CLUSTER_NAME}" \
     https://"${CONTROL_PLANE1}":6443 \
     --output-dir "${CONFIG_DIR}" \
     --config-patch @"${PATCH_DIR}"/ntp.yaml \
@@ -52,7 +53,7 @@ for controlplane in "${controlplane_ips[@]}"; do
       ;;
   esac
 
-  talosctl apply-config \
+  ${TC} apply-config \
     --insecure \
     --nodes "${controlplane}" \
     --file "${CONFIG_DIR}/controlplane.yaml" \
@@ -79,7 +80,7 @@ for worker in "${worker_ips[@]}"; do
       ;;
   esac
 
-  talosctl apply-config \
+  ${TC} apply-config \
     --insecure \
     --nodes "${worker}" \
     --file "${CONFIG_DIR}/worker.yaml" \
@@ -89,7 +90,7 @@ done
 
 
 # configure talos endpoint
-talosctl config endpoint "${CONTROL_PLANE1}" \
+${TC} config endpoint "${CONTROL_PLANE1}" \
   --talosconfig "${CONFIG_DIR}"/talosconfig
 
 
@@ -99,17 +100,17 @@ sleep ${DELAY} # need to wait for controlplane to be ready
 
 
 # get talos members
-talosctl get members --nodes "${CONTROL_PLANE1}" \
+${TC} get members --nodes "${CONTROL_PLANE1}" \
   --talosconfig "${CONFIG_DIR}"/talosconfig
 
 
 # bootstrap cluster
-talosctl bootstrap --nodes "${CONTROL_PLANE1}" \
+${TC} bootstrap --nodes "${CONTROL_PLANE1}" \
   --talosconfig "${CONFIG_DIR}"/talosconfig
 
 
 # get kubeconfig
-talosctl kubeconfig \
+${TC} kubeconfig \
   --nodes "${CONTROL_PLANE1}" \
   "${CONFIG_DIR}" \
   --talosconfig "${CONFIG_DIR}"/talosconfig
@@ -120,7 +121,7 @@ sleep ${DELAY} # need to wait for all nodes to be ready
 
 
 # get all kubernetes resources
-kubectl get all \
+${TC} get all \
   --kubeconfig="${CONFIG_DIR}"/kubeconfig \
   -o wide \
   -A
@@ -131,7 +132,7 @@ sleep ${DELAY}
 
 
 # get nodes
-kubectl get nodes \
+${TC} get nodes \
   --kubeconfig="${CONFIG_DIR}"/kubeconfig
 
 
