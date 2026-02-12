@@ -16,6 +16,7 @@ locals {
         keep    = false
       }
 
+      ## as of 2/12/2026 this still fails
       # config = {
       #   enabledGatewayAPI = true
       # }
