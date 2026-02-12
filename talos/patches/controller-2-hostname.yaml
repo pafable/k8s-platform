@@ -1,4 +1,4 @@
----
-machine:
-  network:
-    hostname: controller-02
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: controller-02
+auto: off

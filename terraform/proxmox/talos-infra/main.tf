@@ -105,7 +105,7 @@ resource "null_resource" "talos_script" {
         ${module.talos_worker_3.ipv4_address}
     EOT
 
-    interpreter = ["/bin/bash", "-c"]
+    interpreter = ["/bin/bash", "-cx"]
   }
 
   depends_on = [

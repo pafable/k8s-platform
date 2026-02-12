@@ -4,6 +4,8 @@ resource "aws_ssm_parameter" "controller1_ip" {
   type      = "String"
   value     = module.talos_controller_1.ipv4_address
   overwrite = true
+
+  depends_on = [module.talos_controller_1]
 }
 
 resource "aws_ssm_parameter" "controller2_ip" {
@@ -12,4 +14,6 @@ resource "aws_ssm_parameter" "controller2_ip" {
   type      = "String"
   value     = module.talos_controller_2.ipv4_address
   overwrite = true
+
+  depends_on = [module.talos_controller_2]
 }

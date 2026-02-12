@@ -1,4 +1,4 @@
----
-machine:
-  network:
-    hostname: worker-01
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: worker-01
+auto: off

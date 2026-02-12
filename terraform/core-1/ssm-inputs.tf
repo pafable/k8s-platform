@@ -48,17 +48,6 @@ data "aws_ssm_parameter" "kubeconfig_file" {
   name     = "/proxmox/k3s/kubeconfig"
 }
 
-data "aws_ssm_parameter" "controller1_ipv4" {
-  provider = aws.parameters
-  name     = "/proxmox/talos/controller1/ipv4"
-}
-
-data "aws_ssm_parameter" "controller2_ipv4" {
-  provider = aws.parameters
-  name     = "/proxmox/talos/controller2/ipv4"
-}
-
-
 data "aws_ssm_parameter" "packer_ssh_password" {
   provider = aws.parameters
   name     = "/packer/ssh/password"

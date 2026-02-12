@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -euxo pipefail
 
 CP=$(which cp)
 KUBE_DIR=${HOME}/.kube
@@ -8,7 +8,7 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 CONFIG_DIR="${SCRIPT_DIR}/config"
 PATCH_DIR="${SCRIPT_DIR}/patches"
 CLUSTER_NAME="talos-cluster"
-IMAGE="factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.11.5"
+IMAGE="factory.talos.dev/metal-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.12.3"
 
 # Node IPs
 CONTROL_PLANE1=$1
@@ -18,10 +18,10 @@ WORKER_NODE2=$4
 WORKER_NODE3=$5
 DELAY=60
 
-## Delete contents of CONFIG_DIR. Uncomment this when you're recreating the cluster
-#if [[ -d "${CONFIG_DIR}" ]]; then
-#  find "${CONFIG_DIR}" -mindepth 1 -delete
-#fi
+# Delete contents of CONFIG_DIR. Uncomment this when you're recreating the cluster
+if [[ -d "${CONFIG_DIR}" ]]; then
+  find "${CONFIG_DIR}" -mindepth 1 -delete
+fi
 
 # create talos secrets
 talosctl gen secrets -o "${CONFIG_DIR}/secrets.yaml" --force
@@ -40,21 +40,51 @@ talosctl gen config "${CLUSTER_NAME}" \
 
 # apply control plane config
 controlplane_ips=("${CONTROL_PLANE1}" "${CONTROL_PLANE2}")
-for contolplane in "${controlplane_ips[@]}"; do
+for controlplane in "${controlplane_ips[@]}"; do
+
+  case ${controlplane} in
+    "${CONTROL_PLANE1}")
+      PATCH_FILE="controller-1-hostname.yaml"
+      ;;
+
+    "${CONTROL_PLANE2}")
+      PATCH_FILE="controller-2-hostname.yaml"
+      ;;
+  esac
+
   talosctl apply-config \
     --insecure \
-    --nodes "${contolplane}" \
-    --file "${CONFIG_DIR}/controlplane.yaml"
+    --nodes "${controlplane}" \
+    --file "${CONFIG_DIR}/controlplane.yaml" \
+    --config-patch @"${PATCH_DIR}"/"${PATCH_FILE}" \
+    --mode reboot
 done
 
 
 # apply worker config
 worker_ips=("${WORKER_NODE1}" "${WORKER_NODE2}" "${WORKER_NODE3}")
 for worker in "${worker_ips[@]}"; do
+
+  case ${worker} in
+    "${WORKER_NODE1}")
+      PATCH_FILE="worker-1-hostname.yaml"
+      ;;
+
+    "${WORKER_NODE2}")
+      PATCH_FILE="worker-2-hostname.yaml"
+      ;;
+
+    "${WORKER_NODE3}")
+      PATCH_FILE="worker-3-hostname.yaml"
+      ;;
+  esac
+
   talosctl apply-config \
     --insecure \
     --nodes "${worker}" \
-    --file "${CONFIG_DIR}/worker.yaml"
+    --file "${CONFIG_DIR}/worker.yaml" \
+    --config-patch @"${PATCH_DIR}"/"${PATCH_FILE}" \
+    --mode reboot
 done
 
 
@@ -66,42 +96,6 @@ talosctl config endpoint "${CONTROL_PLANE1}" \
 # apply patches on controlpane nodes
 echo "Waiting ${DELAY} sec for nodes to be ready..."
 sleep ${DELAY} # need to wait for controlplane to be ready
-
-talosctl patch mc \
-  --talosconfig "${CONFIG_DIR}"/talosconfig \
-  --nodes "${CONTROL_PLANE1}" \
-  --mode reboot \
-  --patch @"${PATCH_DIR}"/controller-1-hostname.yaml
-
-talosctl patch mc \
-  --talosconfig "${CONFIG_DIR}"/talosconfig \
-  --nodes "${CONTROL_PLANE2}" \
-  --mode reboot \
-  --patch @"${PATCH_DIR}"/controller-2-hostname.yaml
-
-
-# apply patches on worker nodes
-talosctl patch mc \
-  --talosconfig "${CONFIG_DIR}"/talosconfig \
-  --mode reboot \
-  --nodes "${WORKER_NODE1}" \
-  --patch @"${PATCH_DIR}"/worker-1-hostname.yaml
-
-talosctl patch mc \
-  --talosconfig "${CONFIG_DIR}"/talosconfig \
-  --mode reboot \
-  --nodes "${WORKER_NODE2}" \
-  --patch @"${PATCH_DIR}"/worker-2-hostname.yaml
-
-talosctl patch mc \
-  --talosconfig "${CONFIG_DIR}"/talosconfig \
-  --mode reboot \
-  --nodes "${WORKER_NODE3}" \
-  --patch @"${PATCH_DIR}"/worker-3-hostname.yaml
-
-
-echo "Waiting ${DELAY} sec for nodes to reboot..."
-sleep ${DELAY} # need to wait for all nodes to be ready
 
 
 # get talos members

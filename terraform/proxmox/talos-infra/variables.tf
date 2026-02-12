@@ -1,7 +1,7 @@
 variable "iso" {
   description = "ISO"
   type        = string
-  default     = "local:iso/talos-linux-qemu-metal-amd64.iso"
+  default     = "local:iso/talos-linux-v1-12-3-metal-amd64.iso"
 }
 
 variable "node" {
