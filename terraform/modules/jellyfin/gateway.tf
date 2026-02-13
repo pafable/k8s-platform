@@ -15,6 +15,7 @@ resource "kubernetes_manifest" "jellyfin_gateway" {
 
     spec = {
       gatewayClassName = var.gateway_class_name
+
       infrastructure = {
         labels = {
           app = var.namespace
