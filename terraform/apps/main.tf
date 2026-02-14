@@ -1,8 +1,7 @@
-# module "argocd" {
-#   source   = "../modules/argocd"
-#   app_repo = "https://github.com/pafable/argo-examples"
-#   domain   = var.domain
-# }
+module "argocd" {
+  source   = "../modules/argocd"
+  app_repo = "https://github.com/pafable/argo-examples"
+}
 
 # module "chaos_mesh" {
 #   source                        = "../../modules/chaos-mesh"

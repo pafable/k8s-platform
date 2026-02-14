@@ -3,5 +3,7 @@
 # }
 
 output "apps_ips" {
-  value = module.output_ssm.parameters
+  value = {
+    for k, v in module.output_ssm.parameters : k => { ip = v.value }
+  }
 }

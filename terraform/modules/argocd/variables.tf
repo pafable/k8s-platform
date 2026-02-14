@@ -1,7 +1,7 @@
 variable "argocd_version" {
   description = "ArgoCD helm version"
   type        = string
-  default     = "7.3.6"
+  default     = "9.4.2"
 }
 
 variable "app_repo" {
@@ -12,7 +12,13 @@ variable "app_repo" {
 variable "domain" {
   description = "Domain"
   type        = string
-  default     = "local"
+  default     = "home.pafable.com"
+}
+
+variable "gateway_class_name" {
+  description = "Gateway class name"
+  type        = string
+  default     = "door"
 }
 
 variable "ingress_name" {
