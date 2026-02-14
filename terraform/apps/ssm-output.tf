@@ -1,29 +1,26 @@
-resource "aws_ssm_parameter" "jellyfin_ip" {
-  provider  = aws.parameters
-  name      = "/apps/jellyfin/service/ip"
-  type      = "String"
-  value     = module.jellyfin.exposed_ip
-  overwrite = true
+module "output_ssm" {
+  source = "../modules/ssm-writer"
 
-  depends_on = [module.jellyfin]
-}
+  parameters = [
+    {
+      description = "Jellyfin Loadbalancer IP"
+      name        = "/apps/jellyfin/loadbalancer/ip"
+      value       = module.jellyfin.exposed_ip
+    },
+    {
+      description = "Grafana Loadbalancer IP"
+      name        = "/apps/grafana/loadbalancer/ip"
+      value       = module.kube_prom.exposed_grafana_ip
+    },
+    {
+      description = "Prometheus Loadbalancer IP"
+      name        = "/apps/prometheus/loadbalancer/ip"
+      value       = module.kube_prom.exposed_prometheus_ip
+    }
+  ]
 
-resource "aws_ssm_parameter" "grafana_ip" {
-  provider  = aws.parameters
-  name      = "/apps/grafana/service/ip"
-  type      = "String"
-  value     = module.kube_prom.exposed_grafana_ip
-  overwrite = true
-
-  depends_on = [module.kube_prom]
-}
-
-resource "aws_ssm_parameter" "prometheus_ip" {
-  provider  = aws.parameters
-  name      = "/apps/prometheus/service/ip"
-  type      = "String"
-  value     = module.kube_prom.exposed_prometheus_ip
-  overwrite = true
-
-  depends_on = [module.kube_prom]
+  depends_on = [
+    module.jellyfin,
+    module.kube_prom
+  ]
 }
