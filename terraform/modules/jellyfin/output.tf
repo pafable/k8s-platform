@@ -3,6 +3,8 @@ data "kubernetes_resources" "exposed_gateway_svcs" {
   kind           = "Service"
   namespace      = "envoy-gateway-system"
   label_selector = "app=jellyfin"
+
+  depends_on = [kubernetes_service_v1.jellyfin_service]
 }
 
 output "exposed_ip" {
