@@ -9,6 +9,7 @@ metadata:
     app.kubernetes.io/name: ghost
     app.kubernetes.io/managed-by: terraform
     app.kubernetes.io/owner: devops
+    hello: world
     version: blue
 
 ---

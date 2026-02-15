@@ -9,4 +9,6 @@ data "kubernetes_resources" "exposed_gateway_svcs" {
 
 output "exposed_ip" {
   value = data.kubernetes_resources.exposed_gateway_svcs.objects[0].status.loadBalancer.ingress[0].ip
+
+  depends_on = [helm_release.argodcd]
 }
