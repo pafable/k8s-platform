@@ -65,7 +65,7 @@ metadata:
     app.kubernetes.io/owner: devops
     version: blue
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       jobLabel: nginx
