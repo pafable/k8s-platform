@@ -2,7 +2,7 @@ locals {
   issuer = "self-signed-ca-cluster-issuer"
 }
 
-resource "kubernetes_manifest" "argocd_cert" {
+resource "kubernetes_manifest" "argo_cert" {
   manifest = {
     apiVersion = "cert-manager.io/v1"
     kind       = "Certificate"

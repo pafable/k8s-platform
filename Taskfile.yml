@@ -901,7 +901,6 @@ tasks:
     desc: Create Core Terraform
     cmds:
       - task: core-1-create
-      - task: core-1-create # deploys cluster issuer
       - task: core-2-create
 
   core-destroy:

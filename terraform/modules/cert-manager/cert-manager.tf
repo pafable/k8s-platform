@@ -32,6 +32,7 @@ resource "kubernetes_namespace_v1" "cert_manager_ns" {
 
 resource "helm_release" "cert_manager" {
   chart             = local.chart_name
+  cleanup_on_fail   = true
   create_namespace  = false
   dependency_update = true
   force_update      = true

@@ -7,7 +7,6 @@ This serves all the necessary apps to bootstrap a kubernetes cluster.
 1. [Argo CD](https://argo-cd.readthedocs.io/en/stable/)
 2. [Cert Manager](https://cert-manager.io/)
 3. [Chaos Mesh](https://chaos-mesh.org/)
-4. [Kong Ingress Controller](https://docs.konghq.com/kubernetes-ingress-controller/latest/)
 5. [Kube-Prometheus-Stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack)
 6. [Metric Server](https://github.com/kubernetes-sigs/metrics-server)
 7. [Postgresql](https://github.com/bitnami/charts/tree/main/bitnami/postgresql)

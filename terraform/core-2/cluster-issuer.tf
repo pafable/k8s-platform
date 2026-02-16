@@ -1,10 +1,4 @@
-## Cert manager helm chart needs to be installed before creating the issuer
-## Because the issuer is a CRD
-## Comment out this line on initial deployment to new kubernetes clusters
-## Then uncomment it after the first deployment
 resource "kubernetes_manifest" "self_signed_cluster_issuer" {
-  count = local.install_count
-
   manifest = {
     apiVersion = "cert-manager.io/v1"
     kind       = "ClusterIssuer"
@@ -26,24 +20,19 @@ resource "kubernetes_manifest" "self_signed_cluster_issuer" {
       # self = {}
     }
   }
-
-  depends_on = [
-    helm_release.cert_manager,
-    kubernetes_secret_v1.ca_secret
-  ]
 }
 
 resource "kubernetes_secret_v1" "ca_secret" {
   metadata {
     name      = "self-signed-ca-secret"
-    namespace = kubernetes_namespace_v1.cert_manager_ns.metadata[0].name
+    namespace = "cert-manager"
   }
 
   data = {
     # DO NOT encode in base64.
     # these will automatically be encoded in base64.
-    "tls.crt" = base64decode(var.ca_cert)
-    "tls.key" = base64decode(var.ca_key)
+    "tls.crt" = base64decode(data.aws_ssm_parameter.ca_cert.value)
+    "tls.key" = base64decode(data.aws_ssm_parameter.ca_private_key.value)
   }
 
   type = "kubernetes.io/tls"
