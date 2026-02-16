@@ -7,6 +7,7 @@ variable "argocd_version" {
 variable "app_repo" {
   description = "ArgoCD app repo"
   type        = string
+  default     = "https://github.com/pafable/k8s-platform.git"
 }
 
 variable "domain" {

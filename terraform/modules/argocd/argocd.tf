@@ -22,9 +22,13 @@ locals {
         }
 
         repositories = {
-          app-repo = { # use "-" instead of "_"
-            name = "main-repo"
+          github-k8s-platform = { # use "-" instead of "_"
+            name = "github-k8s-platform"
             url  = var.app_repo
+          },
+          gitlab-k8s-platform = {
+            name = "gitlab-k8s-platform"
+            url  = "https://gitlab.com/pafable/k8s-platform.git"
           }
         }
       }

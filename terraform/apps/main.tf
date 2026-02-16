@@ -1,6 +1,5 @@
 module "argocd" {
-  source   = "../modules/argocd"
-  app_repo = "https://github.com/pafable/argo-examples"
+  source = "../modules/argocd"
 }
 
 # module "chaos_mesh" {
