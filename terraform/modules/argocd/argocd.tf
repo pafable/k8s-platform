@@ -17,6 +17,11 @@ locals {
   values = [
     yamlencode({
       configs = {
+        cm = {
+          "statusbadge.enabled"    = true
+          "timeout.reconciliation" = "120s"
+        }
+
         params = {
           "server.insecure" = true # tls is being applied on the ingress so setting insecure to true is fine
         }
