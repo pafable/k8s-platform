@@ -8,7 +8,9 @@ test-script:
   tags:
     - rocko2
   script:
-    - echo sleeping 30s
-    - sleep 10
+    - echo sleeping $DELAY secs
+    - sleep $DELAY
     - sh ./runner-test.sh
     - docker pull nginx:latest
+  variables:
+    DELAY: 10
