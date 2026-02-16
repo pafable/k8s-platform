@@ -11,3 +11,4 @@ test-script:
     - echo sleeping 30s
     - sleep 30
     - sh ./runner-test.sh
+    - docker pull nginx:latest
