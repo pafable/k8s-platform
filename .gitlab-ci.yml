@@ -8,4 +8,6 @@ test-script:
   tags:
     - rocko2
   script:
+    - echo sleeping 30s
+    - sleep 30
     - sh ./runner-test.sh
