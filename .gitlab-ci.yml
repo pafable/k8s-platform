@@ -1,0 +1,11 @@
+stages:
+  - test
+  - build
+  - deploy
+
+test-script:
+  stage: test
+  tags:
+    - rocko2
+  script:
+    - sh ./runner-test.sh
