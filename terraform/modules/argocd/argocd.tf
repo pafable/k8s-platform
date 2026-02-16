@@ -23,8 +23,9 @@ locals {
 
         repositories = {
           github-k8s-platform = { # use "-" instead of "_"
-            name = "github-k8s-platform"
-            url  = var.app_repo
+            name    = "github-k8s-platform"
+            project = "default"
+            url     = var.app_repo
           },
           gitlab-k8s-platform = {
             name = "gitlab-k8s-platform"
