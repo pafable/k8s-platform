@@ -1,0 +1,24 @@
+ARG VERSION=9.3
+FROM rockylinux:$VERSION
+ARG TF_VERSION=1.14.5
+
+RUN dnf up -y
+
+RUN dnf install --refresh -y \
+    git \
+    unzip
+
+# Install taskfile
+RUN sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
+
+# Installs kubectl
+RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
+    && install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+# Installs terraform
+RUN curl -LO https://releases.hashicorp.com/terraform/1.14.5/terraform_${TF_VERSION}_linux_amd64.zip
+RUN unzip terraform_${TF_VERSION}_linux_amd64.zip \
+    && rm -f LICENSE.txt terraform_${TF_VERSION}_linux_amd64.zip \
+    && mv terraform /usr/local/bin/
+
+

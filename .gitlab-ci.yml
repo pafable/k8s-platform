@@ -19,7 +19,7 @@ build:
   tags:
     - rocko2
   image:
-    name: bitnami/kubectl:latest
+    name: pafable-test-builder:0.0.1
     pull_policy: if-not-present
     entrypoint: [""]
   script:
@@ -32,5 +32,8 @@ build:
     - chmod 600 /.kube/config
     - kubectl get nodes
     - cat $TFVARS_FILE
+    - terraform version
+    - task --version
+    - kubectl version
   variables:
     TFVARS_FILE: "vars.tfvars"
