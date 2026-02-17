@@ -37,5 +37,5 @@ deploy:
 #    - cp $TFVARS_FILE terraform/core-2/
     - task apps-create
   variables:
-    TFVARS_FILE: "vars.tfvars"
+    TFVARS_FILE: "terraform.tfvars"
     FF_ENABLE_JOB_CLEANUP: "true"

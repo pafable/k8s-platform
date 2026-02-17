@@ -260,7 +260,6 @@ tasks:
           rm -f tfplan*
       - |
         terraform plan \
-          -var-file vars.tfvars \
           -out=tfplan \
           -no-color
       - terraform apply tfplan -no-color
@@ -276,7 +275,6 @@ tasks:
           rm -f tfplan*
       - | 
         terraform plan \
-          -var-file vars.tfvars \
           -out=tfplan.destroy \
           -destroy \
           -no-color
@@ -818,7 +816,6 @@ tasks:
           rm -f tfplan*
       - |
         terraform plan \
-          -var-file=vars.tfvars \
           -out=tfplan \
           -no-color
       - terraform apply tfplan -no-color
@@ -834,7 +831,6 @@ tasks:
           rm -f tfplan*
       - |
         terraform plan \
-          -var-file=vars.tfvars \
           -out=tfplan.destroy \
           -destroy \
           -no-color
@@ -874,7 +870,6 @@ tasks:
           rm -f tfplan*
       - |
         terraform plan \
-          -var-file=vars.tfvars \
           -out=tfplan \
           -no-color
       - terraform apply tfplan -no-color
@@ -890,7 +885,6 @@ tasks:
           rm -f tfplan*
       - |
         terraform plan \
-          -var-file=vars.tfvars \
           -out=tfplan.destroy \
           -destroy \
           -no-color
