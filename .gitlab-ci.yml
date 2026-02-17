@@ -37,5 +37,6 @@ build:
     - pwd
     - pwd ~
     - $(which ls) -ahl
+    - sleep 60m
   variables:
     TFVARS_FILE: "vars.tfvars"
