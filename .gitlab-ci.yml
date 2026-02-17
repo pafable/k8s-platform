@@ -11,9 +11,14 @@ test-script:
     - echo sleeping $DELAY secs
     - sleep $DELAY
     - sh ./runner-test.sh
-    - docker pull nginx:latest
+  variables:
+    DELAY: 10
+
+kubernetes-test:
+  stage: build
+  image:
+    name: bitnami/kubectl:latest
+  script:
     - echo "$KUBECONFIG_BASE64" | base64 -d > ~/.kube/config
     - chmod 600 ~/.kube/config
     - kubectl get pods
-  variables:
-    DELAY: 10
