@@ -29,6 +29,7 @@ deploy:
     - echo "config_path = \"$TF_ENV_config_path\"" >> $TFVARS_FILE
     - echo "config_context = \"admin@talos-cluster\"" >> $TFVARS_FILE
     - chmod 600 ~/.kube/config
+    - htpasswd -bcs terraform/modules/kube-prom/.htpasswd $PROM_AUTH_USER PROM_AUTH_PASS
     - cat $TFVARS_FILE
     - kubectl get nodes
     - cp $TFVARS_FILE terraform/apps/

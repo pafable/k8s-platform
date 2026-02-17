@@ -6,13 +6,14 @@ RUN dnf up -y
 
 RUN dnf install --refresh -y \
     git \
+    httpd-tools \
     unzip
 
 # Install Awscli v2
 RUN curl -LO "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" \
     && unzip awscli-exe-linux-x86_64.zip \
     && sh ./aws/install \
-    && rm -rf aws
+    && rm -rf aws*
 
 # Install taskfile
 RUN sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
