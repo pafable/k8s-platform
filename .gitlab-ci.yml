@@ -21,6 +21,6 @@ kubernetes-test:
     pull_policy: always
   script:
     - mkdir -p ~/.kube
-    - echo "$KUBECONFIG_BASE64" | base64 -d > ~/.kube/config
+    - echo $KUBECONFIG_BASE64 | base64 -d > ~/.kube/config
     - chmod 600 ~/.kube/config
     - kubectl get nodes
