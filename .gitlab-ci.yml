@@ -28,7 +28,7 @@ build:
     - export TF_ENV_config_path="$HOME/.kube/config"
     - export TF_ENV_config_context="admin@talos-cluster"
     - echo "config_path = $TF_ENV_config_path" >> $TFVARS_FILE
-    - echo "config_context = admin@talos-cluster" $TFVARS_FILE
+    - echo "config_context = admin@talos-cluster" >> $TFVARS_FILE
     - chmod 600 ~/.kube/config
     - kubectl get nodes
     - cat $TFVARS_FILE
