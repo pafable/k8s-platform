@@ -35,6 +35,7 @@ build:
     - cat ~/.kube/config
     - env
     - pwd
+    - pwd ~
     - $(which ls) -ahl
   variables:
     TFVARS_FILE: "vars.tfvars"
