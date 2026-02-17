@@ -24,12 +24,12 @@ build:
     entrypoint: [""]
   script:
     - mkdir -p ~/.kube
-    - echo $KUBECONFIG_BASE64 | base64 -d > /.kube/config
-    - export TF_ENV_config_path="/.kube/config"
+    - echo $KUBECONFIG_BASE64 | base64 -d > ~/.kube/config
+    - export TF_ENV_config_path="//.kube/config"
     - export TF_ENV_config_context="admin@talos-cluster"
     - echo "config_path = $TF_ENV_config_path" >> $TFVARS_FILE
     - echo "config_context = admin@talos-cluster" >> $TFVARS_FILE
-    - chmod 600 /.kube/config
+    - chmod 600 ~/.kube/config
     - kubectl get nodes
     - cat $TFVARS_FILE
     - terraform version
