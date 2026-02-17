@@ -35,6 +35,7 @@ build:
     - terraform version
     - task --version
     - kubectl version
-    - task
+    - task || true
+    - ls -ahl --color=auto
   variables:
     TFVARS_FILE: "vars.tfvars"
