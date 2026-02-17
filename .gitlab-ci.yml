@@ -37,7 +37,6 @@ deploy:
     - cp $TFVARS_FILE terraform/core-1/
     - cp $TFVARS_FILE terraform/core-2/
     - task apps-create || true
-    - sleep 60m
   variables:
     TFVARS_FILE: "vars.tfvars"
     FF_ENABLE_JOB_CLEANUP: "true"
