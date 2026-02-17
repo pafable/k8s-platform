@@ -15,6 +15,7 @@ test-script:
     DELAY: 10
 
 build:
+  stage: build
   image:
     name: bitnami/kubectl:latest
     pull_policy: always
@@ -23,6 +24,7 @@ build:
     - mkdir -p ~/.kube
     - echo $KUBECONFIG_BASE64 | base64 -d > ~/.kube/config
     - chmod 600 ~/.kube/config
-    - ping -c 5 google.com
+    - ping -c 5 google.com ||
+    - sleep 86400
     - ping -c 5 10.0.50.177
 #    - kubectl get nodes
