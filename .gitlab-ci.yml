@@ -26,7 +26,4 @@ build:
     - mkdir -p ~/.kube
     - echo $KUBECONFIG_BASE64 | base64 -d > ~/.kube/config
     - chmod 600 ~/.kube/config
-    - ping -c 5 google.com ||
-    - sleep 86400
-    - ping -c 5 10.0.50.177
-#    - kubectl get nodes
+    - kubectl get nodes
