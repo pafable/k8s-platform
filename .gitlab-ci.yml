@@ -14,8 +14,7 @@ test-script:
   variables:
     DELAY: 10
 
-kubernetes-test:
-  stage: build
+build:
   image:
     name: bitnami/kubectl:latest
     pull_policy: always
