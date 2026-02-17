@@ -16,6 +16,8 @@ test-script:
 
 build:
   stage: build
+  tags:
+    - rocko2
   image:
     name: bitnami/kubectl:latest
     pull_policy: always
