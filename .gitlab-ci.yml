@@ -25,13 +25,16 @@ deploy:
     - mkdir -p ~/.kube
     - echo $KUBECONFIG_BASE64 | base64 -d > ~/.kube/config
     - cp ~/.kube/config $CI_PROJECT_DIR
-    - export TF_ENV_config_path="$CI_PROJECT_DIR/config"
-    - export TF_ENV_config_context="admin@talos-cluster"
-    - echo "config_path = \"$TF_ENV_config_path\"" >> $TFVARS_FILE
-    - echo "config_context = \"admin@talos-cluster\"" >> $TFVARS_FILE
+    - export TF_VAR_config_path="$CI_PROJECT_DIR/config"
+    - export TF_VAR_config_context="admin@talos-cluster"
+#    - echo "config_path = \"$TF_ENV_config_path\"" >> $TFVARS_FILE
+#    - echo "config_context = \"admin@talos-cluster\"" >> $TFVARS_FILE
     - chmod 600 ~/.kube/config
     - htpasswd -bcs terraform/modules/kube-prom/.htpasswd $PROM_UI_AUTH_USER $PROM_UI_AUTH_PASS
     - kubectl get nodes
+#    - cp $TFVARS_FILE terraform/apps/
+#    - cp $TFVARS_FILE terraform/core-1/
+#    - cp $TFVARS_FILE terraform/core-2/
     - task apps-create
   variables:
     TFVARS_FILE: "vars.tfvars"
