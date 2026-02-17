@@ -12,5 +12,8 @@ test-script:
     - sleep $DELAY
     - sh ./runner-test.sh
     - docker pull nginx:latest
+    - echo "$KUBECONFIG_BASE64" | base64 -d > ~/.kube/config
+    - chmod 600 ~/.kube/config
+    - kubectl get pods
   variables:
     DELAY: 10
