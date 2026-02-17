@@ -25,7 +25,7 @@ deploy:
     - mkdir -p ~/.kube
     - echo $KUBECONFIG_BASE64 | base64 -d > ~/.kube/config
     - cp ~/.kube/config $CI_PROJECT_DIR
-    - export TF_ENV_config_path="$CI_PROJECT_DIR/.kube/config"
+    - export TF_ENV_config_path="$CI_PROJECT_DIR/config"
     - export TF_ENV_config_context="admin@talos-cluster"
     - echo "config_path = \"$TF_ENV_config_path\"" >> $TFVARS_FILE
     - echo "config_context = \"admin@talos-cluster\"" >> $TFVARS_FILE
