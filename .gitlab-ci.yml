@@ -32,6 +32,5 @@ build:
     - chmod 600 /.kube/config
     - kubectl get nodes
     - cat $TFVARS_FILE
-    - $(which ls) -ahl
   variables:
     TFVARS_FILE: "vars.tfvars"
