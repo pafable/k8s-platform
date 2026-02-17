@@ -1,6 +1,5 @@
 stages:
   - test
-  - build
   - deploy
 
 test-script:
@@ -14,8 +13,8 @@ test-script:
   variables:
     DELAY: 10
 
-build:
-  stage: build
+deploy:
+  stage: deploy
   tags:
     - rocko2
   image:
@@ -31,16 +30,10 @@ build:
     - echo "config_context = admin@talos-cluster" >> $TFVARS_FILE
     - chmod 600 ~/.kube/config
     - kubectl get nodes
-    - cat $TFVARS_FILE
-    - terraform version
-    - task --version
-    - kubectl version
-    - task || true
-    - ls -ahl --color=auto
     - cp $TFVARS_FILE terraform/apps/
     - cp $TFVARS_FILE terraform/core-1/
     - cp $TFVARS_FILE terraform/core-2/
-    - ls -ahl --color=auto
+    - task apps-create
   variables:
     TFVARS_FILE: "vars.tfvars"
     FF_ENABLE_JOB_CLEANUP: "true"
