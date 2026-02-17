@@ -40,6 +40,7 @@ build:
     - cp $TFVARS_FILE terraform/apps/
     - cp $TFVARS_FILE terraform/core-1/
     - cp $TFVARS_FILE terraform/core-2/
+    - ls -ahl --color=auto
   variables:
     TFVARS_FILE: "vars.tfvars"
     FF_ENABLE_JOB_CLEANUP: "true"
