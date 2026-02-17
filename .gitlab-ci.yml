@@ -1,0 +1,35 @@
+stages:
+  - test
+  - deploy
+
+test-script:
+  stage: test
+  tags:
+    - rocko2
+  script:
+    - echo sleeping $DELAY secs
+    - sleep $DELAY
+    - sh ./runner-test.sh
+  variables:
+    DELAY: 10
+
+deploy:
+  stage: deploy
+  tags:
+    - rocko2
+  image:
+    name: pafable-test-builder:0.0.1
+    pull_policy: if-not-present
+    entrypoint: [""]
+  script:
+    - mkdir -p ~/.kube
+    - echo $KUBECONFIG_BASE64 | base64 -d > ~/.kube/config
+    - cp ~/.kube/config $CI_PROJECT_DIR
+    - export TF_VAR_config_path="$CI_PROJECT_DIR/config"
+    - export TF_VAR_config_context="admin@talos-cluster"
+    - chmod 600 ~/.kube/config
+    - htpasswd -bcs terraform/modules/kube-prom/.htpasswd $PROM_UI_AUTH_USER $PROM_UI_AUTH_PASS
+    - kubectl get nodes
+    - task apps-create
+  variables:
+    FF_ENABLE_JOB_CLEANUP: "true"
