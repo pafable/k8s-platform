@@ -22,4 +22,4 @@ deploy:
   stage: deploy
   tags:
     - rocko2
-  extends: apps-create
+  extends: .apps-create
