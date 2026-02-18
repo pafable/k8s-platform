@@ -7,17 +7,6 @@ stages:
   - test
   - deploy
 
-test-script:
-  stage: test
-  tags:
-    - rocko2
-  script:
-    - echo sleeping $DELAY secs
-    - sleep $DELAY
-    - sh ./runner-test.sh
-  variables:
-    DELAY: 10
-
 deploy:
   stage: deploy
   tags:
