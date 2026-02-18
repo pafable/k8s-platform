@@ -3,7 +3,7 @@ include:
     ref: main
     file: 'templates/task-apps-create.yml'
     inputs:
-      BUILD_DIR: /builds/homelab7064608/k8s-platform
+      BUILD_DIR: "/builds/homelab7064608/k8s-platform"
 
 stages:
   - deploy
