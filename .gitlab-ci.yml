@@ -13,4 +13,3 @@ apps-create:
   tags:
     - rocko2
   extends: .apps-create
-  script: echo hello world
