@@ -2,6 +2,9 @@ include:
   - project: 'homelab7064608/ci-templates'
     ref: main
     file: 'templates/task-apps-create.yml'
+    inputs:
+      BUILD_DIR:
+        default: '/builds/homelab7064608/k8s-platform'
 
 stages:
   - deploy
