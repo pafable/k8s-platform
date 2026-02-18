@@ -4,7 +4,6 @@ include:
     file: 'templates/task-apps-create.yml'
 
 deploy:
-  stage: deploy
   tags:
     - rocko2
   extends: .apps-create
