@@ -27,8 +27,8 @@ RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/s
     && install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 # Installs terraform
-RUN curl -LO https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
-RUN unzip terraform_${TF_VERSION}_linux_amd64.zip \
+RUN curl -LO https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip \
+    && unzip terraform_${TF_VERSION}_linux_amd64.zip \
     && rm -f LICENSE.txt terraform_${TF_VERSION}_linux_amd64.zip \
     && mv terraform /usr/local/bin/
 
