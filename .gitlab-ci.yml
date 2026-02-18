@@ -6,7 +6,7 @@ include:
 stages:
   - deploy
 
-deploy-apps:
+apps-create:
   stage: deploy
   tags:
     - rocko2
