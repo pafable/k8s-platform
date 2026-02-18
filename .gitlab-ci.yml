@@ -31,5 +31,3 @@ deploy:
     - htpasswd -bcs terraform/modules/kube-prom/.htpasswd $PROM_UI_AUTH_USER $PROM_UI_AUTH_PASS
     - kubectl get nodes
     - task apps-create
-  variables:
-    FF_ENABLE_JOB_CLEANUP: "true"
