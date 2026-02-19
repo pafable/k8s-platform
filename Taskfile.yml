@@ -35,7 +35,7 @@ vars:
 env:
   AWS_REGION: us-east-1
   KUBECONFIG: "{{ .HOME }}/.kube/k3s-config"
-
+  GITLAB_RUNNER_DIR: containerfiles/gitlab-runner
   PROXMOX_DNS_DIR: terraform/proxmox/dns
   PROXMOX_DNS_INFRA_DIR: terraform/proxmox/dns-infra
   PROXMOX_K3S_INFRA_CONTROLLERS_DIR: terraform/proxmox/k3s-infra/controllers
@@ -961,3 +961,12 @@ tasks:
           rm -f tfplan-destroy
       - terraform plan -out=tfplan-destroy -destroy
       - terraform apply tfplan-destroy
+
+  gitlab-runner-create:
+    desc: Create gitlab runner container image
+    dir: '{{ .GITLAB_RUNNER_DIR }}'
+    cmds:
+      - |
+        docker build -f Containerfile \
+          -t {{ .REGISTRY_URL_IMAGE_NAME }}:{{ .TAG }} \
+          --platform linux/amd64 .
