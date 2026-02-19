@@ -970,3 +970,4 @@ tasks:
         docker build -f Containerfile \
           -t {{ .REGISTRY_URL_IMAGE_NAME }}:{{ .TAG }} \
           --platform linux/amd64 .
+      - docker push {{ .REGISTRY_URL_IMAGE_NAME }}:{{ .TAG }}
