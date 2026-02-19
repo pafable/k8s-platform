@@ -10,7 +10,7 @@ include:
     file: 'templates/task-gitlab-runner.yml'
     inputs:
       REGISTRY_URL_IMAGE_NAME: 'registry.gitlab.com/homelab7064608/k8s-platform/deployer'
-      TAG: '0.0.1'
+      TAG: '0.0.2'
 
 stages:
   - deploy
