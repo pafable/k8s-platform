@@ -1,9 +1,14 @@
 include:
   - project: 'homelab7064608/ci-templates'
     ref: main
-    file: 'templates/all.yml'
+    file: 'templates/task-apps-create.yml'
     inputs:
       BUILD_DIR: '/builds/homelab7064608/k8s-platform'
+
+  - project: 'homelab7064608/ci-templates'
+    ref: main
+    file: 'templates/task-gitlab-runner.yml'
+    inputs:
       REGISTRY_URL_IMAGE_NAME: 'registry.gitlab.com/homelab7064608/k8s-platform/deployer'
       TAG: '0.0.2'
 
@@ -21,4 +26,3 @@ gitlab-runner-create:
   tags:
     - rocko2
   extends: .gitlab-runner-create
-
