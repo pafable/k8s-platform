@@ -20,4 +20,3 @@ gitlab-runner-create:
   tags:
     - rocko2
   extends: .gitlab-runner-create
-  before_script: printenv
