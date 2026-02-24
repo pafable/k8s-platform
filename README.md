@@ -31,29 +31,10 @@ You will need the following installed on your machine before deploying:
 
 ---
 ## Local K8S Cluster
+This deploys a kubernetes cluster to either k3s or talos.
 
-### Deploy
-*NOTE:* For my local deploy I'm using the k8s cluster that comes prepackaged with Docker Desktop.
-```shell
-task create-apps-local
-```
-
-In order to access apps without port forwarding, you will need to add the following to your hosts file:
-```shell
-127.0.0.1  argocd.local
-127.0.0.1  chaos.local
-127.0.0.1  grafana.local
-127.0.0.1  myhelmapp.dev.local
-127.0.0.1  my-helm-chart.dev.local
-127.0.0.1  pgadmin.local
-127.0.0.1  prometheus.local
-127.0.0.1  jenkins.local
-```
-
-### Destroy
-```shell
-task destroy-apps-local
-```
+## Cloud K8S Cluster
+Creates a kubernetes cluster using AWS EKS.
 
 ---
 ## AWS EKS
@@ -84,4 +65,16 @@ task k3s-infra-create
 ### Destroy
 ```shell
 task k3s-infra-destroy
+```
+
+---
+## Creating Talos Cluster
+### Create
+```shell
+task talos-create
+```
+
+### Destroy
+```shell
+task talos-destroy
 ```
