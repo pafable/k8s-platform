@@ -20,3 +20,6 @@ gitlab-runner-create:
   tags:
     - rocko2
   extends: .gitlab-runner-create
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+  when: manual
