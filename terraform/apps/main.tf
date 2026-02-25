@@ -79,8 +79,10 @@ module "kube_prom" {
 #   ]
 # }
 
-module "jellyfin" {
-  source   = "../modules/jellyfin"
-  nfs_ipv4 = nonsensitive(data.aws_ssm_parameter.nfs_server_ip.insecure_value)
-  domain   = "jellyfin.${var.domain}"
-}
+# # removed due to performance
+# # keeping this here for future reference
+# module "jellyfin" {
+#   source   = "../modules/jellyfin"
+#   nfs_ipv4 = nonsensitive(data.aws_ssm_parameter.nfs_server_ip.insecure_value)
+#   domain   = "jellyfin.${var.domain}"
+# }
