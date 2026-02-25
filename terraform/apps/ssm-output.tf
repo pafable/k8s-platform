@@ -2,11 +2,11 @@ module "output_ssm" {
   source = "../modules/ssm-writer"
 
   parameters = [
-    {
-      description = "Jellyfin Loadbalancer IP"
-      name        = "/apps/jellyfin/loadbalancer/ip"
-      value       = module.jellyfin.exposed_ip
-    },
+    # {
+    #   description = "Jellyfin Loadbalancer IP"
+    #   name        = "/apps/jellyfin/loadbalancer/ip"
+    #   value       = module.jellyfin.exposed_ip
+    # },
     {
       description = "Grafana Loadbalancer IP"
       name        = "/apps/grafana/loadbalancer/ip"
@@ -26,7 +26,7 @@ module "output_ssm" {
 
   depends_on = [
     module.argocd,
-    module.jellyfin,
+    # module.jellyfin,
     module.kube_prom
   ]
 }
