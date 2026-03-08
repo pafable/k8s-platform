@@ -3,6 +3,7 @@ include:
     ref: main
     file: 'templates/all.yml'
     inputs:
+      CONTAINER_FILE: $CI_PROJECT_DIR/containerfiles/gitlab-runner/Containerfile
       REGISTRY_URL_IMAGE_NAME: 'registry.gitlab.com/homelab7064608/k8s-platform/deployer'
       TAG: '0.0.2'
 
