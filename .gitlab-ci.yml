@@ -9,6 +9,7 @@ include:
 
 stages:
   - deploy
+  - check_fail
 
 apps-create:
   stage: deploy
@@ -24,3 +25,10 @@ gitlab-runner-create:
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
   when: manual
+
+failure_analysis:
+  stage: check_fail
+  when: on_failure
+  tags:
+    - rocko2
+  extends: .failure_analysis
