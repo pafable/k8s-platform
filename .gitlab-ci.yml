@@ -28,7 +28,6 @@ gitlab-runner-create:
 
 failure_analysis:
   stage: check_fail
-  when: on_failure
   tags:
     - rocko2
   extends: .failure_analysis
