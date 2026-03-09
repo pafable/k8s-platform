@@ -8,6 +8,7 @@ tfplan*
 *.pkrvars.hcl
 controlplane.yaml
 kubeconfig
+output.txt
 secrets.yaml
 talosconfig
 worker.yaml
