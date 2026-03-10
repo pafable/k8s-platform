@@ -7,3 +7,7 @@ output "apps_ips" {
     for k, v in module.output_ssm.parameters : k => { ip = v.value }
   }
 }
+
+output "foo" {
+  value = module.kube_prom.kubernetes.ip
+}
