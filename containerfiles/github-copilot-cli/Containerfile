@@ -16,9 +16,6 @@ RUN npm install -g @github/copilot
 RUN groupadd -r ${USER} \
     && useradd -r -g ${USER} -m ${USER}
 
-RUN mkdir -p /home/${USER}/analysis \
-    && chown -R ${USER}:${USER} /home/${USER}/analysis
-
 USER ${USER}
 
 WORKDIR /home/${USER}
