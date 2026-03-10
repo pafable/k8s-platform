@@ -30,6 +30,9 @@ gitlab-runner-sign:
   stage: deploy
   tags:
     - rocko2
+  needs:
+    - job: gitlab-runner-create
+      artifacts: false
   extends: .sign-image
 
 failure_analysis:
