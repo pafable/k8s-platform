@@ -1,0 +1,26 @@
+ARG VERSION=20-slim
+
+FROM node:${VERSION}
+
+ARG USER=copilot
+
+RUN apt update -y && apt upgrade -y
+
+RUN apt install -y \
+    git \
+    openssl \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN npm install -g @github/copilot
+
+RUN groupadd -r ${USER} \
+    && useradd -r -g ${USER} -m ${USER}
+
+RUN mkdir -p /home/${USER}/analysis \
+    && chown -R ${USER}:${USER} /home/${USER}/analysis
+
+USER ${USER}
+
+WORKDIR /home/${USER}
+
+CMD ["/bin/bash"]
