@@ -21,19 +21,10 @@ gitlab-runner-create:
   stage: deploy
   tags:
     - rocko2
-  extends: .container-image-create
+  extends: .create-sign-image
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
   when: manual
-
-gitlab-runner-sign:
-  stage: deploy
-  tags:
-    - rocko2
-  needs:
-    - job: gitlab-runner-create
-      artifacts: false
-  extends: .sign-image
 
 failure_analysis:
   stage: check_fail
