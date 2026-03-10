@@ -26,6 +26,14 @@ gitlab-runner-create:
     - if: $CI_COMMIT_BRANCH == "master"
   when: manual
 
+gitlab-runner-sign:
+  stage: deploy
+  tags:
+    - rocko2
+  needs:
+    - gitlab-runner-create
+  extends: .sign-image
+
 failure_analysis:
   stage: check_fail
   tags:
