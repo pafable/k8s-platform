@@ -21,6 +21,11 @@ RUN curl -LO "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" \
     && sh ./aws/install \
     && rm -rf aws*
 
+# Install Cosign
+RUN curl -LO "https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64" \
+    && mv cosign-linux-amd64 /usr/local/bin/cosign \
+    && chmod +x /usr/local/bin/cosign
+
 # Install taskfile
 RUN sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
 
