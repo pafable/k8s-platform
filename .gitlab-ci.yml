@@ -18,6 +18,9 @@ core-create:
   extends: .core-create
 
 apps-create:
+  needs:
+    - job: core-create
+      artifacts: false
   stage: deploy
   tags:
     - rocko2
