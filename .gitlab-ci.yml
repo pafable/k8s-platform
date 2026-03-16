@@ -10,6 +10,12 @@ include:
 stages:
   - deploy
   - check_fail
+  -
+core-create:
+  stage: deploy
+  tags:
+    - rocko2
+  extends: .core-create
 
 apps-create:
   stage: deploy
