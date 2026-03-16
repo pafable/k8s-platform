@@ -4,12 +4,13 @@ set -euxo pipefail
 
 TC=$(which talosctl)
 CP=$(which cp)
+K=$(which kubectl)
 KUBE_DIR=${HOME}/.kube
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 CONFIG_DIR="${SCRIPT_DIR}/config"
 PATCH_DIR="${SCRIPT_DIR}/patches"
 CLUSTER_NAME="talos-cluster"
-IMAGE="factory.talos.dev/metal-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.12.3"
+IMAGE="factory.talos.dev/metal-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.12.5"
 
 # Node IPs
 CONTROL_PLANE1=$1
@@ -121,7 +122,7 @@ sleep ${DELAY} # need to wait for all nodes to be ready
 
 
 # get all kubernetes resources
-${TC} get all \
+${K} get all \
   --kubeconfig="${CONFIG_DIR}"/kubeconfig \
   -o wide \
   -A
@@ -132,8 +133,9 @@ sleep ${DELAY}
 
 
 # get nodes
-${TC} get nodes \
-  --kubeconfig="${CONFIG_DIR}"/kubeconfig
+${K} get nodes \
+  --kubeconfig="${CONFIG_DIR}"/kubeconfig \
+  -o wide
 
 
 echo -e "\nKubernetes cluster is up and running!"
