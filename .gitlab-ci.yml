@@ -10,7 +10,7 @@ include:
 stages:
   - deploy
   - check_fail
-  -
+
 core-create:
   stage: deploy
   tags:
