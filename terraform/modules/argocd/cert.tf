@@ -45,5 +45,5 @@ resource "kubernetes_manifest" "argo_cert" {
       }
     }
   }
-  depends_on = [helm_release.argodcd]
+  depends_on = [helm_release.argocd]
 }

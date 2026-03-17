@@ -58,12 +58,13 @@ resource "kubernetes_namespace_v1" "argocd_ns" {
   }
 }
 
-resource "helm_release" "argodcd" {
+resource "helm_release" "argocd" {
   chart             = local.chart_name
   cleanup_on_fail   = true
   create_namespace  = false
   dependency_update = true
   force_update      = true
+  wait              = true
   name              = local.app_name
   namespace         = kubernetes_namespace_v1.argocd_ns.metadata.0.name
   repository        = local.helm_repo
