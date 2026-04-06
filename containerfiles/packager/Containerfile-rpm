@@ -13,6 +13,9 @@ RUN microdnf install \
     -y \
     epel-release
 
+# Sets sslverify=0 to avoid "Error: Failed to download metadata for repo 'appstream': Cannot prepare internal mirrorlist: No URLs in mirrorlist" error when running microdnf install
+RUN echo 'sslverify=0' >> /etc/dnf/dnf.conf
+
 RUN microdnf install \
     --setopt=install_weak_deps=0 \
     --nodocs \
@@ -23,6 +26,9 @@ RUN microdnf install \
     rpm-build \
     rpmdevtools \
     rsync
+
+# removes sslverify=0
+RUN sed -i '/^sslverify=0$/d' /etc/dnf/dnf.conf
 
 RUN microdnf clean all
 
