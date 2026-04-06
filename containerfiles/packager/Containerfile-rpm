@@ -23,7 +23,6 @@ RUN microdnf install \
     git \
     make \
     rpm-build \
-    rpmdevtools \
     rsync
 
 RUN microdnf clean all
