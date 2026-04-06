@@ -1,0 +1,37 @@
+ARG VERSION=10.1-minimal
+
+FROM rockylinux/rockylinux:${VERSION}
+
+ARG USER=pkg-bldr
+
+RUN microdnf upgrade -y
+
+RUN microdnf install \
+    --setopt=install_weak_deps=0 \
+    --nodocs \
+    --refresh \
+    -y \
+    epel-release
+
+RUN microdnf install \
+    --setopt=install_weak_deps=0 \
+    --nodocs \
+    --refresh \
+    -y \
+    gcc \
+    make \
+    rpm-build \
+    rpmdevtools \
+    rsync
+
+RUN microdnf clean all
+
+RUN rm -rf /etc/yum.repos.d
+
+RUN useradd -m -s /bin/bash ${USER}
+
+WORKDIR /home/${USER}
+
+USER ${USER}
+
+RUN rpmdev-setuptree
