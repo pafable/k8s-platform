@@ -13,9 +13,10 @@ RUN microdnf install \
     -y \
     epel-release
 
+RUN echo "sslverify=0" >> /etc/dnf/dnf.conf
+
 RUN microdnf install \
     --setopt=install_weak_deps=0 \
-    --setopt=sslverify=0 \
     --nodocs \
     --refresh \
     -y \
@@ -24,6 +25,8 @@ RUN microdnf install \
     make \
     rpm-build \
     rsync
+
+RUN sed -i '/sslverify=0/d' /etc/dnf/dnf.conf
 
 RUN microdnf clean all
 
@@ -34,5 +37,3 @@ RUN useradd -m -s /bin/bash ${USER}
 WORKDIR /home/${USER}
 
 USER ${USER}
-
-RUN rpmdev-setuptree
