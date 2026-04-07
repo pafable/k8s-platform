@@ -1,6 +1,6 @@
 ARG VERSION=10.1-minimal
 
-FROM rockylinux/rockylinux:${VERSION}
+FROM docker.io/rockylinux/rockylinux:${VERSION}
 
 ARG USER=pkg-bldr
 
