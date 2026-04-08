@@ -23,6 +23,7 @@ RUN microdnf install \
     gcc \
     git \
     make \
+    openssh-clients \
     rpm-build \
     rsync
 
