@@ -24,7 +24,10 @@ RUN microdnf install \
     git \
     make \
     openssh-clients \
+    pinentry-tty \
+    rng-tools \
     rpm-build \
+    rpm-sign \
     rsync
 
 RUN sed -i '/sslverify=0/d' /etc/dnf/dnf.conf
