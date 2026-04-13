@@ -22,10 +22,10 @@ RUN microdnf install \
     -y \
     gcc \
     git \
+    gnupg \
     make \
     openssh-clients \
     pinentry-tty \
-    rng-tools \
     rpm-build \
     rpm-sign \
     rsync
