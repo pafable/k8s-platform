@@ -10,7 +10,7 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 CONFIG_DIR="${SCRIPT_DIR}/config"
 PATCH_DIR="${SCRIPT_DIR}/patches"
 CLUSTER_NAME="talos-cluster"
-IMAGE="factory.talos.dev/metal-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.12.5"
+IMAGE="factory.talos.dev/nocloud-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.14.4"
 
 # Node IPs
 CONTROL_PLANE1=$1
@@ -59,7 +59,7 @@ for controlplane in "${controlplane_ips[@]}"; do
     --nodes "${controlplane}" \
     --file "${CONFIG_DIR}/controlplane.yaml" \
     --config-patch @"${PATCH_DIR}"/"${PATCH_FILE}" \
-    --mode reboot
+    --mode auto
 done
 
 
@@ -86,7 +86,7 @@ for worker in "${worker_ips[@]}"; do
     --nodes "${worker}" \
     --file "${CONFIG_DIR}/worker.yaml" \
     --config-patch @"${PATCH_DIR}"/"${PATCH_FILE}" \
-    --mode reboot
+    --mode auto
 done
 
 
