@@ -816,6 +816,7 @@ tasks:
           rm -f tfplan*
       - |
         terraform plan \
+          -var-file=terraform.tfvars \
           -out=tfplan \
           -no-color
       - terraform apply tfplan -no-color
@@ -870,6 +871,7 @@ tasks:
           rm -f tfplan*
       - |
         terraform plan \
+          -var-file=terraform.tfvars \
           -out=tfplan \
           -no-color
       - terraform apply tfplan -no-color

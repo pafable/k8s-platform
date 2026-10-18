@@ -1,7 +1,7 @@
 variable "envoy_gw_helm_chart_version" {
   description = "Envoy gateway helm chart version"
   type        = string
-  default     = "0.0.0-latest"
+  default     = "1.9.2"
 }
 
 variable "app_repo" {
