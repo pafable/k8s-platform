@@ -15,7 +15,7 @@ variable "container_hostname" {
 variable "container_image" {
   description = "jellyfin container image"
   type        = string
-  default     = "docker.io/jellyfin/jellyfin:10.11.6"
+  default     = "docker.io/jellyfin/jellyfin:12.2"
 }
 
 variable "cpu_request" {

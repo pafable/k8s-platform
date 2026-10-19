@@ -25,7 +25,7 @@ variable "grafana_image_repo" {
 variable "grafana_image_tag" {
   description = "Grafana image tag"
   type        = string
-  default     = "12.4.0-21693836646"
+  default     = "13.0.11-slim"
 }
 
 # variable "ingress_name" {
@@ -49,7 +49,7 @@ variable "is_docker_desktop" {
 variable "loki_helm_chart_version" {
   description = "helm chart version"
   type        = string
-  default     = "6.52.0"
+  default     = "7.4.0"
 }
 
 variable "loki_helm_repo" {
