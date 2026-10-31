@@ -10,7 +10,7 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 CONFIG_DIR="${SCRIPT_DIR}/config"
 PATCH_DIR="${SCRIPT_DIR}/patches"
 CLUSTER_NAME="talos-cluster"
-IMAGE="factory.talos.dev/nocloud-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.14.4"
+IMAGE="factory.talos.dev/nocloud-installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515:v1.14.5"
 
 # Node IPs
 CONTROL_PLANE1=$1
@@ -18,7 +18,7 @@ CONTROL_PLANE2=$2
 WORKER_NODE1=$3
 WORKER_NODE2=$4
 WORKER_NODE3=$5
-DELAY=60
+DELAY=75
 
 # Delete contents of CONFIG_DIR. Uncomment this when you're recreating the cluster
 if [[ -d "${CONFIG_DIR}" ]]; then
