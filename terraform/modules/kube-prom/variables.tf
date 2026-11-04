@@ -13,7 +13,7 @@ variable "chart_repo" {
 variable "chart_version" {
   description = "Chart version"
   type        = string
-  default     = "81.6.1"
+  default     = "92.17.1"
 }
 
 variable "cluster_issuer" {
