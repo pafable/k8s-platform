@@ -1,5 +1,6 @@
 module "argocd" {
-  source = "../modules/argocd"
+  source             = "../modules/argocd"
+  gateway_class_name = "istio"
 }
 
 # module "chaos_mesh" {
@@ -27,8 +28,9 @@ module "argocd" {
 # }
 
 module "kube_prom" {
-  source = "../modules/kube-prom"
-  domain = var.domain
+  source             = "../modules/kube-prom"
+  domain             = var.domain
+  gateway_class_name = "istio"
 }
 
 # module "postgresql_db_01" {
