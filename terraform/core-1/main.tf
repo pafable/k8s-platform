@@ -3,7 +3,7 @@ module "cert_manager" {
   ca_cert = sensitive(data.aws_ssm_parameter.ca_cert.value)
   ca_key  = sensitive(data.aws_ssm_parameter.ca_private_key.value)
 
-  # depends_on = [module.envoy_gateway]
+  depends_on = [module.istio_gateway]
 }
 
 # module "jenkins" {
@@ -74,4 +74,8 @@ module "metrics_server" {
 
 module "metallb" {
   source = "../modules/metallb"
+}
+
+module "istio_gateway" {
+  source = "../modules/istio-gateway-api"
 }
