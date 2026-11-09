@@ -1,6 +1,5 @@
 module "argocd" {
-  source             = "../modules/argocd"
-  gateway_class_name = "istio"
+  source = "../modules/argocd"
 }
 
 # module "chaos_mesh" {
