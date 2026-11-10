@@ -57,6 +57,8 @@ module "metrics_server" {
 
 module "envoy_gateway" {
   source = "../modules/envoy-gateway"
+
+  depends_on = [module.metallb]
 }
 
 # module "ghost_1" {
