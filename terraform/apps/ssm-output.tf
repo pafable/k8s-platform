@@ -7,16 +7,16 @@ module "output_ssm" {
     #   name        = "/apps/jellyfin/loadbalancer/ip"
     #   value       = module.jellyfin.exposed_ip
     # },
-    # {
-    #   description = "Grafana Loadbalancer IP"
-    #   name        = "/apps/grafana/loadbalancer/ip"
-    #   value       = module.kube_prom.exposed_grafana_ip
-    # },
-    # {
-    #   description = "Prometheus Loadbalancer IP"
-    #   name        = "/apps/prometheus/loadbalancer/ip"
-    #   value       = module.kube_prom.exposed_prometheus_ip
-    # },
+    {
+      description = "Grafana Loadbalancer IP"
+      name        = "/apps/grafana/loadbalancer/ip"
+      value       = module.kube_prom.exposed_grafana_ip
+    },
+    {
+      description = "Prometheus Loadbalancer IP"
+      name        = "/apps/prometheus/loadbalancer/ip"
+      value       = module.kube_prom.exposed_prometheus_ip
+    },
     {
       description = "ArgoCD Loadbalancer IP"
       name        = "/apps/argocd/loadbalancer/ip"

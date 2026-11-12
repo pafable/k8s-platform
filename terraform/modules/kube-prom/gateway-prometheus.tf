@@ -122,31 +122,32 @@ resource "kubernetes_manifest" "prometheus_http_route" {
   }
 }
 
-resource "kubernetes_manifest" "prometheus_basic_auth" {
-  manifest = {
-    apiVersion = "gateway.envoyproxy.io/v1alpha1"
-    kind       = "SecurityPolicy"
-
-    metadata = {
-      name      = "prometheus-basic-auth"
-      namespace = kubernetes_namespace_v1.kube_prom_ns.metadata.0.name
-      labels    = local.labels
-    }
-
-    spec = {
-      targetRefs = [
-        {
-          group = "gateway.networking.k8s.io"
-          kind  = "HTTPRoute"
-          name  = kubernetes_manifest.prometheus_http_route.manifest.metadata.name
-        }
-      ]
-
-      basicAuth = {
-        users = {
-          name = kubernetes_secret_v1.prometheus_ui_secret.metadata[0].name
-        }
-      }
-    }
-  }
-}
+## This create a basic auth prompt for prometheus UI but needs envoy gateway
+# resource "kubernetes_manifest" "prometheus_basic_auth" {
+#   manifest = {
+#     apiVersion = "gateway.envoyproxy.io/v1alpha1"
+#     kind       = "SecurityPolicy"
+#
+#     metadata = {
+#       name      = "prometheus-basic-auth"
+#       namespace = kubernetes_namespace_v1.kube_prom_ns.metadata.0.name
+#       labels    = local.labels
+#     }
+#
+#     spec = {
+#       targetRefs = [
+#         {
+#           group = "gateway.networking.k8s.io"
+#           kind  = "HTTPRoute"
+#           name  = kubernetes_manifest.prometheus_http_route.manifest.metadata.name
+#         }
+#       ]
+#
+#       basicAuth = {
+#         users = {
+#           name = kubernetes_secret_v1.prometheus_ui_secret.metadata[0].name
+#         }
+#       }
+#     }
+#   }
+# }

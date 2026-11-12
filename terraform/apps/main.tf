@@ -26,11 +26,11 @@ module "argocd" {
 #   is_cloud = false
 # }
 
-# module "kube_prom" {
-#   source             = "../modules/kube-prom"
-#   domain             = var.domain
-#   gateway_class_name = "istio"
-# }
+module "kube_prom" {
+  source             = "../modules/kube-prom"
+  domain             = var.domain
+  gateway_class_name = "door"
+}
 
 # module "postgresql_db_01" {
 #   source       = "../modules/postgresql"
