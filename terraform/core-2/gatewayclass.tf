@@ -15,7 +15,7 @@ resource "kubernetes_manifest" "core_gateway_class" {
     }
 
     spec = {
-      controllerName = "gateway.envoyproxy.io/gatewayclass-controller"
+      controllerName = "istio.io/gateway-controller"
       description    = "babys first gatewayclass"
     }
   }
