@@ -1,7 +1,7 @@
 variable "argocd_version" {
   description = "ArgoCD helm version"
   type        = string
-  default     = "10.11.7"
+  default     = "10.18.0"
 }
 
 variable "app_repo" {
