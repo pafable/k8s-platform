@@ -3,7 +3,7 @@ locals {
   chart_name = "argo-cd"
   helm_repo  = "https://argoproj.github.io/argo-helm"
 
-  tf_labels = {
+  labels = {
     app                            = local.app_name
     "app.kubernetes.io/name"       = local.app_name
     "app.kubernetes.io/managed-by" = "terraform"
@@ -54,7 +54,7 @@ locals {
 resource "kubernetes_namespace_v1" "argocd_ns" {
   metadata {
     name   = local.app_name
-    labels = local.tf_labels
+    labels = local.labels
   }
 }
 
