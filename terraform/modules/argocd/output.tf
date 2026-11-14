@@ -4,10 +4,11 @@ data "kubernetes_resources" "exposed_gateway_svcs" {
   namespace      = kubernetes_namespace_v1.argocd_ns.metadata.0.name
   label_selector = "gateway.networking.k8s.io/gateway-name=argocd-gateway"
 
-  depends_on = [helm_release.argocd]
+  depends_on = [kubernetes_manifest.argo_gateway]
 }
 
 output "exposed_ip" {
-  value      = data.kubernetes_resources.exposed_gateway_svcs.objects[0].status.loadBalancer.ingress[0].ip
-  depends_on = [helm_release.argocd]
+  value = data.kubernetes_resources.exposed_gateway_svcs.objects[0].status.loadBalancer.ingress[0].ip
+
+  depends_on = [kubernetes_manifest.argo_gateway]
 }

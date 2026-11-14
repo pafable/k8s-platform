@@ -21,12 +21,17 @@ module "output_ssm" {
       description = "ArgoCD Loadbalancer IP"
       name        = "/apps/argocd/loadbalancer/ip"
       value       = module.argocd.exposed_ip
+    },
+    {
+      description = "Podinfo Loadbalancer IP"
+      name        = "/apps/podinfo/loadbalancer/ip"
+      value       = module.podinfo.exposed_ip
     }
   ]
 
-  depends_on = [
-    module.argocd,
-    # module.jellyfin,
-    # module.kube_prom
-  ]
+  # depends_on = [
+  #   module.argocd,
+  #   # module.jellyfin,
+  #   # module.kube_prom
+  # ]
 }

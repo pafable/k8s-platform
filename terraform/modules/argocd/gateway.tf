@@ -59,6 +59,18 @@ resource "kubernetes_manifest" "argo_gateway" {
       ]
     }
   }
+
+  wait {
+    condition {
+      type   = "Programmed"
+      status = "True"
+    }
+  }
+
+  timeouts {
+    create = "5m"
+    update = "5m"
+  }
 }
 
 resource "kubernetes_manifest" "argo_http_route" {
