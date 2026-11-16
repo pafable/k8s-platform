@@ -30,7 +30,7 @@ variable "domain" {
 variable "gateway_class_name" {
   description = "Gateway class name"
   type        = string
-  default     = "door"
+  default     = "door-envoy"
 }
 
 variable "is_talos" {

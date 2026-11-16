@@ -27,9 +27,8 @@ module "argocd" {
 # }
 
 module "kube_prom" {
-  source             = "../modules/kube-prom"
-  domain             = var.domain
-  gateway_class_name = "door"
+  source = "../modules/kube-prom"
+  domain = var.domain
 }
 
 # module "postgresql_db_01" {

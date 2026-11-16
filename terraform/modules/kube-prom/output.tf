@@ -1,8 +1,8 @@
 data "kubernetes_resources" "exposed_gateway_grafana_svc" {
   api_version    = "v1"
   kind           = "Service"
-  namespace      = kubernetes_namespace_v1.kube_prom_ns.metadata[0].name
-  label_selector = "gateway.networking.k8s.io/gateway-name=grafana-gateway"
+  namespace      = "envoy-gateway-system"
+  label_selector = "app=grafana"
 
   depends_on = [helm_release.kube_prom_stack]
 }
@@ -14,8 +14,8 @@ output "exposed_grafana_ip" {
 data "kubernetes_resources" "exposed_gateway_prometheus_svc" {
   api_version    = "v1"
   kind           = "Service"
-  namespace      = kubernetes_namespace_v1.kube_prom_ns.metadata[0].name
-  label_selector = "gateway.networking.k8s.io/gateway-name=prometheus-gateway"
+  namespace      = "envoy-gateway-system"
+  label_selector = "app=prometheus"
 
   depends_on = [helm_release.kube_prom_stack]
 }

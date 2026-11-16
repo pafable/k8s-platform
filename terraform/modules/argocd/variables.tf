@@ -19,7 +19,7 @@ variable "domain" {
 variable "gateway_class_name" {
   description = "Gateway class name"
   type        = string
-  default     = "door"
+  default     = "door-istio"
 }
 
 variable "ingress_name" {

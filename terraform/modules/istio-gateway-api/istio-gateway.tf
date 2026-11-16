@@ -9,7 +9,7 @@ terraform {
 locals {
   app_name = "istio"
 
-  tf_labels = {
+  labels = {
     "app.kubernetes.io/name"       = local.app_name
     "app.kubernetes.io/managed-by" = "terraform"
     "app.kubernetes.io/owner"      = var.owner
@@ -19,7 +19,7 @@ locals {
 resource "kubernetes_namespace_v1" "istio_gw_ns" {
   metadata {
     name   = "${local.app_name}-system"
-    labels = local.tf_labels
+    labels = local.labels
   }
 }
 
