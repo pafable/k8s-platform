@@ -13,7 +13,7 @@ variable "chart_repo" {
 variable "chart_version" {
   description = "Chart version"
   type        = string
-  default     = "81.6.1"
+  default     = "93.2.2"
 }
 
 variable "cluster_issuer" {
@@ -30,7 +30,7 @@ variable "domain" {
 variable "gateway_class_name" {
   description = "Gateway class name"
   type        = string
-  default     = "door"
+  default     = "door-envoy"
 }
 
 variable "is_talos" {

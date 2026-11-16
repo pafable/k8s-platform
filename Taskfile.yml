@@ -258,11 +258,12 @@ tasks:
       - defer: |
           echo "Cleaning up terraform plans..."
           rm -f tfplan*
-      - |
-        terraform plan \
-          -out=tfplan \
-          -no-color
-      - terraform apply tfplan -no-color
+#      - |
+#        terraform plan \
+#          -out=tfplan \
+#          -no-color
+#      - terraform apply tfplan -no-color
+      - terraform apply --auto-approve -no-color
 
   apps-destroy:
     dir: '{{ .TF_APPS_DIR }}'
@@ -273,12 +274,13 @@ tasks:
       - defer: |
           echo "Cleaning up terraform plans..."
           rm -f tfplan*
-      - | 
-        terraform plan \
-          -out=tfplan.destroy \
-          -destroy \
-          -no-color
-      - terraform apply tfplan.destroy -no-color
+#      - |
+#        terraform plan \
+#          -out=tfplan.destroy \
+#          -destroy \
+#          -no-color
+#      - terraform apply tfplan.destroy -no-color
+      - terraform destroy --auto-approve -no-color
       - task: delete-crds
     ignore_error: true
 

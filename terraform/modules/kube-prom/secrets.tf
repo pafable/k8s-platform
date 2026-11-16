@@ -10,7 +10,7 @@ resource "kubernetes_secret_v1" "grafana_admin_creds" {
   }
 
   data = {
-    username = "${var.owner}-admin"
+    username = sensitive("${var.owner}-admin")
     password = sensitive(random_password.grafana_admin_password.result)
   }
 }

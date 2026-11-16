@@ -122,6 +122,7 @@ resource "kubernetes_manifest" "prometheus_http_route" {
   }
 }
 
+# This create a basic auth prompt for prometheus UI but needs envoy gateway
 resource "kubernetes_manifest" "prometheus_basic_auth" {
   manifest = {
     apiVersion = "gateway.envoyproxy.io/v1alpha1"

@@ -1,7 +1,7 @@
 variable "argocd_version" {
   description = "ArgoCD helm version"
   type        = string
-  default     = "10.10.5"
+  default     = "10.18.0"
 }
 
 variable "app_repo" {
@@ -19,7 +19,7 @@ variable "domain" {
 variable "gateway_class_name" {
   description = "Gateway class name"
   type        = string
-  default     = "door"
+  default     = "door-istio"
 }
 
 variable "ingress_name" {
