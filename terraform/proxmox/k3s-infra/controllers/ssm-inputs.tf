@@ -1,6 +1,6 @@
 data "aws_ssm_parameter" "k3s_join_token" {
   provider = aws.parameters
-  name     = "/proxmox/join/token"
+  name     = "/k3s/join/token"
 }
 
 data "aws_ssm_parameter" "main_proxmox_node" {

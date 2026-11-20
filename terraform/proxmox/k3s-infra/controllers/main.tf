@@ -18,8 +18,8 @@ locals {
         path    = "/home/${var.ssh_username}/instance_creation_date"
         owner   = "nobody:nobody"
         content = <<-EOT
-          name: ${local.k3s_controller_name}
-          created: ${local.current_time}
+                    name: ${local.k3s_controller_name}
+                 created: ${local.current_time}
           clone_template: ${local.k3s_controller_template}
         EOT
       }
