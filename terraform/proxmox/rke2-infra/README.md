@@ -2,6 +2,13 @@
 
 [RKE2](https://docs.rke2.io/)
 
+File location:
+
+- kubectl - `/var/lib/rancher/rke2/bin/kubectl`
+- rke2-killall.sh & rke2-uninstall.sh - `/usr/bin`
+- kubeconfig - `/etc/rancher/rke2/rke2.yaml`
+- token - `/var/lib/rancher/rke2/server/node-token`
+
 ## Procedures
 1. Open ports:
     
